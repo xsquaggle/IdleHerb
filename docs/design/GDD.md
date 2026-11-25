@@ -1064,6 +1064,23 @@ The script buys greedily (lowest wait plus payback time), Replants when pending 
 | 30 | ×9 | ×7,000 | 10 |
 | 60 | ×13 | ×20,000 | 14 |
 
+**Where the budget comes from.** This is a rough estimate of the middle column, built from the rows in CONTENT.md for an active player. The budget is the product of these parts.
+
+| Part | Day 7 | Day 30 |
+|---|---|---|
+| Research (Soil Science, Crop Rotation) | ×4.9 | ×10 |
+| Achievements and Codex | ×1.65 | ×2.1 |
+| World Mastery | ×1.45 | ×1.7 |
+| Skills (profit, speed, tower milestones) | ×1.7 | ×2.5 |
+| Heirlooms and set bonuses | ×1.6 | ×4 |
+| Plants and manager perks | ×1.6 | ×3.5 |
+| World twists, abilities, Sunbeams, Morning Dew | ×2.1 | ×2.8 |
+| Cheaper levels (a discount is worth about as much as the same factor of income) | ×1.5 | ×2.2 |
+| Master Composter | ×1 | ×1.75 |
+| **Product** | **about ×160** | **about ×13,000** |
+
+Both land within a factor of two of the budget (×120 and ×7,000), on the high side. So the content can carry the pacing in the results below, and the simulator is more likely to trim a little than to need more.
+
 **Results** (days from first launch):
 
 | Event | Active | Mixed | Idle |
