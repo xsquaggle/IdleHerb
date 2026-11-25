@@ -1,6 +1,6 @@
 # Sprout Tower: Content Tables
 
-Version 0.1, Phase 0. Owner: Game Designer thread. This file holds every content row. Rules and formulas are in [GDD.md](GDD.md). The reasons behind the big calls are in [AUDIT.md](AUDIT.md).
+Version 0.2, Phase 0, revised after the independent design audit (what changed is in [CHANGES.md](CHANGES.md)). Owner: Game Designer thread. This file holds every content row. Rules and formulas are in [GDD.md](GDD.md). The reasons behind the big calls are in [AUDIT.md](AUDIT.md).
 
 ## 0. How to read this file
 
@@ -8,7 +8,7 @@ Version 0.1, Phase 0. Owner: Game Designer thread. This file holds every content
 - **Ids are stable.** They follow the Engine thread's convention: lowercase, dotted, namespaced by kind (`floor.w1.windowsill`, `card.manager.nana_sprig`, `plant.mint.frosted`, `artifact.sprouting_trowel`). Heirlooms use the `artifact.` prefix because that is the pipeline's table name. Players only ever see the word Heirloom.
 - **Names are defaults** for the Writer to polish. Every name here follows the word list in GDD 2.3 and the never list in `docs/art/HEMP_ART.md`.
 - **Art** columns say which picture already exists in Lawson's packs (B numbers) and what is new. How things look belongs to the Art Director.
-- **Launch** `yes` means the row is needed for the three-world launch. `later` rows belong to worlds 4 to 6.
+- **Launch** `yes` means the row is needed for the four-world launch. `later` rows belong to worlds 5 and 6.
 - Numbers such as `2.5e10` are big numbers.
 
 ### 0.1 Effects
@@ -24,7 +24,7 @@ Every bonus in this file is an effect with four parts: a `stat`, a scope, an ope
 
 **Scopes:** `floor` (the floor the card sits on), `adjacent` (the floors directly above and below it), `world` (every floor in the world where the card is placed), `global` (everything, counted once per card).
 
-**Buckets:** a manager's own profit multiplier is the `manager` bucket. Manager perks and plant traits share the `floor` bucket. Heirlooms and their set bonuses are the `heirloom` bucket. Then `skill`, `research`, `compost`, `ribbon`, `achievement`, `codex`, `mastery`, `twist` and `buff`.
+**Buckets:** a manager's own profit multiplier is the `manager` bucket. Manager perks and plant traits share the `floor` bucket. Heirlooms and their set bonuses are the `heirloom` bucket. Then `skill`, `research`, `compost`, `ribbon`, `achievement`, `codex`, `mastery`, `twist` and `boost`. The `boost` bucket holds everything that lasts a set time. It is the one bucket that adds across every source and has a cap (GDD 13.5).
 
 **Scaling with level:**
 
@@ -59,11 +59,11 @@ These are the stat names used in this file. The Engine thread may map them to it
 | `visitor.reward` | Value of Golden Sprout outcomes | none |
 | `offline.earnings` | Offline earnings, as a percentage on top of efficiency | see GDD 13.4 |
 | `offline.efficiency` | Offline efficiency, in points | 1.0 |
-| `offline.cap` | Hours of offline earnings stored | 24 h, 28 h with the Moonstone Mortar |
-| `chest.luck` | Rare, Epic and Legendary chest weights | none |
-| `insight.gain`, `pollen.gain`, `compost.gain` | Income of that currency | none |
+| `offline.cap` | Hours of offline earnings stored | 36 h. Everything in the game adds up to 33 h |
+| `chest.luck` | Rare, Epic and Legendary chest weights. Skills and research only | none needed (GDD 8.3, rule 6) |
+| `insight.gain`, `pollen.gain`, `compost.gain` | Income of that currency. `compost.gain` comes from skills and the Compost Shop only | none |
 | `manager.power` | Every manager's profit multiplier | none |
-| `manager.cooldown` | Ability cooldowns, as a reduction | 50% |
+| `manager.cooldown` | Manager ability cooldowns, as a reduction. Cooldowns tick faster while it is active | 50% |
 | `plant.power` | Strength of plant traits. May be limited to one family | none |
 | `plant.affinity` | The ×1.5 at-home bonus | none |
 | `heirloom.power` | Strength of numeric heirloom passives | none |
@@ -93,7 +93,7 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 | `world.w1` | Thymeford | temperate | Coins | 10 | 1 | 1.00 | 5 | 5e19 Coins | none | B3, B26 | yes |
 | `world.w2` | Loomington | urban | Notes | 8 | 1e5 | 0.90 | 15 | 2e19 Notes | none | B17 | yes |
 | `world.w3` | Papaya Cay | tropical | Shells | 8 | 2e7 | 0.85 | 40 | 1e24 Shells | none | B18 | yes |
-| `world.w4` | Mount Mitten | frost | Snowmarks | 8 | 5e10 | 0.80 | 100 | 2e29 Snowmarks | 8 Ribbons | new | later |
+| `world.w4` | Mount Mitten | frost | Snowmarks | 8 | 5e10 | 0.80 | 100 | 2e29 Snowmarks | 8 Ribbons | new | yes |
 | `world.w5` | The Moon | lunar | Moonpennies | 8 | 1e16 | 0.75 | 250 | 1e34 Moonpennies | 60 Ribbons | B27 (file is named "world4") | later |
 | `world.w6` | Nebula Nursery | stellar | Stardust | 8 | 4e20 | 0.70 | 600 | none | 600 Ribbons | new | later |
 
@@ -102,7 +102,7 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 | `order` | `id` | `name` | `product` | `favouredFamily` | `openCost` | `basePayout` | `baseCycle` (s) | `levelBaseCost` | `growth` | `hireFee` | Art |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | `floor.w1.windowsill` | Windowsill Planter | Fresh mint | Mint | free | 1 | 0.6 | 4 | 1.07 | 1,000 | B4 floor 01 v2 |
-| 2 | `floor.w1.balcony` | Balcony Boxes | Basil and kitchen herbs | Basil | 60 | 50 | 3 | 69 | 1.15 | 12,000 | B4 floor 02 v2 (was "Balcony Pots") |
+| 2 | `floor.w1.balcony` | Balcony Boxes | Basil and kitchen herbs | Basil | 60 | 50 | 3 | 70 | 1.15 | 12,000 | B4 floor 02 v2 (was "Balcony Pots") |
 | 3 | `floor.w1.hemp_patch` | Backyard Hemp Patch | Hemp stalks | Hemp | 720 | 540 | 6 | 828 | 1.14 | 90,000 | B4 floor 03 v2, re-dressed as a hemp patch |
 | 4 | `floor.w1.garden_shed` | Garden Shed Nursery | Seedlings | Thyme | 8,640 | 6,480 | 12 | 9,936 | 1.13 | 604,800 | B4 floor 04 v2 |
 | 5 | `floor.w1.greenhouse` | Glass Greenhouse | Sage and tender herbs | Sage | 103,680 | 77,760 | 24 | 119,232 | 1.12 | 4,147,200 | B4 floor 05 v2 |
@@ -117,9 +117,9 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 | `order` | `id` | `name` | `product` | `favouredFamily` | `openCost` | `basePayout` | `baseCycle` (s) | `levelBaseCost` | `growth` | `hireFee` | Art |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | `floor.w2.rooftop_beds` | Rooftop Garden Beds | Rooftop thyme | Thyme | free | 1 | 0.6 | 400,000 | 1.07 | 100,000,000 | new |
-| 2 | `floor.w2.herb_kiosk` | Corner Herb Kiosk | Mint bunches to go | Mint | 6,000,000 | 50 | 3 | 6,900,000 | 1.15 | 1.2e9 | new |
+| 2 | `floor.w2.herb_kiosk` | Corner Herb Kiosk | Mint bunches to go | Mint | 6,000,000 | 50 | 3 | 7,000,000 | 1.15 | 1.2e9 | new |
 | 3 | `floor.w2.weaving_mill` | Canvas Weaving Mill | Hemp canvas | Hemp | 72,000,000 | 540 | 6 | 82,800,000 | 1.14 | 9e9 | new |
-| 4 | `floor.w2.paper_workshop` | Paper Workshop | Hemp notebooks, wrapping paper, kites | Hemp | 864,000,000 | 5,832 | 12 | 993,600,000 | 1.13 | 6.048e10 | new |
+| 4 | `floor.w2.paper_workshop` | Paper Workshop | Hemp notebooks, gift paper and kites | Hemp | 864,000,000 | 5,832 | 12 | 993,600,000 | 1.13 | 6.048e10 | new |
 | 5 | `floor.w2.bistro` | Spice Kitchen Bistro | Herb dishes | Basil | 1.037e10 | 62,985.60 | 24 | 1.192e10 | 1.12 | 4.147e11 | B4 floor 08 v2 (Spice Kitchen) |
 | 6 | `floor.w2.atelier` | Tailor's Atelier | Hemp-linen clothes, lavender sachets | Lavender | 1.244e11 | 680,244.48 | 48 | 1.431e11 | 1.11 | 3.11e12 | new |
 | 7 | `floor.w2.brickyard` | Hempcrete Brickyard | Eco building blocks | Hemp | 1.493e12 | 7,346,640.38 | 96 | 1.717e12 | 1.10 | 2.538e13 | new |
@@ -130,7 +130,7 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 | `order` | `id` | `name` | `product` | `favouredFamily` | `openCost` | `basePayout` | `baseCycle` (s) | `levelBaseCost` | `growth` | `hireFee` | Art |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | `floor.w3.beach_hut` | Beach Hut Planters | Iced mint tea | Mint | free | 1 | 0.6 | 80,000,000 | 1.07 | 2e10 | new |
-| 2 | `floor.w3.jungle_terrace` | Jungle Herb Terrace | Island basil | Basil | 1.2e9 | 50 | 3 | 1.38e9 | 1.15 | 2.4e11 | new |
+| 2 | `floor.w3.jungle_terrace` | Jungle Herb Terrace | Island basil | Basil | 1.2e9 | 50 | 3 | 1.4e9 | 1.15 | 2.4e11 | new |
 | 3 | `floor.w3.sailcloth_loft` | Sailcloth Loft | Hemp sails | Hemp | 1.44e10 | 540 | 6 | 1.656e10 | 1.14 | 1.8e12 | new |
 | 4 | `floor.w3.net_weavers` | Hammock & Net Weavers | Hemp hammocks and nets | Hemp | 1.728e11 | 5,508 | 12 | 1.987e11 | 1.13 | 1.21e13 | new |
 | 5 | `floor.w3.hot_spring` | Hot-Spring Greenhouse | Volcano-warmed sage | Sage | 2.074e12 | 56,181.60 | 24 | 2.385e12 | 1.12 | 8.294e13 | new |
@@ -143,7 +143,7 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 | `order` | `id` | `name` | `product` | `favouredFamily` | `openCost` | `basePayout` | `baseCycle` (s) | `levelBaseCost` | `growth` | `hireFee` | Art |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | `floor.w4.cabin_windowsill` | Cabin Windowsill | Winter mint | Mint | free | 1 | 0.6 | 2e11 | 1.07 | 5e13 | new |
-| 2 | `floor.w4.herb_racks` | Hearthside Herb Racks | Dried sage | Sage | 3e12 | 50 | 3 | 3.45e12 | 1.15 | 6e14 | new |
+| 2 | `floor.w4.herb_racks` | Hearthside Herb Racks | Dried sage | Sage | 3e12 | 50 | 3 | 3.5e12 | 1.15 | 6e14 | new |
 | 3 | `floor.w4.ice_greenhouse` | Ice-Glass Greenhouse | Chamomile under ice glass | Chamomile | 3.6e13 | 540 | 6 | 4.14e13 | 1.14 | 4.5e15 | new |
 | 4 | `floor.w4.knitworks` | Hemp Knitworks | Hemp-wool blankets and mittens | Hemp | 4.32e14 | 5,184 | 12 | 4.968e14 | 1.13 | 3.024e16 | new |
 | 5 | `floor.w4.tea_lodge` | Fireside Tea Lodge | Lavender tea and cocoa | Lavender | 5.184e15 | 49,766.40 | 24 | 5.962e15 | 1.12 | 2.074e17 | new |
@@ -156,7 +156,7 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 | `order` | `id` | `name` | `product` | `favouredFamily` | `openCost` | `basePayout` | `baseCycle` (s) | `levelBaseCost` | `growth` | `hireFee` | Art |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | `floor.w5.lander_windowsill` | Lander Windowsill | Moon mint | Mint | free | 1 | 0.6 | 4e16 | 1.07 | 1e19 | new (B27 sets the look) |
-| 2 | `floor.w5.dome_garden` | Dome Garden | Basil under glass | Basil | 6e17 | 50 | 3 | 6.9e17 | 1.15 | 1.2e20 | new (B27 sets the look) |
+| 2 | `floor.w5.dome_garden` | Dome Garden | Basil under glass | Basil | 6e17 | 50 | 3 | 7e17 | 1.15 | 1.2e20 | new (B27 sets the look) |
 | 3 | `floor.w5.hemp_field` | Low-Gravity Hemp Field | Very tall hemp | Hemp | 7.2e18 | 540 | 6 | 8.28e18 | 1.14 | 9e20 | new |
 | 4 | `floor.w5.hempcrete_works` | Moon-Dust Hempcrete Works | Lunar building blocks | Hemp | 8.64e19 | 4,860 | 12 | 9.936e19 | 1.13 | 6.048e21 | new |
 | 5 | `floor.w5.tea_room` | Zero-G Tea Room | Floating chamomile tea | Chamomile | 1.037e21 | 43,740 | 24 | 1.192e21 | 1.12 | 4.147e22 | new |
@@ -169,7 +169,7 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 | `order` | `id` | `name` | `product` | `favouredFamily` | `openCost` | `basePayout` | `baseCycle` (s) | `levelBaseCost` | `growth` | `hireFee` | Art |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | `floor.w6.airlock_planter` | Airlock Planter | Thyme by the airlock | Thyme | free | 1 | 0.6 | 1.6e21 | 1.07 | 4e23 | new |
-| 2 | `floor.w6.ring_garden` | Spinning Ring Garden | Mint in a spinning ring | Mint | 2.4e22 | 50 | 3 | 2.76e22 | 1.15 | 4.8e24 | new |
+| 2 | `floor.w6.ring_garden` | Spinning Ring Garden | Mint in a spinning ring | Mint | 2.4e22 | 50 | 3 | 2.8e22 | 1.15 | 4.8e24 | new |
 | 3 | `floor.w6.sail_loom` | Solar-Sail Loom | Hemp-canvas solar sails | Hemp | 2.88e23 | 540 | 6 | 3.312e23 | 1.14 | 3.6e25 | new |
 | 4 | `floor.w6.seed_vault` | Comet Seed Vault | Hemp seed stores | Hemp | 3.456e24 | 4,536 | 12 | 3.974e24 | 1.13 | 2.419e26 | new |
 | 5 | `floor.w6.asteroid_greenhouse` | Asteroid Greenhouse | Sage on a rock | Sage | 4.147e25 | 38,102.40 | 24 | 4.769e25 | 1.12 | 1.659e27 | new |
@@ -179,7 +179,7 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 
 ## 2. Managers
 
-Rules are in GDD 7. There are 30 managers, 27 at launch. A manager's profit multiplier comes from its rarity and level (GDD 7.2). The perk and ability are below.
+Rules are in GDD 7. There are 30 managers, 28 at launch. A manager's profit multiplier comes from its rarity and level (GDD 7.2). The perk and ability are below.
 
 `poolWorld` is the world that must be unlocked before the card can drop from chests. Exotic managers never drop from chests. They come from World Mastery (GDD 14.5).
 
@@ -210,11 +210,11 @@ Rules are in GDD 7. There are 30 managers, 27 at launch. A manager's profit mult
 | M21 | `card.manager.barnaby_moonwort` | Barnaby Moonwort | epic | w2 | `offline.earnings` +20% (world) | Night-shift keeper with a lantern. Never the default on a hemp floor | B21, 5th | yes |
 | M22 | `card.manager.granny_evergreen` | Granny Evergreen | legendary | w1 | `floor.profit` +15% (world) | Matriarch of the tower | new | yes |
 | M23 | `card.manager.maestro_fennel` | Maestro Fennel | legendary | w2 | `spurt.duration` +3 s (world) | Conductor of the town band | new | yes |
-| M24 | `card.manager.amazing_marrow` | The Amazing Marrow | legendary | w3 | `chest.luck` +10% (global) | Stage magician | new | yes |
+| M24 | `card.manager.amazing_marrow` | The Amazing Marrow | legendary | w3 | `floor.doubleChance` +10% (world) | Stage magician who pulls a second harvest out of his hat | new | yes |
 | M25 | `card.manager.mayor_thyme` | Mayor Thyme | exotic | Mastery, w1 | `tower.milestoneMult` +0.1 (world) | Mayor of Thymeford | new | yes |
 | M26 | `card.manager.madame_loom` | Madame Loom | exotic | Mastery, w2 | `plant.power` +50%, Hemp family only (world) | Head of the weavers' guild | new, hemp cast | yes |
 | M27 | `card.manager.skipper_papaya` | Skipper Papaya | exotic | Mastery, w3 | `visitor.reward` +100% (world) | Island ferry skipper | new | yes |
-| M28 | `card.manager.grandpa_mitten` | Grandpa Mitten | exotic | Mastery, w4 | `offline.efficiency` +25 points (world) | Storyteller by the fire | new | later |
+| M28 | `card.manager.grandpa_mitten` | Grandpa Mitten | exotic | Mastery, w4 | `offline.efficiency` +25 points (world) | Storyteller by the fire | new | yes |
 | M29 | `card.manager.commander_comet` | Commander Comet | exotic | Mastery, w5 | `tap.power` +30% (world) | Moon base commander | new | later |
 | M30 | `card.manager.stargardener` | The Stargardener | exotic | Mastery, w6 | `floor.profit` +50% (world) | Keeper of the orbital greenhouse | new | later |
 
@@ -222,30 +222,30 @@ A `global` perk counts once while that manager is hired anywhere. A `world` perk
 
 ### 2.2 Abilities
 
-Rare and better managers have one ability. Strength is fixed. "This world" is the world where the manager is hired, and the ability button is on that floor.
+Rare and better managers have one ability. Strength is fixed. "This world" is the world where the manager is hired, and the ability button is on that floor. A **boost** is a timed bonus that adds into the world's one capped Boost and never multiplies another boost (GDD 13.5).
 
 | Manager | `ability` | Effect | `cooldown` |
 |---|---|---|---|
-| M13 Marigold Mayhew | Keep the Beat | Combo cannot fall for 60 s | 8 min |
+| M13 Marigold Mayhew | Keep the Beat | Combo jumps to full and cannot fall for 60 s | 8 min |
 | M14 Chip | Dig In | This floor's level costs ×0.5 for 30 s | 15 min |
-| M15 Hazel Thimble | Stitch in Time | This floor pays 60 s of its own income at once | 6 min |
-| M16 Captain Kelp | All Hands | Every floor in this world runs at ×2 speed for 30 s | 12 min |
+| M15 Hazel Thimble | Stitch in Time | This floor pays 60 s of its own steady income at once | 6 min |
+| M16 Captain Kelp | All Hands | A ×2 boost in this world for 30 s, shown as speed | 12 min |
 | M17 Pepper Finch | Step Right Up | A Golden Sprout appears now | 10 min |
-| M18 Professor Thistlewick | Sprinkler Surge | This floor ×10 profit for 30 s | 10 min |
+| M18 Professor Thistlewick | Sprinkler Surge | A ×10 boost on this floor for 30 s | 10 min |
 | M19 Dame Dahlia Fairweather | Best in Show | The next 20 taps are Bumpers | 8 min |
-| M20 Bjorn Barrow | Heave-Ho | Pays 120 s of this world's income at once | 20 min |
-| M21 Barnaby Moonwort | Night Shift | Every floor in this world ×2 profit for 60 s | 15 min |
-| M22 Granny Evergreen | Sunday Best | Every floor in this world ×5 profit for 30 s | 15 min |
+| M20 Bjorn Barrow | Heave-Ho | Pays 120 s of this world's steady income at once | 20 min |
+| M21 Barnaby Moonwort | Night Shift | A ×2 boost in this world for 60 s | 15 min |
+| M22 Granny Evergreen | Sunday Best | A ×5 boost in this world for 30 s | 15 min |
 | M23 Maestro Fennel | Crescendo | Fills the Growth Spurt meter | 10 min |
 | M24 The Amazing Marrow | Abracadabra | The next chest opened rolls with double the Rare, Epic and Legendary weights | 60 min |
 | M25 Mayor Thyme | Town Fair | A Growth Spurt of normal length starts now. It does not use the meter | 30 min |
-| M26 Madame Loom | Golden Thread | Every floor in this world ×10 profit for 20 s | 20 min |
+| M26 Madame Loom | Golden Thread | A ×10 boost in this world for 20 s | 20 min |
 | M27 Skipper Papaya | Treasure Map | Three Golden Sprouts appear | 20 min |
-| M28 Grandpa Mitten | Fireside Story | In Mount Mitten, Heat jumps to 100. In any other world, every floor runs at ×3 speed for 30 s | 20 min |
-| M29 Commander Comet | Liftoff | The next 50 taps pay ×5 | 15 min |
-| M30 The Stargardener | Supernova | Pays 10 minutes of this world's income at once | 60 min |
+| M28 Grandpa Mitten | Fireside Story | In Mount Mitten, Heat jumps to 100. In any other world, a ×3 boost for 30 s, shown as speed | 20 min |
+| M29 Commander Comet | Liftoff | A ×5 tap boost for the next 50 taps | 15 min |
+| M30 The Stargardener | Supernova | Pays 10 minutes of this world's steady income at once | 60 min |
 
-Abilities that pay income at once use the income rate at that moment, with active buffs.
+Boosts add. Sunday Best and Night Shift together are ×6 (1 + 4 + 1), and the Boost stops at ×15. A boost that is already running restarts its timer when it is triggered again. Abilities that pay income at once use the steady rate, with no Boost and no Growth Spurt in it (GDD 13.5, rule 4).
 
 ### 2.3 Who a new player meets first
 
@@ -253,19 +253,19 @@ The first ten managers are fixed, so the first session never depends on luck and
 
 | When | Managers |
 |---|---|
-| Welcome Chest (1,000 lifetime Coins) | M01 Nana Sprig, M02 Basil Brumble, M03 Olive Ledger |
+| Welcome Chest (the first time the player holds 1,000 Coins with floor 3 open) | M01 Nana Sprig, M02 Basil Brumble, M03 Olive Ledger |
 | Hiring Crates, as World 1 floors 4 to 10 open for the first time | M04, M05, M06, M07, M08, M09, M10, in that order |
 
 A Hiring Crate gives the unowned manager of the lowest rarity, lowest number first. If luck already gave the player that card, the crate gives the next one.
 
-The first three hires are floors 1 to 3, which include the Backyard Hemp Patch. None of the three Welcome Chest managers is the beach gardener or the night-shift keeper, which keeps the Art Director's hemp-floor rule for default hires. A player may still seat any manager anywhere.
+The Welcome Chest arrives at the moment the player can pay the first hire fee (1,000 Coins), so the first manager is hired seconds after the chest opens. The first three hires are floors 1 to 3, which include the Backyard Hemp Patch. None of the three Welcome Chest managers is the beach gardener or the night-shift keeper, which keeps the Art Director's hemp-floor rule for default hires. A player may still seat any manager anywhere.
 
 ### 2.4 Art status
 
 - **Pictured (12):** M01 to M10, M14 and M21.
 - **New for the World 1 chest pool (9):** M11, M12, M13, M15, M16, M17, M18, M19, M22.
-- **New for worlds 2 and 3 (6):** M20, M23, M24, M25, M26, M27.
-- **Later (3):** M28, M29, M30.
+- **New for worlds 2 to 4 (7):** M20, M23, M24, M25, M26, M27, M28.
+- **Later (2):** M29, M30.
 - **Hemp cast** (brisk, proud craftspeople): M11 Rowan Rake, M12 Posy Seedwell, M15 Hazel Thimble, M16 Captain Kelp, M20 Bjorn Barrow, M26 Madame Loom.
 - Managers sit at any floor in any world, so every floor needs one manager spot and every manager needs a floor-neutral pose.
 - For the same reason every manager sprite must be safe on a hemp floor. The Art Director keeps mortars, pipes, steam and smoke puffs off manager sprites. Role hints, bios and ability text stay clear of them too.
@@ -273,7 +273,7 @@ The first three hires are floors 1 to 3, which include the Backyard Hemp Patch. 
 
 ## 3. Plants
 
-Rules, traits and formulas are in GDD 8.5 and 8.6. There are 38 plants: 26 from chests, 4 Legendary hybrids and 8 Exotics. Launch has 34.
+Rules, traits and formulas are in GDD 8.5 and 8.6. There are 38 plants: 26 from chests, 4 Legendary hybrids and 8 Exotics. Launch has 36.
 
 ### 3.1 Families
 
@@ -346,8 +346,8 @@ Honeymint is the teaching recipe. Both parents drop in World 1, so the first hyb
 | `plant.thyme.clockwork` | Clockwork Thyme | thyme | Quick, Radiant | Elfin Thyme | urban | world 3 | new | yes |
 | `plant.basil.ember` | Ember Basil | basil | Sweet, Zesty | Purple Basil | tropical | world 3 | B9, B23 | yes |
 | `plant.rosemary.thunder` | Thunder Rosemary | rosemary | Thrifty, Zesty | Rosemary Topiary | tropical | world 3 | B23 | yes |
-| `plant.mint.frosted` | Frosted Mint | mint | Frosty, Quick | Chocolate Mint | frost | world 4 | B9, B23, B25 | later |
-| `plant.sage.crystal` | Crystal Sage | sage | Studious, Lucky | Silver Sage | frost | world 4 | B23 | later |
+| `plant.mint.frosted` | Frosted Mint | mint | Frosty, Quick | Chocolate Mint | frost | world 4 | B9, B23, B25 | yes |
+| `plant.sage.crystal` | Crystal Sage | sage | Studious, Lucky | Silver Sage | frost | world 4 | B23 | yes |
 | `plant.lavender.moonlit` | Moonlit Lavender | lavender | Evergreen, Lucky | Royal Lavender | lunar | world 5 | B9, B23 | later |
 | `plant.chamomile.starlight` | Starlight Chamomile | chamomile | Radiant, Bountiful | Golden Chamomile | stellar | world 6 | B23 | later |
 
@@ -365,13 +365,13 @@ Rules are in GDD 8.7. There are 18 heirlooms in six sets of three: one Rare, one
 |---|---|---|---|---|---|---|---|---|
 | H01 | `artifact.sprouting_trowel` | Sprouting Trowel | toolshed | rare | `floor.profit` +30% (global) | | | B11 |
 | H02 | `artifact.brass_garden_key` | Brass Garden Key | toolshed | epic | `floor.levelCost` -8% (global) | | | B11 |
-| H03 | `artifact.golden_watering_can` | Golden Watering Can | toolshed | legendary | `floor.profit` +60% (global) | **Downpour:** every floor in the world on screen ×3 profit for 30 s | 10 min | B11 |
+| H03 | `artifact.golden_watering_can` | Golden Watering Can | toolshed | legendary | `floor.profit` +60% (global) | **Downpour:** a ×3 boost in the world on screen for 30 s | 10 min | B11 |
 | H04 | `artifact.honey_hive_charm` | Honey Hive Charm | lucky | rare | `pollen.gain` +20% | | | B11 |
 | H05 | `artifact.lucky_gnome` | Lucky Gnome | lucky | epic | `visitor.interval` -15% | | | B11 |
-| H06 | `artifact.clover_locket` | Clover Locket | lucky | legendary | `chest.luck` +20% | **Lucky Day:** the next Golden Sprout is a Jackpot, a Windfall worth ×5 | 20 min | new |
+| H06 | `artifact.clover_locket` | Clover Locket | lucky | legendary | `floor.doubleChance` +8% (global) | **Lucky Day:** the next Golden Sprout is a Jackpot, a Windfall worth ×5 | 20 min | new |
 | H07 | `artifact.glass_cloche_bell` | Glass Cloche Bell | night | rare | `offline.earnings` +20% | | | B11 |
-| H08 | `artifact.moonstone_mortar` | Moonstone Mortar | night | epic | `offline.cap` +4 h (fixed), `insight.gain` +10% | | | B11 |
-| H09 | `artifact.sandglass_of_seasons` | Sandglass of Seasons | night | legendary | `floor.speed` +20% (global) | **Time Skip:** pays 10 minutes of offline-rate income in every world at once | 30 min | B11 |
+| H08 | `artifact.moonstone_birdbath` | Moonstone Birdbath | night | epic | `offline.cap` +4 h (fixed), `insight.gain` +10% | | | B11, redrawn (the icon shows a mortar; it becomes a stone bowl of moonlit water with no pestle) |
+| H09 | `artifact.sandglass_of_seasons` | Sandglass of Seasons | night | legendary | `floor.speed` +20% (global) | **Time Skip:** pays 10 minutes of offline-rate income in every world at once, from the steady rate | 30 min | B11 |
 | H10 | `artifact.bramble_gloves` | Bramble Gloves | thorn | rare | `tap.power` +25% | | | new |
 | H11 | `artifact.thornback_pruners` | Thornback Pruners | thorn | epic | `tap.critChance` +1.5 points | | | B11 |
 | H12 | `artifact.whetstone_of_plenty` | Whetstone of Plenty | thorn | legendary | `tap.critMult` +3 | **Sharp Season:** the next 30 taps are Bumpers | 10 min | new |
@@ -379,10 +379,12 @@ Rules are in GDD 8.7. There are 18 heirlooms in six sets of three: one Rare, one
 | H14 | `artifact.toadstool_wind_bell` | Toadstool Wind-Bell | rainmaker | epic | `spurt.duration` +4 s | | | B11 |
 | H15 | `artifact.rainbow_sprinkler` | Rainbow Sprinkler | rainmaker | legendary | `spurt.tapsNeeded` -20% | **Rainbow Burst:** fills half of the Growth Spurt meter | 8 min | B11 |
 | H16 | `artifact.heirloom_spindle` | Heirloom Spindle | weaver | rare | `manager.power` +10% | | | new |
-| H17 | `artifact.canvas_guild_banner` | Canvas Guild Banner | weaver | epic | `compost.gain` +10% | | | new |
+| H17 | `artifact.canvas_guild_banner` | Canvas Guild Banner | weaver | epic | `manager.cooldown` -10% | | | new |
 | H18 | `artifact.golden_rope_coil` | Golden Rope Coil | weaver | legendary | `plant.power` +50%, Hemp family only | **Pull Together:** every manager cooldown in the world on screen is reset | 45 min | new |
 
-Twelve icons exist in B11. Six are new: locket, gloves, whetstone, spindle, banner and rope coil.
+Twelve icons exist in B11, and one of them (the mortar) is redrawn as the birdbath. Six are new: locket, gloves, whetstone, spindle, banner and rope coil.
+
+No heirloom gives chest luck or Compost gain. Those two are read at a single click, so a piece that carried them would only ever be swapped in for that click (GDD 13.4).
 
 ### 4.2 Sets
 
@@ -390,14 +392,14 @@ Twelve icons exist in B11. Six are new: locket, gloves, whetstone, spindle, bann
 |---|---|---|---|---|
 | `toolshed` | Grandmother's Toolshed | Profit | `floor.profit` +25% | `tower.milestoneMult` +0.1 |
 | `lucky` | Lucky Garden | Luck and visitors | `visitor.lifetime` +6 s | Windfalls pay +100% |
-| `night` | Night Garden | Offline | `dew.duration` +120 s | `offline.efficiency` +25 points |
+| `night` | Night Garden | Offline | `dew.duration` +120 s | `offline.efficiency` +15 points |
 | `thorn` | Thorn & Thistle | Tapping | `tap.comboCap` +5 | Every Bumper adds 5 to the Spurt meter |
 | `rainmaker` | Rainmaker's Kit | Growth Spurts | `spurt.duration` +3 s | `spurt.speed` +1 (3 becomes 4) |
 | `weaver` | Weaver's Legacy | Managers and hemp | `hire.fee` ×0.5 | `manager.power` +15% |
 
 With six slots a player can wear two full sets, or three pairs.
 
-The story gives the Sprouting Trowel at the third Replant. That is how heirlooms are introduced.
+The story gives the Sprouting Trowel at the third Replant. That is how heirlooms are introduced. The first Harvest Festival gives the **Heirloom Pick**: the player chooses one Legendary out of H03, H06, H09, H12, H15 and H18. After that, chest rolls never repeat a piece until that rarity is complete, a pity counter gives a Legendary piece at least every 10 pieces, and Pollen buys copies of pieces already owned (GDD 8.3, 8.6 and 8.7).
 
 ## 5. Skill tree
 
@@ -415,7 +417,7 @@ Rules are in GDD 9.2. Three branches of 37 points. A branch has six minor skills
 | `skill.gt.second_wind` | Second Wind | 3 | 5 | `spurt.tapsNeeded` -6% |
 | `skill.gt.sprout_spotter` | Sprout Spotter | 3 | 5 | `visitor.interval` -5% |
 | `skill.gt.steady_hands` | Steady Hands | 3, major | 3 | `tap.comboGrace` +1 s |
-| `skill.gt.thunder_thumb` | **Thunder Thumb** | keystone | 1 | Combo cannot fall during a Growth Spurt. Each Bumper during a Spurt makes that Spurt 0.25 s longer, up to +15 s |
+| `skill.gt.thunder_thumb` | **Thunder Thumb** | keystone | 1 | Combo cannot fall during a Growth Spurt. Each Bumper during a Spurt makes that Spurt 0.25 s longer, up to +15 s. This is on top of the 45 s length cap |
 | `skill.gt.golden_touch` | **Golden Touch** | keystone | 1 | Catching a Golden Sprout adds 60 taps to the Spurt meter. The first tap of every Growth Spurt calls a Golden Sprout |
 
 ### 5.2 Botanist (collection)
@@ -430,7 +432,7 @@ Rules are in GDD 9.2. Three branches of 37 points. A branch has six minor skills
 | `skill.bo.quick_study` | Quick Study | 3 | 5 | `insight.gain` +10% |
 | `skill.bo.curator` | Curator | 3 | 5 | `heirloom.power` +5% |
 | `skill.bo.bench_hand` | Bench Hand | 3, major | 3 | `bench.speed` +10% |
-| `skill.bo.companion_planting` | **Companion Planting** | keystone | 1 | A floor gets ×1.5 profit while the floors directly above and below it each hold a plant of the same family as one of its own plants |
+| `skill.bo.companion_planting` | **Companion Planting** | keystone | 1 | A floor gets ×1.5 profit while every floor directly next to it holds a plant of the same family as one of its own plants. A middle floor has two neighbours. The top and bottom floors have one |
 | `skill.bo.star_pupil` | **Star Pupil** | keystone | 1 | In each world, the highest-level hired manager counts as 2 levels higher, even past its max level. `manager.cooldown` -25% |
 
 ### 5.3 Tycoon (automation)
@@ -438,14 +440,14 @@ Rules are in GDD 9.2. Three branches of 37 points. A branch has six minor skills
 | `id` | `name` | Tier | Ranks | Effect per rank |
 |---|---|---|---|---|
 | `skill.ty.good_bookkeeping` | Good Bookkeeping | 1 | 5 | `floor.profit` +10% (global) |
-| `skill.ty.night_owl` | Night Owl | 1 | 5 | `offline.efficiency` +5 points |
+| `skill.ty.night_owl` | Night Owl | 1 | 5 | `offline.efficiency` +3 points |
 | `skill.ty.early_shift` | Early Shift | 2 | 5 | `floor.speed` +4% (global) |
 | `skill.ty.bulk_discount` | Bulk Discount | 2 | 5 | `floor.levelCost` -2% (global) |
 | `skill.ty.even_rows` | Even Rows | 2, major | 3 | `tower.milestoneMult` +0.05 |
 | `skill.ty.deep_pantry` | Deep Pantry | 3 | 5 | `offline.cap` +1 h |
 | `skill.ty.compost_connoisseur` | Compost Connoisseur | 3 | 5 | `compost.gain` +4% |
 | `skill.ty.warm_welcome` | Warm Welcome | 3, major | 3 | `dew.duration` +60 s |
-| `skill.ty.autopilot` | **Autopilot** | keystone | 1 | While the game is open, every hired manager taps once a second. These taps pay the plain tap value with no Combo and no Bumpers, and do not fill the Spurt meter |
+| `skill.ty.autopilot` | **Autopilot** | keystone | 1 | While the game is open, every hired manager in every unlocked world taps once a second. Each of these taps pays `TAP_SECONDS x tapPowerMult x steadyIPS` of its own world: no Combo, no Bumpers, no Boost and no Growth Spurt. They do not fill the Spurt meter or build Combo |
 | `skill.ty.compound_interest` | **Compound Interest** | keystone | 1 | Offline earnings grow by +2% for every hour away, up to +50%. This is applied after the efficiency cap |
 
 ## 6. Research
@@ -456,10 +458,10 @@ Rules are in GDD 10. Forty projects in four lanes. A project needs the project n
 
 | `id` | `name` | `requires` | Cost | Time | Effect |
 |---|---|---|---|---|---|
-| `research.tools.sturdy_baskets` | Sturdy Baskets | | 50 | 5 min | `offline.cap` +2 h |
+| `research.tools.sturdy_baskets` | Sturdy Baskets | | 50 | 5 min | `offline.cap` +4 h |
 | `research.tools.bigger_baskets` | Bigger Baskets | Sturdy Baskets | 400 | 1 h | `offline.cap` +4 h |
 | `research.tools.root_cellar` | Root Cellar | Bigger Baskets | 3,000 | 6 h | `offline.cap` +4 h |
-| `research.tools.cold_store` | Cold Store | Root Cellar | 20,000 | 24 h | `offline.cap` +12 h |
+| `research.tools.cold_store` | Cold Store | Root Cellar | 20,000 | 24 h | `offline.cap` +8 h |
 | `research.tools.whole_tower_button` | Whole-Tower Button | | 150 | 20 min | Unlocks one button (and the A key) that buys the current buy mode on every floor, cheapest first |
 | `research.tools.second_planter` | Second Planter | | 1,500 | 4 h | Every floor gets a second planter |
 | `research.tools.heirloom_shelf_1` | Heirloom Shelf I | heirlooms unlocked | 2,500 | 6 h | Heirloom slot 3 |
@@ -527,11 +529,11 @@ Rules are in GDD 12.1. Paid in Compost. Every item has a level cap. The whole sh
 | `shop.compost.loyal_staff` | Loyal Staff | Floors 1 to `2n` keep their managers through a Replant, with no fee | 5 | `15 x 6^(n-1)` | 23,325 |
 | `shop.compost.market_day` | Market Day | `hire.fee` -20% | 4 | `25 x 3^(n-1)` | 1,000 |
 | `shop.compost.green_deal` | Green Deal | Level cost ×0.96 | 10 | `30 x 2.5^(n-1)` | about 190,700 |
-| `shop.compost.overnight_growth` | Overnight Growth | `offline.efficiency` +5 points | 6 | `40 x 3^(n-1)` | 14,560 |
+| `shop.compost.overnight_growth` | Overnight Growth | `offline.efficiency` +3 points | 6 | `40 x 3^(n-1)` | 14,560 |
 | `shop.compost.sprout_whistle` | Sprout Whistle | `visitor.interval` -4% | 5 | `100 x 4^(n-1)` | 34,100 |
 | `shop.compost.compost_tea` | Compost Tea | `compost.gain` +10% | 10 | `50 x 3^(n-1)` | 1,476,200 |
 
-Rich Soil is the only item that multiplies profit, and its ten levels are ×9.31 in total. The first Replant (60 Compost) buys Rich Soil twice. The whole shop costs about 1.8 million Compost, which is less than one era produces, so every era ends with a full shop.
+Rich Soil is the only item that multiplies profit, and its ten levels are ×9.31 in total. The first Replant (60 Compost) buys Rich Soil twice. The whole shop costs about 1.8 million Compost, which is less than one era produces, so every era ends with a full shop. After the first Harvest Festival a Buy All button buys every level the player can afford, cheapest first.
 
 ## 8. Ribbon Shop
 
@@ -567,7 +569,7 @@ Rules are in GDD 11.1. One step is active at a time. A step whose goal is alread
 | 3 | `quest.story.proper_milestone` | A Proper Milestone | Any floor at level 25 | | Milestones panel, buy modes | 30 |
 | 4 | `quest.story.fresh_air` | Fresh Air | Open floor 2 | | | 30 |
 | 5 | `quest.story.flagship_crop` | The Flagship Crop | Open floor 3, the Backyard Hemp Patch | | | 30 |
-| 6 | `quest.story.helping_hands` | Helping Hands | 1,000 lifetime Coins | Welcome Chest | Chests, managers | 50 |
+| 6 | `quest.story.helping_hands` | Helping Hands | Hold 1,000 Coins at once | Welcome Chest | Chests, managers | 50 |
 | 7 | `quest.story.youre_hired` | You're Hired | Hire a manager | 5 Gems | Tap bonus, Combo | 50 |
 | 8 | `quest.story.moving_up` | Moving Up | Open floor 4 | | Quests panel, daily quests | 75 |
 | 9 | `quest.story.full_swing` | Full Swing | Fill the Combo meter | 5 Gems | | 75 |
@@ -576,14 +578,14 @@ Rules are in GDD 11.1. One step is active at a time. A step whose goal is alread
 | 12 | `quest.story.what_a_whopper` | What a Whopper | Land 5 Bumper taps | Wooden Crate | | 150 |
 | 13 | `quest.story.to_market` | To Market | Open floor 6 | | Garden Visitors | 150 |
 | 14 | `quest.story.catch` | Catch! | Catch a Golden Sprout | 10 Gems | | 150 |
-| 15 | `quest.story.tea_time` | Tea Time | Open floor 7 | | Achievements, Codex | 200 |
+| 15 | `quest.story.tea_time` | Tea Time | Open floor 7 | 10 Gems | | 200 |
 | 16 | `quest.story.level_best` | Level Best | Level up any card | Copper Chest | | 200 |
 | 17 | `quest.story.know_the_ropes` | Know the Ropes | Open floor 8, the Ropewalk | | Growth Spurt | 250 |
 | 18 | `quest.story.spurt` | Spurt! | Trigger a Growth Spurt | 15 Gems | | 250 |
-| 19 | `quest.story.squeaky_clean` | Squeaky Clean | Open floor 9 | Wooden Crate | | 300 |
-| 20 | `quest.story.head_office` | Head Office | Open floor 10 | Silver Chest | The Replant button, greyed out until 25 Compost is pending | 400 |
+| 19 | `quest.story.squeaky_clean` | Squeaky Clean | Open floor 9 | Wooden Crate | Achievements, Codex | 300 |
+| 20 | `quest.story.head_office` | Head Office | Open floor 10 | Silver Chest | The Replant button, with a bar that fills toward 60 Compost pending | 400 |
 | 21 | `quest.story.even_growth` | Even Growth | Every World 1 floor at level 25 | 20 Gems | | 400 |
-| 22 | `quest.story.turn_the_heap` | Turn the Heap | Replant with at least 60 Compost pending | Silver Chest | Compost Shop, Research | 500 |
+| 22 | `quest.story.turn_the_heap` | Turn the Heap | Replant for the first time (the button is live at 60 Compost pending) | Silver Chest | Compost Shop, Research | 500 |
 | 23 | `quest.story.richer_soil` | Richer Soil | Buy Rich Soil | 10 Gems | | 300 |
 | 24 | `quest.story.bright_idea` | Bright Idea | Start a research project | 10 Gems | | 300 |
 | 25 | `quest.story.back_again` | Back Again | Open floor 10 again | Copper Chest | | 300 |
@@ -600,14 +602,14 @@ Rules are in GDD 11.1. One step is active at a time. A step whose goal is alread
 | 36 | `quest.story.island_time` | Island Time | Buy the ticket to Papaya Cay | Golden Chest | World 3, Weather | 1,500 |
 | 37 | `quest.story.rain_or_shine` | Rain or Shine | In Papaya Cay, have plants from all three weather groups planted at once | 40 Gems | | 1,000 |
 | 38 | `quest.story.festival_season` | Festival Season | Have 8 Ribbons pending | Silver Chest | Harvest Festival | 1,500 |
-| 39 | `quest.story.blue_ribbon` | Blue Ribbon | Hold a Harvest Festival | 50 Gems (the Festival itself gives a Crystal Chest) | Ribbon Shop | 2,500 |
-| 40 | `quest.story.something_strange` | Something Strange in the Greenhouse | Grow an Exotic plant | 100 Gems | | 2,500 |
-| 41 | `quest.story.local_legend` | Local Legend | Earn 5 Mastery stars in one world | 50 Gems (the star itself gives the Exotic manager) | | 3,000 |
-| 42 | `quest.story.snow_day` | Snow Day | Arrive in Mount Mitten | Golden Chest | World 4, Hearth Heat | 2,500 |
+| 39 | `quest.story.blue_ribbon` | Blue Ribbon | Hold a Harvest Festival | 50 Gems (the Festival itself gives a Crystal Chest and the Heirloom Pick) | Ribbon Shop | 2,500 |
+| 40 | `quest.story.snow_day` | Snow Day | Arrive in Mount Mitten | Golden Chest | World 4, Hearth Heat | 2,500 |
+| 41 | `quest.story.something_strange` | Something Strange in the Greenhouse | Grow an Exotic plant | 100 Gems | | 2,500 |
+| 42 | `quest.story.local_legend` | Local Legend | Earn 5 Mastery stars in one world | 50 Gems (the star itself gives the Exotic manager) | | 3,000 |
 | 43 | `quest.story.small_step` | Small Step | Arrive on the Moon | Crystal Chest | World 5, Floating Harvests | 4,000 |
 | 44 | `quest.story.among_the_stars` | Among the Stars | Arrive in the Nebula Nursery | Starlight Chest | World 6, Orbital Sunrise | 5,000 |
 
-Steps 42 to 44 are `later`. With a three-world launch the fixed chain ends at step 41.
+Steps 43 and 44 are `later`. With a four-world launch the fixed chain ends at step 42. Steps 40 to 42 are in the order an active player meets them: Mount Mitten around day 7, the first Exotic plant about the same time, and the fifth Mastery star around day 11. The skill tree has no story step. It opens at player level 6.
 
 **Chapter goals.** After the last fixed step, every unlocked world shows a repeating goal: every floor in that world at level `100 x n`, for `n = 1, 2, 3` and so on. Each is counted once, on the best level ever reached. Each gives a Silver Chest and 2,000 XP.
 
@@ -668,8 +670,8 @@ Rules are in GDD 11.4. Twenty families with five tiers each. Ids are `ach.<famil
 | `levels` | Floor levels bought | 500 | 5,000 | 25,000 | 100,000 | 500,000 |
 | `milestones` | Floor milestones reached | 25 | 250 | 1,000 | 5,000 | 20,000 |
 | `floors` | Floors opened | 10 | 100 | 500 | 2,500 | 10,000 |
-| `managers` | Managers owned | 5 | 10 | 15 | 20 | 27 |
-| `plants` | Plants owned | 5 | 10 | 20 | 28 | 34 |
+| `managers` | Managers owned | 5 | 10 | 15 | 20 | 28 |
+| `plants` | Plants owned | 5 | 10 | 20 | 28 | 36 |
 | `heirlooms` | Heirlooms owned | 2 | 6 | 10 | 14 | 18 |
 | `card_levels` | Card level-ups | 5 | 25 | 100 | 250 | 500 |
 | `chests` | Chests opened | 10 | 50 | 250 | 1,000 | 5,000 |
@@ -681,7 +683,7 @@ Rules are in GDD 11.4. Twenty families with five tiers each. Ids are `ach.<famil
 | `quests` | Daily and weekly quests finished | 10 | 50 | 200 | 500 | 1,500 |
 | `offline` | Hours of offline earnings collected | 1 | 24 | 100 | 500 | 2,000 |
 
-All 100 can be earned with the three launch worlds. When worlds 4 to 6 ship, a sixth tier can be added to `managers`, `plants` and `stars`.
+All 100 can be earned with the four launch worlds. The top `stars` tier asks for 30 of the 40 stars in those worlds, which the rough script puts near day 60 for an active player (GDD 14.5). When worlds 5 and 6 ship, a sixth tier can be added to `managers`, `plants` and `stars`.
 
 ## 12. Visitors and Codex
 
@@ -691,9 +693,9 @@ Rules and weights are in GDD 6.6.
 
 | `id` | `name` | Outcome | Art |
 |---|---|---|---|
-| `visitor.sprout.windfall` | Golden Sprout | 60 s of this world's income | B29 sets the feel |
-| `visitor.sprout.sunbeam` | Sunbeam Sprout | Profit ×5 for 30 s | new |
-| `visitor.sprout.storm` | Tap Storm Sprout | Tap value ×10 for 15 s | new |
+| `visitor.sprout.windfall` | Golden Sprout | 60 s of this world's steady income | B29 sets the feel |
+| `visitor.sprout.sunbeam` | Sunbeam Sprout | A ×5 boost in this world for 30 s | new |
+| `visitor.sprout.storm` | Tap Storm Sprout | A ×10 tap boost for 15 s | new |
 | `visitor.dewdrop` | Dewdrop | 2 Gems | new |
 | `visitor.mystery_crate` | Mystery Crate | 1 Wooden Crate | new |
 | `visitor.busy_bee` | Busy Bee | 5 Pollen | new |
@@ -704,13 +706,13 @@ The three Golden Sprouts look alike from a distance and differ by a small badge,
 
 | Kind | Entries in total | At launch |
 |---|---|---|
-| Floors | 50 | 26 |
-| Managers | 30 | 27 |
-| Plants | 38 | 34 |
+| Floors | 50 | 34 |
+| Managers | 30 | 28 |
+| Plants | 38 | 36 |
 | Heirlooms | 18 | 18 |
 | Visitors | 6 | 6 |
-| Worlds | 6 | 3 |
-| **Total** | **148** | **114** |
+| Worlds | 6 | 4 |
+| **Total** | **148** | **126** |
 
 Each entry gives 5 Gems once and +0.25% profit forever (GDD 11.5).
 
@@ -718,13 +720,13 @@ Each entry gives 5 Gems once and +0.25% profit forever (GDD 11.5).
 
 | Content | In the design | Needed at launch | Already pictured | New for launch |
 |---|---|---|---|---|
-| Floor rooms | 50 | 26 | 10 (B4 v2 set, two of them re-dressed for hemp wording; the Spice Kitchen moves to World 2) | 16 |
-| Managers | 30 | 27 | 12 (B5, B21) | 15 |
-| Plants | 38 | 34 | 5 (Garden Mint, Sweet Basil, Field Lavender, Ember Basil, Thunder Rosemary) | 29 |
-| Heirlooms | 18 | 18 | 12 (B11) | 6 |
+| Floor rooms | 50 | 34 | 10 (B4 v2 set, two of them re-dressed for hemp wording; the Spice Kitchen moves to World 2) | 24 |
+| Managers | 30 | 28 | 12 (B5, B21) | 16 |
+| Plants | 38 | 36 | 7 (Garden Mint, Sweet Basil, Field Lavender, Ember Basil, Thunder Rosemary, Frosted Mint, Crystal Sage) | 29 |
+| Heirlooms | 18 | 18 | 12 (B11, one of them redrawn) | 6 |
 | Visitors | 6 | 6 | 0 | 6 |
-| World backgrounds | 6 | 3 | 3 (B3 and B26, B17, B18) | 0 |
-| Currency icons | 13 | 10 | 5 (B12: Coins, Notes, Gems, Compost, Ribbons) | 5 (Shells, Insight, Pollen, Skill Points, Fair Tickets) |
+| World backgrounds | 6 | 4 | 3 (B3 and B26, B17, B18) | 1 (Mount Mitten) |
+| Currency icons | 13 | 11 | 5 (B12: Coins, Notes, Gems, Compost, Ribbons) | 6 (Shells, Snowmarks, Insight, Pollen, Skill Points, Fair Tickets) |
 | Story characters | 2 | 2 | 0 | 2 (Pip, Baron Fauxliage) |
 
-Four more plants are already pictured for later worlds: Frosted Mint, Crystal Sage, Moonlit Lavender and Starlight Chamomile.
+Two more plants are already pictured for the later worlds: Moonlit Lavender and Starlight Chamomile. The Moon's background (B27) exists too.
