@@ -87,6 +87,10 @@ Floor names and their worlds are from the game design document. The art plan per
 | 3 Papaya Cay | **Sailcloth Loft** | Sail on a sewing frame | Sail rolls, grommets, rope | Later |
 | 3 Papaya Cay | **Hammock and Net Weavers** | Net on a frame | Hammocks, floats, knots board | Later |
 | 3 Papaya Cay | **Seed Snack Shack** | Toasting pan and mixing bowl | Seed sacks, granola trays, coconut bars, sparrows | Later |
+| 4 Mount Mitten | **Hemp Knitworks** | Big knitting frame with a half-made blanket | Yarn balls, folded blankets, mittens drying on a line, a closed tiled stove | Later |
+| 4 Mount Mitten | **Sled Works** | Sled on a workbench | Boards of hemp fibre, wooden runners, rope pulls, a finished sled rack | Later |
+
+Worlds 1 to 4 ship at launch. The Moon and Nebula Nursery have two hemp rooms each, planned with those worlds. Both Mount Mitten hemp rooms are product rooms, so their default art has no living hemp plant, and snow never lies on a hemp plant anywhere.
 
 The Soap and Scent Workshop (World 1, floor 9) is led by lavender, not hemp, but it follows the same rules: a soap kitchen with a kettle, moulds and racks, never a laboratory.
 
@@ -115,7 +119,8 @@ None of these appears anywhere in the game, its text or its art.
 **Smoke and fire**
 
 - No smoke, burning or embers near hemp. Steam is white, and only from a visible kettle or vat.
-- Flames appear only on stoves and ember herbs, on non-hemp floors.
+- Flames appear only on stoves, hearths and ember herbs, on non-hemp floors.
+- Mount Mitten has a warmth rule called Hearth Heat. It is shown by a gauge in the HUD and by warmer window light, never by fire in a hemp room. Its two hemp rooms have a closed tiled stove with no visible flame, and no chimney in that world has a smoke plume.
 
 **Use**
 
@@ -178,5 +183,6 @@ HEMP PRODUCTS: everything here is made from industrial hemp fibre and seed, show
 ## Already in the references, to fix
 
 - **B11 compass lid:** many-fingered fan-leaf emblem. Replace with the two-leaf sprout.
+- **B11 mortar:** redrawn as the Moonstone Birdbath, a stone bowl of moonlit water with no pestle.
 - **B12 purple plus token:** reads as a medical cross. Redesign as a gem or seed.
 - **B29:** flame row stays away from hemp. Baked "+$" is removed.

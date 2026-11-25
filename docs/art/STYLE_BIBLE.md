@@ -1,6 +1,6 @@
 # Sprout Tower Style Bible v1
 
-Status: v1.1, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
+Status: v1.2, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
 
 This is the single source of truth for how Sprout Tower looks. If an asset and this document disagree, the asset is wrong, or this document gets a new version. Nobody "interprets around" it.
 
@@ -9,6 +9,7 @@ Companion pages:
 - [HEMP_ART.md](HEMP_ART.md): the exact look of hemp, the planned hemp art, and the never list.
 - [CLEANUP_ROUTE.md](CLEANUP_ROUTE.md): how a generated image becomes a production sprite, with real before/after results.
 - [ASSET_BATCH_01.md](ASSET_BATCH_01.md): the first numbered prompt batch.
+- [BATCH_PLAN.md](BATCH_PLAN.md): what each later batch holds, up to a four-world launch.
 - [palette/](palette/): the locked master palette in four file formats.
 
 ---
@@ -57,7 +58,8 @@ Things found in the references that production must fix:
 - **B12** has a purple "plus" token that can read as a medical cross. Redesign as a gem or a seed. Its blue flask (the research currency, now called Insight) becomes a lightbulb with a sprout inside, so nothing reads as extraction.
 - **B5 botanist** carries test tubes in the coat pocket. In the redraw they become plant labels and a pencil.
 - **B21 cook** grinds in a mortar and **B21 tea master** holds a steaming cup. Managers can be seated on any floor, including hemp floors, so the cook's sprite carries a ladle and a copper pan instead, and the tea master's cup has no drawn steam (steam is a game effect, off on hemp floors).
-- **B11 pruners** carry a purple leaf with five pointed lobes. It becomes a rounded bramble leaf. The **B11 mortar** stays as a kitchen tool with lavender, and is never shown with hemp.
+- **B11 pruners** carry a purple leaf with five pointed lobes. It becomes a rounded bramble leaf.
+- **B11 mortar** is redrawn as the **Moonstone Birdbath**: a stone bowl of moonlit water on a short pedestal, with a moonstone set in the rim and no pestle. A mortar read badly beside hemp, so no heirloom shows one.
 - **B29** bakes "+$" into the art and includes a flame row. Text and currency signs are drawn by the game. Flames are for stoves and ember herbs only.
 - **B5 beach-shirt manager** and **B21 sleepy night-shift manager** are fine characters, but default art and story hires never place them on hemp floors.
 - **B28 customer and the floor 09 perfumer** sniff herbs. Fine on herb floors, never on hemp floors.
@@ -159,18 +161,28 @@ One rule: **every art pixel in the game is the same size on screen.** The game r
 
 ### Mood per world
 
-World names are from the game design document.
+World names are from the game design document. Worlds 1 to 4 ship at launch. Worlds 5 and 6 follow later.
 
 | World | Time and mood | Dominant ramps | Accent | Art so far |
 |---|---|---|---|---|
 | 1 Thymeford, home town | Golden hour, always | wood, clay, gold, leaf, lavender | rose clouds | B3, B26, floors, cast |
 | 2 Loomington, hemp-industry city | Blue night, lit windows | sky, stone, lavender | gold windows, a little teal | B17 background only |
 | 3 Papaya Cay, island | Bright late afternoon | teal, sky, leaf, cream sand | rose and red flowers | B18 background only |
-| 4 Mount Mitten, winter | Snowy dusk, cabin lamps | sky, steel, lavender, with `white` and `sky-5` snow | gold lamps, red scarves | none |
+| 4 Mount Mitten, winter | Snowy dusk, cabin lamps | sky, steel, lavender, with `white` and `sky-5` snow | gold lamps, red scarves | none. A launch world, so its look is fixed below |
 | 5 The Moon | Earthlight outside, warm lamps inside | stone, steel, sky | teal glass, gold lamps | B27 background only |
 | 6 Nebula Nursery | Deep space, glowing nebula bands | ink, lavender, rose, teal | gold lamps, white stars | none |
 
 Every world uses the same 76 colours. A world chooses which five or six ramps cover most of the screen. If a world truly needs a new colour, the palette gets a new version, with at most 8 added colours per world.
+
+### Mount Mitten, the one launch world with no reference image
+
+- **The mountain is a mitten.** One rounded peak with a smaller thumb-shaped peak beside it. That outline is the world's signature and its icon.
+- **A cabin village at dusk.** Log cabins with thick snow caps, pine trees, lamp posts and a string of lanterns up the slope. Every cabin has a lit gold window, so pillar 1 holds: the cold is outside and the warmth is one window away.
+- **Snow is clean and bright.** `white` and `sky-5` on top, `sky-4` and `lavender-5` in shadow. Never grey, never dirty. Snow lies on roofs, fences, the tower shell and the street. It never falls inside a room and never lies on a plant.
+- **Sky bands,** horizon upward: a thin `gold-4` band, `rose-3`, `lavender-3`, `sky-2`, `sky-1`, `ink-2`, then stars. The Aurora Garden's lights are two or three flat ribbons in `teal` and `lavender`, drawn by the game like the sky bands. No glow, no gradient.
+- **The cast wears knitwear.** Scarves, bobble hats, mittens and thick socks, with red as the accent. Faces stay bright and awake.
+- **Hearth Heat is a gauge, not a bonfire.** The world's warmth rule is shown by a mitten-shaped meter in the HUD that fills with `gold`. As it fills, the game warms the window light and thins the snow caps on the shell in three steps.
+- **Fire stays in its place.** A flame is drawn only in a hearth or a closed stove, and only in the herb rooms (Hearthside Herb Racks, Fireside Tea Lodge, Summit Lodge). The two hemp rooms (Hemp Knitworks, Sled Works) are warmed by lamps and a closed tiled stove with no visible flame. No chimney in the world has a smoke plume. See the never list in HEMP_ART.md.
 
 ---
 
@@ -375,6 +387,8 @@ From B26, cleaned to the grid. Layers, back to front, with suggested scroll spee
 
 **World 1 sky bands**, horizon upward: `gold-4`, `clay-5`, `rose-3`, `lavender-4`, `lavender-3`, `lavender-2`, `sky-1`, `lavender-1`, `ink-2`, then stars. Bands get taller as they go up (about 10, 14, 18, 24, 32, 48, 64 pixels, then as needed). Flat bands, no dithering. This lets the tower climb from the street to the stars without a seam.
 
+**Worlds 2 to 4** use the same five layers and the same band method. B17 (Loomington) and B18 (Papaya Cay) are single paintings, so both are drawn again as separate layers, with those images as the guide for what is in them. Mount Mitten's layers are new (section 7).
+
 ---
 
 ## 15. Cards, chests, artifacts, currencies
@@ -383,8 +397,8 @@ From B26, cleaned to the grid. Layers, back to front, with suggested scroll spee
 - **Small card (64×88):** 48×48 picture, rarity frame colour, pips 1 to 6, level number drawn by the game.
 - **Card art:** the plant or person sits on a simple two-band backdrop in the rarity colour. No scenery.
 - **Chests (B10):** six rarities, closed and open. Material tells the rarity: wood and iron, green enamel, blue with sapphires, purple with amethyst, gold with laurel, prismatic crystal. Opening is done by the game: shake, squash, lid swap, burst, cards fly out.
-- **Artifacts (B11):** 48×48 icons, one clear object each, with the B11 compass emblem fixed.
-- **Currencies (B12, B29):** coin with the sprout mark is the main one. Which currencies exist is the Game Designer's list. The research currency is called Insight and its icon is a lightbulb with a sprout inside. The purple plus token and the blue flask get redesigned.
+- **Heirlooms (B11, called artifacts in the file names):** 48×48 icons, one clear object each, with the B11 compass emblem fixed and the mortar redrawn as the Moonstone Birdbath.
+- **Currencies (B12, B29):** coin with the sprout mark is the main one. Which currencies exist is the Game Designer's list. Launch needs eleven icons: Coins, Notes, Shells, Snowmarks, Gems, Compost, Ribbons, Insight, Pollen, Skill Points and Fair Tickets. Moonpennies and Stardust come with their worlds. The research currency is called Insight and its icon is a lightbulb with a sprout inside. The purple plus token and the blue flask get redesigned.
 
 ---
 
@@ -404,6 +418,8 @@ The UI is **built by hand on the grid** from the palette, not generated. B13 and
 | Progress bar | Track `ink-2`, fill `leaf-4` with a `leaf-5` top line |
 | Notification pip | `red-3` dot, 6 pixels, `white` number |
 | Tooltip | Small parchment panel, 1 pixel `ink-1` outline |
+| Ticket plate (above a world's top floor) | Brass plate on a wood board, the next world's icon on the left, three small waypoint marks along the price bar that turn from `ash` to `gold-4` when passed |
+| "Coming soon" card | The same plate in the `ash` ramp, with the next world drawn as a flat `ink-2` silhouette. It has no button, so nothing looks buyable |
 
 **Button states:** normal, hover (one step lighter and 1 pixel up), pressed (one step darker and 1 pixel down, bevel flipped), disabled (`ash` ramp, no bevel), keyboard focus (2 pixel `gold-4` ring).
 
@@ -563,19 +579,20 @@ A sprite is production-ready when all of these are true. A reviewer can check ea
 
 ## 23. What is missing
 
-After both packs, this is still to be made. Batch 1 covers the items marked **B1**.
+After both packs, this is still to be made. Batch 1 covers the items marked **B1**. Counts follow the game design document, version 0.2, which plans **four worlds at launch** (34 rooms). That version is still in re-check, so names are near-final. Which batch makes what is in [BATCH_PLAN.md](BATCH_PLAN.md).
 
 | Missing | Notes |
 |---|---|
 | All hemp art | Crop, growth stages, floors, products, cast, cards, packets. **B1** |
-| Room back walls for every floor | The shell interiors are transparent. World 1 floors 1 to 8 in **B1** |
+| Rooms | 50 in the design document, 34 at launch. Ten are pictured (the v2 set; the spice kitchen moves to World 2). 24 are new for launch: the Ropewalk in **B1**, then 7 in Loomington, 8 in Papaya Cay and 8 on Mount Mitten |
+| Room back walls for every floor | The shell interiors are transparent. World 1 floors 1 to 8 in **B1**. 26 more for launch |
 | Growth stages for every plant except mint | Basil, rosemary, lavender in **B1** |
-| Animation sheets for every worker except the B22 gardener | Lead workers of floors 1, 2 and 3 in **B1** |
-| In-world manager sprites in floor-neutral poses | 30 managers in the design document. The first ten hires all have pictures: six in B5 (redrawn in the crisp style by **B1** prompt 18) and four in B21, plus the robot and the night-shift manager. Fifteen more are needed for launch: nine for the World 1 chest pool (Batch 2) and six for worlds 2 and 3 |
-| Plants | 38 in the design document, 34 at launch. Nine herbs are pictured (B9, B23) and Batch 1 adds the hemp cards. About 25 more herb cards are needed for launch, each with growth stages if it can be planted on a floor |
-| Heirlooms | Six new icons: clover locket, bramble gloves, whetstone, spindle, guild banner, golden rope coil |
+| Animation sheets for every worker except the B22 gardener | Lead workers of floors 1, 2 and 3 in **B1**. 31 more lead workers for launch, and a short sheet (stand, blink, two work frames) for each room's second worker |
+| In-world manager sprites in floor-neutral poses | 30 managers in the design document, 28 at launch. Twelve have pictures: six in B5 (redrawn in the crisp style by **B1** prompt 18) and six in B21. Sixteen more are needed for launch: nine for the World 1 chest pool, and seven for worlds 2 to 4 (Mayor Thyme, Bjorn Barrow, Maestro Fennel, Madame Loom, The Amazing Marrow, Skipper Papaya, Grandpa Mitten) |
+| Plants | 38 in the design document, 36 at launch. Nine herbs are pictured (B9, B23), seven of them launch cards. **B1** adds the six hemp cards. 23 more herb cards are needed for launch. Growth stages are drawn once per family: mint exists (B24), hemp, basil, rosemary and lavender are in **B1**, and thyme, sage and chamomile are still to make |
+| Heirlooms | Six new icons: clover locket, bramble gloves, whetstone, spindle, guild banner, golden rope coil. One redraw: the B11 mortar becomes the Moonstone Birdbath |
 | Visitors | Six new animated sprites: three Golden Sprouts with badges, Dewdrop, Mystery Crate, Busy Bee |
-| Currency icons | Shells, Snowmarks, Moonpennies, Stardust, Pollen, Insight, Fair Tickets, Skill Points |
+| Currency icons | Six new for launch: Insight, Pollen, Skill Points, Shells, Snowmarks, Fair Tickets. Later: Moonpennies, Stardust |
 | Story characters | Pip the seedling guide and Baron Fauxliage, the plastic-plant salesman |
 | Manager spot props | Stool and crate for floor 3 and counter stool for floor 8 in **B1**. The rest by hand |
 | Floor 9 rework | Soap kettle, moulds and racks to replace the still and flasks |
@@ -587,19 +604,22 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | Card back, frames in B25 layout for five rarities, small card | B25 shows Epic only |
 | Shared planter kit, lamp sprite, tower side walls and floor plates | |
 | Upper sky, stars, separate clouds | Sky bands are specified here |
-| Worlds 2 (Loomington) and 3 (Papaya Cay) | Backgrounds only so far. No floors, cast or plants. The weaving mill, paper workshop, tailor and hempcrete floors belong to World 2 |
-| World 4 (Mount Mitten) and World 6 (Nebula Nursery) | No art at all |
-| World 5 (The Moon) | Background only |
+| Worlds 2 (Loomington) and 3 (Papaya Cay) | One background painting each (B17, B18), to be drawn again as parallax layers. No rooms or cast yet. The weaving mill, paper workshop, tailor and hempcrete rooms belong to World 2. Papaya Cay also needs four weather signs (sunshine, rain, breeze, rainbow) |
+| World 4 (Mount Mitten), a launch world | No art at all. Needs background layers, eight rooms with back walls and cast, the Snowmarks icon, the Heat gauge, snow caps for the tower shell, and Grandpa Mitten. Look in section 7 |
+| World 5 (The Moon), later | Background only (B27) |
+| World 6 (Nebula Nursery), later | No art at all |
+| Weekend events | Four event emblems (Herb Fair, Night Market, Hemp Harvest Home, Blossom Parade) and fair-stall dressing for World 1 rooms 1 to 5 |
+| Ticket plate and "Coming soon" card | Hand-built (section 16). World icons and their flat silhouettes for all six worlds |
 | Final logo | Pick: the B16 top-left wooden arch sign with lanterns, redrawn on the grid, with a rope border so hemp is in the brand |
 | Golden sprout pickup, combo and critical hit styles | |
-| B11 compass emblem and B12 plus token | Redesign |
+| B11 compass emblem, B11 mortar and B12 plus token | Redesign |
 | Windows app icon | The two-leaf sprout in a terracotta planter, 16 to 256 pixels |
 
 ---
 
 ## 24. Interfaces and names that may change
 
-- **Game Designer** owns the names and lists of floors, plants, managers, currencies and worlds, in `docs/design/`. This bible describes looks by type ("the windowsill room", "the ropewalk") and quotes design names where they are known. Agreed so far: World 1 floor names (section 13), six worlds (section 7), six hemp cards (HEMP_ART.md), managers as cards for any floor. Still open on the art side: the full manager and plant rows in `CONTENT.md`, and the final list of currencies.
+- **Game Designer** owns the names and lists of floors, plants, managers, currencies and worlds, in `docs/design/`. This bible describes looks by type ("the windowsill room", "the ropewalk") and quotes design names where they are known. Agreed so far: World 1 floor names (section 13), six worlds with four at launch (section 7), six hemp cards (HEMP_ART.md), managers as cards for any floor, the manager, plant, heirloom and currency rows in `CONTENT.md`. Design version 0.2 is still in re-check, so a name can still move. A renamed row changes a label here, not a look.
 - **Words.** Asset names, file names and anything a player can see follow the word list in the design document (section 2.3): planter, not the three-letter word; variety; sun lamp; kettle and soap mould. These pages follow it too, except where a rule has to name the thing it forbids.
 - **Engine** owns the tech. Agreed contract: 640×360 canvas, whole-number scaling, nearest-neighbour transparent PNGs, cutout actors from parts with pivots in JSON, bitmap fonts, soft light made by the engine only.
 - **A fresh-eyes art review** checks later assets against section 22.
@@ -610,3 +630,4 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 
 - **v1:** first version, built from both reference packs, with the measured grid, the 76-colour palette, the hemp definition and the clean-up proof.
 - **v1.1:** aligned with the game design document. World 1 floor table, six worlds, six named hemp cards, managers as floor-neutral cards with a manager spot on every floor, fixes owed on v2 floors 03 and 09, on the B12 flask, the B5 botanist, the B21 cook and tea master and the B11 pruners, and the design document's word list. The look, grid, palette and prompt suffix are unchanged.
+- **v1.2:** follows design version 0.2, which plans four worlds at launch. Mount Mitten's look is fixed (section 7), the missing list has launch counts (section 23), the B11 mortar becomes the Moonstone Birdbath, the ticket plate and "Coming soon" card join the UI kit, and the later batches are laid out in BATCH_PLAN.md. The look, grid, palette and prompt suffix are unchanged.

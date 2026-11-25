@@ -8,6 +8,7 @@ Everything about how the game looks lives here.
 | [HEMP_ART.md](HEMP_ART.md) | Before drawing, prompting or reviewing anything with hemp in it |
 | [CLEANUP_ROUTE.md](CLEANUP_ROUTE.md) | To turn a generated image into a game sprite. Includes the before/after proof |
 | [ASSET_BATCH_01.md](ASSET_BATCH_01.md) | The first 18 image prompts, ready to paste into ChatGPT |
+| [BATCH_PLAN.md](BATCH_PLAN.md) | To see which later batch makes which art, up to a four-world launch |
 
 ## Folders
 
