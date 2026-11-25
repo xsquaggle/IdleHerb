@@ -100,7 +100,9 @@ The Soap and Scent Workshop (World 1, floor 9) is led by lavender, not hemp, but
 
 ### The hemp cast
 
-Gardeners on the hemp patch, then ropemakers, weavers, papermakers, tailors, masons and sailmakers on the product floors. They are **brisk, proud and bright-eyed**: skilled trades people who love their craft. Humour comes from pride, competition and scale (the giant cane, the endless rope, the sparrows stealing seed).
+Gardeners on the hemp patch, then ropemakers, weavers, papermakers, tailors, masons and sailmakers on the product floors. They are **brisk, proud and bright-eyed**: skilled trades people who love their craft.
+
+The design document's hemp managers, to be drawn in Batch 2: Rowan Rake (hemp field hand), Posy Seedwell (seed keeper), Hazel Thimble (tailor), Captain Kelp (rope master) and Bjorn Barrow (hempcrete builder). Humour comes from pride, competition and scale (the giant cane, the endless rope, the sparrows stealing seed).
 
 Managers are cards the player can place on any floor, so the game cannot forbid a pairing. But default art, story hires, card pictures and marketing never show the B5 beach-shirt manager, the B21 sleepy night-shift manager, or any character whose joke is being drowsy, dazed or "chill", on a hemp floor.
 

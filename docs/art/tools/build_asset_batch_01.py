@@ -376,10 +376,10 @@ add(15, "Ropewalk and Twine Shop floor: props and two workers", "b01_15_floor08_
 
 add(16, "Back walls: market square and tea house", "b01_16_backwalls_market_teahouse.png",
     "landscape 3:2", "about 1536×1024", "Around the panels only", "A",
-    "The wall layer for floors 6 and 7, so that floors 1 to 8 of World 1 all have one.",
+    "The wall layer for floor 6 (Farmers' Market Stall) and floor 7 (Tea House), so that floors 1 to 8 of World 1 all "
+    "have one.",
     "2 panels at 336×104. The flat blue area of the market panel is removed in clean-up.",
-    "Assumes floors 6 and 7 stay a farmers' market and a tea house, as in your v2 floor images. To be confirmed by the "
-    "game design document.",
+    "Floor names are from the game design document, still in review.",
     PANELS + "\n\n"
     "TOP PANEL, an open-air market square: a low cream stone wall runs along the bottom third, with an iron lamp post "
     "at each end and a string of small triangular bunting flags in cream, rose and lavender hanging between the posts. "
@@ -408,6 +408,37 @@ add(17, "Menu and stat icons", "b01_17_ui_icons.png",
     "Row 4: (19) a green two-leaf sprout. (20) a yellow lightning bolt. (21) a gold four-point star burst. (22) three "
     "stacked chevrons pointing up. (23) a crescent moon with two tiny stars. (24) a two-leaf sprout made of shiny gold.")
 
+# ---------------------------------------------------------------- Round 7: first managers (Set B + B5)
+add(18, "First six managers in the house style", "b01_18_managers_first_six.png",
+    "landscape 16:9", "about 1664×936", "Yes", "B",
+    "The first managers a new player hires (the six from your B5 lineup), redrawn in the crisp style of your expansion "
+    "pack so they match the floors. They stand in poses that work on any floor, because a manager can be placed anywhere.",
+    "6 full-body sprites at 64 art pixels tall, plus six 48×48 portraits redrawn from them.",
+    "Manager names are from the game design document, still in review: Nana Sprig, Basil Brumble, Olive Ledger, Bram "
+    "Applewhite, Fern Petrie, Sandy Tidewell.",
+    "Six manager characters for a cozy pixel-art idle game, standing in one row: full body, evenly spaced, not touching, "
+    "all on the same baseline, each facing the viewer. Each is chunky, about two and a half heads tall. Each holds only "
+    "their own small item. All six look friendly, bright-eyed and wide awake.\n\n"
+    "Left to right:\n"
+    "1. A grandmother with grey hair in a bun, round glasses, a purple knitted cardigan, a green apron embroidered with "
+    "lavender and a plaid skirt, holding a garden trowel, with a proud, knowing smile.\n"
+    "2. A big, jolly gardener with curly brown hair and a beard, a cream shirt and a red checked apron with a two-leaf "
+    "sprout stitched on the chest, arms open in welcome, laughing.\n"
+    "3. An elegant businesswoman with brown hair pinned up, sunglasses, gold hoop earrings and a dark green trouser "
+    "suit with a small sprout pin, arms crossed, with a confident smile.\n"
+    "4. A cheerful beekeeper with a ginger beard, a cream beekeeper suit, yellow gloves and a veiled hat with the veil "
+    "lifted, holding a wooden honey dipper.\n"
+    "5. A keen botanist with curly dark hair and safety goggles, a white coat over a green shirt, with wooden plant "
+    "labels and a pencil in the coat pocket, holding a small potted seedling in one hand.\n"
+    "6. A sunny, relaxed gardener with wavy blond hair, a red headband and a short beard, a bright flower-print shirt, "
+    "shorts and sandals, holding a potted basil plant in both hands, eyes open, with a big friendly grin.",
+    cast=True,
+    ref=("Use the attached animation sheet and the attached lineup with a robot in it for style only (pixel size, "
+         "outline, shading, colours). The other attached lineup, six people on a cream background with a beekeeper in "
+         "the middle, shows the characters to redraw. Keep each person's face, hair, outfit and colours, but draw them "
+         "in the crisp, flat pixel style of the style references, not in its soft painted style."),
+    extra="With this prompt also attach `B5_manager_lineup.png`, so the six managers keep their looks.")
+
 ROUNDS = [
     (1, "Rooms and the hemp patch", "A", [1, 2, 3, 4], "Needed first"),
     (2, "Crops", "C", [5, 6, 7], "Needed first"),
@@ -415,6 +446,7 @@ ROUNDS = [
     (4, "Chest, cards and products", "C", [11, 12, 13, 14], "Needed next"),
     (5, "The ropewalk and two more rooms", "A", [15, 16], "Needed next"),
     (6, "Menu icons", "C", [17], "Needed next"),
+    (7, "First managers", "B", [18], "Needed first (added last, so it sits at the end)"),
 ]
 SETS = {
     "A": ("Scenes", ["B4_floor04_garden_shed_nursery_v2.png", "B4_floor_frame_shell.png"]),
@@ -426,26 +458,27 @@ L = []
 w = L.append
 w("# Production Asset Batch 1")
 w("")
-w("Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **2** (aligned with the game design document's floor "
-  "and card names). Style suffix version: **v1**. Hemp guards version: **v1**.")
+w("Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **3** (aligned with the game design document's floor, "
+  "card and manager names). Style suffix version: **v1**. Hemp guards version: **v1**.")
 w("")
 w(f"**{len(P)} images.** Ordered by what the World 1 vertical slice needs first: rooms for the first five floors, the "
   "hemp crop and its floor, lead workers who can move for the first three floors, a chest opening, cards, then the "
-  "first hemp product floor and the menu icons. If you only have time for ten, do prompts 1 to 10.")
+  "first hemp product floor and the menu icons. Prompt 18, the first managers, was added last and is also needed "
+  "early. If you only have time for some, do prompts 1 to 10 and 18.")
 w("")
 w("Floor and card names follow the game design document, which is still in review. Each prompt describes a look, not "
   "a name, so a rename does not spoil an image. The prompt's **Name flag** says what could still change.")
 w("")
-w("Managers are not in this batch. The six in your B21 lineup cover the vertical slice, and new managers follow in "
-  "Batch 2 once the manager list in the design document is settled.")
+w("Managers: prompt 18 redraws the six from your B5 lineup, who are the first hires, in the crisp expansion style. "
+  "Your B21 lineup is already in that style. Managers who have no picture yet follow in Batch 2.")
 w("")
 w("## How to do it on your phone")
 w("")
-w("1. The work is split into **6 rounds**. Each round is **one new ChatGPT chat**.")
+w(f"1. The work is split into **{len(ROUNDS)} rounds**. Each round is **one new ChatGPT chat**.")
 w("2. At the start of a round, **attach that round's two reference images** from your own packs (listed below) and "
   "paste the round's first prompt in the same message.")
 w("3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the two "
-  "reference images again. Only round 3 is different: each of its three prompts also needs one of your floor images, "
+  "reference images again. Rounds 3 and 7 are a little different: their prompts also need one more of your images, "
   "named under the prompt's title.")
 w("4. Each prompt is one grey box. Copy the whole box, change nothing.")
 w("5. Save each result as it comes: **PNG, original size**. No screenshots, no JPG, no cropping or resizing.")
@@ -469,7 +502,7 @@ w("")
 w("| Round | Theme | Attach | Prompts | Priority |")
 w("|---|---|---|---|---|")
 for r, theme, s, ns, pri in ROUNDS:
-    att = f"Set {s}" + (" plus one floor image per prompt" if r == 3 else "")
+    att = f"Set {s}" + (" plus one floor image per prompt" if r == 3 else " plus your B5 lineup" if r == 7 else "")
     w(f"| {r} | {theme} | {att} | {', '.join(str(n) for n in ns)} | {pri} |")
 w("")
 w("### All prompts at a glance")
@@ -489,6 +522,8 @@ for r, theme, s, ns, pri in ROUNDS:
     if r == 3:
         hdr += (" **In this round each prompt also needs one floor image of yours**, named under the prompt's title. "
                 "Attach it in the same message as that prompt.")
+    if r == 7:
+        hdr += " **Also attach** `B5_manager_lineup.png` (three images in total)."
     w(hdr)
     for n in ns:
         p = P[n - 1]
@@ -553,7 +588,7 @@ COV = [
     ("Floor shell, locked shutter, construction scene", "`B4_floor_frame_shell`, `B4_floor_locked_shutter`, `B4_floor_under_construction`"),
     ("Props and workers for the floors", "The ten `B4_floor..._v2` images. Floor 3 gets hemp props from prompt 4. Floor 8 is new in prompt 15"),
     ("Tower roof and entrance", "`B20_tower_parts`"),
-    ("Managers for the vertical slice", "`B21_manager_lineup_2`, with `B5_manager_lineup` as design reference"),
+    ("Managers already in the crisp style", "`B21_manager_lineup_2` (six managers). The six in `B5_manager_lineup` are redrawn by prompt 18"),
     ("One animated worker", "`B22_character_animation_sheet`"),
     ("Customers", "`B28_customers_npc_sheet`"),
     ("Herb card pictures, everyday and magical", "`B9_plant_card_art`, `B23_exotic_plants`"),
@@ -561,7 +596,7 @@ COV = [
     ("Card frames and card layout", "`B8_card_frames_6_rarities`, `B25_card_layout_mockup`"),
     ("Chests, closed and full, six rarities", "`B10_chests_by_rarity`"),
     ("Artifacts", "`B11_artifacts_icons` (compass emblem to be redrawn)"),
-    ("Currencies", "`B12_currency_icons` (plus token to be redrawn)"),
+    ("Currencies", "`B12_currency_icons` (the plus token and the blue flask get redrawn by hand)"),
     ("Herb seed packets", "`B9b_seed_packets`"),
     ("World 1 background layers", "`B26_world1_parallax_layers`"),
     ("Tap and reward effects", "`B29_tap_feedback_vfx`, `B19_vfx_reference`"),

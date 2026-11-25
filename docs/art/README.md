@@ -7,7 +7,7 @@ Everything about how the game looks lives here.
 | [STYLE_BIBLE.md](STYLE_BIBLE.md) | Always first. The look, the pixel grid, the palette, the UI, the rules, the checklists |
 | [HEMP_ART.md](HEMP_ART.md) | Before drawing, prompting or reviewing anything with hemp in it |
 | [CLEANUP_ROUTE.md](CLEANUP_ROUTE.md) | To turn a generated image into a game sprite. Includes the before/after proof |
-| [ASSET_BATCH_01.md](ASSET_BATCH_01.md) | The first 17 image prompts, ready to paste into ChatGPT |
+| [ASSET_BATCH_01.md](ASSET_BATCH_01.md) | The first 18 image prompts, ready to paste into ChatGPT |
 
 ## Folders
 

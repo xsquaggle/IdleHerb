@@ -54,7 +54,8 @@ Both packs were measured, not just looked at. The numbers below drive the rest o
 Things found in the references that production must fix:
 
 - **B11 compass lid** carries a many-fingered fan-leaf emblem. Replace with the two-leaf sprout. See the never list in HEMP_ART.md.
-- **B12** has a purple "plus" token that can read as a medical cross. Redesign as a gem or a seed.
+- **B12** has a purple "plus" token that can read as a medical cross. Redesign as a gem or a seed. Its blue flask (the research currency, now called Insight) becomes a lightbulb with a sprout inside, so nothing reads as extraction.
+- **B5 botanist** carries test tubes in the coat pocket. In the redraw they become plant labels and a pencil.
 - **B29** bakes "+$" into the art and includes a flame row. Text and currency signs are drawn by the game. Flames are for stoves and ember herbs only.
 - **B5 beach-shirt manager** and **B21 sleepy night-shift manager** are fine characters, but default art and story hires never place them on hemp floors.
 - **B28 customer and the floor 09 perfumer** sniff herbs. Fine on herb floors, never on hemp floors.
@@ -348,8 +349,8 @@ Names are from the game design document, still in review.
 | 3 | Backyard Hemp Patch | v2 floor 03 gardeners, hemp props from Batch 1 prompt 4, crop from prompt 5 | Batch 1, prompt 2 |
 | 4 | Potting Shed Nursery | v2 floor 04 | Batch 1, prompt 2 |
 | 5 | Glass Greenhouse | v2 floor 05 | Batch 1, prompt 3 |
-| 6 | Farmers' market (name to confirm) | v2 floor 06 | Batch 1, prompt 16 |
-| 7 | Tea house (name to confirm) | v2 floor 07 | Batch 1, prompt 16 |
+| 6 | Farmers' Market Stall | v2 floor 06 | Batch 1, prompt 16 |
+| 7 | Tea House | v2 floor 07 | Batch 1, prompt 16 |
 | 8 | Ropewalk and Twine Shop | Batch 1, prompt 15 | Batch 1, prompt 3 |
 | 9 | Soap and Scent Workshop | v2 floor 09 with the still and flasks replaced | Batch 2 |
 | 10 | Sprout Tower HQ | v2 floor 10 | Batch 2 |
@@ -379,7 +380,7 @@ From B26, cleaned to the grid. Layers, back to front, with suggested scroll spee
 - **Card art:** the plant or person sits on a simple two-band backdrop in the rarity colour. No scenery.
 - **Chests (B10):** six rarities, closed and open. Material tells the rarity: wood and iron, green enamel, blue with sapphires, purple with amethyst, gold with laurel, prismatic crystal. Opening is done by the game: shake, squash, lid swap, burst, cards fly out.
 - **Artifacts (B11):** 48×48 icons, one clear object each, with the B11 compass emblem fixed.
-- **Currencies (B12, B29):** coin with the sprout mark is the main one. Which currencies exist is the Game Designer's list. The purple plus token gets redesigned.
+- **Currencies (B12, B29):** coin with the sprout mark is the main one. Which currencies exist is the Game Designer's list. The research currency is called Insight and its icon is a lightbulb with a sprout inside. The purple plus token and the blue flask get redesigned.
 
 ---
 
@@ -566,7 +567,8 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | Room back walls for every floor | The shell interiors are transparent. World 1 floors 1 to 8 in **B1** |
 | Growth stages for every plant except mint | Basil, rosemary, lavender in **B1** |
 | Animation sheets for every worker except the B22 gardener | Lead workers of floors 1, 2 and 3 in **B1** |
-| In-world manager sprites in floor-neutral poses | 30 managers in the design document. B5 and B21 exist as lineups only. Batch 2, once the manager list is settled |
+| In-world manager sprites in floor-neutral poses | 30 managers in the design document. The first ten hires all have pictures: six in B5 (redrawn in the crisp style by **B1** prompt 18) and four in B21, plus the robot and the night-shift manager. Ten more have no picture yet and come in Batch 2: the nine World 1 chest managers and the hempcrete builder |
+| Clockwork Thyme | The one exotic herb with no picture. B23 covers six and **B1** prompt 12 covers Sunspun Hemp |
 | Manager spot props | Stool and crate for floor 3 and counter stool for floor 8 in **B1**. The rest by hand |
 | Floor 9 rework | Soap kettle, moulds and racks to replace the still and flasks |
 | Chest opening in-between frames | Lid ajar, half open, open and empty. **B1** |
@@ -589,7 +591,7 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 
 ## 24. Interfaces and names that may change
 
-- **Game Designer** owns the names and lists of floors, plants, managers, currencies and worlds, in `docs/design/`. This bible describes looks by type ("the windowsill room", "the ropewalk") and quotes design names where they are known. Agreed so far: World 1 floor names (section 13), six worlds (section 7), six hemp cards (HEMP_ART.md), managers as cards for any floor. Still open on the art side: the names of floors 6 and 7, the manager list, which currencies exist.
+- **Game Designer** owns the names and lists of floors, plants, managers, currencies and worlds, in `docs/design/`. This bible describes looks by type ("the windowsill room", "the ropewalk") and quotes design names where they are known. Agreed so far: World 1 floor names (section 13), six worlds (section 7), six hemp cards (HEMP_ART.md), managers as cards for any floor. Still open on the art side: the full manager and plant rows in `CONTENT.md`, and the final list of currencies.
 - **Engine** owns the tech. Agreed contract: 640×360 canvas, whole-number scaling, nearest-neighbour transparent PNGs, cutout actors from parts with pivots in JSON, bitmap fonts, soft light made by the engine only.
 - **A fresh-eyes art review** checks later assets against section 22.
 
@@ -598,4 +600,4 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 ## 25. Change log
 
 - **v1:** first version, built from both reference packs, with the measured grid, the 76-colour palette, the hemp definition and the clean-up proof.
-- **v1.1:** aligned with the game design document. World 1 floor table, six worlds, six named hemp cards, managers as floor-neutral cards with a manager spot on every floor, fixes owed on v2 floors 03 and 09. The look, grid, palette and prompt suffix are unchanged.
+- **v1.1:** aligned with the game design document. World 1 floor table, six worlds, six named hemp cards, managers as floor-neutral cards with a manager spot on every floor, fixes owed on v2 floors 03 and 09, on the B12 flask and on the B5 botanist. The look, grid, palette and prompt suffix are unchanged.

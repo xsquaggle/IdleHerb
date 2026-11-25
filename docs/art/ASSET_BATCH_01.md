@@ -1,18 +1,18 @@
 # Production Asset Batch 1
 
-Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **2** (aligned with the game design document's floor and card names). Style suffix version: **v1**. Hemp guards version: **v1**.
+Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **3** (aligned with the game design document's floor, card and manager names). Style suffix version: **v1**. Hemp guards version: **v1**.
 
-**17 images.** Ordered by what the World 1 vertical slice needs first: rooms for the first five floors, the hemp crop and its floor, lead workers who can move for the first three floors, a chest opening, cards, then the first hemp product floor and the menu icons. If you only have time for ten, do prompts 1 to 10.
+**18 images.** Ordered by what the World 1 vertical slice needs first: rooms for the first five floors, the hemp crop and its floor, lead workers who can move for the first three floors, a chest opening, cards, then the first hemp product floor and the menu icons. Prompt 18, the first managers, was added last and is also needed early. If you only have time for some, do prompts 1 to 10 and 18.
 
 Floor and card names follow the game design document, which is still in review. Each prompt describes a look, not a name, so a rename does not spoil an image. The prompt's **Name flag** says what could still change.
 
-Managers are not in this batch. The six in your B21 lineup cover the vertical slice, and new managers follow in Batch 2 once the manager list in the design document is settled.
+Managers: prompt 18 redraws the six from your B5 lineup, who are the first hires, in the crisp expansion style. Your B21 lineup is already in that style. Managers who have no picture yet follow in Batch 2.
 
 ## How to do it on your phone
 
-1. The work is split into **6 rounds**. Each round is **one new ChatGPT chat**.
+1. The work is split into **7 rounds**. Each round is **one new ChatGPT chat**.
 2. At the start of a round, **attach that round's two reference images** from your own packs (listed below) and paste the round's first prompt in the same message.
-3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the two reference images again. Only round 3 is different: each of its three prompts also needs one of your floor images, named under the prompt's title.
+3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the two reference images again. Rounds 3 and 7 are a little different: their prompts also need one more of your images, named under the prompt's title.
 4. Each prompt is one grey box. Copy the whole box, change nothing.
 5. Save each result as it comes: **PNG, original size**. No screenshots, no JPG, no cropping or resizing.
 6. Upload the results to the project. You do not need to rename them. Upload in number order, or tell me which number each one is.
@@ -38,6 +38,7 @@ All six are from your expansion pack. The B1 key art is the mood anchor for the 
 | 4 | Chest, cards and products | Set C | 11, 12, 13, 14 | Needed next |
 | 5 | The ropewalk and two more rooms | Set A | 15, 16 | Needed next |
 | 6 | Menu icons | Set C | 17 | Needed next |
+| 7 | First managers | Set B plus your B5 lineup | 18 | Needed first (added last, so it sits at the end) |
 
 ### All prompts at a glance
 
@@ -60,6 +61,7 @@ All six are from your expansion pack. The B1 key art is the mood anchor for the 
 | 15 | Ropewalk and Twine Shop floor: props and two workers | `b01_15_floor08_ropewalk_twine_shop.png` | very wide landscape 3:1 | Yes |
 | 16 | Back walls: market square and tea house | `b01_16_backwalls_market_teahouse.png` | landscape 3:2 | Around the panels only |
 | 17 | Menu and stat icons | `b01_17_ui_icons.png` | landscape 16:9 | Yes |
+| 18 | First six managers in the house style | `b01_18_managers_first_six.png` | landscape 16:9 | Yes |
 
 ---
 
@@ -558,9 +560,9 @@ Image shape: very wide landscape 3:1.
 - **File name:** `b01_16_backwalls_market_teahouse.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Around the panels only
-- **Purpose:** The wall layer for floors 6 and 7, so that floors 1 to 8 of World 1 all have one.
+- **Purpose:** The wall layer for floor 6 (Farmers' Market Stall) and floor 7 (Tea House), so that floors 1 to 8 of World 1 all have one.
 - **Parts we cut from it:** 2 panels at 336×104. The flat blue area of the market panel is removed in clean-up.
-- **Name flag:** Assumes floors 6 and 7 stay a farmers' market and a tea house, as in your v2 floor images. To be confirmed by the game design document.
+- **Name flag:** Floor names are from the game design document, still in review.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
@@ -612,6 +614,44 @@ Image shape: landscape 16:9.
 
 ---
 
+## Round 7: First managers
+
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Also attach** `B5_manager_lineup.png` (three images in total).
+
+### Prompt 18: First six managers in the house style
+
+- **File name:** `b01_18_managers_first_six.png`
+- **Shape and size:** landscape 16:9, about 1664×936 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The first managers a new player hires (the six from your B5 lineup), redrawn in the crisp style of your expansion pack so they match the floors. They stand in poses that work on any floor, because a manager can be placed anywhere.
+- **Parts we cut from it:** 6 full-body sprites at 64 art pixels tall, plus six 48×48 portraits redrawn from them.
+- **Name flag:** Manager names are from the game design document, still in review: Nana Sprig, Basil Brumble, Olive Ledger, Bram Applewhite, Fern Petrie, Sandy Tidewell.
+- **Extra attachment:** With this prompt also attach `B5_manager_lineup.png`, so the six managers keep their looks.
+
+```text
+Use the attached animation sheet and the attached lineup with a robot in it for style only (pixel size, outline, shading, colours). The other attached lineup, six people on a cream background with a beekeeper in the middle, shows the characters to redraw. Keep each person's face, hair, outfit and colours, but draw them in the crisp, flat pixel style of the style references, not in its soft painted style.
+
+Six manager characters for a cozy pixel-art idle game, standing in one row: full body, evenly spaced, not touching, all on the same baseline, each facing the viewer. Each is chunky, about two and a half heads tall. Each holds only their own small item. All six look friendly, bright-eyed and wide awake.
+
+Left to right:
+1. A grandmother with grey hair in a bun, round glasses, a purple knitted cardigan, a green apron embroidered with lavender and a plaid skirt, holding a garden trowel, with a proud, knowing smile.
+2. A big, jolly gardener with curly brown hair and a beard, a cream shirt and a red checked apron with a two-leaf sprout stitched on the chest, arms open in welcome, laughing.
+3. An elegant businesswoman with brown hair pinned up, sunglasses, gold hoop earrings and a dark green trouser suit with a small sprout pin, arms crossed, with a confident smile.
+4. A cheerful beekeeper with a ginger beard, a cream beekeeper suit, yellow gloves and a veiled hat with the veil lifted, holding a wooden honey dipper.
+5. A keen botanist with curly dark hair and safety goggles, a white coat over a green shirt, with wooden plant labels and a pencil in the coat pocket, holding a small potted seedling in one hand.
+6. A sunny, relaxed gardener with wavy blond hair, a red headband and a short beard, a bright flower-print shirt, shorts and sandals, holding a potted basil plant in both hands, eyes open, with a big friendly grin.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 16:9.
+```
+
+---
+
 ## If a result is off
 
 Send the matching sentence in the same chat.
@@ -639,7 +679,7 @@ No new images are needed for these. They go straight to clean-up.
 | Floor shell, locked shutter, construction scene | `B4_floor_frame_shell`, `B4_floor_locked_shutter`, `B4_floor_under_construction` |
 | Props and workers for the floors | The ten `B4_floor..._v2` images. Floor 3 gets hemp props from prompt 4. Floor 8 is new in prompt 15 |
 | Tower roof and entrance | `B20_tower_parts` |
-| Managers for the vertical slice | `B21_manager_lineup_2`, with `B5_manager_lineup` as design reference |
+| Managers already in the crisp style | `B21_manager_lineup_2` (six managers). The six in `B5_manager_lineup` are redrawn by prompt 18 |
 | One animated worker | `B22_character_animation_sheet` |
 | Customers | `B28_customers_npc_sheet` |
 | Herb card pictures, everyday and magical | `B9_plant_card_art`, `B23_exotic_plants` |
@@ -647,7 +687,7 @@ No new images are needed for these. They go straight to clean-up.
 | Card frames and card layout | `B8_card_frames_6_rarities`, `B25_card_layout_mockup` |
 | Chests, closed and full, six rarities | `B10_chests_by_rarity` |
 | Artifacts | `B11_artifacts_icons` (compass emblem to be redrawn) |
-| Currencies | `B12_currency_icons` (plus token to be redrawn) |
+| Currencies | `B12_currency_icons` (the plus token and the blue flask get redrawn by hand) |
 | Herb seed packets | `B9b_seed_packets` |
 | World 1 background layers | `B26_world1_parallax_layers` |
 | Tap and reward effects | `B29_tap_feedback_vfx`, `B19_vfx_reference` |
