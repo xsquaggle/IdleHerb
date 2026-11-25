@@ -1,6 +1,6 @@
 # Sprout Tower: Game Design Document
 
-Version 0.1, Phase 0. Owner: Game Designer thread. Companion files: [AUDIT.md](AUDIT.md) (why the premise changed) and [CONTENT.md](CONTENT.md) (every content row: floors, managers, plants, heirlooms, skills, research, shops, quests, achievements).
+Version 0.2, Phase 0, revised after the independent design audit. Owner: Game Designer thread. Companion files: [AUDIT.md](AUDIT.md) (why the premise changed), [CONTENT.md](CONTENT.md) (every content row: floors, managers, plants, heirlooms, skills, research, shops, quests, achievements) and [CHANGES.md](CHANGES.md) (every rule and number that changed since version 0.1, for the balance simulator).
 
 ## 0. How to read this document
 
@@ -10,7 +10,7 @@ Version 0.1, Phase 0. Owner: Game Designer thread. Companion files: [AUDIT.md](A
 - **"Profit"** means a multiplier on a floor's payout. **"Speed"** means a multiplier on how fast a floor's cycle runs. **"IPS"** means income per second.
 - **Scopes.** An effect is `floor` (one floor), `world` (every floor in one world), or `global` (everything).
 - **Names are defaults.** The Writer may polish names and the Art Director owns how everything looks. Ids are stable.
-- Section 13 says exactly how bonuses stack. Read it before implementing any multiplier.
+- Section 13 says exactly how bonuses stack. Read it before implementing any multiplier. Section 13.5 is the one rule for everything that lasts a set time.
 - Section 17.6 separates what a rough pacing script has checked from what is still a first guess.
 
 ## 1. Vision and pillars
@@ -41,7 +41,7 @@ Wholesome garden comedy. Puns, gentle absurdity, proud gardeners and plants that
 4. No real brands, people or likenesses. Nothing from Cash, Inc. except mechanics.
 5. No real-money purchases. Gems are earned only by playing.
 6. Nothing bad ever happens to the player's garden. No pests, blights or losses.
-7. No featured number is 420. Floor 2's base payout is 50 for this reason.
+7. No featured number is 420 or 69. Floor 2's base payout is 50 and its first level costs 70 for this reason.
 
 ### 2.3 Words for the Writer and Art Director
 
@@ -57,13 +57,14 @@ Some ordinary garden words have a second meaning. The safe word is always used.
 | extract, tincture, concentrate, resin | soap, lotion, scent, cooking oil |
 | edibles, brownies | snacks, granola, seed bars |
 | high, baked, lit, blazing, stoned | (no wordplay on these at all) |
-| joint, roll, rolling (for paper goods) | notebook, wrapping paper, kite paper |
+| joint, roll, rolling, wrap, wrapping, papers (for paper goods) | notebook, gift paper, kite paper |
 | flower (as a hemp product) | fibre, seed, stalk |
 | cannabis and every other name for it | hemp |
 | essence, still, flask, lab (near hemp, or as a product) | workshop, kettle, soap mould |
 | hydro, press, grinder, trim (as names for tools, floors or products) | (not used) |
+| mortar, pestle (as a tool, a prop or part of a name) | bowl, birdbath |
 
-The paper workshop makes notebooks, wrapping paper and kites. The soap floor uses lavender and hemp-seed oil. Hemp is never shown in a laboratory.
+The paper workshop makes notebooks, gift paper and kites. The soap floor uses lavender and hemp-seed oil. Hemp is never shown in a laboratory.
 
 ## 3. The loops
 
@@ -185,11 +186,11 @@ For floor `n` (1-based) in a world with cost scale `D` and payout taper `T`:
 | `openCost` | 0 (free) | `60 x D` | `60 x 12^(n-2) x D` |
 | `basePayout` | 1 | 50 | `0.75 x T^(n-3) x 60 x 12^(n-2)` |
 | `baseCycle` (s) | 0.6 | 3 | `3 x 2^(n-2)` |
-| `levelBaseCost` | `4 x D` | `1.15 x openCost` | `1.15 x openCost` |
+| `levelBaseCost` | `4 x D` | `70 x D` | `1.15 x openCost` |
 | `growth` | 1.07 | 1.15 | `1.15 - 0.01 x (n-2)`, so 1.14, 1.13, ... 1.07 at floor 10 |
 | `hireFee` | `1,000 x D` | `HIRE_RATIO[n] x openCost` | `HIRE_RATIO[n] x openCost` |
 
-`HIRE_RATIO` for floors 2 to 10: `200, 125, 70, 40, 25, 17, 14, 12, 12`.
+`HIRE_RATIO` for floors 2 to 10: `200, 125, 70, 40, 25, 17, 14, 12, 12`. Floor 2's level base cost is 1.15 times its open cost, rounded up from 69 to 70 (rule 7 in section 2.2).
 
 Base payouts are **not** multiplied by `D`. That is how a later world absorbs the multipliers the player arrives with. `T` makes the upper floors of later worlds pay back more slowly. World 1 has `D = 1` and `T = 1`.
 
@@ -205,7 +206,7 @@ What the template means for feel:
 | # | Floor | Open cost | Base payout | Cycle (s) | Level base cost | Growth | Hire fee |
 |---|---|---|---|---|---|---|---|
 | 1 | Windowsill Planter | free | 1 | 0.6 | 4 | 1.07 | 1,000 |
-| 2 | Balcony Boxes | 60 | 50 | 3 | 69 | 1.15 | 12,000 |
+| 2 | Balcony Boxes | 60 | 50 | 3 | 70 | 1.15 | 12,000 |
 | 3 | Backyard Hemp Patch | 720 | 540 | 6 | 828 | 1.14 | 90,000 |
 | 4 | Garden Shed Nursery | 8,640 | 6,480 | 12 | 9,936 | 1.13 | 604,800 |
 | 5 | Glass Greenhouse | 103,680 | 77,760 | 24 | 119,232 | 1.12 | 4,147,200 |
@@ -243,8 +244,10 @@ Tapping has five parts. They unlock one at a time (section 16).
 
 ### 6.1 Counted taps
 
-- A tap is a left click or Space on the tower, or on a specific floor.
-- **Hold to tap:** holding the button or key taps at `HOLD_RATE = 6` per second. Holding on a floor also harvests it whenever it is ready.
+- A tap is a left click or Space.
+- **What a tap harvests.** A tap on a floor harvests that floor if it is ready. A tap anywhere else on the tower, or Space, harvests the unmanaged floor that has been ready longest. One tap harvests at most one floor, so a player can run the whole tower from the keyboard.
+- Every tap counts the same for the tap bonus, Combo and the Spurt meter, wherever it lands.
+- **Hold to tap:** holding the button or key taps at `HOLD_RATE = 6` per second.
 - At most `TAP_RATE_CAP = 12` taps per second are counted. Extra taps are ignored.
 
 ### 6.2 Tap bonus
@@ -252,28 +255,32 @@ Tapping has five parts. They unlock one at a time (section 16).
 Unlocks when the first manager is hired. Before that, taps only harvest.
 
 ```
-worldIPS  = sum of floorIPS over every open floor in the current world
+steadyIPS = sum of floorIPS over every open floor in the current world,
+            with no timed boost and no Growth Spurt in it (section 13.5)
             (a floor without a manager counts at its own floorIPS, with no manager multiplier)
 
-tapValue  = TAP_SECONDS x tapPowerMult x worldIPS
-          x comboMult x (critMult if Bumper, else 1) x tapBuffs
+tapValue  = TAP_SECONDS x tapPowerMult x steadyIPS
+          x comboMult x (critMult if Bumper, else 1)
+          x spurt x tapBoost                               (section 13.5)
 ```
 
-`TAP_SECONDS = 0.05`. A tap is worth one twentieth of a second of the whole tower's income before any bonus. Tapping an unmanaged floor that is ready also harvests it.
+`TAP_SECONDS = 0.05`. A tap is worth one twentieth of a second of the whole tower's steady income before any bonus.
 
-`worldIPS` is the rate **right now**, with every active buff in it (a Growth Spurt, a Sunbeam, an ability). So anything that speeds up the tower makes taps worth more by the same factor, and no buff is counted twice. `tapBuffs` holds only buffs that name tap value, such as a Tap Storm.
+**Taps follow the tower.** `spurt` is the Growth Spurt speed while one is active, and `tapBoost` is the world's Boost plus any tap-only boost such as a Tap Storm. So a Growth Spurt or a Sunbeam lifts taps by the same factor as it lifts the floors, each timed effect is counted once, and the whole of it sits under one cap (section 13.5).
 
-Because the tap is tied to `worldIPS`, it scales with everything the player builds and never goes stale.
+Because the tap is tied to the tower's income, it scales with everything the player builds and never goes stale.
 
 ### 6.3 Combo
 
 ```
-each counted tap:   stacks = min(comboCap, stacks + 1)
-no tap for COMBO_GRACE seconds:   stacks fall by COMBO_DECAY per second
+every COMBO_TAPS_PER_STACK counted taps:   stacks = min(comboCap, stacks + 1)
+no tap for COMBO_GRACE seconds:            stacks fall by COMBO_DECAY per second
 comboMult = 1 + COMBO_PER_STACK x stacks
 ```
 
-`COMBO_PER_STACK = 0.1`, `COMBO_CAP_BASE = 20` (so ×3 at full), `COMBO_GRACE = 1.5 s`, `COMBO_DECAY = 10` stacks per second. The HUD meter has 10 segments, each worth a tenth of the current cap.
+`COMBO_TAPS_PER_STACK = 5`, `COMBO_PER_STACK = 0.1`, `COMBO_CAP_BASE = 20` (so ×3 at full), `COMBO_GRACE = 1.5 s`, `COMBO_DECAY = 10` stacks per second. The HUD meter has 10 segments, each worth a tenth of the current cap.
+
+**Combo is slow to build and quick to lose.** A full meter takes 100 taps at the base cap (about 17 seconds of holding) and 250 taps at the cap of 50 (about 42 seconds). A pause of a few seconds empties it. Keeping the chain alive is the skill, and that is what a longer grace, Keep the Beat and Thunder Thumb are for. Clicking faster than the hold rate fills it sooner. A chest opening or any other reveal the game plays pauses the Combo timer, so a reward never costs a chain.
 
 ### 6.4 Bumper taps (crits)
 
@@ -285,7 +292,7 @@ Each counted tap has `critChance` to be a Bumper, which multiplies that tap by `
 
 - Every counted tap adds 1 to the Spurt meter. The meter does not fill during a Spurt.
 - At `SPURT_TAPS = 300` the meter is full. The player triggers it with a click or the F key. A setting triggers it automatically.
-- For `SPURT_DURATION = 20 s`, every floor in the current world runs at `SPURT_SPEED = 3` times speed. Taps are worth three times as much too, because a tap pays a slice of what the tower earns right now (section 6.2).
+- For `SPURT_DURATION = 20 s`, every floor in the current world runs at `SPURT_SPEED = 3` times speed, and taps are worth three times as much too (section 6.2). A Growth Spurt is the one timed effect that multiplies the Boost (section 13.5).
 - Holding to tap fills the meter in 50 s, so a Spurt is active about 29% of the time.
 
 ### 6.6 Garden Visitors
@@ -298,37 +305,51 @@ Clickable visitors drift across the tower. They appear only while the game windo
 
 | Visitor | Unlock | Weight | Outcome when caught |
 |---|---|---|---|
-| Golden Sprout: Windfall | floor 6 | 55 | Coins worth `WINDFALL_SECONDS = 60 s` of `worldIPS` |
-| Golden Sprout: Sunbeam | floor 6 | 20 | All profit in this world ×5 for 30 s |
-| Golden Sprout: Tap Storm | floor 6 | 15 | Tap value ×10 for 15 s |
+| Golden Sprout: Windfall | floor 6 | 55 | Coins worth `WINDFALL_SECONDS = 60 s` of `steadyIPS` |
+| Golden Sprout: Sunbeam | floor 6 | 20 | A ×5 boost in this world for 30 s (section 13.5) |
+| Golden Sprout: Tap Storm | floor 6 | 15 | A ×10 tap boost for 15 s (section 13.5) |
 | Dewdrop | floor 6 | 7 | 2 Gems |
 | Mystery Crate | floor 6 | 3 | 1 Wooden Crate |
 | Busy Bee | research "Bee Hotel" | separate timer, 240 to 360 s | `BEE_POLLEN = 5` Pollen |
 
-A Golden Sprout that is missed is simply gone. Nothing is lost.
+A Golden Sprout that is missed is simply gone. Nothing is lost. Catching a boost that is already running restarts its timer. It does not stack with itself.
 
 ### 6.7 What tapping is worth
 
 With no upgrades, holding to tap gives:
 
 ```
-tap income  = 6 taps/s x 0.05 s x comboMult 3 x Bumper average 1.27  = 1.14 x worldIPS
-with Spurts = (1 + 1.14) x 1.57 = about 3.4 x idle income, plus about 0.3 x from Golden Sprouts
+tap income      = 6 taps/s x 0.05 s x comboMult 3 x Bumper average 1.27  = 1.14 x steadyIPS
+with Spurts     = (1 + 1.14) x 1.57 = about 3.4 x idle income
+Golden Sprouts  = about 1.2 x more with every one caught
+                  (Windfall 0.28, Sunbeam 0.67, Tap Storm 0.30)
 ```
 
-| Build | Active income compared with idle |
+| Build | Active income compared with idle, before timed boosts |
 |---|---|
-| No upgrades | about 3.5× |
+| No upgrades | about 3.4×, and about 4.6× with every Golden Sprout caught |
 | Mid game, some Green Thumb skills | 6× to 10× |
-| Full tapping build with the tapping heirloom set | about 25×. The caps in section 13.4 bound it near 50× |
+| Full tapping build with the tapping heirloom set | about 25× |
+| Every tap stat at its cap (section 13.4) | about 55× holding at 6 taps a second. About 120× at the limit of 12 a second |
 
-Idle builds get the mirror image: up to 100% offline efficiency, a 24 hour cap, and stronger managers.
+**Timed boosts come on top, and they are bounded too.** Boosts add into one capped number (section 13.5), so their value is their average uptime. Rough arithmetic from the rows in CONTENT.md:
+
+| Player | Average Boost on the tower | Average Boost on taps |
+|---|---|---|
+| No upgrades (Golden Sprouts and Morning Dew only) | about ×1.3 | about ×1.4 |
+| Day 30, six abilities owned | about ×2.4 | about ×2.7 |
+| Every ability owned, full cooldown reduction | about ×2.9 | about ×3.4 |
+| The same, built around Golden Sprouts | about ×3.6 | about ×4.6 |
+
+So the highest active income the rules allow is about 180 times idle for a finished account that holds to tap, and about 250 times with a full Golden Sprout build. Those are ceilings for the end of the game, not targets. The simulator should run both tap rates and measure boost uptime (section 17.6).
+
+Idle builds get the mirror image: up to 100% offline efficiency, up to 33 hours stored, and stronger managers.
 
 ## 7. Managers
 
 ### 7.1 Rules
 
-1. Managers are cards. There are 30 (27 at launch). Rows are in CONTENT.md section 2.
+1. Managers are cards. There are 30 (28 at launch). Rows are in CONTENT.md section 2.
 2. Each floor has one manager desk. To fill it, pay the floor's `hireFee` in that world's currency, then pick a manager you own. The fee is paid once per run. It is paid again after a Replant.
 3. A manager can sit at one desk per world. The same manager can work in every world at once.
 4. Swapping managers between desks you have already paid for is free and instant.
@@ -356,7 +377,7 @@ perkValue     = perkBase x (1 + PERK_PER_LEVEL x (level - 1))
 
 All rarities end near the same ceiling on purpose. Rarer managers get there with far fewer copies and bring better perks and abilities, so a Common is never useless and a Legendary is always exciting.
 
-Abilities have fixed strength. Cooldowns keep running while the game is closed. Ability hotkeys are the number keys in floor order.
+Abilities have fixed strength. Cooldowns keep running while the game is closed. Ability hotkeys are the number keys in floor order. An ability that lasts a set time is a timed boost and follows section 13.5. An ability that pays income at once pays from the steady rate.
 
 ## 8. Cards, chests and the collection
 
@@ -421,10 +442,11 @@ Rules, in order:
 2. **Card type.** Each slot is a manager with probability `CHEST_MANAGER_SHARE = 0.55`, otherwise a plant. Before planters unlock, every slot is a manager.
 3. **Which card.** Uniform among cards of that rarity and type that are in the pool. A card is in the pool when its `poolWorld` is unlocked. Exotics and hybrids are never in the pool. If the pool has no card of that rarity and type, the slot gives the other type. That is how a Legendary plant slot becomes a Legendary manager.
 4. **New-card help.** In a player's first `NEW_CARD_CHESTS = 10` chests, a slot whose rarity has an unowned card always gives an unowned card.
-5. **Pity.** Two counters count cards drawn since the last Epic-or-better and since the last Legendary. At `PITY_EPIC = 60` the next card is Epic. At `PITY_LEGENDARY = 300` the next card is Legendary. Both counters are shown on the chest screen.
-6. **Luck.** `chestLuck` multiplies the Rare, Epic and Legendary weights by `1 + chestLuck`. The Common weight shrinks to keep the total at 100%.
-7. **Heirloom.** If the heirloom roll succeeds, the chest also holds one heirloom piece: Rare 70%, Epic 25%, Legendary 5% (Starlight: Epic 70%, Legendary 30%). Before heirlooms unlock, this roll is skipped.
+5. **Pity.** Two counters count cards drawn since the last Epic-or-better and since the last Legendary. At `PITY_EPIC = 60` the next card is Epic. At `PITY_LEGENDARY = 300` the next card is Legendary. Both counters, and the heirloom counter in rule 7, are shown on the chest screen.
+6. **Luck.** `chestLuck` multiplies the Rare, Epic and Legendary weights by `1 + chestLuck`. Abracadabra doubles those three weights again. Then all five weights are scaled so that they add up to 100%. Common and Uncommon shrink together and no weight can go below zero, whatever the luck.
+7. **Heirloom.** If the heirloom roll succeeds, the chest also holds one heirloom piece: Rare 70%, Epic 25%, Legendary 5% (Starlight: Epic 70%, Legendary 30%). While the player is missing a piece of the rolled rarity, the piece is always one they do not own yet. A third pity counter counts heirloom pieces since the last Legendary piece. At `PITY_HEIRLOOM = 10` the next piece is Legendary. Before heirlooms unlock, this roll is skipped.
 8. **Shown odds.** The chest screen shows this table with the player's current luck applied.
+9. **Starlight Chest.** Its Exotic copy is for a random Exotic manager the player has already earned. If they have earned none, it is a third guaranteed Legendary.
 
 **Special chests**
 
@@ -434,6 +456,7 @@ Rules, in order:
 | Hiring Crate | 1 new manager (lowest rarity not owned, lowest number first), plus 2 Wooden Crate slots |
 | Morning Basket | 1 Wooden Crate. One becomes ready every `BASKET_HOURS = 4` hours. Up to `BASKET_STORE = 2` wait for the player |
 | First seed packet | Plants Garden Mint and Fibre Hemp. Fixed |
+| Heirloom Pick | The player chooses one Legendary heirloom out of all six. Given once, at the first Harvest Festival |
 
 ### 8.4 Where chests come from
 
@@ -449,13 +472,13 @@ Rules, in order:
 | Golden Sprout | Wooden, 3% of sprouts | rare |
 | Gem shop | Copper 40, Silver 120, Golden 350, Crystal 1,000 Gems | player's choice |
 | Events | up to Crystal on the reward track | weekends |
-| Harvest Festival | Golden. Crystal on the first Festival. Starlight on every fifth | every few days |
+| Harvest Festival | Golden. Crystal on the first Festival, with the Heirloom Pick. Starlight on every fifth | every few days |
 
 Expected cards per day for an active player in week 1: about 90 to 120. Section 17.5 shows what that does to card levels.
 
 ### 8.5 Plants
 
-1. Plants are cards. There are 38 (34 at launch). Rows are in CONTENT.md section 3.
+1. Plants are cards. There are 38 (36 at launch). Rows are in CONTENT.md section 3.
 2. Every floor has one **planter**. A second comes from research and a third from the Ribbon Shop.
 3. Planting is free and instant, and plants can be moved at any time. A plant can be in one planter per world. The same plant can be planted in every world at once.
 4. A plant gives its **trait** to the floor, to the world, or globally, as the trait says.
@@ -508,7 +531,7 @@ The parent levels are low on purpose. Pollen and bench time are the real price, 
 
 Climates: Temperate (Thymeford), Urban (Loomington), Tropical (Papaya Cay), Frost (Mount Mitten), Lunar (the Moon), Stellar (Nebula Nursery). The recipe list is in CONTENT.md section 3.3. The brief's example is in it: Chocolate Mint in the Frost climate gives Frosted Mint, whose first trait is Frosty.
 
-**Pollen can also buy copies of a card you already own:** Common 5, Uncommon 15, Rare 50, Epic 200, Legendary 1,000 Pollen each. Exotic copies cannot be bought.
+**Pollen can also buy copies of a card you already own:** Common 5, Uncommon 15, Rare 50, Epic 200, Legendary 1,000 Pollen each. Exotic copies cannot be bought. Copies of an heirloom you already own cost Rare 100, Epic 400 and Legendary 2,000 Pollen.
 
 ### 8.7 Heirlooms
 
@@ -519,6 +542,7 @@ Heirlooms are the game's artifacts: old garden tools with a little magic. There 
 3. Each set gives a bonus for two pieces equipped and another for all three.
 4. Heirlooms level up with copies. A numeric passive is multiplied by `1 + HEIRLOOM_PER_LEVEL x (level - 1)`, with `HEIRLOOM_PER_LEVEL = 0.15`. Set bonuses and abilities do not scale.
 5. Swapping is free, but an ability's cooldown is kept on the heirloom.
+6. **Getting them never hangs on one lucky roll.** The story gives the Sprouting Trowel at the third Replant. The first Harvest Festival gives the Heirloom Pick, one Legendary of the player's choice, so every player has an heirloom ability and a set to aim for by day 4 or 5. Chest rolls give no repeats until a rarity is complete and have their own pity counter (section 8.3, rule 7). Pollen buys copies of pieces already owned (section 8.6). A chosen set is complete in week 2 or 3 for an active player.
 
 Copies needed per level (max level 9):
 
@@ -551,7 +575,7 @@ XP needed to go from level L to L + 1  =  XP_BASE + XP_PER_LEVEL x L  =  500 + 2
 | Daily quest | 1,500 each, plus 1,500 for finishing all three |
 | Weekly quest | 5,000 each, plus 10,000 for finishing all five |
 | Floor milestone, first time ever for that floor and tier | 50 × tier number (tier 1 is level 25, tier 2 is 50, tier 3 is 100, tier 4 is 200, ...) |
-| Replant | `100 x floor(log2(1 + Compost gained))`, at most 2,000 |
+| New Compost record | `REPLANT_XP_STEP x n` the first time all-time Compost passes `2^n`, with `REPLANT_XP_STEP = 150`. A Replant that crosses several powers of two pays each of them |
 | Chest opened | 20 × chest tier |
 | Visitor caught | 5 |
 | Achievement | 200, 400, 800, 1,500, 3,000 by tier |
@@ -559,7 +583,7 @@ XP needed to go from level L to L + 1  =  XP_BASE + XP_PER_LEVEL x L  =  500 + 2
 
 Every level-up gives 1 Skill Point, 10 Gems and a chest (section 8.4). `LEVEL_CAP = 112`, which is exactly enough points for the whole tree.
 
-XP rewards are fixed amounts for records and quests, so resetting quickly does not farm levels.
+XP rewards are fixed amounts for records and quests, so resetting quickly does not farm levels. A Replant pays XP only for a new all-time Compost record, never for the Replant itself.
 
 Expected level: 7 to 9 after the first hour, about 18 after day 1, about 40 after week 1, about 70 after a month, and the cap around month 3.
 
@@ -579,7 +603,7 @@ Rules:
 2. Tier gates count points spent in the same branch: tier 2 needs 5, tier 3 needs 15, the keystone needs 30.
 3. A keystone changes a rule. A branch's two keystones exclude each other.
 4. Respec refunds every point. It is free once after each Harvest Festival and otherwise costs `RESPEC_GEMS = 100`.
-5. The tree unlocks at level 3, with the two points already earned waiting.
+5. The tree unlocks at level 6, with the five points already earned waiting. That is enough to open tier 2 of one branch on the spot.
 
 With about 40 points at the end of week 1, a player can finish one branch or split between two. That is the build choice.
 
@@ -606,7 +630,7 @@ insightPerHour   = INSIGHT_PER_MILESTONE x recordMilestones x insightGainMult
 
 ### 11.1 Story quests
 
-A single chain that teaches the game and unlocks features. One story quest is active at a time. It is pinned to the HUD with a progress bar. Rows are in CONTENT.md section 9. The chain has 44 fixed steps (41 at launch), then a repeating "chapter" goal for each world (all floors to level 100, 200, 300 and so on) that gives a Silver Chest.
+A single chain that teaches the game and unlocks features. One story quest is active at a time. It is pinned to the HUD with a progress bar. Rows are in CONTENT.md section 9. The chain has 44 fixed steps (42 at launch), then a repeating "chapter" goal for each world (all floors to level 100, 200, 300 and so on) that gives a Silver Chest.
 
 ### 11.2 Daily quests
 
@@ -654,21 +678,22 @@ Replant is per world.
 
 ```
 compostTotal(w) = floor( COMPOST_K[w] x (lifetime(w) / COMPOST_E0) ^ COMPOST_EXP x compostGainMult )
-pending(w)      = compostTotal(w) - claimed(w)
+pending(w)      = max(0, compostTotal(w) - claimed(w))
 ```
 
 - `lifetime(w)` is every unit of world `w`'s currency earned in the current era. It does not reset on Replant. Starting money from Head Start is not counted.
 - `COMPOST_E0 = 2e10`, `COMPOST_EXP = 0.4`, `COMPOST_K = 5, 15, 40, 100, 250, 600` for worlds 1 to 6.
-- **Replant is available** in a world when its top floor is open in the current run and `pending >= 1`. The very first Replant of a save needs `pending >= FIRST_REPLANT_MIN = 25`.
+- **Replant is available** in a world when its top floor is open in the current run and `pending >= 1`. The very first Replant of a save needs `pending >= FIRST_REPLANT_MIN = 60`.
+- `compostGainMult` comes only from skills and the Compost Shop, never from a card or an heirloom, so there is nothing to swap in for the click. If a respec lowers it, `pending` stays at 0 until lifetime earnings catch up.
 - **On Replant:** `claimed(w) += pending(w)`, `compostEra += pending(w)`, `compostAllTime += pending(w)`. That world's currency, floor levels and hires reset. Floor 1 is open at level 1. Manager and plant placements are remembered and come back as floors reopen.
 - **Passive:** every Compost earned this era gives `COMPOST_PCT = +2%` profit in every world. Spending Compost in the Compost Shop does not reduce this.
-- **Compost Shop:** rows in CONTENT.md section 7. Every item has a level cap. Rich Soil (×1.25 profit, 10 levels) is the only one that multiplies profit.
+- **Compost Shop:** rows in CONTENT.md section 7. Every item has a level cap. Rich Soil (×1.25 profit, 10 levels) is the only one that multiplies profit. After the first Harvest Festival the shop has a Buy All button, because it is rebuilt every era.
 
 Because `pending` comes from lifetime earnings, a second Replant five minutes after the first gives almost nothing. The player must grow past their previous best. The Replant screen says "Replant now for +N Compost (+X% profit)", and the button glows once `pending` is at least half of `compostEra`.
 
 Why 0.4 and not a square root: section 17.6.
 
-First Replant: the button unlocks at 25 pending Compost (about 1.1e12 lifetime Coins), and the story asks the player to wait for 60 (about 1e13 lifetime Coins). Sixty Compost gives ×2.2 profit and buys Rich Soil twice, so the second run is about three times faster.
+First Replant: the button unlocks at 60 pending Compost, which is about 1e13 lifetime Coins. Until then it shows a progress bar toward 60. Sixty Compost gives ×2.2 profit and buys Rich Soil twice, so the second run is about three times faster. There is one number for the first Replant, and the Compost Shop and Research unlock with it.
 
 ### 12.2 Harvest Festival (the big reset)
 
@@ -684,13 +709,14 @@ ribbonsPending = ribbonsTotal - ribbonsClaimed
 - **On Festival:** `ribbonsClaimed += ribbonsPending`. Then every world's currency, floors, hires and `lifetime` reset. `compostEra`, every `claimed(w)` and all Compost Shop purchases reset. World tickets must be bought again. Everything in the "Keeps" column of section 3.4 stays.
 - **Passive:** every Ribbon ever earned gives `RIBBON_PCT = +10%` profit in every world. Spending Ribbons does not reduce this.
 - **Ribbon Shop:** rows in CONTENT.md section 8. It never resets. It holds Golden Hour (×2 profit, 5 levels), the deeds to worlds 4, 5 and 6, the third planter, heirloom slots, a second research desk, auto-buy (the Auto-Gardener) and one endless item, Blue Ribbon Polish.
-- Each Festival gives a Golden Chest (a Crystal Chest the first time, a Starlight Chest every fifth time) and one free respec.
+- Each Festival gives a Golden Chest (a Crystal Chest the first time, a Starlight Chest every fifth time) and one free respec. The first Festival also gives the Heirloom Pick (section 8.3).
+- The Festival screen says "Hold the Festival now for +N Ribbons (+X% profit)", and the button glows once `ribbonsPending` is at least equal to `ribbonsClaimed`.
 
 The first 8 Ribbons need about 3.2 million Compost. The pacing check puts that on day 4 to 5 for an active player.
 
 ### 12.3 No third layer in v1
 
-The long tail is carried by worlds 4 to 6, World Mastery, card levels, research and the Ribbon Shop's endless item. A third reset would cost more readability than it adds. If the simulator shows the game going flat after week 6, the next layer is designed then.
+The long tail is carried by the later worlds, World Mastery, Exotic plants and managers, heirloom sets, card levels, research and the Ribbon Shop's endless item. A third reset would cost more readability than it adds. If the simulator shows the game going flat after week 6, the next layer is designed then.
 
 ## 13. How bonuses stack
 
@@ -713,10 +739,10 @@ profitMult(floor) =
   x (1 + CODEX_PCT x codexEntries)
   x (1 + MASTERY_PCT x masteryStars(world))
   x twistMult(world)                                 section 14.4
-  x product of active buffs                          Sunbeam, abilities, Morning Dew
+  x boost(floor)                                     the one timed Boost, section 13.5
 ```
 
-`MASTER_COMPOSTER_PCT = 0.005` (5 levels) and `BLUE_POLISH_PCT = 0.002` (endless) are Ribbon Shop items. An effect written as "×1.5 profit" in CONTENT.md (a keystone, an ability, a twist) is its own multiplier.
+`MASTER_COMPOSTER_PCT = 0.005` (5 levels) and `BLUE_POLISH_PCT = 0.002` (endless) are Ribbon Shop items. A permanent effect written as "×1.5 profit" in CONTENT.md (a keystone, a twist) is its own multiplier. Anything that lasts a set time is a timed boost: it adds into the Boost and never multiplies another boost (section 13.5).
 
 A harvest with a Bountiful chance `c` pays double with probability `c` (capped at 1).
 
@@ -728,8 +754,10 @@ speedMult(floor) = 2 ^ milestoneCount x towerMilestoneMult ^ towerMilestoneCount
   x (1 + sum of heirloom speed bonuses)
   x (1 + sum of skill speed bonuses)
   x researchSpeed                                    1.2 ^ (Crop Rotation projects done)
-  x product of active buffs                          Growth Spurt, abilities
+  x spurt                                            Growth Spurt speed while one is active, else 1
 ```
+
+Abilities written as speed (All Hands, Fireside Story) are timed boosts. They count in the Boost of section 13.5, not here.
 
 `towerMilestoneMult` is `TOWER_MILESTONE_MULT` plus any flat additions (a Tycoon skill, a set bonus, Mayor Thyme), capped at `TOWER_MILESTONE_CAP = 2.0`.
 
@@ -741,7 +769,7 @@ costMult(floor) = (1 - sum of floor discounts)       Thrifty, manager perks. At 
   x (1 - sum of skill discounts)
   x researchCost                                     0.9 ^ (Frugal Farming projects done)
   x GREEN_DEAL ^ greenDealLevel
-  x product of active buffs
+  x 0.5 while Dig In is active on this floor
 costMult is never below COST_MULT_FLOOR = 0.25
 ```
 
@@ -760,12 +788,13 @@ Discounts apply to level costs only. Open costs, hire fees and tickets have thei
 | Spurt taps needed | `SPURT_TAPS x product of (1 - reduction)` per source | at least `SPURT_TAPS_MIN = 150` |
 | Spurt speed | `SPURT_SPEED` + every source added | `SPURT_SPEED_CAP = 4` |
 | `visitorIntervalMult` | product of `(1 - reduction)` per source | at least 0.4 |
-| `offlineEfficiency` | `(OFFLINE_EFF_BASE + points added) x (1 + sum of "offline earnings" bonuses in that world)` | 1.0. Compound Interest is applied after the cap |
-| `offlineCap` | `OFFLINE_CAP_BASE` + every source added | 24 h (28 h with the Moonstone Mortar) |
-| `chestLuck` | every source added | none |
-| `insightGainMult`, `pollenGainMult`, `compostGainMult`, `managerPowerMult`, `plantPowerMult` | 1 + every source added | none |
+| `offlineEfficiency` | `(OFFLINE_EFF_BASE + points added) x (1 + sum of "offline earnings" bonuses in that world)` | 1.0. Compound Interest and the Night Market are applied after the cap |
+| `offlineCap` | `OFFLINE_CAP_BASE` + every source added | `OFFLINE_CAP_MAX = 36 h`. Everything in the game adds up to 33 h |
+| `chestLuck` | every source added. Skills and research only | none needed. Section 8.3 rule 6 rescales the weights |
+| `insightGainMult`, `pollenGainMult`, `compostGainMult`, `managerPowerMult`, `plantPowerMult` | 1 + every source added. `compostGainMult` comes from skills and the Compost Shop only | none |
 | `hireFeeMult` | product of every source | at least 0.1 |
-| Cooldown reduction | every source added | 50% |
+| Cooldown reduction | every source added. Cooldowns tick faster while it is active. It is not read at the press | 50% |
+| Boost (every timed bonus in a world) | section 13.5 | `BOOST_CAP = 15` |
 
 A reduction that comes in ranks or levels adds up inside its own source first. Five ranks of Sprout Spotter are one source of 25%.
 
@@ -773,9 +802,64 @@ The tap caps are there so that active play stays a bounded multiple of idle play
 
 World-scoped effects count only from managers and plants placed in that world.
 
-### 13.5 Why this is safe
+**Offline numbers add up like this.** Efficiency starts at 40 points. Night Owl adds up to 15 and Overnight Growth up to 18, so the two cheap sources stop at 73. The Night Garden set adds 15 and Grandpa Mitten 25 or more in the world where he works. Every "offline earnings" percentage (Evergreen plants, three managers, the Glass Cloche Bell) multiplies the points. Reaching 100% therefore takes a real idle build and every piece of it counts. Stored hours: 4 to start, +20 from research, +5 from Deep Pantry, +4 from the Moonstone Birdbath.
 
-Every bucket except three has a hard ceiling, because its content is finite: card levels, skill ranks, research projects, achievements. The three open-ended ones are milestones (paid for with exponentially rising costs), Compost and Ribbons (both gentle roots of lifetime totals). Blue Ribbon Polish is endless, but its price rises 15% a level for a fixed step, so it grows only with the logarithm of Ribbons. Section 17.6 shows the arithmetic.
+**Bonuses are read when they are used.** Swapping a card or an heirloom in for a single click is allowed, and nothing strong depends on it: chest luck and Compost gain come only from skills, research and shops.
+
+### 13.5 Timed boosts
+
+A **timed boost** is any bonus that lasts a set time or a set number of taps: manager and heirloom abilities, Sunbeams, Tap Storms and Morning Dew. They all follow one rule, so that pressing every button at once is a treat and can never break the economy.
+
+**Every timed boost in a world adds into one number, the Boost, and the Boost has a cap.**
+
+```
+a boost written "xN" has bonus N - 1
+
+boost(world) = min(BOOST_CAP, 1 + sum of the bonuses of active world boosts)
+boost(floor) = min(BOOST_CAP, 1 + sum of active world boosts + active boosts on that floor)
+tapBoost     = min(BOOST_CAP, 1 + sum of active world boosts + active tap boosts)
+spurt        = Growth Spurt speed while one is active in this world, else 1
+
+floor income right now = steady floorIPS x boost(floor) x spurt
+tap value right now    = steady tap value x tapBoost x spurt          (section 6.2)
+steadyIPS              = the world's income with boost = 1 and spurt = 1
+```
+
+`BOOST_CAP = 15`.
+
+| Boost | Kind | Size | Lasts | From |
+|---|---|---|---|---|
+| Sunbeam | world | ×5 | 30 s | Golden Sprout |
+| Morning Dew | world, in every world | ×2 | 120 s | returning after an hour away |
+| All Hands | world, shown as speed | ×2 | 30 s | Captain Kelp |
+| Night Shift | world | ×2 | 60 s | Barnaby Moonwort |
+| Sunday Best | world | ×5 | 30 s | Granny Evergreen |
+| Golden Thread | world | ×10 | 20 s | Madame Loom |
+| Fireside Story, outside Mount Mitten | world, shown as speed | ×3 | 30 s | Grandpa Mitten |
+| Downpour | the world on screen | ×3 | 30 s | Golden Watering Can |
+| Sprinkler Surge | one floor | ×10 | 30 s | Professor Thistlewick |
+| Tap Storm | taps | ×10 | 15 s | Golden Sprout |
+| Liftoff | taps | ×5 | 50 taps | Commander Comet |
+
+Rules:
+
+1. **Bonuses add.** A Sunbeam and Sunday Best together are ×9 (1 + 4 + 4), not ×25. Golden Thread, Sunday Best and Night Shift together are ×15, which is the cap.
+2. **A boost never stacks with itself.** Triggering it again restarts its timer.
+3. **A Growth Spurt is the only timed effect that multiplies the Boost.** With the Spurt speed cap of 4, nothing timed can lift a world's income by more than `BOOST_CAP x SPURT_SPEED_CAP = 60` times, and only for as long as the shortest boost lasts.
+4. **Lump sums pay from the steady rate.** Anything that pays "N seconds of income at once" uses `steadyIPS`, with no Boost and no Growth Spurt in it: Windfalls and Jackpots, customer tips, Stitch in Time, Heave-Ho, Supernova, Time Skip and Time Warp. A world's twist counts at its current value where the twist is a profit multiplier (Weather, Hearth Heat).
+5. Whether a boost is written as speed or as profit only changes how it looks on screen. Both raise income by the same factor (section 5.2) and both count toward the same Boost.
+6. Guaranteed Bumpers (Best in Show, Sharp Season) are not boosts. They turn taps into Bumpers, and the Bumper multiplier has its own cap (section 13.4). Dig In is not a boost either. It is a timed discount on one floor's level costs (section 13.3).
+7. The HUD shows one Boost badge per world with the current total, for example "Boost ×9". It glows at the cap.
+8. Boosts do not run in the fair stall and are never part of offline earnings.
+9. World twists are not boosts. A twist (section 14.4) is part of a world's steady income at its current value. Each has its own ceiling there (×3 for Weather, ×4 for Hearth Heat), and it multiplies the Boost like every permanent bucket in section 13.1.
+
+**Why boosts add.** In version 0.1 each boost was its own multiplier, and abilities that pay income at once read the boosted rate. The independent audit showed that one player pressing every button together got about ×74,000 for 20 seconds, and about 100 days of income from a single Heave-Ho inside that window. Adding fixes both. A boost is now worth the same whenever it is used, so lining two or three up is a satisfying burst and not a requirement, and the most a burst can do is known in advance.
+
+What boosts are worth on average is in section 6.7. A player who owns every ability and uses each one on cooldown averages a Boost of about ×3.
+
+### 13.6 Why this is safe
+
+Every bucket except three has a hard ceiling, because its content is finite: card levels, skill ranks, research projects, achievements. The three open-ended ones are milestones (paid for with exponentially rising costs), Compost and Ribbons (both gentle roots of lifetime totals). Blue Ribbon Polish is endless, but its price rises 15% a level for a fixed step, so it grows only with the logarithm of Ribbons. Timed boosts add into one capped number and lump sums pay from the steady rate (section 13.5), so no combination of buttons multiplies. Section 17.6 shows the arithmetic.
 
 ## 14. Worlds
 
@@ -786,9 +870,11 @@ Every bucket except three has a hard ceiling, because its content is finite: car
 | 1 | **Thymeford**, the home town | Temperate | Coins | 10 | None. This world teaches the game | required |
 | 2 | **Loomington**, the big city of mills | Urban | Notes | 8 | **Customers** queue at the door. Click to serve them for tips | required |
 | 3 | **Papaya Cay**, a tropical island | Tropical | Shells | 8 | **Weather** turns, and each kind of weather favours some plant families | required |
-| 4 | **Mount Mitten**, a snowy peak | Frost | Snowmarks | 8 | **Hearth Heat.** Tapping warms the mountain, and warmth multiplies profit | planned |
+| 4 | **Mount Mitten**, a snowy peak | Frost | Snowmarks | 8 | **Hearth Heat.** Tapping warms the mountain, and warmth multiplies profit | required |
 | 5 | **The Moon**, Crater Gardens | Lunar | Moonpennies | 8 | **Floating Harvests.** Harvests float up as bubbles. Pop them yourself for more | planned |
 | 6 | **Nebula Nursery**, an orbital greenhouse | Stellar | Stardust | 8 | **Orbital Sunrise.** The tower pays out all at once every orbit. Catch the sunrise for a bonus | planned |
+
+**Launch is four worlds.** The brief asks for at least three, and more if the pacing needs them. The pacing check has an active player arriving in Mount Mitten around day 7, so a three-world game would run out of new places inside the first week. Four worlds also bring Frosted Mint, the brief's own example of a mutation. Worlds 5 and 6 are fully designed and can ship later. In a four-world build, Mount Mitten's ticket plate and the two later deeds show a "Coming soon" card with a silhouette. They cannot be bought, so nothing can be spent on them.
 
 Worlds run in parallel. Managed floors in every unlocked world keep earning at full rate while the game is open. Taps, Combo, Spurts and visitors belong to the world on screen. Tab switches world.
 
@@ -814,6 +900,7 @@ These feed the floor template in section 5.3.
 - The plate above a world's top floor is the **ticket** to the next world. It is paid in the current world's currency. It shows once the top floor has been opened.
 - Worlds 4, 5 and 6 also need a **deed** from the Ribbon Shop. A deed is bought once and kept forever.
 - After a Harvest Festival, tickets must be bought again. Deeds are kept.
+- A ticket costs far more than the world's top floor, so the plate shows three **waypoint marks** at one millionth, one ten-thousandth and one hundredth of the price. Passing a mark for the first time ever gives 5 Gems. The marks give the long climb a nearer goal.
 - Arriving in a world for the first time adds its cards to the chest pool, unlocks its climate for mutation, and starts its World Mastery track.
 
 ### 14.4 Twist rules
@@ -821,7 +908,7 @@ These feed the floor template in section 5.3.
 **World 2, Customers**
 
 - A customer joins the queue every `CUSTOMER_INTERVAL = 20 s`, while playing and while away. The queue holds `CUSTOMER_QUEUE_CAP = 15`.
-- Clicking a customer (or pressing C) serves them and pays `CUSTOMER_TIP_SECONDS = 15 s` of `worldIPS`. Holding serves 4 a second.
+- Clicking a customer (or pressing C) serves them and pays `CUSTOMER_TIP_SECONDS = 15 s` of `steadyIPS`. Holding serves 4 a second.
 - Worth about +75% income to a player who keeps up, and a full queue on return is worth 225 s of income.
 
 **World 3, Weather**
@@ -842,14 +929,14 @@ These feed the floor template in section 5.3.
 
 - A managed floor's payouts collect in a bubble above it. A bubble holds `BUBBLE_CAP_SECONDS = 120 s` of that floor's income. A full bubble pops by itself and pays ×1.
 - Clicking a bubble (or pressing B for the fullest) pops it for `BUBBLE_BONUS = x2`.
-- Each pop within `BUBBLE_CHAIN_WINDOW = 2 s` of the last adds +0.25, up to `BUBBLE_CHAIN_MAX = +1.0`. A fast sweep of all eight floors averages about ×2.6.
+- Each pop within `BUBBLE_CHAIN_WINDOW = 2 s` of the last adds +0.25, up to `BUBBLE_CHAIN_MAX = +1.0`. A fast sweep of all eight floors averages about ×2.7 a bubble, and close to ×3 of income when the top floors are popped last.
 - While away, bubbles pay ×1.
 
 **World 6, Orbital Sunrise**
 
 - An orbit lasts `ORBIT_SECONDS = 90`. Managed floors' payouts are banked during the orbit.
 - At sunrise there is a `SUNRISE_WINDOW = 3 s` window. Clicking in it pays the bank at `SUNRISE_BONUS = x2.5`, plus 0.25 for every sunrise caught in a row, up to ×4.
-- If the window passes, the bank pays ×1 and the streak resets. While away, every orbit pays ×1.
+- If the window passes, the bank pays ×1 and the streak steps down by one. While away, every orbit pays ×1 and the streak is kept.
 
 No twist ever takes anything away. A player who ignores a twist earns exactly what they would have earned without it.
 
@@ -857,9 +944,10 @@ No twist ever takes anything away. A player who ignores a twist earns exactly wh
 
 A permanent record for each world. It never resets.
 
-- A world has 10 stars. Star `n` is earned the first time every floor in that world is at or above level `MASTERY_LEVELS[n]` = 25, 50, 100, 200, 300, 400, 500, 600, 800, 1,000.
+- A world has 10 stars. Star `n` is earned the first time every floor in that world is at or above level `MASTERY_LEVELS[n]` = 25, 50, 100, 250, 350, 400, 450, 500, 550, 600.
 - Each star gives `MASTERY_PCT = +10%` profit in that world.
 - **Star 5** gives the first copy of that world's **Exotic manager**. Stars 7, 9 and 10 give one more copy each.
+- The ten levels are first-pass values from the rough script. In Thymeford an active player earns star 4 on day 5, star 5 on about day 11, star 8 on about day 19 and star 10 on about day 50. Each later world trails by one to three weeks. The low floors grow at 1.15 a level, so a threshold much above 600 cannot be reached in any sensible time. The simulator should set the ten levels from cost.
 
 ## 15. Events, offline time and the clock
 
@@ -873,26 +961,27 @@ for each unlocked world:
              (with that world's twist rule from 14.4)
 ```
 
-`OFFLINE_CAP_BASE = 2 h`, `OFFLINE_EFF_BASE = 0.5`. Research, skills, plants, heirlooms and the Compost Shop raise both, to 24 hours and 100%. The exact stacking is in section 13.4.
+`OFFLINE_CAP_BASE = 4 h`, `OFFLINE_EFF_BASE = 0.4`. Research, skills, plants, managers, heirlooms and the Compost Shop raise both, to as much as 33 hours and 100%. The exact stacking is in section 13.4. The first research project, Sturdy Baskets, costs 50 Insight and takes the cap to 8 hours, so a player who has Replanted once is covered for a night's sleep.
 
 - A floor without a manager finishes the cycle it was on and waits.
 - These keep running for the whole time away, whatever the cap: research, bench jobs, ability cooldowns, Morning Basket timers, the customer queue and the weather loop. Insight accrues for up to 24 hours.
 - These do not happen while away: visitors, Combo, Spurts, taps.
 - The Welcome Back screen shows a harvest basket with a line for each world. One tap collects it with a burst.
-- **Morning Dew:** after `DEW_AWAY = 1 h` or more away, the player returns to ×2 profit in every world for `DEW_DURATION = 120 s`.
-- **Time Warp:** 30 Gems for 1 hour or 100 Gems for 4 hours of offline-rate income, paid at once. It ignores the cap and does not advance research.
+- **Morning Dew:** after `DEW_AWAY = 1 h` or more away, the player returns to a ×2 boost in every world for `DEW_DURATION = 120 s` (section 13.5).
+- **Time Warp:** 30 Gems for 1 hour or 100 Gems for 4 hours of offline-rate income, paid at once from the steady rate. It ignores the cap and does not advance research.
 - A game that is open but in the background runs at the full online rate.
 
 ### 15.2 Clock rules
 
 The design requirement is that changing the PC clock can never break a save or pay out more than one normal return.
 
-1. The game keeps `highestTimeSeen`. `trustedNow = max(systemNow, highestTimeSeen)`.
-2. If the clock moves **back**, `away` is 0. All timers wait until real time passes `highestTimeSeen`. Nothing is lost and nothing is paid twice.
-3. If the clock moves **forward**, the player gets one capped return. Moving it back afterwards falls under rule 2.
-4. Daily and weekly quests, Morning Baskets and events are keyed to a day number that only moves forward. Replaying a day cannot grant its rewards again.
+1. Live play is timed by a clock that only counts up. Changing the PC clock while the game is running does nothing.
+2. On return, `away` is the larger of what the PC clock claims and the time that provably passed. It is never negative and never more than 30 days. Earnings use at most the offline cap.
+3. If the clock moves **back**, the player gets the time that provably passed, which is often none. Timers carry on from where they were. Nothing is lost, nothing is locked and nothing is paid twice.
+4. If the clock moves **forward**, the player gets one capped return.
+5. Daily and weekly quests, Morning Baskets and events are keyed to a guarded day counter. Moving the clock back never grants a new set. A clock that was once far ahead cannot strand the player either: the counter re-anchors, and the next reset is the next real midnight.
 
-The Save and Offline thread owns the implementation. These four rules are the behaviour to test.
+`docs/tech/07-offline-and-time.md` owns the mechanism (three clocks, the proven-time floor and the day counter), and the Save and Offline thread owns the implementation. These five rules are the behaviour to test. In `away` above, `trustedNow - lastSeen` is shorthand for rule 2.
 
 ### 15.3 Weekend events
 
@@ -901,26 +990,26 @@ Unlock at player level 12. An event runs from Friday 00:00 to Sunday 23:59 local
 | Week mod 4 | Event | Bonus in the main game all weekend |
 |---|---|---|
 | 0 | Herb Fair | Golden Sprout Windfalls pay double |
-| 1 | Night Market | Offline efficiency +25 points |
+| 1 | Night Market | Offline earnings ×1.5, applied after the efficiency cap |
 | 2 | Hemp Harvest Home | Hemp-family traits ×1.5 |
 | 3 | Blossom Parade | Pollen from every source ×2 |
 
 Every event also has a **fair stall**: a five-floor mini tower with its own currency, Fair Tickets.
 
-- It uses the world 1 template for floors 1 to 5. Managers are free and already hired.
-- Only tap skills and tap heirlooms apply to it. No Compost, Ribbons, cards or research. A new player and a veteran are close to equal there.
-- It earns while away, using the normal offline rules.
+- It uses the world 1 template for floors 1 to 5. Its helpers are free, already hired, and collect at ×1 profit.
+- Only tap skills and the passives of tap heirlooms apply to it. No Compost, Ribbons, cards, research, visitors, abilities or boosts. Growth Spurts work as usual.
+- It earns while away by its own fixed rule, the same for everyone: `FAIR_OFFLINE_EFF = 50%` for up to `FAIR_OFFLINE_CAP = 12 h`.
 - Lifetime Fair Tickets move the player along a 10-step reward track.
 
 | Step | Fair Tickets | Reward | Step | Fair Tickets | Reward |
 |---|---|---|---|---|---|
-| 1 | 1e3 | Wooden Crate | 6 | 1e11 | 50 Gems |
-| 2 | 1e5 | 20 Gems | 7 | 1e12 | Golden Chest |
-| 3 | 1e7 | Copper Chest | 8 | 1e13 | 200 Pollen |
-| 4 | 1e9 | 50 Pollen | 9 | 1e14 | 3 copies of the event's featured Epic card |
-| 5 | 1e10 | Silver Chest | 10 | 1e15 | Crystal Chest |
+| 1 | 1e3 | Wooden Crate | 6 | 3e10 | 50 Gems |
+| 2 | 1e5 | 20 Gems | 7 | 1e11 | Golden Chest |
+| 3 | 1e7 | Copper Chest | 8 | 3e11 | 200 Pollen |
+| 4 | 1e9 | 50 Pollen | 9 | 6e11 | 3 copies of the event's featured Epic card |
+| 5 | 1e10 | Silver Chest | 10 | 1e12 | Crystal Chest |
 
-The track takes about four to five hours of mixed play across the weekend. Nothing is exclusive. A missed event returns four weeks later with the same track.
+With no Compost and no cards, the stall grows almost in a straight line, so the steps bunch up at the top. A rough script of the stall (`stall2.py` in the pacing-check folder) puts a new player with no upgrades at step 4 after 10 minutes of play, step 7 within an hour, and step 10 after two and a half to three and a half hours of mixed play spread across the weekend. A player who only looks in a few times finishes step 9. A week-2 player needs about two hours for the whole track and a veteran with a full tapping build about half an hour. The simulator should set the ten steps from the mixed profile. Nothing is exclusive. A missed event returns four weeks later with the same track.
 
 ## 16. Unlock order
 
@@ -932,18 +1021,18 @@ One new thing at a time. Conditions are exact. Times are targets for a new playe
 | 2 | Floor levels | first harvest | 0:10 |
 | 3 | Milestones panel and buy modes | any floor reaches level 25 | 0:35 |
 | 4 | More floors | coins | 0:40 onward |
-| 5 | Chests and managers | 1,000 lifetime Coins (Welcome Chest) | 1:30 |
+| 5 | Chests and managers | holding 1,000 Coins with floor 3 open (Welcome Chest) | 1:30 |
 | 6 | Tap bonus and Combo | first manager hired | 1:40 |
 | 7 | Quests panel (story and daily) | world 1 floor 4 opened | 2:15 |
 | 8 | Plants and planters | world 1 floor 5 opened (first seed packet) | 3:30 |
 | 9 | Bumper taps | player level 2 | about 4:00 |
 | 10 | Garden Visitors | world 1 floor 6 opened | 5:30 |
-| 11 | Skill tree | player level 3 | about 7:00 |
-| 12 | Achievements and Codex | world 1 floor 7 opened | 8:30 |
-| 13 | Growth Spurt | world 1 floor 8 opened | 13:00 |
-| 14 | Morning Basket | 15 minutes of play | 15:00 |
+| 11 | Growth Spurt | world 1 floor 8 opened | 13:00 |
+| 12 | Morning Basket | 15 minutes of play | 15:00 |
+| 13 | Achievements and Codex | world 1 floor 9 opened | 21:00 |
+| 14 | Skill tree | player level 6 | about 26:00 |
 | 15 | Offline earnings screen | first return after 5 minutes away with a manager hired | first return |
-| 16 | Replant | world 1 floor 10 opened and 25 Compost pending | about 40:00 |
+| 16 | Replant | world 1 floor 10 opened (32:00). The button is live at 60 Compost pending | about 50:00 |
 | 17 | Compost Shop and Research | first Replant | about 55:00 |
 | 18 | Heirlooms | third Replant (the story gives the Sprouting Trowel) | about 1 h 30 |
 | 19 | World 2, Customers, World Mastery, weekly quests | ticket: 5e19 Coins | end of day 1 |
@@ -952,14 +1041,16 @@ One new thing at a time. Conditions are exact. Times are targets for a new playe
 | 22 | Cross-pollination | research "Pollination Bench" (needs world 2) | day 2 |
 | 23 | World 3, Weather | ticket: 2e19 Notes | day 3 |
 | 24 | Mutation and Exotic plants | research "Mutation Chamber" (needs world 3) | day 5 to 7 |
-| 25 | Harvest Festival and Ribbon Shop | world 3 reached and 8 Ribbons pending | day 4 to 5 |
+| 25 | Harvest Festival, Ribbon Shop and the Heirloom Pick | world 3 reached and 8 Ribbons pending | day 4 to 5 |
 | 26 | Auto-buy (the Auto-Gardener) | Ribbon Shop, 4 Ribbons | after the first Festival |
 | 27 | World 4, Hearth Heat | deed (8 Ribbons) and ticket | week 1 to 2 |
-| 28 | Exotic managers | 5 Mastery stars in a world | week 2 |
-| 29 | World 5, Floating Harvests | deed (60 Ribbons) and ticket | week 2 to 3 |
-| 30 | World 6, Orbital Sunrise | deed (600 Ribbons) and ticket | week 3 to 4 |
+| 28 | Exotic managers | 5 Mastery stars in a world | week 2 (about day 11) |
+| 29 | World 5, Floating Harvests (after launch) | deed (60 Ribbons) and ticket | week 2 to 3 |
+| 30 | World 6, Orbital Sunrise (after launch) | deed (600 Ribbons) and ticket | week 3 to 4 |
 
 Nothing that is locked shows more than a silhouette and a one-line hint. The bottom bar starts with no buttons and gains them as features unlock.
+
+Rows 1 to 10 arrive in the first six minutes. Rows 11 to 16 are spread over the next forty-five, so there is something new about every eight minutes right up to the first Replant. Achievements count from the first second of play, so several pop at once when the panel opens at floor 9.
 
 ## 17. Pacing
 
@@ -980,11 +1071,11 @@ All times in 17.1 to 17.4 are design targets for a real new player. Section 17.6
 | 3:30 | Floor 5. First seed packet. Mint goes in the windowsill, hemp in the patch | Plants |
 | 4:00 | Level 2. First Bumper tap: ×10 with a hit-pause | Bumpers |
 | 5:30 | Floor 6. A Golden Sprout drifts past | Visitors |
-| 7:00 | Level 3. Two skill points to spend | Skills |
-| 8:30 | Floor 7. First achievement pops | Achievements, Codex |
+| 7:00 | Level 3. A Copper Chest and 10 Gems | |
+| 8:30 | Floor 7, the Tea House. Another Hiring Crate | |
 | 10:00 | Seven floors, five of them managed, seven or more managers owned, three plants, one card level-up, level 3 | |
 
-A new thing roughly every 60 to 90 seconds, each one taught by doing it once.
+A new thing roughly every 60 to 90 seconds for the first six minutes, each one taught by doing it once. Then the pace eases on purpose: minutes 6 to 13 are for playing with what is already there. The skill tree, achievements and the Codex wait for the quieter stretch before the first Replant (section 17.2).
 
 ### 17.2 First hour
 
@@ -992,10 +1083,11 @@ A new thing roughly every 60 to 90 seconds, each one taught by doing it once.
 |---|---|
 | 13 min | Floor 8, the Ropewalk. First Growth Spurt |
 | 15 min | The Morning Basket appears |
-| 21 min | Floor 9 |
-| 32 min | Floor 10, Sprout Tower HQ. The ticket plate to Loomington appears far out of reach. Pip mentions the compost heap |
+| 21 min | Floor 9. Achievements and the Codex open, and the first handful of achievements pop at once |
+| 26 min | Level 6. The skill tree opens with five points to spend |
+| 32 min | Floor 10, Sprout Tower HQ. The ticket plate to Loomington appears far out of reach, with its first waypoint mark. Pip mentions the compost heap, and the Replant button shows a bar toward 60 Compost |
 | 32 to 50 min | Push floors to 50 and 100, hit the first tower milestones. Pending Compost climbs to 60 |
-| 50 to 60 min | **First Replant.** ×2.2 profit, two levels of Rich Soil, Research opens |
+| 50 to 60 min | **First Replant.** ×2.2 profit, two levels of Rich Soil, the Compost Shop and Research open |
 | 60 min | Level 8. About 12 managers, 5 plants. The second run reaches HQ in about 12 minutes |
 
 ### 17.3 Day 1 (about 3 hours of play)
@@ -1014,7 +1106,7 @@ A new thing roughly every 60 to 90 seconds, each one taught by doing it once.
 | 1 to 2 | Arrives in Loomington | Customers, World Mastery, weekly quests, 8 new floors |
 | 2 | Pollination Bench built. First hybrid on day 2 to 3 | Cross-pollination |
 | 3 | Arrives in Papaya Cay | Weather |
-| 4 to 5 | **First Harvest Festival.** 8 Ribbons, Golden Hour, auto-buy | Ribbon Shop |
+| 4 to 5 | **First Harvest Festival.** 8 Ribbons, Golden Hour, auto-buy, and a Legendary heirloom of the player's choice | Ribbon Shop, Heirloom Pick |
 | 5 to 7 | Mutation Chamber built. First Exotic plant around day 7 (Ember Basil is the easy one) | Exotics |
 | 6 to 7 | Deed and ticket to Mount Mitten | Hearth Heat |
 | 7 | Level about 40. Commons at level 5, Rares at 3, a first Legendary. 12 to 15 research projects done. 3 to 4 Festivals | |
@@ -1023,10 +1115,12 @@ A new thing roughly every 60 to 90 seconds, each one taught by doing it once.
 
 | When (active player) | Beat |
 |---|---|
-| Week 2 | First Exotic manager. The Moon. Festivals every one to two days |
-| Week 3 | Nebula Nursery. All six heirloom slots |
+| Week 2 | First Exotic manager, Mayor Thyme, around day 11. Frosted Mint and Crystal Sage from the Frost climate. A first full heirloom set. Festivals every one to two days. The Moon, once it ships |
+| Week 3 | Mastery stars 7 and 8 in Thymeford, star 5 in Loomington and Papaya Cay. All six heirloom slots. Nebula Nursery, once it ships |
 | Week 4 | Level about 70. Research about half done. Commons at level 8 to 9. Festivals every three to five days |
-| Weeks 5 to 8 | Mastery stars 6 to 10 in the early worlds. Last research projects. Level about 90, with the cap of 112 around month 3. Hybrids and Exotics levelling up |
+| Weeks 5 to 8 | Mastery stars 9 and 10 in Thymeford and stars 6 to 8 in the later worlds. Last research projects. Level about 90, with the cap of 112 around month 3. Hybrids and Exotics levelling up |
+
+With four worlds at launch, new places stop arriving around day 7. From there the game is carried by Exotic plants and managers, heirloom sets, World Mastery, research (two to three months), the Ribbon Shop and card levels. Worlds 5 and 6 slot into weeks 2 and 3 when they ship.
 
 Card levels over time for an active player (about 100 cards a day):
 
@@ -1054,7 +1148,7 @@ The script buys greedily (lowest wait plus payback time), Replants when pending 
 
 **Multiplier budget.** The systems that never reset must add up to roughly this. The simulator should measure the real systems against it.
 
-| Day | Manager profit on a typical floor | Everything else that never resets, plus the capped Compost Shop items other than Rich Soil | Tap income as a multiple of `worldIPS`, before Spurts |
+| Day | Manager profit on a typical floor | Everything else that never resets, plus the capped Compost Shop items other than Rich Soil | Tap income as a multiple of `steadyIPS`, before Spurts and boosts |
 |---|---|---|---|
 | 0 | ×2 | ×1 | 1.1 |
 | 1 | ×2.5 | ×4 | 2.5 |
@@ -1074,26 +1168,29 @@ The script buys greedily (lowest wait plus payback time), Replants when pending 
 | Skills (profit, speed, tower milestones) | ×1.7 | ×2.5 |
 | Heirlooms and set bonuses | ×1.6 | ×4 |
 | Plants and manager perks | ×1.6 | ×3.5 |
-| World twists, abilities, Sunbeams, Morning Dew | ×2.1 | ×2.8 |
+| World twists | ×1.5 | ×1.6 |
+| Timed boosts, as average uptime (section 6.7) | ×1.4 | ×1.9 |
 | Cheaper levels (a discount is worth about as much as the same factor of income) | ×1.5 | ×2.2 |
 | Master Composter | ×1 | ×1.75 |
-| **Product** | **about ×160** | **about ×13,000** |
+| **Product** | **about ×160** | **about ×15,000** |
 
-Both land within a factor of two of the budget (×120 and ×7,000), on the high side. So the content can carry the pacing in the results below, and the simulator is more likely to trim a little than to need more.
+Both land within about a factor of two of the budget (×120 and ×7,000), on the high side. So the content can carry the pacing in the results below, and the simulator is more likely to trim a little than to need more. The timed-boost row is the tower average for the abilities a player is likely to own by then, discounted because nobody presses every button on cooldown. If the simulator finds it high, ability strengths in CONTENT.md 2.2 are the first thing to trim, before `BOOST_CAP`.
 
 **Results** (days from first launch):
 
 | Event | Active | Mixed | Idle |
 |---|---|---|---|
-| World 1 top floor | 17 min | 30 min | 16 h |
+| World 1 top floor | 17 min | 30 min | 11 h |
 | First Replant | 36 min | 4.4 h | 16 h |
 | World 2 | day 0.5 | day 1.4 | day 3.2 |
 | World 3 | day 2.6 | day 4.1 | day 5.2 |
-| First Festival | day 4.1 | day 5.4 | day 7.7 |
-| World 4 | day 6.7 | day 10.3 | day 15.2 |
-| World 5 | day 11.5 | day 17.1 | day 28.2 |
-| World 6 | day 19.5 | day 29.3 | day 53.2 |
+| First Festival | day 4.1 | day 5.4 | day 8.2 |
+| World 4 | day 6.7 | day 10.1 | day 16.2 |
+| World 5 | day 12.2 | day 18.1 | day 27.2 |
+| World 6 | day 19.5 | day 30.5 | day 52.2 |
 | Festivals by day 30 | 13 | 11 | 7 |
+
+This table was run again for version 0.2 with the new offline start (40% for 4 hours, rising to 100% for 24 hours over three weeks) and with the first Replant held to 60 Compost. The biggest move is 1.2 days (World 6 for the mixed profile).
 
 The script plays perfectly. A real new player is about twice as slow in the first ten minutes and about 1.5 times as slow in the first hour, which is where the targets in 17.1 and 17.2 come from.
 
@@ -1103,21 +1200,24 @@ The script plays perfectly. A real new player is about twice as slow in the firs
 2. **No dead zone longer than about 20 minutes inside a run.** The longest wait is saving for level 100 on several floors late in the first run. That is exactly when the Replant button is glowing.
 3. **Idle players are slower but not left behind.** Idle reaches each world in roughly two to three times the active player's days.
 4. **Festivals are frequent in week 2** (about one a day for the active profile) while Golden Hour's five doublings are being bought, then stretch to every three to eight days. If that feels too fast in play, raise the Golden Hour prices first.
+5. **Timed boosts are bounded by rule, not by this script.** The script has no abilities in it. Section 13.5 makes every timed boost add into one number capped at ×15, with the Growth Spurt as the only multiplier on top, and makes lump sums pay from the steady rate. The uptime arithmetic in section 6.7 (`boost_avg.py`) puts the average Boost near ×2.4 at day 30 and ×3 for a finished account.
+6. **The script's tap model is on the low side for Golden Sprouts.** It counts them at 0.3 times idle income. Section 6.7 now puts them near 1.2 times with every one caught. That makes a real active player a little faster than the Active column, by about a quarter of income.
+7. **World Mastery and the fair stall were sized with the same rough scripts** (`mastery_track.py` and `stall2.py`). The Mastery levels in section 14.5 and the track steps in section 15.3 are first-pass values from them.
 
-**Not checked:** XP and level pacing, Insight income, chest and card rates, Pollen, Gem flow, twist values, ability uptime, Master Composter, Blue Ribbon Polish and the tap caps. Those are estimates from the formulas in this document.
+**Not checked by any script:** XP and level pacing, Insight income, chest and card rates, heirloom rates, Pollen, Gem flow, twist values, Master Composter, Blue Ribbon Polish, the tap caps, the Combo ramp and the offline build (how soon a player reaches 100%). Boost uptime, Mastery levels and the event track have rough arithmetic only. All of these are estimates from the formulas in this document, and the simulator should run each of them with both tap rates (6 and 12 a second).
 
 ## 18. Currency sources and sinks
 
 | Currency | Sources | Sinks |
 |---|---|---|
 | World currency | Harvests, taps, Windfalls, customer tips, abilities, offline earnings, Time Warp, Head Start | Floor levels, floor opens, hire fees, the ticket to the next world |
-| Gems | Daily quests (50 a day), weekly quests (200 a week), level-ups (10), achievements (5 to 50), codex entries (5), story quests, Dewdrops, event track | Chests (40, 120, 350, 1,000), Time Warp (30, 100), respec (100) |
+| Gems | Daily quests (50 a day), weekly quests (200 a week), level-ups (10), achievements (5 to 50), codex entries (5), story quests, Dewdrops, ticket waypoints (5), event track | Chests (40, 120, 350, 1,000), Time Warp (30, 100), respec (100) |
 | Compost | Replant | Compost Shop. Spending never lowers the passive bonus |
-| Ribbons | Harvest Festival | Ribbon Shop, including one endless item. Spending never lowers the passive bonus |
+| Ribbons | Harvest Festival | Ribbon Shop, including one endless item. Spending never lowers the passive bonus. The shop's fixed items are all bought by about week 3, and Blue Ribbon Polish carries on from there. Cosmetic tower decorations are the planned next sink after launch (AUDIT.md section 6) |
 | Insight | Passive, from record milestones | Research projects |
-| Pollen | Copies of max-level cards and heirlooms, Busy Bees, chests (Copper and better), daily quests, events | Hybrid jobs (400), Exotic jobs (1,500), copies of owned cards (5 to 1,000) |
+| Pollen | Copies of max-level cards and heirlooms, Busy Bees, chests (Copper and better), daily quests, events | Hybrid jobs (400), Exotic jobs (1,500), copies of owned cards (5 to 1,000), copies of owned heirlooms (100 to 2,000) |
 | Skill Points | Player level | Skill tree. Refunded by respec |
-| Card copies | Chests, Hiring Crates, bench jobs, Mastery stars, Pollen | Card levels |
+| Card and heirloom copies | Chests, Hiring Crates, bench jobs, Mastery stars, the Heirloom Pick, Pollen | Card and heirloom levels |
 | Fair Tickets | Fair stall | None. They only move the reward track |
 
 Expected flow for an active player in week 1: about 150 to 200 Gems a day (about 100 a day later), 200 to 400 Pollen a day once bees are out, 1,700 Insight a day rising to about 5,000 by week 2.
@@ -1142,6 +1242,8 @@ In the order to reach for them. Change one at a time.
 | 10 | Milestone strength | `MILESTONE_MULT`, `TOWER_MILESTONE_MULT` | How rewarding levelling is. Raises the in-run exponent, so handle with care |
 | 11 | Chest rates and duplicate curves | section 8 | Collection speed |
 | 12 | Research times | CONTENT.md section 6 | The idle cadence |
+| 13 | Ability strengths, then the Boost cap | CONTENT.md section 2.2, `BOOST_CAP` | What timed boosts add on average, and how big a lined-up burst can get |
+| 14 | Mastery levels and event steps | `MASTERY_LEVELS`, section 15.3 | When Exotic managers arrive, and how long a weekend event takes |
 
 ## Appendix A. Constants
 
@@ -1157,6 +1259,7 @@ In the order to reach for them. Change one at a time.
 | `HOLD_RATE` | 6 taps per second | 6.1 |
 | `TAP_RATE_CAP` | 12 taps per second | 6.1 |
 | `TAP_SECONDS` | 0.05 | 6.2 |
+| `COMBO_TAPS_PER_STACK` | 5 | 6.3 |
 | `COMBO_PER_STACK` | 0.1 | 6.3 |
 | `COMBO_CAP_BASE` | 20 | 6.3 |
 | `COMBO_GRACE` | 1.5 s | 6.3 |
@@ -1178,6 +1281,7 @@ In the order to reach for them. Change one at a time.
 | `NEW_CARD_CHESTS` | 10 | 8.3 |
 | `PITY_EPIC` | 60 cards | 8.3 |
 | `PITY_LEGENDARY` | 300 cards | 8.3 |
+| `PITY_HEIRLOOM` | 10 heirloom pieces | 8.3 |
 | `BASKET_HOURS`, `BASKET_STORE` | 4, 2 | 8.3 |
 | `AFFINITY_BONUS` | 1.5 | 8.5 |
 | `DUAL_TRAIT_FACTOR` | 0.7 | 8.5 |
@@ -1189,6 +1293,7 @@ In the order to reach for them. Change one at a time.
 | `HEIRLOOM_SLOTS_BASE` | 2 | 8.7 |
 | `HEIRLOOM_PER_LEVEL` | 0.15 | 8.7 |
 | `XP_BASE`, `XP_PER_LEVEL` | 500, 250 | 9.1 |
+| `REPLANT_XP_STEP` | 150 | 9.1 |
 | `LEVEL_CAP` | 112 | 9.1 |
 | `RESPEC_GEMS` | 100 | 9.2 |
 | `INSIGHT_PER_MILESTONE` | 1 per hour | 10 |
@@ -1200,7 +1305,7 @@ In the order to reach for them. Change one at a time.
 | `COMPOST_EXP` | 0.4 | 12.1 |
 | `COMPOST_K` (worlds 1 to 6) | 5, 15, 40, 100, 250, 600 | 12.1 |
 | `COMPOST_PCT` | 0.02 | 12.1 |
-| `FIRST_REPLANT_MIN` | 25 | 12.1 |
+| `FIRST_REPLANT_MIN` | 60 | 12.1 |
 | `RICH_SOIL` | 1.25 per level, 10 levels | 12.1 |
 | `GREEN_DEAL` | 0.96 per level, 10 levels | 13.3 |
 | `RIBBON_C0` | 50,000 | 12.2 |
@@ -1211,9 +1316,10 @@ In the order to reach for them. Change one at a time.
 | `BLUE_POLISH_PCT` | 0.002 per level, endless | 13.1 |
 | `TOWER_MILESTONE_CAP` | 2.0 | 13.2 |
 | `TAP_POWER_CAP`, `COMBO_CAP_MAX` | 3, 50 | 13.4 |
+| `BOOST_CAP` | 15 | 13.5 |
 | `SPURT_DURATION_CAP`, `SPURT_TAPS_MIN`, `SPURT_SPEED_CAP` | 45 s, 150, 4 | 13.4 |
 | `AUTO_BUY_SHARE` | 0.10 | CONTENT.md 8 |
-| `MASTERY_LEVELS` | 25, 50, 100, 200, 300, 400, 500, 600, 800, 1,000 | 14.5 |
+| `MASTERY_LEVELS` | 25, 50, 100, 250, 350, 400, 450, 500, 550, 600 | 14.5 |
 | `MASTERY_PCT` | 0.10 | 14.5 |
 | `CUSTOMER_INTERVAL` | 20 s | 14.4 |
 | `CUSTOMER_QUEUE_CAP` | 15 | 14.4 |
@@ -1223,6 +1329,7 @@ In the order to reach for them. Change one at a time.
 | `BUBBLE_CAP_SECONDS`, `BUBBLE_BONUS` | 120, 2 | 14.4 |
 | `BUBBLE_CHAIN_WINDOW`, `BUBBLE_CHAIN_MAX` | 2 s, +1.0 | 14.4 |
 | `ORBIT_SECONDS`, `SUNRISE_WINDOW`, `SUNRISE_BONUS` | 90, 3 s, 2.5 | 14.4 |
-| `OFFLINE_CAP_BASE` | 2 h | 15.1 |
-| `OFFLINE_EFF_BASE` | 0.5 | 15.1 |
+| `OFFLINE_CAP_BASE`, `OFFLINE_CAP_MAX` | 4 h, 36 h | 15.1, 13.4 |
+| `OFFLINE_EFF_BASE` | 0.4 | 15.1 |
 | `DEW_AWAY`, `DEW_DURATION` | 1 h, 120 s | 15.1 |
+| `FAIR_OFFLINE_EFF`, `FAIR_OFFLINE_CAP` | 0.5, 12 h | 15.3 |

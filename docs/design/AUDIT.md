@@ -2,7 +2,7 @@
 
 Phase 0 design audit. It covers the brief, the Cash, Inc. game bible, the earlier idle-RPG brainstorm and both art reference packs (B1 to B29). The full design that follows from these calls is in [GDD.md](GDD.md), and the content rows are in [CONTENT.md](CONTENT.md).
 
-Each call below is a decision, not an option. Where a call is big, the reason is given in a sentence or two.
+Each call below is a decision, not an option. Where a call is big, the reason is given in a sentence or two. Section 9 lists what changed after an independent audit of the first version.
 
 ## 1. Verdict
 
@@ -41,7 +41,7 @@ The premise has three real weaknesses, and the design fixes each one:
 
 ### 4.1 Tapping pays all game long
 
-After a floor has a manager, every tap still pays a slice of the whole tower's income, and that slice grows with Combo, Bumper taps (crits), Growth Spurts (frenzies) and Golden Sprouts. A new player with no upgrades earns about 3 to 4 times more while tapping than while watching, and a build that invests in tapping reaches about 25 times.
+After a floor has a manager, every tap still pays a slice of the whole tower's income, and that slice grows with Combo, Bumper taps (crits), Growth Spurts (frenzies) and Golden Sprouts. A new player with no upgrades earns about 3 to 4 times more while tapping than while watching, and a build that invests in tapping reaches about 25 times. Hard caps keep the ratio bounded however far a player goes.
 
 **Why:** the brief puts Clicker first. If tapping only matters for the first 90 seconds, the game is an idle game with a clicker tutorial.
 
@@ -97,11 +97,11 @@ No pests, no frost damage, no plants dying. Every world twist is an extra way to
 
 **Why:** each later world brings a twist mechanic, so it does not need ten floors to feel full, and it saves ten floor dioramas across the game. This is a scope call. The numbers work the same either way.
 
-### 4.11 Six worlds designed, three required at launch
+### 4.11 Six worlds designed, four at launch
 
 Thymeford (home), Loomington (city), Papaya Cay (island), Mount Mitten (winter), the Moon and the Nebula Nursery. Worlds 4 to 6 open through the prestige shop, so they are the long game.
 
-**Why:** the brief asks for at least three. The pacing check in the GDD shows worlds 4 to 6 landing in weeks 2 to 4, so they are what keeps week 3 from feeling like week 2.
+**Why:** the brief asks for at least three, and more if the pacing needs them. The pacing check in the GDD has an active player reaching the fourth world around day 7, so three worlds would run dry inside the first week. Mount Mitten also carries Frosted Mint, the brief's own example of a mutation. The Moon and the Nebula Nursery are fully designed and can follow after launch. They would land in weeks 2 and 3.
 
 ### 4.12 Events are local and miss-proof
 
@@ -116,7 +116,7 @@ Weekend events run from the calendar on the player's PC. Anything you miss comes
 | Combo meter | Taps build a multiplier that decays when you stop | The art pack HUD already shows one. It rewards rhythm |
 | Bumper taps | 3% of taps pay ×10 | Crits are the cheapest juice in the genre |
 | Growth Spurt | 300 taps fill a meter. Spend it for 20 seconds of ×3 everything | A frenzy you build yourself |
-| Garden Visitors | A Golden Sprout drifts by every two minutes or so. Catch it for a windfall or a buff | A reason to keep watching the screen |
+| Garden Visitors | A Golden Sprout drifts by every two minutes or so. Catch it for a windfall or a short boost | A reason to keep watching the screen |
 | Hold to tap | Holding the mouse button or Space taps 6 times a second | Comfort and accessibility. Nobody needs an autoclicker |
 | Pollen | Earned from spare cards and from bees. Pays for cross-pollination and for copies of a card you choose | Bad luck protection, and it gives duplicates of maxed cards a use |
 | Tower milestones | Every floor past the same level gives the whole tower ×1.5 | Rewards levelling evenly, not only the top floor |
@@ -138,7 +138,7 @@ Weekend events run from the calendar on the player's PC. Anything you miss comes
 | Relic forge | Brainstorm | Folded into Pollen |
 | Contracts and bounties | Brainstorm | They are the daily and weekly quests |
 | Ads, real-money packs, leaderboards | Bible | Cut, as the brief requires |
-| Eighteen tower skins | Bible | Cut from v1. Worlds provide the visual variety |
+| Eighteen tower skins | Bible | Cut from v1. Worlds provide the visual variety. A few cosmetic tower decorations are the planned first use for spare Ribbons after launch |
 | A third reset layer | Brief (optional) | Not in v1. The pacing check reaches week 4 with two layers, six worlds and World Mastery. Three reset layers would hurt the 60-second readability |
 
 ## 7. Risks and flags
@@ -149,7 +149,7 @@ The numbers in the GDD were checked with a rough pacing script, not proven. An e
 
 ### 7.2 Hemp wording
 
-Several ordinary garden words have a second meaning that a hemp game cannot afford. The GDD has a short word list for the Writer and Art Director (section 2.3). Three things change in existing material because of it: "Balcony Pots" becomes "Balcony Boxes", "Essence Lab" becomes "Soap & Scent Workshop", and the research currency is called Insight, not Essence, so that nothing reads as an extraction lab. The flask icon in B12 wants a redraw. World 1's floor 2 base payout is 50, not the bible's 60, so the tutorial never shows a payout of 420.
+Several ordinary garden words have a second meaning that a hemp game cannot afford. The GDD has a short word list for the Writer and Art Director (section 2.3). Three things change in existing material because of it: "Balcony Pots" becomes "Balcony Boxes", "Essence Lab" becomes "Soap & Scent Workshop", and the research currency is called Insight, not Essence, so that nothing reads as an extraction lab. The flask icon in B12 wants a redraw, and so does the mortar icon in B11, which becomes a stone birdbath. "Wrapping paper" became "gift paper" for the same reason. World 1's floor 2 base payout is 50, not the bible's 60, so the tutorial never shows a payout of 420, and its first level costs 70, not 69.
 
 ### 7.3 Working title
 
@@ -157,7 +157,7 @@ Several ordinary garden words have a second meaning that a hemp game cannot affo
 
 ### 7.4 Art load
 
-The design asks for 50 floor rooms, 30 managers, 38 plants and 18 heirlooms in total. Launch with three worlds needs 26 floors (10 already painted), 27 managers (12 already drawn), 34 plants (5 already drawn) and 18 heirlooms (12 already drawn). The content rows were fitted to the existing pictures on purpose: the first ten managers a player meets and six of the eight Exotic plants already have art. Everything is listed in CONTENT.md with a launch flag and an art column, and section 13 there adds it up.
+The design asks for 50 floor rooms, 30 managers, 38 plants and 18 heirlooms in total. Launch with four worlds needs 34 floors (10 already painted), 28 managers (12 already drawn), 36 plants (7 already drawn), 18 heirlooms (12 already drawn) and one new world background. The content rows were fitted to the existing pictures on purpose: the first ten managers a player meets and six of the eight Exotic plants already have art. Everything is listed in CONTENT.md with a launch flag and an art column, and section 13 there adds it up.
 
 ### 7.5 Many systems
 
@@ -167,5 +167,24 @@ There are 14 systems. The unlock order in section 16 of the GDD shows at most on
 
 Only two matter enough to ask.
 
-1. **Launch size.** The design has six worlds, with three as the launch minimum. Are you happy to generate art for five or six worlds over time (about 8 floor paintings each), or should the game be designed to feel complete at three? Three is fine, but worlds 4 to 6 are what the pacing leans on after week 2. One detail either way: the winter world is world 4 and the Moon is world 5, so your Moon picture (its file is named "world4") is used for world 5. Frosted Mint and Crystal Sage need the winter world.
+1. **How far past launch.** The design has six worlds and launches with four, because the pacing reaches the fourth world in the first week. Are you happy to generate art for the Moon and the Nebula Nursery after launch (about 8 floor paintings each), or should the game be designed to feel complete at four? Four is fine. Worlds 5 and 6 only add more places for weeks 2 and 3. One detail either way: the winter world is world 4 and the Moon is world 5, so your Moon picture (its file is named "world4") is used for world 5.
 2. **Assignable managers.** Managers are cards you place on any floor, not one fixed character per floor. It adds a small "who goes where" choice each time you get a new card. If you would prefer zero management, managers can be fixed to floors with no change to the numbers.
+
+## 9. What changed after the independent audit
+
+A second reviewer who did not write the design audited version 0.1 of all three documents. The design met the brief. One rule had to change and nine more were worth changing while it is cheap. The full list of changed rules and numbers is in [CHANGES.md](CHANGES.md).
+
+| Finding | Call |
+|---|---|
+| Timed boosts multiplied each other, and "pay N seconds of income now" abilities paid at the boosted rate. Every button pressed together paid about 100 days of income | **Fixed.** Every timed boost in a world now adds into one Boost, capped at ×15. A Growth Spurt is the only thing that multiplies it. Lump sums pay from the steady rate. Lining abilities up is still a nice burst and can no longer break the economy (GDD 13.5) |
+| Offline bonuses reached their cap almost for free, so the idle build's cards and heirlooms did nothing | **Fixed.** Efficiency starts at 40% and the two cheap sources stop at 73%, so 100% takes a real idle build. Stored hours start at 4 and go to 33. A new player now gets more from a first night away, not less |
+| Heirloom abilities and sets hung on a 5% roll | **Fixed.** The first Harvest Festival lets the player choose one Legendary heirloom. Rolls never repeat a piece, there is a pity counter, and Pollen buys copies |
+| The weekend event's top prizes could not be reached | **Fixed.** The track now ends at about three hours of mixed play for a new player, sized with a rough script |
+| The last World Mastery stars were out of reach and the first Exotic manager came too early | **Fixed.** The ten levels now run from 25 to 600. The first Exotic manager arrives around day 11 and the tenth star around day 50 |
+| Combo refilled in three seconds, so nothing that protected it was worth having | **Fixed.** A stack now takes five taps. A full meter takes 17 to 42 seconds to build and a few seconds to lose |
+| Twelve features unlocked in nine minutes, then nothing for half an hour | **Fixed.** Achievements and the Codex move to floor 9 and the skill tree to level 6 |
+| Three worlds are too few for the pacing | **Fixed.** Four worlds at launch (section 4.11) |
+| Replanting often could farm player levels | **Fixed.** XP is paid only for a new all-time Compost record |
+| Eight rules an implementer could not follow as written | **Fixed**, each one in place (chest luck, what a tap harvests, one number for the first Replant, and so on) |
+
+Not done on purpose: a late skill that raises the hold-to-tap rate, and cosmetic Ribbon sinks. The first would break the exact 111-point skill tree for a small gain, so the simulator is asked to test both tap rates first. The second needs new art, so it waits until after launch.
