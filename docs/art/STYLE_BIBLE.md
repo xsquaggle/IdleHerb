@@ -1,6 +1,6 @@
 # Sprout Tower Style Bible v1
 
-Status: v1, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
+Status: v1.1, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
 
 This is the single source of truth for how Sprout Tower looks. If an asset and this document disagree, the asset is wrong, or this document gets a new version. Nobody "interprets around" it.
 
@@ -56,9 +56,12 @@ Things found in the references that production must fix:
 - **B11 compass lid** carries a many-fingered fan-leaf emblem. Replace with the two-leaf sprout. See the never list in HEMP_ART.md.
 - **B12** has a purple "plus" token that can read as a medical cross. Redesign as a gem or a seed.
 - **B29** bakes "+$" into the art and includes a flame row. Text and currency signs are drawn by the game. Flames are for stoves and ember herbs only.
-- **B5 beach-shirt manager** and **B21 sleepy night-shift manager** are fine characters, but they never work on hemp floors.
+- **B5 beach-shirt manager** and **B21 sleepy night-shift manager** are fine characters, but default art and story hires never place them on hemp floors.
 - **B28 customer and the floor 09 perfumer** sniff herbs. Fine on herb floors, never on hemp floors.
-- **B27** is named `world4_moon_greenhouse` while the brief talks about three worlds plus a Moon. World numbering is the Game Designer's call.
+- **v2 floor 03** becomes the Backyard Hemp Patch. Its two gardeners stay. Its side shelf (jars, hanging dried bunches) and potting table (mortar and pestle) are replaced with hemp-patch props, because those items are on the hemp never list.
+- **v2 floor 09** becomes the Soap and Scent Workshop. Its copper still with a flame and its lab flasks are replaced with a soap kettle, moulds and drying racks, so nothing reads as a laboratory.
+- **v2 floor 08** (spice kitchen) moves to World 2. World 1 floor 8 is the new Ropewalk and Twine Shop.
+- **B27** is named `world4_moon_greenhouse`. In the game design document the Moon is world 5.
 
 ---
 
@@ -153,12 +156,16 @@ One rule: **every art pixel in the game is the same size on screen.** The game r
 
 ### Mood per world
 
-| World | Time and mood | Dominant ramps | Accent |
-|---|---|---|---|
-| World 1, home town | Golden hour, always | wood, clay, gold, leaf, lavender | rose clouds |
-| World 2, big city (B17) | Blue night, lit windows | sky, stone, lavender | gold windows, a little teal |
-| World 3, tropical island (B18) | Bright late afternoon | teal, sky, leaf, cream sand | rose and red flowers |
-| Moon greenhouse (B27) | Earthlight outside, warm lamps inside | stone, steel, sky | teal glass, gold lamps |
+World names are from the game design document.
+
+| World | Time and mood | Dominant ramps | Accent | Art so far |
+|---|---|---|---|---|
+| 1 Thymeford, home town | Golden hour, always | wood, clay, gold, leaf, lavender | rose clouds | B3, B26, floors, cast |
+| 2 Loomington, hemp-industry city | Blue night, lit windows | sky, stone, lavender | gold windows, a little teal | B17 background only |
+| 3 Papaya Cay, island | Bright late afternoon | teal, sky, leaf, cream sand | rose and red flowers | B18 background only |
+| 4 Mount Mitten, winter | Snowy dusk, cabin lamps | sky, steel, lavender, with `white` and `sky-5` snow | gold lamps, red scarves | none |
+| 5 The Moon | Earthlight outside, warm lamps inside | stone, steel, sky | teal glass, gold lamps | B27 background only |
+| 6 Nebula Nursery | Deep space, glowing nebula bands | ink, lavender, rose, teal | gold lamps, white stars | none |
 
 Every world uses the same 76 colours. A world chooses which five or six ramps cover most of the screen. If a world truly needs a new colour, the palette gets a new version, with at most 8 added colours per world.
 
@@ -255,8 +262,18 @@ Each material has one recipe. Steps are ramp steps, dark to light.
 - **Clothes tell the job.** The apron or main garment carries the floor's accent colour.
 - **Faces:** happy closed-eye smiles are the default, as in the references. Open eyes are 2×3 pixels with a 1 pixel glint. Cheeks get a `blush` patch.
 - **Moods we use:** happy, proud, focused, surprised, comically grumpy, sleepy. Sleepy never appears on hemp floors.
-- **A different cast on every floor.** No character is copied between floors.
+- **A different pair of workers on every floor.** No worker is copied between floors. Managers are separate characters (see below).
 - **Original characters only.** No real people, no celebrity likenesses, no existing cartoon characters.
+
+### Managers
+
+Managers are collectible cards that the player can assign to any floor in any world. So:
+
+- **A manager never depends on a floor.** The pose is floor-neutral: standing or sitting, facing the viewer or slightly right, holding only their own signature item. No floor tools, no floor furniture drawn into the sprite.
+- **Frames:** stand, blink, cheer, and one "boost" gesture (ring the bell, point, clap). No walk cycle. Same 64 pixel height and 80×80 canvas as workers.
+- **Card and portrait** are cut from the same design: full body for the large card, a 48×48 bust for lists.
+- **Every floor has a manager spot** (section 13). An unassigned spot shows the empty stool.
+- The beach-shirt and sleepy night-shift managers are valid cards. Default art and story hires never place them on hemp floors.
 
 ### How characters are built so they can move
 
@@ -316,8 +333,26 @@ Rules:
 - **Back walls are quiet.** Lower contrast, slightly darker and cooler than the props, few details. The room should read from the props and people, not the wallpaper.
 - **Outdoor floors are open to the sky.** Balcony, backyard and field floors have a low back layer (wall, fence, hedge) and the world's sky shows above it.
 - **Two workers per floor** as in the v2 floors, flanking the tap target.
+- **One manager spot per floor,** always at the right end (about x 292 to 336). It holds a low stool, crate or small desk, no taller than 24 pixels, themed to the floor, and nothing tall in front of it. The assigned manager stands or sits there. In the v2 floors the right-hand furniture is moved or trimmed to make this room.
 - **States:** locked (B4 shutter with the sprout sign), under construction (B4 scaffold scene), built and waiting (dimmed), built and running.
 - **Tower extras** from B20: roof, entrance, side walls. Tower roof is warm terracotta so it stands out from the purple town roofs.
+
+### World 1 floors and where their art comes from
+
+Names are from the game design document, still in review.
+
+| Floor | Name | Contents | Back wall |
+|---|---|---|---|
+| 1 | Windowsill Planter | v2 floor 01 | Batch 1, prompt 1 |
+| 2 | Balcony Boxes | v2 floor 02 | Batch 1, prompt 1 |
+| 3 | Backyard Hemp Patch | v2 floor 03 gardeners, hemp props from Batch 1 prompt 4, crop from prompt 5 | Batch 1, prompt 2 |
+| 4 | Potting Shed Nursery | v2 floor 04 | Batch 1, prompt 2 |
+| 5 | Glass Greenhouse | v2 floor 05 | Batch 1, prompt 3 |
+| 6 | Farmers' market (name to confirm) | v2 floor 06 | Batch 1, prompt 16 |
+| 7 | Tea house (name to confirm) | v2 floor 07 | Batch 1, prompt 16 |
+| 8 | Ropewalk and Twine Shop | Batch 1, prompt 15 | Batch 1, prompt 3 |
+| 9 | Soap and Scent Workshop | v2 floor 09 with the still and flasks replaced | Batch 2 |
+| 10 | Sprout Tower HQ | v2 floor 10 | Batch 2 |
 
 ---
 
@@ -432,7 +467,7 @@ All text is a bitmap pixel font drawn by the game. Fonts must be under the SIL O
 - Don't mix pixel sizes in one image, or scale a sprite to fit.
 - Don't bake text, numbers or currency signs into art.
 - Don't bake sky, frames or characters into a floor.
-- Don't reuse a character on another floor.
+- Don't reuse a worker on another floor. Managers are cards and can go anywhere.
 - Don't use any leaf as an emblem except the two-leaf sprout.
 - Don't show smoke, anything held to a face on hemp floors, or any item on the never list in HEMP_ART.md.
 - Don't copy anything from Cash, Inc. or any other game: no names, characters, art or layouts.
@@ -528,10 +563,12 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | Missing | Notes |
 |---|---|
 | All hemp art | Crop, growth stages, floors, products, cast, cards, packets. **B1** |
-| Room back walls for every floor | The shell interiors are transparent. First five floors and hemp floors in **B1** |
+| Room back walls for every floor | The shell interiors are transparent. World 1 floors 1 to 8 in **B1** |
 | Growth stages for every plant except mint | Basil, rosemary, lavender in **B1** |
-| Animation sheets for every worker except the B22 gardener | Two in **B1** |
-| In-world manager sprites | Hemp managers in **B1**. B5 and B21 exist as lineups only |
+| Animation sheets for every worker except the B22 gardener | Lead workers of floors 1, 2 and 3 in **B1** |
+| In-world manager sprites in floor-neutral poses | 30 managers in the design document. B5 and B21 exist as lineups only. Batch 2, once the manager list is settled |
+| Manager spot props | Stool and crate for floor 3 and counter stool for floor 8 in **B1**. The rest by hand |
+| Floor 9 rework | Soap kettle, moulds and racks to replace the still and flasks |
 | Chest opening in-between frames | Lid ajar, half open, open and empty. **B1** |
 | Face Kit | Hand-built |
 | UI kit | Hand-built |
@@ -540,8 +577,9 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | Card back, frames in B25 layout for five rarities, small card | B25 shows Epic only |
 | Shared pot kit, lamp sprite, tower side walls and floor plates | |
 | Upper sky, stars, separate clouds | Sky bands are specified here |
-| Worlds 2 and 3 | Backgrounds only so far. No floors, cast or plants |
-| Moon | Background only |
+| Worlds 2 (Loomington) and 3 (Papaya Cay) | Backgrounds only so far. No floors, cast or plants. The weaving mill, paper workshop, tailor and hempcrete floors belong to World 2 |
+| World 4 (Mount Mitten) and World 6 (Nebula Nursery) | No art at all |
+| World 5 (The Moon) | Background only |
 | Final logo | Pick: the B16 top-left wooden arch sign with lanterns, redrawn on the grid, with a rope border so hemp is in the brand |
 | Golden sprout pickup, combo and critical hit styles | |
 | B11 compass emblem and B12 plus token | Redesign |
@@ -551,7 +589,7 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 
 ## 24. Interfaces and names that may change
 
-- **Game Designer** owns the names and lists of floors, plants, managers, currencies and worlds. This bible describes looks by type ("the windowsill room", "the ropemaker"), not by final name. Flags: floor names, manager names, the three magical hemp variety names (placeholders: golden-thread, moon-silver, star-loom), which currencies exist, world numbering.
+- **Game Designer** owns the names and lists of floors, plants, managers, currencies and worlds, in `docs/design/`. This bible describes looks by type ("the windowsill room", "the ropewalk") and quotes design names where they are known. Agreed so far: World 1 floor names (section 13), six worlds (section 7), six hemp cards (HEMP_ART.md), managers as cards for any floor. Still open on the art side: the names of floors 6 and 7, the manager list, which currencies exist.
 - **Engine** owns the tech. Agreed contract: 640×360 canvas, whole-number scaling, nearest-neighbour transparent PNGs, cutout actors from parts with pivots in JSON, bitmap fonts, soft light made by the engine only.
 - **A fresh-eyes art review** checks later assets against section 22.
 
@@ -560,3 +598,4 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 ## 25. Change log
 
 - **v1:** first version, built from both reference packs, with the measured grid, the 76-colour palette, the hemp definition and the clean-up proof.
+- **v1.1:** aligned with the game design document. World 1 floor table, six worlds, six named hemp cards, managers as floor-neutral cards with a manager spot on every floor, fixes owed on v2 floors 03 and 09. The look, grid, palette and prompt suffix are unchanged.

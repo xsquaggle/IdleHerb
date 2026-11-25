@@ -1,16 +1,18 @@
 # Production Asset Batch 1
 
-Part of the [Style Bible](STYLE_BIBLE.md). Style suffix version: **v1**. Hemp guards version: **v1**.
+Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **2** (aligned with the game design document's floor and card names). Style suffix version: **v1**. Hemp guards version: **v1**.
 
-**17 images.** Ordered by what the World 1 vertical slice needs first: rooms for the first five floors, the hemp crop and its floor, workers who can move, managers, a chest opening, cards, then the first hemp product floor and the menu icons. If you only have time for ten, do prompts 1 to 10.
+**17 images.** Ordered by what the World 1 vertical slice needs first: rooms for the first five floors, the hemp crop and its floor, lead workers who can move for the first three floors, a chest opening, cards, then the first hemp product floor and the menu icons. If you only have time for ten, do prompts 1 to 10.
 
-Everything here avoids final names. Where a name or list could still change, the prompt's **Name flag** says so.
+Floor and card names follow the game design document, which is still in review. Each prompt describes a look, not a name, so a rename does not spoil an image. The prompt's **Name flag** says what could still change.
+
+Managers are not in this batch. The six in your B21 lineup cover the vertical slice, and new managers follow in Batch 2 once the manager list in the design document is settled.
 
 ## How to do it on your phone
 
 1. The work is split into **6 rounds**. Each round is **one new ChatGPT chat**.
-2. At the start of a round, **attach that round's reference images** from your own packs (two images, or three in round 3, listed below) and paste the round's first prompt in the same message.
-3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the images again.
+2. At the start of a round, **attach that round's two reference images** from your own packs (listed below) and paste the round's first prompt in the same message.
+3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the two reference images again. Only round 3 is different: each of its three prompts also needs one of your floor images, named under the prompt's title.
 4. Each prompt is one grey box. Copy the whole box, change nothing.
 5. Save each result as it comes: **PNG, original size**. No screenshots, no JPG, no cropping or resizing.
 6. Upload the results to the project. You do not need to rename them. Upload in number order, or tell me which number each one is.
@@ -30,11 +32,11 @@ All six are from your expansion pack. The B1 key art is the mood anchor for the 
 
 | Round | Theme | Attach | Prompts | Priority |
 |---|---|---|---|---|
-| 1 | Rooms and the hemp field | Set A | 1, 2, 3, 4 | Needed first |
+| 1 | Rooms and the hemp patch | Set A | 1, 2, 3, 4 | Needed first |
 | 2 | Crops | Set C | 5, 6, 7 | Needed first |
-| 3 | People | Set B plus floor 01 v2 | 8, 9, 10 | Needed first |
+| 3 | People | Set B plus one floor image per prompt | 8, 9, 10 | Needed first |
 | 4 | Chest, cards and products | Set C | 11, 12, 13, 14 | Needed next |
-| 5 | The rope and textile mill | Set A | 15, 16 | Needed next |
+| 5 | The ropewalk and two more rooms | Set A | 15, 16 | Needed next |
 | 6 | Menu icons | Set C | 17 | Needed next |
 
 ### All prompts at a glance
@@ -43,25 +45,25 @@ All six are from your expansion pack. The B1 key art is the mood anchor for the 
 |---|---|---|---|---|
 | 1 | Back walls: windowsill room and balcony | `b01_01_backwalls_windowsill_balcony.png` | landscape 3:2 | Around the panels only |
 | 2 | Back walls: backyard and garden shed | `b01_02_backwalls_backyard_shed.png` | landscape 3:2 | Around the panels only |
-| 3 | Back walls: greenhouse and farm field | `b01_03_backwalls_greenhouse_field.png` | landscape 3:2 | Around the panels only |
-| 4 | Hemp field floor: props and two workers | `b01_04_floor_hemp_field.png` | very wide landscape 3:1 | Yes |
+| 3 | Back walls: greenhouse and ropewalk | `b01_03_backwalls_greenhouse_ropewalk.png` | landscape 3:2 | Around the panels only |
+| 4 | Backyard Hemp Patch: props | `b01_04_floor03_hemp_patch_props.png` | very wide landscape 3:1 | Yes |
 | 5 | Hemp growth stages | `b01_05_hemp_growth_stages.png` | very wide landscape 3:1 | Yes |
 | 6 | Hemp varieties and harvest props | `b01_06_hemp_varieties_harvest.png` | landscape 16:9 | Yes |
 | 7 | Herb growth stages: basil, rosemary, lavender | `b01_07_herb_growth_stages.png` | landscape 4:3 | Yes |
 | 8 | Worker animation sheet: floor 1 gardener | `b01_08_worker_sheet_floor1_gardener.png` | square 1:1 | Yes |
-| 9 | Worker animation sheet: hemp farmer | `b01_09_worker_sheet_hemp_farmer.png` | square 1:1 | Yes |
-| 10 | Hemp and workshop managers lineup | `b01_10_managers_hemp_lineup.png` | landscape 16:9 | Yes |
+| 9 | Worker animation sheet: floor 3 gardener | `b01_09_worker_sheet_floor3_gardener.png` | square 1:1 | Yes |
+| 10 | Worker animation sheet: floor 2 gardener | `b01_10_worker_sheet_floor2_gardener.png` | square 1:1 | Yes |
 | 11 | Chest opening frames | `b01_11_chest_opening_frames.png` | landscape 16:9 | Yes |
 | 12 | Hemp plant card art | `b01_12_hemp_card_art.png` | landscape 3:2 | Yes |
 | 13 | Hemp seed packets and jars | `b01_13_hemp_seed_packets.png` | landscape 16:9 | Yes |
 | 14 | Hemp product icons | `b01_14_hemp_product_icons.png` | landscape 16:9 | Yes |
-| 15 | Rope and textile mill floor: props and two workers | `b01_15_floor_rope_textile_mill.png` | very wide landscape 3:1 | Yes |
-| 16 | Back walls: timber mill and craft workshop | `b01_16_backwalls_mill_workshop.png` | landscape 3:2 | Around the panels only |
+| 15 | Ropewalk and Twine Shop floor: props and two workers | `b01_15_floor08_ropewalk_twine_shop.png` | very wide landscape 3:1 | Yes |
+| 16 | Back walls: market square and tea house | `b01_16_backwalls_market_teahouse.png` | landscape 3:2 | Around the panels only |
 | 17 | Menu and stat icons | `b01_17_ui_icons.png` | landscape 16:9 | Yes |
 
 ---
 
-## Round 1: Rooms and the hemp field
+## Round 1: Rooms and the hemp patch
 
 **New chat. Attach Set A:** `B4_floor04_garden_shed_nursery_v2.png` and `B4_floor_frame_shell.png`.
 
@@ -70,9 +72,9 @@ All six are from your expansion pack. The B1 key art is the mood anchor for the 
 - **File name:** `b01_01_backwalls_windowsill_balcony.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Around the panels only
-- **Purpose:** The wall layer behind the props of floors 1 and 2. The shell interiors are see-through, so every room needs one.
+- **Purpose:** The wall layer behind the props of floor 1 (Windowsill Planter) and floor 2 (Balcony Boxes). The shell interiors are see-through, so every room needs one.
 - **Parts we cut from it:** 2 panels. Each is cut out and brought to 336×104 art pixels.
-- **Name flag:** Floor names may change. The rooms are described by type.
+- **Name flag:** Floor names are from the game design document, still in review. The rooms are described by type.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
@@ -95,7 +97,7 @@ Image shape: landscape 3:2.
 - **File name:** `b01_02_backwalls_backyard_shed.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Around the panels only
-- **Purpose:** The wall layer for floors 3 and 4. The backyard is open air, so the game's own sunset sky shows above the hedge.
+- **Purpose:** The wall layer for floor 3 (Backyard Hemp Patch) and floor 4 (Potting Shed Nursery). The backyard is open air, so the game's own sunset sky shows above the hedge.
 - **Parts we cut from it:** 2 panels at 336×104. The flat blue area of the backyard panel is removed in clean-up.
 - **Name flag:** Floor names may change.
 
@@ -115,14 +117,14 @@ BACKGROUND: transparent (PNG with alpha) around and between the panels. Each pan
 Image shape: landscape 3:2.
 ```
 
-### Prompt 3: Back walls: greenhouse and farm field
+### Prompt 3: Back walls: greenhouse and ropewalk
 
-- **File name:** `b01_03_backwalls_greenhouse_field.png`
+- **File name:** `b01_03_backwalls_greenhouse_ropewalk.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Around the panels only
-- **Purpose:** The wall layer for floor 5 and for the hemp field floor.
-- **Parts we cut from it:** 2 panels at 336×104. The flat blue area of the field panel is removed in clean-up.
-- **Name flag:** Floor names may change. Where the hemp field sits in the tower is the Game Designer's call.
+- **Purpose:** The wall layer for floor 5 (Glass Greenhouse) and floor 8 (Ropewalk and Twine Shop), the first hemp product floor.
+- **Parts we cut from it:** 2 panels at 336×104.
+- **Name flag:** Floor names are from the game design document, still in review.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
@@ -131,7 +133,7 @@ Two background wall panels for a cozy pixel-art idle game about a herb-growing t
 
 TOP PANEL, inside a glass greenhouse: a white-painted iron frame of slim posts and arched ribs divides the wall into tall glass panes. Through the glass there is a plain pale teal evening tone with the soft dark shapes of far hills along the bottom. A little ivy climbs one post.
 
-BOTTOM PANEL, a farm field backdrop: gentle far hills covered with neat rows of a tall green crop, drawn as simple sage-green stripes with no single plants or leaves visible, a wooden rail fence across the lower part, and a small red-brown barn and a little windmill far away on the left. Everything above the hills is ONE flat plain pale blue colour with no clouds, no sun and no shading (the game replaces it with its own sky).
+BOTTOM PANEL, inside a long timber rope-making shed: a wall of warm brown planks between stout wooden posts, a row of three small high windows with golden evening light, and a long wooden rail of pegs with two loops of cream rope hanging from it.
 
 STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
 
@@ -140,31 +142,29 @@ BACKGROUND: transparent (PNG with alpha) around and between the panels. Each pan
 Image shape: landscape 3:2.
 ```
 
-### Prompt 4: Hemp field floor: props and two workers
+### Prompt 4: Backyard Hemp Patch: props
 
-- **File name:** `b01_04_floor_hemp_field.png`
+- **File name:** `b01_04_floor03_hemp_patch_props.png`
 - **Shape and size:** very wide landscape 3:1, about 2160×720 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** The contents of the first hemp floor, in the same form as your v2 floors. The crop itself is added by the game in the middle gap so it can grow.
-- **Parts we cut from it:** Sliced into: fence with scarecrow, stook, farmer, soil row, field hand, cart, barrel and can. Brought to 360×120.
-- **Name flag:** Floor name and worker names may change.
+- **Purpose:** New props that turn floor 3 into the Backyard Hemp Patch. The two gardeners from your v2 floor 03 stay. Its herb shelf and potting table are swapped for these, because our hemp rules keep jars and dried bunches off hemp floors. The crop itself is added by the game in the empty bed so it can grow.
+- **Parts we cut from it:** Sliced into: fence with scarecrow, stook, wheelbarrow, raised bed, tool rack, barrel and can, manager's stool and crate. Brought to the 360×120 floor.
+- **Name flag:** Floor name is from the game design document, still in review.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
 
-A row of farm props and two farm workers for one floor of a cozy pixel-art idle game, arranged left to right on one shared ground line, exactly like the attached floor reference: separate objects with small gaps between them, nothing cut off by the edges.
+A row of backyard garden props for one floor of a cozy pixel-art idle game, arranged left to right on one shared ground line, exactly like the attached floor reference: separate objects with small gaps between them, nothing cut off by the edges. No people in this image.
 
 Left to right:
-1. A short piece of wooden rail fence with a friendly scarecrow in a straw hat and a patched jacket. Two small brown sparrows sit on its arms.
+1. A short piece of wooden picket fence with a friendly scarecrow in a straw hat and a patched jacket. Two small brown sparrows sit on its arms.
 2. A stook: three tied sheaves of long, straight, pale golden-green stalks leaning together.
-3. A worker walking to the right, carrying a tied sheaf of long stalks on one shoulder: a sturdy, cheerful farmer in their fifties with warm brown skin, short curly black hair greying at the temples, a wide straw hat with a sage-green band, bushy eyebrows and a big smile, a cream shirt with rolled sleeves, sage-green dungarees with a rope belt, and brown boots.
-4. AN EMPTY GAP in the middle, about one quarter of the image width. Only a long low mound of dark ploughed soil lies on the ground line there. The game plants the crop here.
-5. A second worker, kneeling and tying a sheaf with twine: a lanky young field hand with light freckled skin, a long ginger braid, a faded lavender neckerchief, a cream shirt, brown rolled-up trousers with braces and tall green rubber boots.
-6. A wooden two-wheeled farm cart loaded with tied sheaves, then a wooden water barrel with a tin watering can beside it.
+3. A wooden wheelbarrow loaded with tied sheaves.
+4. A long, low raised garden bed made of wooden planks, about one third of the image width, filled with dark soil and completely EMPTY. The game plants the crop here.
+5. A wooden tool rack holding a hay rake, a spade and a coil of rope, then a wooden water barrel with a tin watering can beside it.
+6. A small empty wooden stool next to an upturned crate with a brass hand bell on it.
 
-Both workers look brisk, proud and wide awake. There are no standing crop plants in this image.
-
-CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+There are no standing crop plants in this image.
 
 HEMP PRODUCTS: everything here is made from industrial hemp fibre and seed, shown as plain farm and workshop goods. Harvested stalks are long, straight and pale, like thin bamboo canes or straw. Any mark on a product is a rope knot or a simple two-leaf sprout. No fan-shaped leaf anywhere as an emblem, pattern or decoration, no plant close-ups, no smoke, no jars of dried leaves, nothing held to a face.
 
@@ -186,9 +186,9 @@ Image shape: very wide landscape 3:1.
 - **File name:** `b01_05_hemp_growth_stages.png`
 - **Shape and size:** very wide landscape 3:1, about 2160×720 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** The crop the player taps on the hemp field floor. This is the image that defines hemp for the whole game.
+- **Purpose:** The crop the player taps on floor 3, Backyard Hemp Patch. This is the image that defines hemp for the whole game.
 - **Parts we cut from it:** 5 sprites, one per stage. The harvest stage becomes 32×96 art pixels.
-- **Name flag:** None.
+- **Name flag:** None. This is the Fibre Hemp card's plant.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
@@ -219,7 +219,7 @@ Image shape: very wide landscape 3:1.
 - **Transparent background:** Yes
 - **Purpose:** The other hemp plants and everything a harvest leaves behind. Used on the hemp floors and in card art.
 - **Parts we cut from it:** 8 sprites. The giant cane's base and top are joined in the game by a repeating cane piece cut from the base.
-- **Name flag:** None.
+- **Name flag:** Variety names (Seed Hemp, Longstalk Hemp, Giant Show-Hemp) are from the game design document, still in review.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
@@ -230,7 +230,7 @@ Row 1:
 1. A seed hemp plant: shorter and branchier than fibre hemp, with slim hanging ears of small round cream-and-tan seeds, like oats or millet. One small brown sparrow sits on a branch.
 2. One tied sheaf of long straight pale golden-green stalks, standing upright.
 3. A stook: three such sheaves leaning together.
-4. A round bale of pale golden stalks tied with twine.
+4. A longstalk hemp clump: three extra tall, extra slim green canes with long gaps between the ringed joints, tied to a tall bamboo stake with two small blue ribbon ties.
 
 Row 2:
 5. A wooden drying rack with bundles of pale golden stalks hanging from it.
@@ -283,7 +283,7 @@ Image shape: landscape 4:3.
 
 ## Round 3: People
 
-**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **For this round also attach** `B4_floor01_windowsill_planter_v2.png` (three images in total).
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **In this round each prompt also needs one floor image of yours**, named under the prompt's title. Attach it in the same message as that prompt.
 
 ### Prompt 8: Worker animation sheet: floor 1 gardener
 
@@ -293,10 +293,10 @@ Image shape: landscape 4:3.
 - **Purpose:** Makes the lead worker of floor 1 (the grandmother from your v2 floor 01) walk, work and cheer.
 - **Parts we cut from it:** 9 poses. Bodies become frames of 80×80 art pixels. One head is redrawn by hand and reused on every frame.
 - **Name flag:** Her name may change. Her look is taken from your v2 floor 01.
-- **Extra attachment:** For this prompt also attach `B4_floor01_windowsill_planter_v2.png`, so the grandmother matches your floor 01.
+- **Extra attachment:** With this prompt also attach `B4_floor01_windowsill_planter_v2.png`, so the grandmother matches your floor 01.
 
 ```text
-Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The third attached image is a floor scene with two gardeners and plant shelves: the grandmother with glasses on its left side is the character to draw. Keep her face, hair, outfit and colours.
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The windowsill floor scene attached with this message shows the character to draw: the grandmother with glasses on its left side. Keep her face, hair, outfit and colours.
 
 A character animation sheet for a cozy pixel-art idle game: the SAME character in nine poses, in a grid of three rows and three columns, one pose per cell, evenly spaced, nothing touching. Full body in every cell. Same size, same face, same outfit, same colours and same proportions in every pose, exactly like the attached animation sheet reference. The character is chunky, about two and a half heads tall. Feet in each row stand on the same baseline.
 
@@ -315,27 +315,28 @@ BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery
 Image shape: square 1:1.
 ```
 
-### Prompt 9: Worker animation sheet: hemp farmer
+### Prompt 9: Worker animation sheet: floor 3 gardener
 
-- **File name:** `b01_09_worker_sheet_hemp_farmer.png`
+- **File name:** `b01_09_worker_sheet_floor3_gardener.png`
 - **Shape and size:** square 1:1, about 1254×1254 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** The lead worker of the hemp field floor, a new character, ready to animate.
+- **Purpose:** Makes the lead worker of floor 3, Backyard Hemp Patch (the gardener with the wheelbarrow from your v2 floor 03), walk, rake and carry sheaves.
 - **Parts we cut from it:** 9 poses, as for prompt 8. The rake and the sheaf are separated as props.
-- **Name flag:** Name may change.
+- **Name flag:** Name may change. The look is taken from your v2 floor 03.
+- **Extra attachment:** With this prompt also attach `B4_floor03_backyard_patch_v2.png`, so the gardener matches your floor 03.
 
 ```text
-Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The backyard floor scene attached with this message shows the character to draw: the older gardener in yellow dungarees pushing a wheelbarrow. Keep the face, hair, outfit and colours.
 
 A character animation sheet for a cozy pixel-art idle game: the SAME character in nine poses, in a grid of three rows and three columns, one pose per cell, evenly spaced, nothing touching. Full body in every cell. Same size, same face, same outfit, same colours and same proportions in every pose, exactly like the attached animation sheet reference. The character is chunky, about two and a half heads tall. Feet in each row stand on the same baseline.
 
-THE CHARACTER: a sturdy, cheerful farmer in their fifties with warm brown skin, short curly black hair greying at the temples, a wide straw hat with a sage-green band, bushy eyebrows and a big smile, a cream shirt with rolled sleeves, sage-green dungarees with a rope belt, and brown boots.
+THE CHARACTER: a cheerful, stout older gardener with deep brown skin, fluffy grey-white curly hair tied with a yellow bow headband, a gold hoop earring, a cream shirt with rolled sleeves, golden-yellow dungarees with a tool pocket, white work gloves and yellow garden clogs.
 
-Row 1: (1) standing relaxed, facing the viewer, thumbs hooked in the dungaree straps, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with both arms up, hat lifted in one hand.
+Row 1: (1) standing relaxed, facing the viewer, hands on hips, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with both arms up and a little hop.
 Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
 Row 3, working, facing right: (7) reaching forward with a long wooden hay rake. (8) pulling the rake back toward the body. (9) walking to the right carrying a tied sheaf of long pale golden-green stalks on one shoulder.
 
-The farmer looks brisk, proud and wide awake in every pose.
+The gardener looks brisk, proud and wide awake in every pose.
 
 CAST: characters invented for this game, not based on any real person or any existing cartoon character.
 
@@ -348,35 +349,34 @@ BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery
 Image shape: square 1:1.
 ```
 
-### Prompt 10: Hemp and workshop managers lineup
+### Prompt 10: Worker animation sheet: floor 2 gardener
 
-- **File name:** `b01_10_managers_hemp_lineup.png`
-- **Shape and size:** landscape 16:9, about 1664×936 (any size ChatGPT gives at this shape is fine)
+- **File name:** `b01_10_worker_sheet_floor2_gardener.png`
+- **Shape and size:** square 1:1, about 1254×1254 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** The five managers of the hemp floors: the faces on manager cards and in each room.
-- **Parts we cut from it:** 5 full-body sprites at 64 art pixels tall, plus five 48×48 portraits redrawn from them.
-- **Name flag:** Names, and which manager runs which floor, belong to the Game Designer.
+- **Purpose:** Makes the lead worker of floor 2, Balcony Boxes (the gardener with the boater hat and watering can from your v2 floor 02), walk, water and carry. With prompts 8 and 9 this gives the first three floors a moving lead worker.
+- **Parts we cut from it:** 9 poses, as for prompt 8. The watering can is separated as a prop.
+- **Name flag:** Name may change. The look is taken from your v2 floor 02.
+- **Extra attachment:** With this prompt also attach `B4_floor02_balcony_pots_v2.png`, so the gardener matches your floor 02.
 
 ```text
-Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The balcony floor scene attached with this message shows the character to draw: the tall gardener in a straw boater hat and red waistcoat holding a watering can. Keep the face, hair, outfit and colours.
 
-Five manager characters for a cozy pixel-art idle game, standing in one row like the attached manager lineup reference: full body, evenly spaced, not touching, all on the same baseline. Each is chunky, about two and a half heads tall, with a very different body shape, age and silhouette from the others. All five look brisk, proud and wide awake, like master craftspeople who love their trade.
+A character animation sheet for a cozy pixel-art idle game: the SAME character in nine poses, in a grid of three rows and three columns, one pose per cell, evenly spaced, nothing touching. Full body in every cell. Same size, same face, same outfit, same colours and same proportions in every pose, exactly like the attached animation sheet reference. The character is chunky, about two and a half heads tall. Feet in each row stand on the same baseline.
 
-1. The field boss: tall and lanky, deep brown skin, short silver curly hair, round spectacles, a cream shirt, a sage-green waistcoat and tall rubber boots. Holds a long wooden measuring pole taller than themselves in one hand and has a tied sheaf of long pale stalks under the other arm. Proud chin-up smile.
-2. The ropemaker: broad and burly, tan skin, a big ginger moustache, a flat navy cap, a cream-and-navy striped shirt with rolled sleeves and a brown leather apron. A huge coil of thick cream rope hangs over one shoulder. The other arm is flexed proudly.
-3. The weaver: a small, elegant elderly woman with light skin, white hair in a neat braided crown, half-moon glasses on a chain, a lavender dress with a cream apron and a tape measure round her neck. She holds a wooden weaving shuttle up like a conductor's baton and has a rolled bolt of cream canvas under her arm.
-4. The papermaker: a neat, cheerful young man with golden-tan skin and straight black hair in a short ponytail, a teal apron over a cream shirt, and a pencil behind one ear. He holds a rectangular wooden frame with a fresh blank cream sheet of paper on it. Delighted smile.
-5. The mason: a stocky, strong woman with dark brown skin, hair wrapped in a bright gold headscarf under a yellow hard hat, and clay-orange overalls with dusty knees. She holds a trowel in one hand and balances a pale cream speckled building block on the other palm. Confident wink.
+THE CHARACTER: a tall, dapper gardener with warm brown skin, curly dark hair, a curled moustache, a cream straw boater hat with a brown band, a cream shirt with rolled sleeves, a red-brown waistcoat with a yellow neckerchief, brown knee breeches and brown boots.
+
+Row 1: (1) standing relaxed, facing the viewer, one hand on the hip, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with one arm up, hat lifted high in the other hand.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) lifting a grey-green watering can up high. (8) tipping the watering can to pour, with a few water drops falling. (9) walking to the right carrying a potted green herb in both hands.
 
 CAST: characters invented for this game, not based on any real person or any existing cartoon character.
-
-HEMP PRODUCTS: everything here is made from industrial hemp fibre and seed, shown as plain farm and workshop goods. Harvested stalks are long, straight and pale, like thin bamboo canes or straw. Any mark on a product is a rope knot or a simple two-leaf sprout. No fan-shaped leaf anywhere as an emblem, pattern or decoration, no plant close-ups, no smoke, no jars of dried leaves, nothing held to a face.
 
 STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
 
 BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
 
-Image shape: landscape 16:9.
+Image shape: square 1:1.
 ```
 
 ---
@@ -422,24 +422,24 @@ Image shape: landscape 16:9.
 - **File name:** `b01_12_hemp_card_art.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** The hero pictures for the hemp plant cards: three farm varieties and three magical ones.
+- **Purpose:** The hero pictures for the six hemp plant cards: Fibre, Seed, Longstalk, Giant Show-Hemp, Silkspun and Sunspun.
 - **Parts we cut from it:** 6 card pictures, each brought to about 108×100 art pixels.
-- **Name flag:** The three magical varieties are placeholders (golden-thread, moon-silver, star-loom). Names and count belong to the Game Designer.
+- **Name flag:** Card names and rarities are from the game design document, still in review. The looks do not depend on the names.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
 
 Six hero plants for collectible cards in a cozy pixel-art farming game, in two rows of three like the attached exotic plants reference, evenly spaced, each in its own cell, the same visual size, nothing touching or overlapping, nothing cut off by the edge. Each is a clump of whole hemp canes growing in a wide container. In every picture the canes are the hero: tall, slim and much taller than the container.
 
-Row 1, farm varieties:
+Row 1:
 1. Fibre hemp: five tall slim green canes in a long wooden planter trough with rope handles.
 2. Seed hemp: a shorter, branchier clump in a wooden half-barrel, with slim hanging ears of small round cream-and-tan seeds, and one small brown sparrow.
-3. Giant show-hemp: one very thick cane, as thick as bamboo, in a half-barrel with a blue first-prize ribbon rosette. It is so tall that it runs out of the top of its cell. A tiny wooden ladder leans against it.
+3. Longstalk hemp: three extra tall, extra slim canes with long gaps between the ringed joints, in a tall narrow wooden planter, tied to a bamboo stake with small blue ribbon ties. A wooden measuring stick stands beside it.
 
-Row 2, magical varieties. The magic is in the canes and the fibre. The leafy tops stay plain:
-4. Golden-thread hemp: green canes with a bright golden thread spiralling up each one, in a cream planter with a gold rim, and a few small four-point gold sparkles.
-5. Moon-silver hemp: pale silver-blue canes with lighter joints, in a deep purple planter painted with a crescent moon, and a few tiny white stars.
-6. Star-loom hemp: deep indigo canes with tiny star-shaped joints, in a dark blue planter painted with a star. A ribbon of pale woven cloth drifts up from the clump like a banner.
+Row 2. In the last two the magic is in the canes and the fibre, and the leafy tops stay plain:
+4. Giant show-hemp: one very thick cane, as thick as bamboo, in a half-barrel with a blue first-prize ribbon rosette. It is so tall that it runs out of the top of its cell. A tiny wooden ladder leans against it.
+5. Silkspun hemp: pale silver-blue canes with lighter joints and a few fine white silky threads draped between them, in a deep purple planter painted with a crescent moon, with a few tiny white stars.
+6. Sunspun hemp: green-gold canes with a bright golden thread spiralling up each one, in a cream planter with a gold sun medallion, a few small four-point gold sparkles, and a ribbon of golden woven cloth drifting up from the clump like a banner.
 
 HEMP LOOK: industrial fibre hemp drawn as a tall farm crop, like bamboo or tall corn: a straight slim green cane with ringed joints, bare in its lower half, with small drooping groups of 3 to 5 narrow leaflets seen from the side in the upper half and a slim leafy tuft on top. Whole plants only, in farm context. No flower buds, no close-up of plant tops, no single fan-shaped leaf shown alone or used as an emblem, no smoke, no jars of dried leaves, nothing held to a face.
 
@@ -455,25 +455,25 @@ Image shape: landscape 3:2.
 - **File name:** `b01_13_hemp_seed_packets.png`
 - **Shape and size:** landscape 16:9, about 1664×936 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** Seed cards and shop items for hemp, to sit next to your B9b herb seed packets.
+- **Purpose:** Seed cards and shop items for the six hemp varieties, to sit next to your B9b herb seed packets.
 - **Parts we cut from it:** 8 icons at 48×48 art pixels, with 32 pixel versions redrawn from them.
-- **Name flag:** Variety names may change.
+- **Name flag:** Variety names are from the game design document, still in review.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
 
 A sheet of eight seed items for a cozy pixel-art farming game, in two rows of four, evenly spaced, each in its own cell, the same visual size, nothing touching or overlapping, nothing cut off by the edge. Packets carry a small picture and a few tiny scribble lines that suggest writing, but no real letters or numbers.
 
-Row 1:
-1. A kraft-brown paper seed packet tied with twine. Its picture shows a whole tall slim cane plant next to a coil of rope.
-2. A cream paper seed packet. Its picture shows a tall plant with hanging grain ears and a small sparrow.
-3. A sage-green paper seed packet with a small blue prize ribbon. Its picture shows one very thick, very tall cane.
-4. A small wooden scoop full of round grey-brown seeds, with a few seeds spilled beside it.
+Row 1, four paper seed packets tied with twine:
+1. A kraft-brown packet. Its picture shows a whole tall slim cane plant next to a coil of rope.
+2. A cream packet. Its picture shows a tall plant with hanging grain ears and a small sparrow.
+3. A pale blue packet. Its picture shows three very tall, very thin canes next to a measuring stick.
+4. A sage-green packet with a small blue prize ribbon. Its picture shows one very thick, very tall cane.
 
 Row 2:
-5. A round glass jar with a gold lid, full of golden seeds, with a golden thread tied round its neck.
-6. A round glass jar with a silver crescent-moon lid, full of pale silver-blue seeds.
-7. A round glass jar with a star-shaped lid, full of deep indigo seeds with tiny star sparkles.
+5. A round glass jar with a silver crescent-moon lid, full of pale silver-blue seeds.
+6. A round glass jar with a gold sun-shaped lid, full of golden seeds, with a golden thread tied round its neck.
+7. A small wooden scoop full of round grey-brown seeds, with a few seeds spilled beside it.
 8. A small burlap seed sack tied with twine, stamped with a simple two-leaf sprout mark.
 
 HEMP LOOK: industrial fibre hemp drawn as a tall farm crop, like bamboo or tall corn: a straight slim green cane with ringed joints, bare in its lower half, with small drooping groups of 3 to 5 narrow leaflets seen from the side in the upper half and a slim leafy tuft on top. Whole plants only, in farm context. No flower buds, no close-up of plant tops, no single fan-shaped leaf shown alone or used as an emblem, no smoke, no jars of dried leaves, nothing held to a face.
@@ -514,18 +514,18 @@ Image shape: landscape 16:9.
 
 ---
 
-## Round 5: The rope and textile mill
+## Round 5: The ropewalk and two more rooms
 
 **New chat. Attach Set A:** `B4_floor04_garden_shed_nursery_v2.png` and `B4_floor_frame_shell.png`.
 
-### Prompt 15: Rope and textile mill floor: props and two workers
+### Prompt 15: Ropewalk and Twine Shop floor: props and two workers
 
-- **File name:** `b01_15_floor_rope_textile_mill.png`
+- **File name:** `b01_15_floor08_ropewalk_twine_shop.png`
 - **Shape and size:** very wide landscape 3:1, about 2160×720 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** The contents of the first hemp product floor, where stalks become rope and cloth.
-- **Parts we cut from it:** Sliced into: fibre baskets and shelf, rope wheel, ropemaker, rope run and post, loom, weaver, cloth shelf. Brought to 360×120.
-- **Name flag:** Floor name and worker names may change.
+- **Purpose:** The contents of floor 8, Ropewalk and Twine Shop, where hemp stalks become rope and twine. It replaces the spice kitchen, which moves to World 2.
+- **Parts we cut from it:** Sliced into: fibre shelf, rope wheel, first worker, rope run and post, twine bench, second worker, shop counter with the manager's stool. Brought to 360×120.
+- **Name flag:** Floor name is from the game design document, still in review. Worker names may change.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
@@ -536,9 +536,9 @@ Left to right:
 1. A wooden shelf with baskets of pale blond fibre hanks and a few rope coils hanging from pegs.
 2. A big wooden rope-making wheel with a hand crank, twisting three thin cream strands into one thick rope. The rope runs to the right, across to a short wooden post with an iron hook.
 3. A worker turning the crank: a stout, cheerful young woman with deep brown skin, hair in two round puffs tied with cream ribbons, a mustard-yellow shirt with rolled sleeves, a brown leather apron and sturdy boots.
-4. A wooden floor loom with a half-woven sheet of cream canvas on it.
-5. A worker sitting on a stool at the loom: a tall, thin old man with light skin, a long white moustache, round glasses, a soft plum-purple cap, a cream shirt and a plum waistcoat, passing a wooden shuttle through the threads.
-6. A low wooden shelf with rolled bolts of cream canvas, one folded cream cloth and a large coil of finished rope.
+4. A wooden workbench with a spool stand, several finished balls of twine and a pair of shears.
+5. A worker sitting on a stool at the bench, winding twine into a ball: a tall, thin old man with light skin, a long white moustache, round glasses, a soft plum-purple cap, a cream shirt and a plum waistcoat.
+6. A small shop counter under a cream-and-lavender striped awning, displaying rope coils and a basket of twine balls, with a brass hand bell on the counter and an empty stool beside it.
 
 Both workers look brisk, proud and wide awake. No plants in this image.
 
@@ -553,23 +553,23 @@ BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery
 Image shape: very wide landscape 3:1.
 ```
 
-### Prompt 16: Back walls: timber mill and craft workshop
+### Prompt 16: Back walls: market square and tea house
 
-- **File name:** `b01_16_backwalls_mill_workshop.png`
+- **File name:** `b01_16_backwalls_market_teahouse.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Around the panels only
-- **Purpose:** The wall layer for the rope and textile mill and for a paper or craft workshop floor.
-- **Parts we cut from it:** 2 panels at 336×104.
-- **Name flag:** Floor names and the final floor list may change. Both walls are generic enough to reuse.
+- **Purpose:** The wall layer for floors 6 and 7, so that floors 1 to 8 of World 1 all have one.
+- **Parts we cut from it:** 2 panels at 336×104. The flat blue area of the market panel is removed in clean-up.
+- **Name flag:** Assumes floors 6 and 7 stay a farmers' market and a tea house, as in your v2 floor images. To be confirmed by the game design document.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
 
 Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, no potted plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, a little darker and cooler than the reference props, with few details, so that bright props and characters placed in front of them will stand out.
 
-TOP PANEL, inside a timber mill: a tall post-and-beam wall of warm brown planks, a row of three tall narrow windows with golden evening light, a big wooden cog wheel fixed to the wall on the left, and one loop of rope on a peg.
+TOP PANEL, an open-air market square: a low cream stone wall runs along the bottom third, with an iron lamp post at each end and a string of small triangular bunting flags in cream, rose and lavender hanging between the posts. Everything above the wall is ONE flat plain pale blue colour with no clouds, no sun and no shading (the game replaces it with its own sky).
 
-BOTTOM PANEL, a tidy craft workshop: a cream plaster wall above pale wooden panelling, a wide window with small panes in the centre showing a plain golden evening sky, a clothesline strung high across the wall with a row of blank cream paper sheets hanging from wooden pegs, and one empty wall shelf on the right.
+BOTTOM PANEL, inside a quiet tea house: a wall of pale paper screens in dark wooden frames, a round window in the centre showing a plain golden evening sky and one bare branch, a hanging scroll with a simple painted sprig and no writing, and warm wooden panelling along the bottom.
 
 STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
 
@@ -637,9 +637,9 @@ No new images are needed for these. They go straight to clean-up.
 | Need | Covered by |
 |---|---|
 | Floor shell, locked shutter, construction scene | `B4_floor_frame_shell`, `B4_floor_locked_shutter`, `B4_floor_under_construction` |
-| Props and workers for floors 1 to 10 | The ten `B4_floor..._v2` images |
+| Props and workers for the floors | The ten `B4_floor..._v2` images. Floor 3 gets hemp props from prompt 4. Floor 8 is new in prompt 15 |
 | Tower roof and entrance | `B20_tower_parts` |
-| Herb managers | `B5_manager_lineup`, `B21_manager_lineup_2` |
+| Managers for the vertical slice | `B21_manager_lineup_2`, with `B5_manager_lineup` as design reference |
 | One animated worker | `B22_character_animation_sheet` |
 | Customers | `B28_customers_npc_sheet` |
 | Herb card pictures, everyday and magical | `B9_plant_card_art`, `B23_exotic_plants` |

@@ -30,16 +30,20 @@ The chart is a proportion guide on the real art-pixel grid (shown at 3×), not f
 | **Ground** | A soil mound, a field row or a long wooden planter trough. Not a small round pot |
 | **Colour** | `sage` and `gold` ramps, with a little `leaf-5` on tips. Never neon green, never purple or black foliage |
 
-### Varieties
+### The six hemp cards
 
-| Variety | Look | Read |
-|---|---|---|
-| **Fibre hemp** | The standard above. 32×96, clump of three canes | "Bamboo-like fibre crop" |
-| **Seed hemp** | Shorter (about 66 tall) and branchier, with slim hanging grain ears: cream and tan husks with small round seeds, like oats or millet. Sparrows love it | "Grain crop" |
-| **Giant show-hemp** | A comic super-cane as thick as bamboo (6 pixels) that pokes through the ceiling into the floor above. It grows in a half-barrel, wears a blue first-prize ribbon and has a ladder and a tape measure next to it | "County fair champion" |
-| **Magical varieties** (three placeholders: golden-thread, moon-silver, star-loom) | The magic lives in the **stalk and the fibre**: golden thread spiralling round the cane, silver-blue canes with a crescent on the planter, star-shaped joints with fibre drifting up like ribbon. The tops stay plain | "Enchanted rope plant" |
+Names and rarities are from the game design document.
 
-Names of the magical varieties belong to the Game Designer and may change. The looks do not depend on the names.
+| Card | Rarity | Look | Read |
+|---|---|---|---|
+| **Fibre Hemp** | Common | The standard above. 32×96, clump of three canes | "Bamboo-like fibre crop" |
+| **Seed Hemp** | Uncommon | Shorter (about 66 tall) and branchier, with slim hanging grain ears: cream and tan husks with small round seeds, like oats or millet. Sparrows love it | "Grain crop" |
+| **Longstalk Hemp** | Rare | Extra tall and extra slim, with long gaps between the joints, tied to a bamboo stake with blue ribbon ties. A measuring stick stands beside it | "The tall one" |
+| **Giant Show-Hemp** | Epic | A comic super-cane as thick as bamboo (6 pixels) that pokes through the ceiling into the floor above. It grows in a half-barrel, wears a blue first-prize ribbon and has a ladder next to it | "County fair champion" |
+| **Silkspun Hemp** | Legendary | Pale silver-blue canes with lighter joints and fine white silky threads draped between them. Crescent moon on the planter | "Moonlit silk plant" |
+| **Sunspun Hemp** | Exotic | Green-gold canes with a bright golden thread spiralling up each one, a sun medallion on the planter, and a ribbon of golden cloth drifting up like a banner | "Enchanted golden rope plant" |
+
+In the two magical cards the magic lives in the **stalk and the fibre**. The tops stay plain. A third magical look (indigo canes with star-shaped joints) is kept in reserve.
 
 ### Growth stages
 
@@ -68,18 +72,25 @@ This is where hemp gets its charm. The crop is plain on purpose. The products ar
 | Seed | Seed sack, toasted seed snack bowl, golden seed-oil bottle with a cork (a kitchen bottle) |
 | Care | Soap bar with a pressed sprout mark, lotion jar with a wooden lid |
 
-### Planned hemp floors
+### Hemp floors
 
-These are art plans by floor type. The Game Designer decides which exist, their order and their names.
+Floor names and their worlds are from the game design document. The art plan per floor is ours.
 
-| Floor type | Tap target | Cast | Key props |
-|---|---|---|---|
-| **Hemp Field** | The crop row itself | Hemp farmer, field hand | Rail fence, stook, cart, scarecrow with sparrows, water barrel |
-| **Rope and Textile Mill** | Rope-walk wheel | Ropemaker, weaver | Loom, canvas bolts, rope coils, fibre baskets |
-| **Paper Workshop** | Paper vat and mould | Papermaker, apprentice | Drying line, press, paper stacks, notebooks |
-| **Hempcrete Builder** | Block mould and mixing trough | Mason, hod carrier | Block stacks, half-built wall, trowels, wheelbarrow |
-| **Seed Press and Pantry** | Wooden screw press | Press-keeper, baker | Seed sacks, oil bottles, snack bowls, sparrows |
-| **Soap and Lotion Kitchen** | Soap moulds on a bench | Soapmaker, packer | Kettle with white steam, soap racks, ribbon and boxes |
+| World | Floor | Tap target | Key props | Art |
+|---|---|---|---|---|
+| 1 Thymeford | **Backyard Hemp Patch** (floor 3) | The crop in a raised bed. Backyard scale: a few tall rows, not a big field | Picket fence, scarecrow with sparrows, stook, wheelbarrow of sheaves, tool rack, water barrel | Batch 1 |
+| 1 Thymeford | **Ropewalk and Twine Shop** (floor 8) | Rope-making wheel | Fibre shelf, rope run and post, twine bench, shop counter with awning | Batch 1 |
+| 2 Loomington | **Canvas Weaving Mill** | Floor loom | Canvas bolts, shuttles, thread cones | Later |
+| 2 Loomington | **Paper Workshop** | Paper vat and mould | Drying line, press, paper stacks, notebooks | Later |
+| 2 Loomington | **Tailor's Atelier** | Cutting table | Dress form, shirts, tape measures, button jars | Later |
+| 2 Loomington | **Hempcrete Brickyard** | Block mould and mixing trough | Block stacks, half-built wall, trowels | Later |
+| 3 Papaya Cay | **Sailcloth Loft** | Sail on a sewing frame | Sail rolls, grommets, rope | Later |
+| 3 Papaya Cay | **Hammock and Net Weavers** | Net on a frame | Hammocks, floats, knots board | Later |
+| 3 Papaya Cay | **Seed Snack Shack** | Wooden press and toasting pan | Seed sacks, oil bottles, snack bowls, sparrows | Later |
+
+The Soap and Scent Workshop (World 1, floor 9) is led by lavender, not hemp, but it follows the same rules: a soap kitchen with a kettle, moulds and racks, never a laboratory.
+
+**Floor 3 uses the two gardeners from the v2 floor 03 image.** That image's side shelf (jars, hanging dried bunches) and potting table (mortar and pestle) are not used on this floor, because they are on the never list for hemp floors.
 
 ### Cards and packets
 
@@ -89,9 +100,9 @@ These are art plans by floor type. The Game Designer decides which exist, their 
 
 ### The hemp cast
 
-Farmer, ropemaker, weaver, papermaker, mason, press-keeper. They are **brisk, proud and bright-eyed**: skilled trades people who love their craft. Humour comes from pride, competition and scale (the giant cane, the endless rope, the sparrows stealing seed).
+Gardeners on the hemp patch, then ropemakers, weavers, papermakers, tailors, masons and sailmakers on the product floors. They are **brisk, proud and bright-eyed**: skilled trades people who love their craft. Humour comes from pride, competition and scale (the giant cane, the endless rope, the sparrows stealing seed).
 
-Not on hemp floors: the B5 beach-shirt manager, the B21 sleepy night-shift manager, or any character whose joke is being drowsy, dazed or "chill".
+Managers are cards the player can place on any floor, so the game cannot forbid a pairing. But default art, story hires, card pictures and marketing never show the B5 beach-shirt manager, the B21 sleepy night-shift manager, or any character whose joke is being drowsy, dazed or "chill", on a hemp floor.
 
 ## The never list
 
