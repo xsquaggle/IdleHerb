@@ -1,6 +1,6 @@
 # 03. Rendering, animation, UI and audio
 
-Status: recommended, Phase 0. Owner: Engine Architect. The pixel grid and sprite sizes here are agreed with the Art Director; the style bible in `docs/art/` is the authority on anything visual and this document follows it.
+Status: recommended, Phase 0. Owner: Engine Architect. The pixel grid and sprite sizes here are agreed with the Art Director; the style bible (`docs/art/STYLE_BIBLE.md`, section 3 for sizes) is the authority on anything visual and this document follows it.
 
 ## Pixel grid and resolution
 
@@ -41,19 +41,19 @@ From the Art Director's style bible. Repeated here because layouts and code cons
 
 | Asset | Size in art pixels |
 |---|---|
-| Floor module, including its frame shell | 360x120. Three floors fill the 360 height. Interior about 336x104 |
+| Floor module, including its frame shell | 360x120. Three floors fill the 360 height. Beams 8, interior about 336x104, floor line at y = 112 |
 | Shell, shutter, construction and floor contents | Same 360x120 canvas, overlaid 1:1 |
-| Actors | 64 tall nominal on an 80x80 canvas, feet baseline at y = 76 |
-| Potted plants | About 48x60. Fibre hemp crop about 32x96 |
+| Actors | Adult 64 tall on an 80x80 canvas, feet at y = 76 |
+| Potted plants | About 48x60, delivered as foliage and pot separately with the pivot at the soil line. Fibre hemp crop about 32x96 |
 | Cards | Large 180x240 with an art window about 108x100. Grid card 64x88 from a 48x48 icon |
-| Icons | 16, 24, 32, 48 |
-| Parallax layers | Strips 320 to 360 tall. Sky is procedural bands plus cloud sprites, so it never stretches |
+| Icons | 16, 24, 32, 48, each drawn at its own size, never scaled from another |
+| Parallax layers | Strips 320 to 360 tall. Sky is a procedural table of flat colour bands plus cloud sprites, so it never stretches |
 
 At 640 wide, a 360 wide tower leaves 140 art pixels on each side for the HUD and docked panels.
 
 ## Layers, back to front
 
-1. Sky: procedural banded gradient, sun or moon, cloud sprites.
+1. Sky: flat colour bands drawn from a per-world table, sun or moon, cloud sprites.
 2. Parallax strips: far, mid, near. Tiled or extended sideways for ultrawide.
 3. Tower: per floor, room back, props, plants, actors, frame shell, floor state overlays (dimmed while waiting for a tap, shutter, construction).
 4. World effects: particles in world space.
@@ -87,7 +87,7 @@ Two things are verified automatically (see 08): the calibration scene is pixel-e
 
 No animation editor is available, and bending a pixel sprite with bones smears its pixels. So characters are **cutout rigs described in JSON**: a few hand-posed body frames, with the head, face and props attached at pivots and animated by keyframes and small procedural motions. This gives lively characters from a small number of clean sprites, which suits art that is generated one image at a time.
 
-Per actor, from the style bible: about 8 body frames (idle, walk x4, work x2, cheer), one head, a shared face kit (eyes, brows, mouth as tiny sprites, giving blinks and expressions), and one or two held props.
+Per actor, from the style bible: 9 body pose frames, one separate head sprite attached at a neck pivot, a shared Face Kit (eyes, brows, mouth as tiny sprites, giving blinks and expressions), and held tools as separate sprites.
 
 Illustrative rig file (field names settle when the runtime is written):
 
@@ -124,7 +124,7 @@ What the runtime supports:
 - Keyframe tracks on position, scale, visibility and tint, with easing. Clips cross-fade.
 - Procedural layers on top: breathing bob, blink timers, look-at-cursor, squash on landing, a white flash on hit.
 - Timeline events that fire sounds and effects at an anchor, so audio and particles stay in sync with motion.
-- Plants use the same system with growth-stage frames and row-shear sway.
+- Plants use the same system with growth-stage frames. Foliage and pot are separate sprites; the foliage sways by row shear anchored at the soil-line pivot and the pot stays still.
 
 **How agents check animation without an editor.** `pnpm rig:preview <id>` renders every clip of a rig as a labelled contact sheet and an animated image, using the real game renderer. The animator looks at the frames, reviewers see them in the pull request, and Lawson can see them on the phone.
 
@@ -159,7 +159,7 @@ The whole UI is drawn in the same PixiJS canvas as the world, on the same pixel 
 
 - **Components** (the UI kit, built in Phase 1): button, icon button, toggle, slider, tabs, panel with nine-slice frames, virtualised scroll list and grid, progress bar, card, tooltip, modal stack, toast, tree canvas with pan and zoom (skills, research), key-binding capture.
 - **Layout**: anchors plus row, column and grid containers. Evaluate `@pixi/layout` for this before writing our own.
-- **Text**: bitmap pixel fonts with tabular digits so counters do not jitter. Fonts must be SIL OFL licensed (free to ship). A small rich-text layer supports inline icons, colour runs and wrapping for tooltips and descriptions.
+- **Text**: bitmap pixel fonts with tabular digits so counters do not jitter. The Display font is a custom bitmap font supplied by art. Body and Small are SIL OFL pixel fonts (free to ship), picked from the style bible's candidates after a legibility test in the engine at 2x, 3x, 4x and 6x during Phase 1. A small rich-text layer supports inline icons, colour runs and wrapping for tooltips and descriptions.
 - **Numbers**: every number on screen goes through the one formatter in 05. Counters animate toward the true value in the presentation layer only.
 - **Tooltips**: stat breakdowns come straight from the core's modifier breakdown, so they are always complete and always correct.
 - **Transitions**: panels and screens use the shared tween system; every interactive element has hover, pressed, disabled and focused states defined in the kit, not per screen.
