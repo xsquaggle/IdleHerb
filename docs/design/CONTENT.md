@@ -268,6 +268,8 @@ The first three hires are floors 1 to 3, which include the Backyard Hemp Patch. 
 - **Later (3):** M28, M29, M30.
 - **Hemp cast** (brisk, proud craftspeople): M11 Rowan Rake, M12 Posy Seedwell, M15 Hazel Thimble, M16 Captain Kelp, M20 Bjorn Barrow, M26 Madame Loom.
 - Managers sit at any floor in any world, so every floor needs one manager spot and every manager needs a floor-neutral pose.
+- For the same reason every manager sprite must be safe on a hemp floor. The Art Director keeps mortars, pipes, steam and smoke puffs off manager sprites. Role hints, bios and ability text stay clear of them too.
+- World 1 has three grandmothers: the lead worker on floor 1 (Lawson's art), Nana Sprig and Granny Evergreen. A hint for the Writer: the floor 1 worker and Nana Sprig can be sisters, so the likeness reads as a joke.
 
 ## 3. Plants
 
@@ -331,7 +333,7 @@ The first seed packet (World 1 floor 5) always holds Garden Mint and Fibre Hemp.
 |---|---|---|---|---|---|---|---|---|
 | `plant.mint.honey` | Honeymint | mint | Quick, Bountiful | Chocolate Mint | Double Chamomile | world 2 (bench) | new | yes |
 | `plant.basil.pepperleaf` | Pepperleaf Basil | basil | Zesty, Fragrant | Purple Basil | Creeping Thyme | world 2 | new | yes |
-| `plant.hemp.silkspun` | Silkspun Hemp | hemp | Sturdy, Evergreen | Giant Show-Hemp | Royal Lavender | world 2 | new, "moon-silver" look | yes |
+| `plant.hemp.silkspun` | Silkspun Hemp | hemp | Sturdy, Evergreen | Giant Show-Hemp | Royal Lavender | world 2 | new, "silk-pearl" look (pale silver-lilac canes, silky threads) | yes |
 | `plant.sage.sunset` | Sunset Sage | sage | Frosty, Thrifty | Silver Sage | Rosemary Topiary | world 2 | new | yes |
 
 Honeymint is the teaching recipe. Both parents drop in World 1, so the first hybrid only waits for the bench and 400 Pollen.
@@ -722,5 +724,7 @@ Each entry gives 5 Gems once and +0.25% profit forever (GDD 11.5).
 | Heirlooms | 18 | 18 | 12 (B11) | 6 |
 | Visitors | 6 | 6 | 0 | 6 |
 | World backgrounds | 6 | 3 | 3 (B3 and B26, B17, B18) | 0 |
+| Currency icons | 13 | 10 | 5 (B12: Coins, Notes, Gems, Compost, Ribbons) | 5 (Shells, Insight, Pollen, Skill Points, Fair Tickets) |
+| Story characters | 2 | 2 | 0 | 2 (Pip, Baron Fauxliage) |
 
 Four more plants are already pictured for later worlds: Frosted Mint, Crystal Sage, Moonlit Lavender and Starlight Chamomile.
