@@ -35,7 +35,7 @@ CAST = "CAST: characters invented for this game, not based on any real person or
 PANELS = ("Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked "
           "one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide "
           "as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, "
-          "no potted plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, "
+          "no plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, "
           "a little darker and cooler than the reference props, with few details, so that bright props and characters placed "
           "in front of them will stand out.")
 FLAT_SKY = ("is ONE flat plain pale blue colour with no clouds, no sun and no shading "
@@ -92,7 +92,7 @@ add(1, "Back walls: windowsill room and balcony", "b01_01_backwalls_windowsill_b
 
 add(2, "Back walls: backyard and garden shed", "b01_02_backwalls_backyard_shed.png",
     "landscape 3:2", "about 1536×1024", "Around the panels only", "A",
-    "The wall layer for floor 3 (Backyard Hemp Patch) and floor 4 (Potting Shed Nursery). The backyard is open air, so "
+    "The wall layer for floor 3 (Backyard Hemp Patch) and floor 4 (Garden Shed Nursery). The backyard is open air, so "
     "the game's own sunset sky shows above the hedge.",
     "2 panels at 336×104. The flat blue area of the backyard panel is removed in clean-up.",
     "Floor names may change.",
@@ -122,7 +122,7 @@ add(3, "Back walls: greenhouse and ropewalk", "b01_03_backwalls_greenhouse_ropew
 add(4, "Backyard Hemp Patch: props", "b01_04_floor03_hemp_patch_props.png",
     "very wide landscape 3:1", "about 2160×720", "Yes", "A",
     "New props that turn floor 3 into the Backyard Hemp Patch. The two gardeners from your v2 floor 03 stay. Its herb "
-    "shelf and potting table are swapped for these, because our hemp rules keep jars and dried bunches off hemp floors. "
+    "shelf and work table are swapped for these, because our hemp rules keep jars and dried bunches off hemp floors. "
     "The crop itself is added by the game in the empty bed so it can grow.",
     "Sliced into: fence with scarecrow, stook, wheelbarrow, raised bed, tool rack, barrel and can, manager's stool and "
     "crate. Brought to the 360×120 floor.",
@@ -151,7 +151,7 @@ add(5, "Hemp growth stages", "b01_05_hemp_growth_stages.png",
     "None. This is the Fibre Hemp card's plant.",
     "A plant growth chart for a cozy pixel-art farming game: the same industrial fibre hemp plant at five growth stages "
     "in a single row, from left to right, evenly spaced, all standing on the same ground line. Sizes are true to each "
-    "other: do NOT enlarge the small stages. Each stage grows from a low mound of dark soil. No pots.\n\n"
+    "other: do NOT enlarge the small stages. Each stage grows from a low mound of dark soil. No planters.\n\n"
     "1. Seed: only the soil mound, with three tiny round seeds on top.\n"
     "2. Sprout: three tiny two-leaf seedlings, each about as tall as the mound.\n"
     "3. Young: three thin green canes about one fifth of the final height, with a few small leaves.\n"
@@ -188,14 +188,15 @@ add(6, "Hemp varieties and harvest props", "b01_06_hemp_varieties_harvest.png",
 add(7, "Herb growth stages: basil, rosemary, lavender", "b01_07_herb_growth_stages.png",
     "landscape 4:3", "about 1448×1086", "Yes", "C",
     "Growth stages for the three everyday herbs that have none yet. Your B24 sheet already covers mint.",
-    "15 sprites: 3 herbs × 5 stages. Foliage and pot are separated in clean-up.",
+    "15 sprites: 3 herbs × 5 stages. Foliage and planter are separated in clean-up.",
     "Which herb sits on which floor is the Game Designer's call. The plants are safe either way.",
     "A plant growth chart for a cozy pixel-art farming game, like the attached growth-stage reference: three kitchen "
     "herbs, each shown at five growth stages. Three rows and five columns, " + GRID + ". Every plant grows in the same "
-    "simple terracotta pot, the same pot size in every cell, and the pots in a row stand on the same baseline. Sizes are "
+    "simple round terracotta planter, the same planter size in every cell, and the planters in a row stand on the same "
+    "baseline. Sizes are "
     "true to each other: do NOT enlarge the small stages.\n\n"
     "Columns, left to right:\n"
-    "1. A pot of dark soil with a few seeds on top.\n"
+    "1. A planter of dark soil with a few seeds on top.\n"
     "2. A tiny two-leaf sprout.\n"
     "3. A young plant, about one third of full size.\n"
     "4. A full-grown plant.\n"
@@ -220,7 +221,7 @@ add(8, "Worker animation sheet: floor 1 gardener", "b01_08_worker_sheet_floor1_g
     "body, body slightly higher. (6) left leg forward, arms swinging the other way.\n"
     "Row 3, working, facing right: (7) leaning forward and reaching out with both hands to pick leaves. (8) standing "
     "back up, holding a small wooden bowl of picked green leaves at waist height. (9) walking to the right carrying a "
-    "potted green herb in both hands.",
+    "green herb in a round terracotta planter in both hands.",
     cast=True,
     ref=("Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). "
          "The windowsill floor scene attached with this message shows the character to draw: the grandmother with "
@@ -261,7 +262,8 @@ add(10, "Worker animation sheet: floor 2 gardener", "b01_10_worker_sheet_floor2_
     "Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the "
     "body, body slightly higher. (6) left leg forward, arms swinging the other way.\n"
     "Row 3, working, facing right: (7) lifting a grey-green watering can up high. (8) tipping the watering can to pour, "
-    "with a few water drops falling. (9) walking to the right carrying a potted green herb in both hands.",
+    "with a few water drops falling. (9) walking to the right carrying a green herb in a round terracotta planter in "
+    "both hands.",
     cast=True,
     ref=("Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). "
          "The balcony floor scene attached with this message shows the character to draw: the tall gardener in a straw "
@@ -306,8 +308,8 @@ add(12, "Hemp plant card art", "b01_12_hemp_card_art.png",
     "Row 2. In the last two the magic is in the canes and the fibre, and the leafy tops stay plain:\n"
     "4. Giant show-hemp: one very thick cane, as thick as bamboo, in a half-barrel with a blue first-prize ribbon "
     "rosette. It is so tall that it runs out of the top of its cell. A tiny wooden ladder leans against it.\n"
-    "5. Silkspun hemp: pale silver-blue canes with lighter joints and a few fine white silky threads draped between "
-    "them, in a deep purple planter painted with a crescent moon, with a few tiny white stars.\n"
+    "5. Silkspun hemp: pale silver-lilac canes with lighter joints and a few fine white silky threads draped between "
+    "them, in a pearl-white planter wrapped with a lilac silk ribbon tied in a bow.\n"
     "6. Sunspun hemp: green-gold canes with a bright golden thread spiralling up each one, in a cream planter with a "
     "gold sun medallion, a few small four-point gold sparkles, and a ribbon of golden woven cloth drifting up from the "
     "clump like a banner.",
@@ -326,7 +328,7 @@ add(13, "Hemp seed packets and jars", "b01_13_hemp_seed_packets.png",
     "3. A pale blue packet. Its picture shows three very tall, very thin canes next to a measuring stick.\n"
     "4. A sage-green packet with a small blue prize ribbon. Its picture shows one very thick, very tall cane.\n\n"
     "Row 2:\n"
-    "5. A round glass jar with a silver crescent-moon lid, full of pale silver-blue seeds.\n"
+    "5. A round glass jar with a pearl-white lid tied with a lilac silk ribbon, full of pale silver-lilac seeds.\n"
     "6. A round glass jar with a gold sun-shaped lid, full of golden seeds, with a golden thread tied round its neck.\n"
     "7. A small wooden scoop full of round grey-brown seeds, with a few seeds spilled beside it.\n"
     "8. A small burlap seed sack tied with twine, stamped with a simple two-leaf sprout mark.",
@@ -429,9 +431,10 @@ add(18, "First six managers in the house style", "b01_18_managers_first_six.png"
     "4. A cheerful beekeeper with a ginger beard, a cream beekeeper suit, yellow gloves and a veiled hat with the veil "
     "lifted, holding a wooden honey dipper.\n"
     "5. A keen botanist with curly dark hair and safety goggles, a white coat over a green shirt, with wooden plant "
-    "labels and a pencil in the coat pocket, holding a small potted seedling in one hand.\n"
+    "labels and a pencil in the coat pocket, holding a small seedling in a little terracotta planter in one hand.\n"
     "6. A sunny, relaxed gardener with wavy blond hair, a red headband and a short beard, a bright flower-print shirt, "
-    "shorts and sandals, holding a potted basil plant in both hands, eyes open, with a big friendly grin.",
+    "shorts and sandals, holding a basil plant in a terracotta planter in both hands, eyes open, with a big friendly "
+    "grin.",
     cast=True,
     ref=("Use the attached animation sheet and the attached lineup with a robot in it for style only (pixel size, "
          "outline, shading, colours). The other attached lineup, six people on a cream background with a beekeeper in "
@@ -458,7 +461,7 @@ L = []
 w = L.append
 w("# Production Asset Batch 1")
 w("")
-w("Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **3** (aligned with the game design document's floor, "
+w("Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **4** (aligned with the game design document's floor, "
   "card and manager names). Style suffix version: **v1**. Hemp guards version: **v1**.")
 w("")
 w(f"**{len(P)} images.** Ordered by what the World 1 vertical slice needs first: rooms for the first five floors, the "

@@ -1,6 +1,6 @@
 # Production Asset Batch 1
 
-Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **3** (aligned with the game design document's floor, card and manager names). Style suffix version: **v1**. Hemp guards version: **v1**.
+Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **4** (aligned with the game design document's floor, card and manager names). Style suffix version: **v1**. Hemp guards version: **v1**.
 
 **18 images.** Ordered by what the World 1 vertical slice needs first: rooms for the first five floors, the hemp crop and its floor, lead workers who can move for the first three floors, a chest opening, cards, then the first hemp product floor and the menu icons. Prompt 18, the first managers, was added last and is also needed early. If you only have time for some, do prompts 1 to 10 and 18.
 
@@ -81,7 +81,7 @@ All six are from your expansion pack. The B1 key art is the mood anchor for the 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
 
-Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, no potted plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, a little darker and cooler than the reference props, with few details, so that bright props and characters placed in front of them will stand out.
+Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, no plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, a little darker and cooler than the reference props, with few details, so that bright props and characters placed in front of them will stand out.
 
 TOP PANEL, a cozy kitchen windowsill room: a warm cream plaster wall with a faint pattern of tiny leaves, wooden panelling along the bottom third, one large arched window left of centre showing a plain golden evening sky and far purple rooftops, cream curtains tied back at its sides, and one small framed pressed-flower picture on the right.
 
@@ -99,14 +99,14 @@ Image shape: landscape 3:2.
 - **File name:** `b01_02_backwalls_backyard_shed.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Around the panels only
-- **Purpose:** The wall layer for floor 3 (Backyard Hemp Patch) and floor 4 (Potting Shed Nursery). The backyard is open air, so the game's own sunset sky shows above the hedge.
+- **Purpose:** The wall layer for floor 3 (Backyard Hemp Patch) and floor 4 (Garden Shed Nursery). The backyard is open air, so the game's own sunset sky shows above the hedge.
 - **Parts we cut from it:** 2 panels at 336×104. The flat blue area of the backyard panel is removed in clean-up.
 - **Name flag:** Floor names may change.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
 
-Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, no potted plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, a little darker and cooler than the reference props, with few details, so that bright props and characters placed in front of them will stand out.
+Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, no plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, a little darker and cooler than the reference props, with few details, so that bright props and characters placed in front of them will stand out.
 
 TOP PANEL, a backyard garden: a wooden picket fence with a rounded garden gate in the middle runs along the bottom half, a clipped dark green hedge stands behind it, and there is one round fruit tree at the far left and one at the far right. Everything above the hedge and trees is ONE flat plain pale blue colour with no clouds, no sun and no shading (the game replaces it with its own sky).
 
@@ -131,7 +131,7 @@ Image shape: landscape 3:2.
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
 
-Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, no potted plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, a little darker and cooler than the reference props, with few details, so that bright props and characters placed in front of them will stand out.
+Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, no plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, a little darker and cooler than the reference props, with few details, so that bright props and characters placed in front of them will stand out.
 
 TOP PANEL, inside a glass greenhouse: a white-painted iron frame of slim posts and arched ribs divides the wall into tall glass panes. Through the glass there is a plain pale teal evening tone with the soft dark shapes of far hills along the bottom. A little ivy climbs one post.
 
@@ -149,7 +149,7 @@ Image shape: landscape 3:2.
 - **File name:** `b01_04_floor03_hemp_patch_props.png`
 - **Shape and size:** very wide landscape 3:1, about 2160×720 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** New props that turn floor 3 into the Backyard Hemp Patch. The two gardeners from your v2 floor 03 stay. Its herb shelf and potting table are swapped for these, because our hemp rules keep jars and dried bunches off hemp floors. The crop itself is added by the game in the empty bed so it can grow.
+- **Purpose:** New props that turn floor 3 into the Backyard Hemp Patch. The two gardeners from your v2 floor 03 stay. Its herb shelf and work table are swapped for these, because our hemp rules keep jars and dried bunches off hemp floors. The crop itself is added by the game in the empty bed so it can grow.
 - **Parts we cut from it:** Sliced into: fence with scarecrow, stook, wheelbarrow, raised bed, tool rack, barrel and can, manager's stool and crate. Brought to the 360×120 floor.
 - **Name flag:** Floor name is from the game design document, still in review.
 
@@ -195,7 +195,7 @@ Image shape: very wide landscape 3:1.
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
 
-A plant growth chart for a cozy pixel-art farming game: the same industrial fibre hemp plant at five growth stages in a single row, from left to right, evenly spaced, all standing on the same ground line. Sizes are true to each other: do NOT enlarge the small stages. Each stage grows from a low mound of dark soil. No pots.
+A plant growth chart for a cozy pixel-art farming game: the same industrial fibre hemp plant at five growth stages in a single row, from left to right, evenly spaced, all standing on the same ground line. Sizes are true to each other: do NOT enlarge the small stages. Each stage grows from a low mound of dark soil. No planters.
 
 1. Seed: only the soil mound, with three tiny round seeds on top.
 2. Sprout: three tiny two-leaf seedlings, each about as tall as the mound.
@@ -255,16 +255,16 @@ Image shape: landscape 16:9.
 - **Shape and size:** landscape 4:3, about 1448×1086 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
 - **Purpose:** Growth stages for the three everyday herbs that have none yet. Your B24 sheet already covers mint.
-- **Parts we cut from it:** 15 sprites: 3 herbs × 5 stages. Foliage and pot are separated in clean-up.
+- **Parts we cut from it:** 15 sprites: 3 herbs × 5 stages. Foliage and planter are separated in clean-up.
 - **Name flag:** Which herb sits on which floor is the Game Designer's call. The plants are safe either way.
 
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
 
-A plant growth chart for a cozy pixel-art farming game, like the attached growth-stage reference: three kitchen herbs, each shown at five growth stages. Three rows and five columns, evenly spaced, each in its own cell, the same visual size, nothing touching or overlapping, nothing cut off by the edge. Every plant grows in the same simple terracotta pot, the same pot size in every cell, and the pots in a row stand on the same baseline. Sizes are true to each other: do NOT enlarge the small stages.
+A plant growth chart for a cozy pixel-art farming game, like the attached growth-stage reference: three kitchen herbs, each shown at five growth stages. Three rows and five columns, evenly spaced, each in its own cell, the same visual size, nothing touching or overlapping, nothing cut off by the edge. Every plant grows in the same simple round terracotta planter, the same planter size in every cell, and the planters in a row stand on the same baseline. Sizes are true to each other: do NOT enlarge the small stages.
 
 Columns, left to right:
-1. A pot of dark soil with a few seeds on top.
+1. A planter of dark soil with a few seeds on top.
 2. A tiny two-leaf sprout.
 3. A young plant, about one third of full size.
 4. A full-grown plant.
@@ -306,7 +306,7 @@ THE CHARACTER: a cheerful, plump grandmother with fluffy grey hair in a bun tied
 
 Row 1: (1) standing relaxed, facing the viewer, hands together, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with both arms up and a little hop.
 Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
-Row 3, working, facing right: (7) leaning forward and reaching out with both hands to pick leaves. (8) standing back up, holding a small wooden bowl of picked green leaves at waist height. (9) walking to the right carrying a potted green herb in both hands.
+Row 3, working, facing right: (7) leaning forward and reaching out with both hands to pick leaves. (8) standing back up, holding a small wooden bowl of picked green leaves at waist height. (9) walking to the right carrying a green herb in a round terracotta planter in both hands.
 
 CAST: characters invented for this game, not based on any real person or any existing cartoon character.
 
@@ -370,7 +370,7 @@ THE CHARACTER: a tall, dapper gardener with warm brown skin, curly dark hair, a 
 
 Row 1: (1) standing relaxed, facing the viewer, one hand on the hip, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with one arm up, hat lifted high in the other hand.
 Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
-Row 3, working, facing right: (7) lifting a grey-green watering can up high. (8) tipping the watering can to pour, with a few water drops falling. (9) walking to the right carrying a potted green herb in both hands.
+Row 3, working, facing right: (7) lifting a grey-green watering can up high. (8) tipping the watering can to pour, with a few water drops falling. (9) walking to the right carrying a green herb in a round terracotta planter in both hands.
 
 CAST: characters invented for this game, not based on any real person or any existing cartoon character.
 
@@ -440,7 +440,7 @@ Row 1:
 
 Row 2. In the last two the magic is in the canes and the fibre, and the leafy tops stay plain:
 4. Giant show-hemp: one very thick cane, as thick as bamboo, in a half-barrel with a blue first-prize ribbon rosette. It is so tall that it runs out of the top of its cell. A tiny wooden ladder leans against it.
-5. Silkspun hemp: pale silver-blue canes with lighter joints and a few fine white silky threads draped between them, in a deep purple planter painted with a crescent moon, with a few tiny white stars.
+5. Silkspun hemp: pale silver-lilac canes with lighter joints and a few fine white silky threads draped between them, in a pearl-white planter wrapped with a lilac silk ribbon tied in a bow.
 6. Sunspun hemp: green-gold canes with a bright golden thread spiralling up each one, in a cream planter with a gold sun medallion, a few small four-point gold sparkles, and a ribbon of golden woven cloth drifting up from the clump like a banner.
 
 HEMP LOOK: industrial fibre hemp drawn as a tall farm crop, like bamboo or tall corn: a straight slim green cane with ringed joints, bare in its lower half, with small drooping groups of 3 to 5 narrow leaflets seen from the side in the upper half and a slim leafy tuft on top. Whole plants only, in farm context. No flower buds, no close-up of plant tops, no single fan-shaped leaf shown alone or used as an emblem, no smoke, no jars of dried leaves, nothing held to a face.
@@ -473,7 +473,7 @@ Row 1, four paper seed packets tied with twine:
 4. A sage-green packet with a small blue prize ribbon. Its picture shows one very thick, very tall cane.
 
 Row 2:
-5. A round glass jar with a silver crescent-moon lid, full of pale silver-blue seeds.
+5. A round glass jar with a pearl-white lid tied with a lilac silk ribbon, full of pale silver-lilac seeds.
 6. A round glass jar with a gold sun-shaped lid, full of golden seeds, with a golden thread tied round its neck.
 7. A small wooden scoop full of round grey-brown seeds, with a few seeds spilled beside it.
 8. A small burlap seed sack tied with twine, stamped with a simple two-leaf sprout mark.
@@ -567,7 +567,7 @@ Image shape: very wide landscape 3:1.
 ```text
 Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
 
-Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, no potted plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, a little darker and cooler than the reference props, with few details, so that bright props and characters placed in front of them will stand out.
+Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, no plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, a little darker and cooler than the reference props, with few details, so that bright props and characters placed in front of them will stand out.
 
 TOP PANEL, an open-air market square: a low cream stone wall runs along the bottom third, with an iron lamp post at each end and a string of small triangular bunting flags in cream, rose and lavender hanging between the posts. Everything above the wall is ONE flat plain pale blue colour with no clouds, no sun and no shading (the game replaces it with its own sky).
 
@@ -638,8 +638,8 @@ Left to right:
 2. A big, jolly gardener with curly brown hair and a beard, a cream shirt and a red checked apron with a two-leaf sprout stitched on the chest, arms open in welcome, laughing.
 3. An elegant businesswoman with brown hair pinned up, sunglasses, gold hoop earrings and a dark green trouser suit with a small sprout pin, arms crossed, with a confident smile.
 4. A cheerful beekeeper with a ginger beard, a cream beekeeper suit, yellow gloves and a veiled hat with the veil lifted, holding a wooden honey dipper.
-5. A keen botanist with curly dark hair and safety goggles, a white coat over a green shirt, with wooden plant labels and a pencil in the coat pocket, holding a small potted seedling in one hand.
-6. A sunny, relaxed gardener with wavy blond hair, a red headband and a short beard, a bright flower-print shirt, shorts and sandals, holding a potted basil plant in both hands, eyes open, with a big friendly grin.
+5. A keen botanist with curly dark hair and safety goggles, a white coat over a green shirt, with wooden plant labels and a pencil in the coat pocket, holding a small seedling in a little terracotta planter in one hand.
+6. A sunny, relaxed gardener with wavy blond hair, a red headband and a short beard, a bright flower-print shirt, shorts and sandals, holding a basil plant in a terracotta planter in both hands, eyes open, with a big friendly grin.
 
 CAST: characters invented for this game, not based on any real person or any existing cartoon character.
 

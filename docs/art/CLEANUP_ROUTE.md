@@ -48,7 +48,7 @@ All three results below are the **automatic pass only**, with no hand polish, so
 - Before: 460×485 pixels, **99,610 colours**, soft edges, baked blue-grey background.
 - After: **96×101 pixels, 13 master colours**, hard edges, clean transparency, 1 pixel outline.
 - True-size sprites: [`mint_card_96px.png`](cleanup/mint_card_96px.png) for cards and [`mint_world_50px.png`](cleanup/mint_world_50px.png) for the floor.
-- Verdict: usable after a short hand polish (the water drops were dropped on purpose, the pot moss needs tidying).
+- Verdict: usable after a short hand polish (the water drops were dropped on purpose, the moss on the planter needs tidying).
 
 ### 2. A whole floor from the expansion pack (floor 01 v2)
 
@@ -57,7 +57,7 @@ All three results below are the **automatic pass only**, with no hand polish, so
 - Before: 2160×720 pixels, 129 colours.
 - After: **360×120 pixels, 28 master colours**: exactly one floor module.
 - True-size sprite: [`floor01_360x120.png`](cleanup/floor01_360x120.png).
-- Verdict: plants, pots, furniture and tools come out production-ready. **Faces do not.** At this size a face is about 10 pixels wide, and automatic clean-up loses the eyes and glasses.
+- Verdict: plants, planters, furniture and tools come out production-ready. **Faces do not.** At this size a face is about 10 pixels wide, and automatic clean-up loses the eyes and glasses.
 
 ### 3. A character from B22
 
@@ -72,7 +72,7 @@ Also proven: the B24 growth stages ([`growth_stages_400x120.png`](cleanup/growth
 
 | Class | Route | Hand work |
 |---|---|---|
-| Plants, pots, props, furniture | Generate, automatic clean-up | Light polish |
+| Plants, planters, props, furniture | Generate, automatic clean-up | Light polish |
 | Floor shell, shutter, back walls | Generate, automatic clean-up | Light polish, make edges tile |
 | Chests, artifacts, product icons | Generate, automatic clean-up | Polish, redraw the 16 pixel versions |
 | Character bodies | Generate, automatic clean-up | Medium polish per pose |

@@ -56,10 +56,12 @@ Things found in the references that production must fix:
 - **B11 compass lid** carries a many-fingered fan-leaf emblem. Replace with the two-leaf sprout. See the never list in HEMP_ART.md.
 - **B12** has a purple "plus" token that can read as a medical cross. Redesign as a gem or a seed. Its blue flask (the research currency, now called Insight) becomes a lightbulb with a sprout inside, so nothing reads as extraction.
 - **B5 botanist** carries test tubes in the coat pocket. In the redraw they become plant labels and a pencil.
+- **B21 cook** grinds in a mortar and **B21 tea master** holds a steaming cup. Managers can be seated on any floor, including hemp floors, so the cook's sprite carries a ladle and a copper pan instead, and the tea master's cup has no drawn steam (steam is a game effect, off on hemp floors).
+- **B11 pruners** carry a purple leaf with five pointed lobes. It becomes a rounded bramble leaf. The **B11 mortar** stays as a kitchen tool with lavender, and is never shown with hemp.
 - **B29** bakes "+$" into the art and includes a flame row. Text and currency signs are drawn by the game. Flames are for stoves and ember herbs only.
 - **B5 beach-shirt manager** and **B21 sleepy night-shift manager** are fine characters, but default art and story hires never place them on hemp floors.
 - **B28 customer and the floor 09 perfumer** sniff herbs. Fine on herb floors, never on hemp floors.
-- **v2 floor 03** becomes the Backyard Hemp Patch. Its two gardeners stay. Its side shelf (jars, hanging dried bunches) and potting table (mortar and pestle) are replaced with hemp-patch props, because those items are on the hemp never list.
+- **v2 floor 03** becomes the Backyard Hemp Patch. Its two gardeners stay. Its side shelf (jars, hanging dried bunches) and work table (mortar and pestle) are replaced with hemp-patch props, because those items are on the hemp never list.
 - **v2 floor 09** becomes the Soap and Scent Workshop. Its copper still with a flame and its lab flasks are replaced with a soap kettle, moulds and drying racks, so nothing reads as a laboratory.
 - **v2 floor 08** (spice kitchen) moves to World 2. World 1 floor 8 is the new Ropewalk and Twine Shop.
 - **B27** is named `world4_moon_greenhouse`. In the game design document the Moon is world 5.
@@ -80,15 +82,15 @@ One rule: **every art pixel in the game is the same size on screen.** The game r
 | Screen | 640×360 | Three floors fill the height |
 | Floor module | 360×120 | Includes the shell. Shell, locked shutter, construction scene, contents and back wall all overlay 1:1 |
 | Floor shell | beams 8 tall (top and bottom), posts about 12 wide | Interior about 336×104 |
-| Floor content zone | x 20 to 340, floor line at y 112 | Feet and pot bases sit on y 112 |
+| Floor content zone | x 20 to 340, floor line at y 112 | Feet and planter bases sit on y 112 |
 | Room back wall | 336×104 | Opaque, quiet, sits behind everything |
 | Adult actor | 64 tall on an 80×80 canvas | Feet baseline y 76. Children 44 to 52 tall |
 | Manager portrait | 48×48 bust | Cut from the actor's head and shoulders, redrawn |
-| Potted herb | up to 48×60 | Pot about 32 wide |
+| Herb in a planter | up to 48×60 | Planter about 32 wide |
 | Fibre hemp | 32×96 per clump | Taller than a person on purpose |
 | Seed hemp | about 48×66 to 72 | |
 | Giant show-hemp | cane 6 thick, spans floors | Base, tileable middle, top |
-| Small prop | 16 to 32 | Tools, pots, jars, baskets |
+| Small prop | 16 to 32 | Tools, planters, jars, baskets |
 | Furniture | 48 to 96 wide | Benches, shelves, stalls |
 | Chest | 96×80 hero, 32×32 icon | Closed, ajar, open |
 | Large card | 180×240 | Art window about 108×100 |
@@ -104,7 +106,7 @@ One rule: **every art pixel in the game is the same size on screen.** The game r
 
 - Transparent PNGs, drawn at 1×, sampled nearest-neighbour. Transparency is fully on or fully off.
 - Actors arrive as parts: body pose frames, one head, face pieces, held tools (section 10).
-- Plants arrive as foliage and pot separately, with the pivot at the soil line, so the game can sway the foliage.
+- Plants arrive as foliage and planter separately, with the pivot at the soil line, so the game can sway the foliage.
 - Every sprite has a pivot (feet for actors, base centre for props). Pivots live in JSON next to the sprite.
 - Cleaned sprites go in the repo under `art/` by class: `floors/`, `actors/`, `plants/`, `props/`, `cards/`, `icons/`, `ui/`, `vfx/`, `bg/`. File names are lowercase snake case: `class_subject_variant_state_frame.png`, for example `plant_mint_stage3.png`, `actor_gardener01_walk_2.png`.
 - Raw generated images stay in project files, never in git. Atlases are built by script and never committed.
@@ -117,7 +119,7 @@ One rule: **every art pixel in the game is the same size on screen.** The game r
 - **Props are squat and rounded.** Corners are cut by 1 to 2 pixels. No straight edge runs longer than 24 pixels without a break such as a chip, knot, rivet or leaf.
 - **Big, medium, small.** Each sprite has one big mass, two or three medium shapes and a few small accents. Even detail everywhere reads as noise.
 - **Silhouette test.** Fill the sprite with one dark colour at 100% size. If you cannot name it, simplify it.
-- **View.** Rooms and actors are seen straight from the side, like a dollhouse. Pots, baskets, chests and icons are seen from slightly above so the rim shows.
+- **View.** Rooms and actors are seen straight from the side, like a dollhouse. Planters, baskets, chests and icons are seen from slightly above so the rim shows.
 - **Smallest readable feature is 2 pixels.** Single pixels are for sparkles and eye glints only.
 - **Curves step in even runs** (for example 3, 2, 1, 1, 2, 3). A lone single-pixel step in a long run is a jaggy and gets fixed.
 
@@ -142,7 +144,7 @@ One rule: **every art pixel in the game is the same size on screen.** The game r
 - **No gradients, no dithering, no noise.** The sky is the one exception and it uses flat bands (section 14).
 - **Colour budgets:** up to 16 colours for a prop or plant, 24 for an actor, 32 for a whole floor or card.
 - **No pillow shading.** Shade follows the light direction, never the outline.
-- **Highlights:** one specular tick of 1 to 3 pixels on glossy things only (glass, glazed pots, metal, eyes).
+- **Highlights:** one specular tick of 1 to 3 pixels on glossy things only (glass, glazed planters, metal, eyes).
 - **Texture:** at most 2 to 4 texture marks per 16×16 area (grain dashes, stone specks), in the neighbouring ramp step.
 
 ---
@@ -230,7 +232,7 @@ Each material has one recipe. Steps are ramp steps, dark to light.
 |---|---|
 | Wood | `wood-3` body, `wood-2` shade, `wood-5` lit top edge, `wood-1` seams. Grain is 2 or 3 short dashes per plank. Never draw every board line |
 | Cream stone and plaster | `cream-3` body, `cream-2` shade, `cream-4` light, corner chips in `cream-1` |
-| Terracotta pots | `clay-3` body, `clay-2` shade, `clay-4` light, rim one step lighter, one `clay-5` tick |
+| Terracotta planters | `clay-3` body, `clay-2` shade, `clay-4` light, rim one step lighter, one `clay-5` tick |
 | Tower roof | `clay` tiles in rows of rounded scallops |
 | Town roofs (background) | `lavender-2` to `lavender-4`, so the tower's warm roof stands out |
 | Glass | `teal-3` body, `teal-4` diagonal streak, `teal-1` frame shade, one white tick |
@@ -275,6 +277,8 @@ Managers are collectible cards that the player can assign to any floor in any wo
 - **Card and portrait** are cut from the same design: full body for the large card, a 48×48 bust for lists.
 - **Every floor has a manager spot** (section 13). An unassigned spot shows the empty stool.
 - The beach-shirt and sleepy night-shift managers are valid cards. Default art and story hires never place them on hemp floors.
+- **Every manager must be safe on a hemp floor,** because the player can put them there. So no manager sprite has drawn steam or smoke, a mortar, a pipe, or anything held to the mouth or nose.
+- **Three grandmothers share the tower:** the floor 1 worker (salmon cardigan, red apron, bow headband), Nana Sprig (purple cardigan, green apron, lavender in her bun) and Granny Evergreen (Legendary). Their colours, hair and silhouettes are kept far apart, and Granny Evergreen gets a grand, unmistakable outline.
 
 ### How characters are built so they can move
 
@@ -291,12 +295,12 @@ The game adds the rest: breathing squash, head bob, a lean into the walk, a hop 
 
 ## 11. Plants
 
-- **Pot view:** from slightly above, rim visible. Foliage straight on.
+- **Planter view:** from slightly above, rim visible. Foliage straight on.
 - **Each herb has its own silhouette:** mint is a round bush of broad toothed leaves. Basil is a glossy dome of big cupped ovals. Rosemary is upright needle spikes. Lavender is thin stems with purple flower heads. Chamomile is daisies on feathery green. Sage is long soft grey-green ovals. Chives are tubes with pink pom-poms.
 - **Five growth stages** for every crop: seed mound, sprout, young, mature, harvest-ready. Each stage changes size and shape clearly (B24 mint is the model). The harvest sparkle is added by the game.
-- **Magical variants** keep the base herb's silhouette and add one element: frost, ember, moon, crystal, star or storm. The element shows in the leaves, the pot motif and the particles (B23 is the model).
-- **Pots are a shared kit:** small, medium and large terracotta, glazed cream, and one magic pot per element. Foliage and pot are separate sprites.
-- **Hemp** is never potted like a herb. See section 12.
+- **Magical variants** keep the base herb's silhouette and add one element: frost, ember, moon, crystal, star or storm. The element shows in the leaves, the planter motif and the particles (B23 is the model).
+- **Planters are a shared kit:** small, medium and large terracotta, glazed cream, and one magic planter per element. Foliage and planter are separate sprites.
+- **Hemp** never grows in a small round planter like a herb. See section 12.
 
 ---
 
@@ -347,7 +351,7 @@ Names are from the game design document, still in review.
 | 1 | Windowsill Planter | v2 floor 01 | Batch 1, prompt 1 |
 | 2 | Balcony Boxes | v2 floor 02 | Batch 1, prompt 1 |
 | 3 | Backyard Hemp Patch | v2 floor 03 gardeners, hemp props from Batch 1 prompt 4, crop from prompt 5 | Batch 1, prompt 2 |
-| 4 | Potting Shed Nursery | v2 floor 04 | Batch 1, prompt 2 |
+| 4 | Garden Shed Nursery | v2 floor 04 | Batch 1, prompt 2 |
 | 5 | Glass Greenhouse | v2 floor 05 | Batch 1, prompt 3 |
 | 6 | Farmers' Market Stall | v2 floor 06 | Batch 1, prompt 16 |
 | 7 | Tea House | v2 floor 07 | Batch 1, prompt 16 |
@@ -567,8 +571,12 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | Room back walls for every floor | The shell interiors are transparent. World 1 floors 1 to 8 in **B1** |
 | Growth stages for every plant except mint | Basil, rosemary, lavender in **B1** |
 | Animation sheets for every worker except the B22 gardener | Lead workers of floors 1, 2 and 3 in **B1** |
-| In-world manager sprites in floor-neutral poses | 30 managers in the design document. The first ten hires all have pictures: six in B5 (redrawn in the crisp style by **B1** prompt 18) and four in B21, plus the robot and the night-shift manager. Ten more have no picture yet and come in Batch 2: the nine World 1 chest managers and the hempcrete builder |
-| Clockwork Thyme | The one exotic herb with no picture. B23 covers six and **B1** prompt 12 covers Sunspun Hemp |
+| In-world manager sprites in floor-neutral poses | 30 managers in the design document. The first ten hires all have pictures: six in B5 (redrawn in the crisp style by **B1** prompt 18) and four in B21, plus the robot and the night-shift manager. Fifteen more are needed for launch: nine for the World 1 chest pool (Batch 2) and six for worlds 2 and 3 |
+| Plants | 38 in the design document, 34 at launch. Nine herbs are pictured (B9, B23) and Batch 1 adds the hemp cards. About 25 more herb cards are needed for launch, each with growth stages if it can be planted on a floor |
+| Heirlooms | Six new icons: clover locket, bramble gloves, whetstone, spindle, guild banner, golden rope coil |
+| Visitors | Six new animated sprites: three Golden Sprouts with badges, Dewdrop, Mystery Crate, Busy Bee |
+| Currency icons | Shells, Snowmarks, Moonpennies, Stardust, Pollen, Insight, Fair Tickets, Skill Points |
+| Story characters | Pip the seedling guide and Baron Fauxliage, the plastic-plant salesman |
 | Manager spot props | Stool and crate for floor 3 and counter stool for floor 8 in **B1**. The rest by hand |
 | Floor 9 rework | Soap kettle, moulds and racks to replace the still and flasks |
 | Chest opening in-between frames | Lid ajar, half open, open and empty. **B1** |
@@ -577,7 +585,7 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | Icon set at 16, 24, 32 | Designs in **B1**, small sizes redrawn by hand |
 | Fonts | Custom Display font, plus tested open fonts |
 | Card back, frames in B25 layout for five rarities, small card | B25 shows Epic only |
-| Shared pot kit, lamp sprite, tower side walls and floor plates | |
+| Shared planter kit, lamp sprite, tower side walls and floor plates | |
 | Upper sky, stars, separate clouds | Sky bands are specified here |
 | Worlds 2 (Loomington) and 3 (Papaya Cay) | Backgrounds only so far. No floors, cast or plants. The weaving mill, paper workshop, tailor and hempcrete floors belong to World 2 |
 | World 4 (Mount Mitten) and World 6 (Nebula Nursery) | No art at all |
@@ -585,13 +593,14 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | Final logo | Pick: the B16 top-left wooden arch sign with lanterns, redrawn on the grid, with a rope border so hemp is in the brand |
 | Golden sprout pickup, combo and critical hit styles | |
 | B11 compass emblem and B12 plus token | Redesign |
-| Windows app icon | The two-leaf sprout in a pot, 16 to 256 pixels |
+| Windows app icon | The two-leaf sprout in a terracotta planter, 16 to 256 pixels |
 
 ---
 
 ## 24. Interfaces and names that may change
 
 - **Game Designer** owns the names and lists of floors, plants, managers, currencies and worlds, in `docs/design/`. This bible describes looks by type ("the windowsill room", "the ropewalk") and quotes design names where they are known. Agreed so far: World 1 floor names (section 13), six worlds (section 7), six hemp cards (HEMP_ART.md), managers as cards for any floor. Still open on the art side: the full manager and plant rows in `CONTENT.md`, and the final list of currencies.
+- **Words.** Asset names, file names and anything a player can see follow the word list in the design document (section 2.3): planter, not the three-letter word; variety; sun lamp; kettle and soap mould. These pages follow it too, except where a rule has to name the thing it forbids.
 - **Engine** owns the tech. Agreed contract: 640×360 canvas, whole-number scaling, nearest-neighbour transparent PNGs, cutout actors from parts with pivots in JSON, bitmap fonts, soft light made by the engine only.
 - **A fresh-eyes art review** checks later assets against section 22.
 
@@ -600,4 +609,4 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 ## 25. Change log
 
 - **v1:** first version, built from both reference packs, with the measured grid, the 76-colour palette, the hemp definition and the clean-up proof.
-- **v1.1:** aligned with the game design document. World 1 floor table, six worlds, six named hemp cards, managers as floor-neutral cards with a manager spot on every floor, fixes owed on v2 floors 03 and 09, on the B12 flask and on the B5 botanist. The look, grid, palette and prompt suffix are unchanged.
+- **v1.1:** aligned with the game design document. World 1 floor table, six worlds, six named hemp cards, managers as floor-neutral cards with a manager spot on every floor, fixes owed on v2 floors 03 and 09, on the B12 flask, the B5 botanist, the B21 cook and tea master and the B11 pruners, and the design document's word list. The look, grid, palette and prompt suffix are unchanged.

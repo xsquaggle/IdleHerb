@@ -27,7 +27,7 @@ The chart is a proportion guide on the real art-pixel grid (shown at 3×), not f
 | **Leaves** | Small drooping groups of 3 to 5 narrow leaflets, seen from the side or three-quarter view and overlapping each other. Each group is at most 10 pixels, no more than one ninth of the plant's height. Colour `sage-2` and `sage-3` with `leaf-5` tips |
 | **Top** | A slim leafy tuft, the same leaf shapes getting smaller. Nothing dense, nothing chunky |
 | **Ripening** | At harvest the cane turns straw-gold (`gold-3`, `gold-2`) from the base upward. Gold stalk means ready |
-| **Ground** | A soil mound, a field row or a long wooden planter trough. Not a small round pot |
+| **Ground** | A soil mound, a field row or a long wooden planter trough. Not a small round planter |
 | **Colour** | `sage` and `gold` ramps, with a little `leaf-5` on tips. Never neon green, never purple or black foliage |
 
 ### The six hemp cards
@@ -40,7 +40,7 @@ Names and rarities are from the game design document.
 | **Seed Hemp** | Uncommon | Shorter (about 66 tall) and branchier, with slim hanging grain ears: cream and tan husks with small round seeds, like oats or millet. Sparrows love it | "Grain crop" |
 | **Longstalk Hemp** | Rare | Extra tall and extra slim, with long gaps between the joints, tied to a bamboo stake with blue ribbon ties. A measuring stick stands beside it | "The tall one" |
 | **Giant Show-Hemp** | Epic | A comic super-cane as thick as bamboo (6 pixels) that pokes through the ceiling into the floor above. It grows in a half-barrel, wears a blue first-prize ribbon and has a ladder next to it | "County fair champion" |
-| **Silkspun Hemp** | Legendary | Pale silver-blue canes with lighter joints and fine white silky threads draped between them. Crescent moon on the planter | "Moonlit silk plant" |
+| **Silkspun Hemp** | Legendary | Pale silver-lilac canes with lighter joints and fine white silky threads draped between them, in a pearl-white planter with a lilac silk bow. No moon, so it cannot be confused with Moonlit Lavender | "Silk plant" |
 | **Sunspun Hemp** | Exotic | Green-gold canes with a bright golden thread spiralling up each one, a sun medallion on the planter, and a ribbon of golden cloth drifting up like a banner | "Enchanted golden rope plant" |
 
 In the two magical cards the magic lives in the **stalk and the fibre**. The tops stay plain. A third magical look (indigo canes with star-shaped joints) is kept in reserve.
@@ -81,16 +81,16 @@ Floor names and their worlds are from the game design document. The art plan per
 | 1 Thymeford | **Backyard Hemp Patch** (floor 3) | The crop in a raised bed. Backyard scale: a few tall rows, not a big field | Picket fence, scarecrow with sparrows, stook, wheelbarrow of sheaves, tool rack, water barrel | Batch 1 |
 | 1 Thymeford | **Ropewalk and Twine Shop** (floor 8) | Rope-making wheel | Fibre shelf, rope run and post, twine bench, shop counter with awning | Batch 1 |
 | 2 Loomington | **Canvas Weaving Mill** | Floor loom | Canvas bolts, shuttles, thread cones | Later |
-| 2 Loomington | **Paper Workshop** | Paper vat and mould | Drying line, press, paper stacks, notebooks | Later |
+| 2 Loomington | **Paper Workshop** | Paper vat and mould | Drying line, paper stacks, notebooks, wrapping paper, kites | Later |
 | 2 Loomington | **Tailor's Atelier** | Cutting table | Dress form, shirts, tape measures, button jars | Later |
 | 2 Loomington | **Hempcrete Brickyard** | Block mould and mixing trough | Block stacks, half-built wall, trowels | Later |
 | 3 Papaya Cay | **Sailcloth Loft** | Sail on a sewing frame | Sail rolls, grommets, rope | Later |
 | 3 Papaya Cay | **Hammock and Net Weavers** | Net on a frame | Hammocks, floats, knots board | Later |
-| 3 Papaya Cay | **Seed Snack Shack** | Wooden press and toasting pan | Seed sacks, oil bottles, snack bowls, sparrows | Later |
+| 3 Papaya Cay | **Seed Snack Shack** | Toasting pan and mixing bowl | Seed sacks, granola trays, coconut bars, sparrows | Later |
 
 The Soap and Scent Workshop (World 1, floor 9) is led by lavender, not hemp, but it follows the same rules: a soap kitchen with a kettle, moulds and racks, never a laboratory.
 
-**Floor 3 uses the two gardeners from the v2 floor 03 image.** That image's side shelf (jars, hanging dried bunches) and potting table (mortar and pestle) are not used on this floor, because they are on the never list for hemp floors.
+**Floor 3 uses the two gardeners from the v2 floor 03 image.** That image's side shelf (jars, hanging dried bunches) and work table (mortar and pestle) are not used on this floor, because they are on the never list for hemp floors.
 
 ### Cards and packets
 
@@ -102,7 +102,9 @@ The Soap and Scent Workshop (World 1, floor 9) is led by lavender, not hemp, but
 
 Gardeners on the hemp patch, then ropemakers, weavers, papermakers, tailors, masons and sailmakers on the product floors. They are **brisk, proud and bright-eyed**: skilled trades people who love their craft.
 
-The design document's hemp managers, to be drawn in Batch 2: Rowan Rake (hemp field hand), Posy Seedwell (seed keeper), Hazel Thimble (tailor), Captain Kelp (rope master) and Bjorn Barrow (hempcrete builder). Humour comes from pride, competition and scale (the giant cane, the endless rope, the sparrows stealing seed).
+The design document's hemp managers, to be drawn in later batches: Rowan Rake (hemp field hand), Posy Seedwell (seed keeper), Hazel Thimble (tailor), Captain Kelp (rope master, a retired sailor with no pipe), Bjorn Barrow (hempcrete builder) and Madame Loom (head of the weavers' guild).
+
+Every manager can be seated on a hemp floor, so no manager sprite has drawn steam or smoke, a mortar, a pipe, or anything held to the mouth or nose. Humour comes from pride, competition and scale (the giant cane, the endless rope, the sparrows stealing seed).
 
 Managers are cards the player can place on any floor, so the game cannot forbid a pairing. But default art, story hires, card pictures and marketing never show the B5 beach-shirt manager, the B21 sleepy night-shift manager, or any character whose joke is being drowsy, dazed or "chill", on a hemp floor.
 
@@ -127,21 +129,23 @@ None of these appears anywhere in the game, its text or its art.
 - No flat, frontal fan with seven or more fingers, even on a whole plant. Leaf groups are small, side-on and overlapping.
 - The only plant emblem in the game is the two-leaf sprout.
 
-**Plant close-ups**
+**Hemp close-ups**
 
-- No close-ups of plant tops.
-- No frost, resin, crystals, sparkle dust or hairs on the tops. Magic goes in the stalk and fibre.
+- No close-ups of hemp plant tops.
+- No frost, resin, crystals, sparkle dust or hairs on hemp tops. Magic goes in the stalk and fibre.
+- Magical herbs such as Frosted Mint and Crystal Sage follow the B23 look and are not affected by this rule.
 
 **Setting**
 
-- No hemp in small pots under purple grow lamps, in tents or in foil-lined rooms. Hemp grows outdoors in rows or in big planters in daylight.
+- No hemp in small planters, under purple or pink lamps, in tents or in foil-lined rooms. Hemp grows outdoors in rows or in big planters in daylight.
+- Off-world hemp, such as the Moon's Low-Gravity Hemp Field, grows in open field rows under a big clear dome with warm golden sun lamps and Earthlight. It still looks like a farm.
 - No medical or green-cross symbols.
 
 **Tone**
 
 - No number jokes, slang or winks.
 - No tie-dye, "chill" stereotypes or red, gold and green stripe sets.
-- No neon or acid green, no purple-black foliage.
+- On hemp: no neon or acid green, no purple or black foliage. Purple Basil is a kitchen herb and is fine.
 
 **Information**
 
