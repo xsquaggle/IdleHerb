@@ -540,7 +540,9 @@ w("### Extra pictures for rounds 4 to 6")
 w("")
 w("These prompts draw workers who are already in your room pictures, so each needs that picture attached in the same "
   "message as the prompt. The `B4_floor..._v2` files are in your expansion pack. The `b01_15` file is "
-  "the ropewalk picture you made in Batch 1.")
+  "the ropewalk picture you made in Batch 1. A copy of every one of them is in the project files, in the folder "
+  "`art/batch02/attach_with_prompts/`. Use the `_v2` files, not the older painted room pictures, which show other "
+  "people.")
 w("")
 w("| Prompt | Also attach |")
 w("|---|---|")
