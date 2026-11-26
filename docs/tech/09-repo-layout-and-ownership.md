@@ -45,6 +45,7 @@ Status: recommended, Phase 0. Owner: Engine Architect.
   tools/
     art/                         clean-up, slicing, palette and lint scripts
     capture/                     screenshot tour, rig preview, video capture
+    preview/                     the phone preview's holding page, until the first web build replaces it
 
   tests/
     e2e/                         Playwright tests against the running game
@@ -93,7 +94,7 @@ One owner per folder. Work in someone else's folder goes through its owner or a 
 
 ## Starting Phase 1
 
-The vertical slice is World 1 with four or five floors, tap feel, managers, a first chest, a first card upgrade and a first rebirth, at final quality.
+The vertical slice is World 1 with four or five floors, tap feel, managers, a first chest, a first card level-up and a first Replant, at final quality.
 
 **Step 0: scaffold. One thread, before anything else.**
 Workspace, configs, lint and import rules, `CLAUDE.md`, empty packages, CI, a calibration scene on the 640x360 grid, the crispness test, and the Windows workflow producing an installer that opens that scene. Done when: CI is green, the preview link shows the scene, and Lawson can install and launch a build. This flushes out every toolchain surprise on day one.
@@ -113,7 +114,7 @@ If the balance simulator is built before Phase 1, it should be built inside this
 | D. Rigs | Rig runtime, preview tool, first actor and plant | A, first cleaned sprites |
 | E. Audio | Mixer, stems, SFX voices | A |
 | F. Saves and shell | save-io, platform adapters, Electron main process, torture tests, time and offline | Step 1 |
-| G. Gameplay | wallet, floors, tapping, managers, then chests and cards, then rebirth; each with its feature views | Step 1 for the core half; A and B for the views |
+| G. Gameplay | wallet, floors, tapping, managers, then chests and cards, then Replant; each with its feature views | Step 1 for the core half; A and B for the views |
 
 **Step 3: slice assembly and polish.** Tower and floor views with real art, the chest opening sequence, the welcome-back screen, tutorial beats, the audio mix, then the verification run in 08 and a build for Lawson.
 

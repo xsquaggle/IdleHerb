@@ -44,7 +44,7 @@ From the Art Director's style bible. Repeated here because layouts and code cons
 | Floor module, including its frame shell | 360x120. Three floors fill the 360 height. Beams 8, interior about 336x104, floor line at y = 112 |
 | Shell, shutter, construction and floor contents | Same 360x120 canvas, overlaid 1:1 |
 | Actors | Adult 64 tall on an 80x80 canvas, feet at y = 76 |
-| Potted plants | About 48x60, delivered as foliage and pot separately with the pivot at the soil line. Fibre hemp crop about 32x96 |
+| Plants in planters | About 48x60, delivered as foliage and planter separately with the pivot at the soil line. Fibre hemp crop about 32x96 |
 | Cards | Large 180x240 with an art window about 108x100. Grid card 64x88 from a 48x48 icon |
 | Icons | 16, 24, 32, 48, each drawn at its own size, never scaled from another |
 | Parallax layers | Strips 320 to 360 tall. Sky is a procedural table of flat colour bands plus cloud sprites, so it never stretches |
@@ -124,7 +124,7 @@ What the runtime supports:
 - Keyframe tracks on position, scale, visibility and tint, with easing. Clips cross-fade.
 - Procedural layers on top: breathing bob, blink timers, look-at-cursor, squash on landing, a white flash on hit.
 - Timeline events that fire sounds and effects at an anchor, so audio and particles stay in sync with motion.
-- Plants use the same system with growth-stage frames. Foliage and pot are separate sprites; the foliage sways by row shear anchored at the soil-line pivot and the pot stays still.
+- Plants use the same system with growth-stage frames. Foliage and planter are separate sprites; the foliage sways by row shear anchored at the soil-line pivot and the planter stays still.
 
 **How agents check animation without an editor.** `pnpm rig:preview <id>` renders every clip of a rig as a labelled contact sheet and an animated image, using the real game renderer. The animator looks at the frames, reviewers see them in the pull request, and Lawson can see them on the phone.
 
@@ -141,7 +141,7 @@ velocity: { angle: [-150, -30], speed: [90, 160] }
 gravity: 420
 drag: 0.6
 bounce: { floorY: 0, restitution: 0.4 }
-then: { flyTo: hud.cash, duration: 0.35, ease: inBack }   # second phase: fly to the counter
+then: { flyTo: hud.coins, duration: 0.35, ease: inBack }   # second phase: fly to the counter
 motion: decorative             # reduce-motion class
 ```
 

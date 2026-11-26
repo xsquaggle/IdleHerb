@@ -13,6 +13,7 @@ Everything here runs without a person at a desktop. Cost is $0: the repository i
 | `pnpm check` | Type check, lint, import-boundary rules |
 | `pnpm test` | Unit and property tests (core, content, save-io) |
 | `pnpm content:build` | Validates and compiles the data tables |
+| `pnpm content:floors` | Regenerates the floor rows from the world parameters (see 04) |
 | `pnpm assets:build` | Packs sprites into atlases, runs the art lint |
 | `pnpm sim` | Balance simulator |
 | `pnpm e2e` | Drives the real game in headless Chromium |
