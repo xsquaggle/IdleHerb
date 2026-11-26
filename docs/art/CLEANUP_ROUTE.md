@@ -83,6 +83,30 @@ The first images made from our own prompts (prompts 11 to 14: chests, hemp cards
 
 If later rounds come back the same way, ask for the same package every time: the big sheet, the true-size parts and the slices file.
 
+## The rest of Batch 1: rounds 1, 2, 3, 5 and 6
+
+Thirteen more images (prompts 1 to 10 and 15 to 17) came back in the same package: an exact enlargement, true-size parts and a slices file. All thirteen passed Gate A and the hemp review with no redo. This time the parts were already cut at true size, so the pass is [`tools/clean_batch01_parts.py`](tools/clean_batch01_parts.py) on top of the shared steps in [`tools/cleanlib.py`](tools/cleanlib.py).
+
+![Floor 3 put together from cleaned sprites](cleanup/batch01_floor03_mockup.png)
+
+The picture is a mock-up, not a game screen: the Backyard Hemp Patch built only from cleaned sprites (veiled back wall, props, fibre hemp at two growth stages, the floor 3 worker).
+
+What these rounds taught the route:
+
+- **Thin strokes keep their colour.** The outline step used to ink every edge pixel, which swallowed hemp leaves, rosemary needles and twine. It now leaves strokes of one or two pixels alone. The hemp growth stages and Longstalk Hemp keep their generated outline altogether.
+- **Hemp greens get a small lift.** The `sage` ramp is darker and stronger than the pale greens ChatGPT paints for hemp, so nearest-colour alone lands one step too dark. Green source colours are lifted a little in lightness before the snap. The canes stay as pale as the hemp chart.
+- **Cut stalks are straw with a green cast:** `cream`, the quiet golds and the light end of `sage`. With the full `sage` and `wood` ramps the strands of a sheaf striped orange and teal.
+- **Baked sparkles are removed.** The harvest-ready herbs came with four-point sparkles. The pass finds small bright warm shapes that sit in outline or empty space and deletes them, also when they touch a leaf. The game adds its own sparkle.
+- **Planter and foliage are separate.** The herb frames are composed from one shared planter and a foliage layer per stage, so a planter can be swapped later.
+- **Back walls need the wall veil.** The generated walls are dusty and quiet. Snapped to master colours they turn as loud as props, because the palette has no dusty mid-tones. The answer is in the style bible, section 13: walls are stored in plain master colours and shown a quarter of the way toward `stone-3`. Measured over the eight walls, that blend is close to the best fit between the snapped and the generated walls (the fit gives 18% of a colour next to `stone-4`; a quarter of `stone-3` is the same idea, one step darker, as the bible asks).
+- **People stay on the skin ramp.** Warm lights on a face are nearer to the bright ends of `wood` and `clay` than to `skin`, so those ends are left out for people. A deep brown skin sits between `skin` and the dark golds and gets a rule of its own, or it turns khaki. Beige-grey hair goes to `ash` by hand-set colours.
+- **Small accents are protected.** The budget step folds the least used colours away first, which are exactly the spectacles, the water drops and the rake tines. Each worker names the ramps that may not be folded away.
+- **One colour map per character.** All nine frames of a worker, the shared head, the body layers and the props share one map, so no colour flickers between poses. Budget: 24 colours for the person, 32 with held props.
+
+Result: 213 sprite files from these five rounds, 259 with round 4, every one in master colours and inside its budget. Before/after sheets are in `cleanup/batch01_round1/` to `batch01_round6/`.
+
+Left for the hand polish: the list in [HANDOFF.md](HANDOFF.md).
+
 ## What this means for each asset class
 
 | Class | Route | Hand work |
@@ -103,7 +127,7 @@ If later rounds come back the same way, ask for the same package every time: the
 - **Skin tones** can snap to `cream` instead of `skin` on very light faces. Character sprites get a ramp whitelist and a manual check.
 - **Very small details** (glasses, jewellery, buttons) need hand placement.
 - **First-pack images** lose more than expansion-style images because they start soft. New prompts therefore ask for the expansion style, which cleans up almost losslessly.
-- The tool does not yet split a sheet into separate sprites, set pivots or make edges tile. Those are pipeline tasks.
+- The tool does not yet set pivots or make edges tile. Those are pipeline tasks. Splitting is no longer needed while images arrive with their parts cut.
 
 ## Acceptance numbers for the automatic pass
 
@@ -111,7 +135,7 @@ A cleaned sprite goes on to hand polish when:
 
 - its size matches the size table exactly,
 - every colour is a master palette colour,
-- the colour count is within budget (16 for props and plants, 24 for actors, 32 for floors and cards),
+- the colour count is within budget (16 for props and plants, 24 for actors, 32 for floors, cards and worker frames that hold a prop),
 - transparency has only two values,
 - the outline is closed.
 

@@ -1,6 +1,6 @@
 # Sprout Tower Style Bible v1
 
-Status: v1.2, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
+Status: v1.3, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
 
 This is the single source of truth for how Sprout Tower looks. If an asset and this document disagree, the asset is wrong, or this document gets a new version. Nobody "interprets around" it.
 
@@ -144,7 +144,7 @@ One rule: **every art pixel in the game is the same size on screen.** The game r
 - **Flat cel shading.** 3 tones for sprites under 32 pixels, 4 to 5 for large ones.
 - **Ramps are hue-shifted.** Each ramp gets cooler and more purple as it darkens and warmer and yellower as it lightens. This is where the golden-hour feeling comes from.
 - **No gradients, no dithering, no noise.** The sky is the one exception and it uses flat bands (section 14).
-- **Colour budgets:** up to 16 colours for a prop or plant, 24 for an actor, 32 for a whole floor or card.
+- **Colour budgets:** up to 16 colours for a prop or plant, 24 for an actor, 32 for a whole floor or card. A worker frame that holds a prop may reach 32: 24 for the person and the rest for the prop.
 - **No pillow shading.** Shade follows the light direction, never the outline.
 - **Highlights:** one specular tick of 1 to 3 pixels on glossy things only (glass, glazed planters, metal, eyes).
 - **Texture:** at most 2 to 4 texture marks per 16×16 area (grain dashes, stone specks), in the neighbouring ramp step.
@@ -348,6 +348,7 @@ Rules:
 
 - **The tap target is the star.** The crop or machine the player taps is the biggest, brightest thing in the room and sits near the centre (about x 130 to 230).
 - **Back walls are quiet.** Lower contrast, slightly darker and cooler than the props, few details. The room should read from the props and people, not the wallpaper.
+- **The wall veil makes them quiet.** A back wall is drawn in plain master colours and shown a quarter of the way toward `stone-3` (25% of `#6B5F87` over the wall). The master palette has no dusty mid-tones, so a wall in plain master colours is as loud as a prop; the veil gives every master colour one quieter twin. It is applied to back walls only, never to props, people, plants or the UI.
 - **Outdoor floors are open to the sky.** Balcony, backyard and field floors have a low back layer (wall, fence, hedge) and the world's sky shows above it.
 - **Two workers per floor** as in the v2 floors, flanking the tap target.
 - **One manager spot per floor,** always at the right end (about x 292 to 336). It holds a low stool, crate or small desk, no taller than 24 pixels, themed to the floor, and nothing tall in front of it. The assigned manager stands or sits there. In the v2 floors the right-hand furniture is moved or trimmed to make this room.
@@ -631,3 +632,4 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 - **v1:** first version, built from both reference packs, with the measured grid, the 76-colour palette, the hemp definition and the clean-up proof.
 - **v1.1:** aligned with the game design document. World 1 floor table, six worlds, six named hemp cards, managers as floor-neutral cards with a manager spot on every floor, fixes owed on v2 floors 03 and 09, on the B12 flask, the B5 botanist, the B21 cook and tea master and the B11 pruners, and the design document's word list. The look, grid, palette and prompt suffix are unchanged.
 - **v1.2:** follows design version 0.2, which plans four worlds at launch. Mount Mitten's look is fixed (section 7), the missing list has launch counts (section 23), the B11 mortar becomes the Moonstone Birdbath, the ticket plate and "Coming soon" card join the UI kit, and the later batches are laid out in BATCH_PLAN.md. The look, grid, palette and prompt suffix are unchanged.
+- **v1.3:** after the first full batch of our own images. Adds the wall veil (section 13) and the 32-colour budget for a worker frame that holds a prop (section 6). Managers still read as in v1.1 and wait for design version 0.3.

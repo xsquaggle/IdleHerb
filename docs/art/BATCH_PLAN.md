@@ -16,7 +16,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 
 | Batch | Theme | Images | State |
 |---|---|---|---|
-| 1 | World 1 vertical slice | 18 | With Lawson. Round 4 (prompts 11 to 14) is back, passed and cleaned. 14 prompts to go |
+| 1 | World 1 vertical slice | 18 | 17 of 18 are back, passed with no redos and cleaned into sprites. Prompt 18 (managers) is on hold |
 | 2 | Finish World 1 | 20 | Next |
 | 3 | Loomington rooms and collection | 17 | Planned |
 | 4 | Loomington cast and weekend events | 13 | Planned |
@@ -27,7 +27,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 
 That is about **103 images after Batch 1**. Mount Mitten, the fourth launch world, is Batches 7 and 8: about 26 images.
 
-**Open point: managers.** On 2026-11-25 Lawson chose one fixed manager per floor instead of manager cards for any floor. The Game Designer is revising the manager list. Until that list is in, the manager images wait: prompt 18 in Batch 1 and the manager rows in Batches 2, 3 and 5.
+**Open point: managers.** On 2026-11-25 Lawson chose one fixed manager per floor instead of manager cards for any floor. The Game Designer's revised list is design version 0.3 (PR #5), not merged yet. It raises the new launch managers from 16 to 22, drops the floor-neutral pose, and puts four Thymeford managers first: Rowan Rake, Posy Seedwell, Captain Kelp and Granny Evergreen. Until it merges, the manager images wait: prompt 18 in Batch 1 and the manager rows in Batches 2, 3 and 5. The manager rows and counts below still follow version 0.2.
 
 ### How the counts are made
 
@@ -42,7 +42,7 @@ That is about **103 images after Batch 1**. Mount Mitten, the fourth launch worl
 | A world background in parallax layers | 2 per world |
 | An icon set | 1 |
 
-**The biggest block is the lead worker sheets:** 31 of the 103 images. Batch 1 prompts 8 to 10 are the first three sheets. If they come back clean, later sheets try two workers per image, which would save about 15 images.
+**The biggest block is the lead worker sheets:** 31 of the 103 images. Batch 1 prompts 8 to 10, the first three sheets, came back clean: nine frames each, the same character in every frame, and a shared head with body layers. So from Batch 2 on, a worker sheet asks for two workers. That would save about 15 images. The tables below keep one worker per sheet until the first two-worker sheet has passed.
 
 ## Batch 2: Finish World 1
 
