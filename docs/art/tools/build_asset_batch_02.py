@@ -46,7 +46,8 @@ def add(n, title, fname, shape, size, transparent, refset, purpose, breakdown, f
     # the design word list (GDD 2.3): planter, never the three-letter word
     assert not re.search(r'\bpots?\b', text, re.I), f'prompt {n} says pot'
     P.append(dict(n=n, title=title, fname=fname, shape=shape, size=size, transparent=transparent, refset=refset,
-                  purpose=purpose, breakdown=breakdown, flag=flag, extra=extra, prompt=text))
+                  purpose=purpose, breakdown=breakdown, flag=flag, extra=extra, prompt=text,
+                  att=re.findall(r'`([^`]+\.png)`', extra or '')))
 
 
 SPROUT = ("a plump golden seed with a small two-leaf golden sprout growing from its top, floating in the air. Its two "
@@ -512,8 +513,9 @@ w("1. Each round is **one new ChatGPT chat**.")
 w("2. At the start of a round, **attach that round's two reference images** from your expansion pack (listed below) "
   "and paste the round's first prompt in the same message.")
 w("3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the "
-  "reference images again. Rounds 4 to 6 are a little different: each worker prompt also needs one or two of your "
-  "floor pictures, named under the prompt's title. Attach them in the same message as that prompt.")
+  "reference images again. **Rounds 4 to 6 are different:** most of their prompts need one or two more of your "
+  "pictures, attached in the same message as that prompt. They are listed in the table \"Extra pictures\" below and "
+  "in bold at the top of each prompt.")
 w("4. Each prompt is one grey box. Copy the whole box, change nothing.")
 w("5. New in this batch: the end of every prompt asks ChatGPT for the zip it made on its own last time (true-size "
   "parts and a slices file). **Upload the zip as well as the picture.** If ChatGPT makes no zip, the picture alone "
@@ -533,6 +535,18 @@ for k in used:
     w(f"| **{k}** | {name} | " + " and ".join(f"`{f}`" for f in files) + " |")
 w("")
 w("Both are from your expansion pack, the same as in Batch 1.")
+w("")
+w("### Extra pictures for rounds 4 to 6")
+w("")
+w("These prompts draw workers who are already in your room pictures, so each needs that picture attached in the same "
+  "message as the prompt. The `B4_floor..._v2` files are in your expansion pack. The `b01_15` file is "
+  "the ropewalk picture you made in Batch 1.")
+w("")
+w("| Prompt | Also attach |")
+w("|---|---|")
+for p in P:
+    if p['att']:
+        w(f"| {p['n']} | " + " and ".join(f"`{f}`" for f in p['att']) + " |")
 w("")
 w("### The rounds")
 w("")
@@ -557,22 +571,23 @@ for r, theme, s, ns, pri in ROUNDS:
     name, files = SETS[s]
     hdr = f"**New chat. Attach Set {s}:** " + " and ".join(f"`{f}`" for f in files) + "."
     if r in EXTRA_ROUNDS:
-        hdr += (" **Worker prompts in this round also need your floor pictures**, named under each prompt's title. "
-                "Attach them in the same message as that prompt.")
+        hdr += (" **Most prompts in this round need one or two more pictures as well.** Each one is named in bold at "
+                "the top of its prompt.")
     w(hdr)
     for n in ns:
         p = P[n - 1]
         w("")
         w(f"### Prompt {p['n']}: {p['title']}")
         w("")
+        if p['att']:
+            w("**Attach with this prompt:** " + " and ".join(f"`{f}`" for f in p['att']))
+            w("")
         w(f"- **File name:** `{p['fname']}`")
         w(f"- **Shape and size:** {p['shape']}, {p['size']} (any size ChatGPT gives at this shape is fine)")
         w(f"- **Transparent background:** {p['transparent']}")
         w(f"- **Purpose:** {p['purpose']}")
         w(f"- **Parts we cut from it:** {p['breakdown']}")
         w(f"- **Name flag:** {p['flag']}")
-        if p['extra']:
-            w(f"- **Extra attachment:** {p['extra']}")
         w("")
         w("```text")
         w(p['prompt'])

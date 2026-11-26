@@ -12,7 +12,7 @@ Names follow the game design document, which is still in review. Each prompt des
 
 1. Each round is **one new ChatGPT chat**.
 2. At the start of a round, **attach that round's two reference images** from your expansion pack (listed below) and paste the round's first prompt in the same message.
-3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the reference images again. Rounds 4 to 6 are a little different: each worker prompt also needs one or two of your floor pictures, named under the prompt's title. Attach them in the same message as that prompt.
+3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the reference images again. **Rounds 4 to 6 are different:** most of their prompts need one or two more of your pictures, attached in the same message as that prompt. They are listed in the table "Extra pictures" below and in bold at the top of each prompt.
 4. Each prompt is one grey box. Copy the whole box, change nothing.
 5. New in this batch: the end of every prompt asks ChatGPT for the zip it made on its own last time (true-size parts and a slices file). **Upload the zip as well as the picture.** If ChatGPT makes no zip, the picture alone is fine.
 6. Save each picture as it comes: **PNG, original size**. No screenshots, no JPG, no cropping or resizing.
@@ -28,6 +28,21 @@ Names follow the game design document, which is still in review. Each prompt des
 | **C** | Plants and items | `B24_plant_growth_stages.png` and `B23_exotic_plants.png` |
 
 Both are from your expansion pack, the same as in Batch 1.
+
+### Extra pictures for rounds 4 to 6
+
+These prompts draw workers who are already in your room pictures, so each needs that picture attached in the same message as the prompt. The `B4_floor..._v2` files are in your expansion pack. The `b01_15` file is the ropewalk picture you made in Batch 1.
+
+| Prompt | Also attach |
+|---|---|
+| 10 | `B4_floor04_garden_shed_nursery_v2.png` |
+| 11 | `B4_floor05_greenhouse_v2.png` |
+| 12 | `B4_floor06_farmers_market_v2.png` |
+| 13 | `B4_floor07_tea_house_v2.png` |
+| 14 | `b01_15_floor08_ropewalk_twine_shop.png` |
+| 15 | `B4_floor09_essence_lab_v2.png` |
+| 16 | `B4_floor10_herb_empire_hq_v2.png` and `B4_floor01_windowsill_planter_v2.png` |
+| 17 | `B4_floor02_balcony_pots_v2.png` and `B4_floor03_backyard_patch_v2.png` |
 
 ### The rounds
 
@@ -351,7 +366,7 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ## Round 4: Pip and the first two-worker sheet
 
-**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Worker prompts in this round also need your floor pictures**, named under each prompt's title. Attach them in the same message as that prompt.
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Most prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
 
 ### Prompt 9: Pip, the seedling guide: poses and expressions
 
@@ -388,13 +403,14 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ### Prompt 10: Workers: Garden Shed Nursery
 
+**Attach with this prompt:** `B4_floor04_garden_shed_nursery_v2.png`
+
 - **File name:** `b02_10_workers_floor04_garden_shed.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
 - **Purpose:** Makes both workers of floor 4, Garden Shed Nursery (from your v2 floor 04), move. This is the first sheet with two workers on it. If it works, the other sheets in this batch do the same and the whole game needs about 15 fewer images.
 - **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
 - **Name flag:** Worker names may change. The looks are taken from your v2 floor 04.
-- **Extra attachment:** With this prompt also attach `B4_floor04_garden_shed_nursery_v2.png`, so the two workers match your floor 04.
 
 ```text
 Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The garden shed floor scene attached with this message shows the two characters to draw: CHARACTER A is the man in the orange cap at the potting bench, CHARACTER B is the young woman in purple dungarees holding a seedling tray. Keep their faces, hair, outfits and colours.
@@ -428,9 +444,11 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ## Round 5: Workers of floors 5 to 7
 
-**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Worker prompts in this round also need your floor pictures**, named under each prompt's title. Attach them in the same message as that prompt.
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Most prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
 
 ### Prompt 11: Workers: Glass Greenhouse
+
+**Attach with this prompt:** `B4_floor05_greenhouse_v2.png`
 
 - **File name:** `b02_11_workers_floor05_greenhouse.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
@@ -438,7 +456,6 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 - **Purpose:** Makes both workers of floor 5, Glass Greenhouse (from your v2 floor 05), move. Character A uses a wheelchair, so her walk is a roll.
 - **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
 - **Name flag:** Worker names may change. The looks are taken from your v2 floor 05.
-- **Extra attachment:** With this prompt also attach `B4_floor05_greenhouse_v2.png`, so the two workers match your floor 05.
 
 ```text
 Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The greenhouse floor scene attached with this message shows the two characters to draw: CHARACTER A is the woman in the wheelchair on the left, CHARACTER B is the young gardener in rust-brown dungarees on the right. Keep their faces, hair, outfits and colours.
@@ -470,13 +487,14 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ### Prompt 12: Workers: Farmers' Market Stall
 
+**Attach with this prompt:** `B4_floor06_farmers_market_v2.png`
+
 - **File name:** `b02_12_workers_floor06_market.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
 - **Purpose:** Makes both workers of floor 6, Farmers' Market Stall (from your v2 floor 06), move.
 - **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
 - **Name flag:** Worker names may change. The looks are taken from your v2 floor 06.
-- **Extra attachment:** With this prompt also attach `B4_floor06_farmers_market_v2.png`, so the two workers match your floor 06.
 
 ```text
 Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The market floor scene attached with this message shows the two characters to draw: CHARACTER A is the woman in the red head wrap on the left, CHARACTER B is the older woman with the white braid and basket on the right. Keep their faces, hair, outfits and colours.
@@ -508,13 +526,14 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ### Prompt 13: Workers: Tea House
 
+**Attach with this prompt:** `B4_floor07_tea_house_v2.png`
+
 - **File name:** `b02_13_workers_floor07_tea_house.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
 - **Purpose:** Makes both workers of floor 7, Tea House (from your v2 floor 07), move.
 - **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
 - **Name flag:** Worker names may change. The looks are taken from your v2 floor 07.
-- **Extra attachment:** With this prompt also attach `B4_floor07_tea_house_v2.png`, so the two workers match your floor 07.
 
 ```text
 Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The tea house floor scene attached with this message shows the two characters to draw: CHARACTER A is the older woman pouring tea on the left, CHARACTER B is the young waiter with the tray on the right. Keep their faces, hair, outfits and colours.
@@ -548,9 +567,11 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ## Round 6: Workers of floors 8 to 10 and the second workers of floors 1 to 3
 
-**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Worker prompts in this round also need your floor pictures**, named under each prompt's title. Attach them in the same message as that prompt.
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Most prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
 
 ### Prompt 14: Workers: Ropewalk and Twine Shop
+
+**Attach with this prompt:** `b01_15_floor08_ropewalk_twine_shop.png`
 
 - **File name:** `b02_14_workers_floor08_ropewalk.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
@@ -558,7 +579,6 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 - **Purpose:** Makes both workers of floor 8, Ropewalk and Twine Shop, move. They are the two you made in Batch 1 prompt 15.
 - **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
 - **Name flag:** Worker names may change. The looks are taken from your Batch 1 prompt 15 picture.
-- **Extra attachment:** With this prompt also attach your Batch 1 picture `b01_15_floor08_ropewalk_twine_shop.png`, so the two workers match it.
 
 ```text
 Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The ropewalk picture attached with this message shows the two characters to draw: CHARACTER A is the young woman turning the rope wheel, CHARACTER B is the old man winding twine at the bench. Keep their faces, hair, outfits and colours.
@@ -592,13 +612,14 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ### Prompt 15: Workers: Soap and Scent Workshop
 
+**Attach with this prompt:** `B4_floor09_essence_lab_v2.png`
+
 - **File name:** `b02_15_workers_floor09_soap_workshop.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
 - **Purpose:** Makes both workers of floor 9, Soap and Scent Workshop (from your v2 floor 09), move. Their jobs change from lab work to soap making.
 - **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
 - **Name flag:** Worker names may change. The looks are taken from your v2 floor 09.
-- **Extra attachment:** With this prompt also attach `B4_floor09_essence_lab_v2.png`, so the two workers match your floor 09.
 
 ```text
 Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The workshop floor scene attached with this message shows the two characters to draw: CHARACTER A is the small older woman with the green headband sitting at the lavender table, CHARACTER B is the woman in the long purple coat with goggles on her head. Ignore the copper still and the glass bottles. Keep their faces, hair, outfits and colours.
@@ -630,13 +651,14 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ### Prompt 16: Workers: Sprout Tower HQ and Windowsill Planter
 
+**Attach with this prompt:** `B4_floor10_herb_empire_hq_v2.png` and `B4_floor01_windowsill_planter_v2.png`
+
 - **File name:** `b02_16_workers_floor10_floor01.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
 - **Purpose:** Makes the worker of floor 10, Sprout Tower HQ, and the second worker of floor 1, Windowsill Planter, move. The grandmother at the HQ desk is left out on purpose: she is the best fit for Granny Evergreen, the Head of Thymeford, and is drawn with the managers.
 - **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
 - **Name flag:** Worker names may change. The looks are taken from your v2 floors 10 and 01.
-- **Extra attachment:** With this prompt also attach `B4_floor10_herb_empire_hq_v2.png` and `B4_floor01_windowsill_planter_v2.png`.
 
 ```text
 Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The two floor scenes attached with this message show the two characters to draw: CHARACTER A is the young man carrying books in the headquarters scene, CHARACTER B is the young gardener in the green bandana with a watering can in the windowsill scene. Keep their faces, hair, outfits and colours.
@@ -668,13 +690,14 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ### Prompt 17: Workers: Balcony Boxes and Backyard Hemp Patch
 
+**Attach with this prompt:** `B4_floor02_balcony_pots_v2.png` and `B4_floor03_backyard_patch_v2.png`
+
 - **File name:** `b02_17_workers_floor02_floor03.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
 - **Purpose:** Makes the second workers of floor 2, Balcony Boxes, and floor 3, Backyard Hemp Patch, move. With prompts 10 to 16 and Batch 1, every worker in your ten World 1 floor pictures can now move.
 - **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
 - **Name flag:** Worker names may change. The looks are taken from your v2 floors 02 and 03.
-- **Extra attachment:** With this prompt also attach `B4_floor02_balcony_pots_v2.png` and `B4_floor03_backyard_patch_v2.png`.
 
 ```text
 Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The two floor scenes attached with this message show the two characters to draw: CHARACTER A is the plump woman crouching to plant on the balcony, CHARACTER B is the young woman with the red braid and straw hat digging in the backyard. Keep their faces, hair, outfits and colours.
