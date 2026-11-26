@@ -1,10 +1,12 @@
 # Art Director handoff
 
-Kept current so that work can stop at any moment and resume cleanly. Last update: 2026-11-26, 10 AM (US Eastern).
+Kept current so that work can stop at any moment and resume cleanly. Last update: 2026-11-26, about 11 AM (US Eastern).
 
 ## Start here if you are a new thread
 
 On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an audit and resume in a new thread with fresh context. The first Art Director thread said yes: Batch 1 is finished, nothing is half-done, and everything a new thread needs is in the repo, in the project files or in project memory. Nothing lives only in the old thread.
+
+**Update, 10:15 AM the same day:** the model chosen for audits ran out of usage, so the audit of PR #2 could not run yet. Lawson asked to move on and audit later. The same thread wrote all of Batch 2 (see Done). The coordinator was told; the later audit should cover PR #2 including Batch 2.
 
 **Read in this order**
 
@@ -22,13 +24,13 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 - Lawson's raw uploads are not in git. They are in the project files: `art/batch01/round1_raw/` to `round6_raw/`. The two reference packs are `HerbAssets_Reference_Pack.zip` and `Sprout_Tower_expansion.zip` in the project files root.
 - The prompt file Lawson reads on the phone is a copy in the project files: `art/batch01/Asset_Batch_01_prompts.md`. Put each new batch file next to it and attach it to the reply.
 
-**To write Batch 2**
+**Batch 2 is written** ([`ASSET_BATCH_02.md`](ASSET_BATCH_02.md), from `tools/build_asset_batch_02.py`)
 
-- Copy `tools/build_asset_batch_01.py` to `tools/build_asset_batch_02.py` and fill it from the Batch 2 table in `BATCH_PLAN.md`. Leave the manager prompts out (see Open questions).
-- Keep the round structure: one new ChatGPT chat per round, a reference set per round taken only from the expansion pack, prompts pasted one at a time.
-- Ask for the same package as Batch 1 in every prompt: the big sheet as an exact whole-number enlargement, the true-size parts or layers, and a slices file.
-- New asks learnt from Batch 1: no loose sparkles or glints around plants, and two lead workers per worker sheet.
-- Each prompt needs its redo sentence, as in Batch 1, so a failed image can be re-requested with one line.
+- The builder reads the style suffix and hemp guards from bible section 21, so they can never drift. It stops if a prompt uses the three-letter word the design word list removes, so every container is a "planter".
+- Every prompt ends with a FILES line asking ChatGPT for the package it sent unasked in Batch 1: the sheet as exact pixel art, true-size parts and a `slices.json`.
+- Every plant and item prompt says no sparkles, glints or floating dots (Batch 1 needed `drop_sparkles`).
+- Worker sheets carry two workers each (three rows, six columns). Prompt 10 is the first. The redo table has a sentence to split a sheet in two if it fails.
+- When uploads come back: Gate A, hemp review (prompts 7 and 14 carry the products guard), then a new clean-up script on top of `cleanlib.py`. The two-worker sheets split down the middle into two of the Batch 1 worker layouts.
 
 **To run the automatic pass on an upload**
 
@@ -40,6 +42,7 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 - The manager text is out of date on purpose and waits for design 0.3 (PR #5): bible section 10 and the manager rows of section 23, the manager lines of `HEMP_ART.md`, the manager rows of `BATCH_PLAN.md`, and prompt 18 of Batch 1.
 - The 259 sprites have had the automatic pass only. Hand polish and Gate B are still owed (step 3 below), so soft faces and small stray colours are known.
 - The wall veil (bible section 13) has not been confirmed by the engine thread.
+- Batch 2 was written while the art-direction model was out of usage, and Lawson asked for it to be checked later. Look hardest at the two-worker sheet layout (prompt 10), the visitor designs (prompt 1), Pip (prompt 9) and the hemp guard on prompts 7 and 14.
 - Everything else is meant to be final and should be held to the bible.
 
 ## Done
@@ -49,6 +52,7 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 - **All 17 went through the automatic pass.** 259 sprite files under `art/` in the repo, all in master colours and inside their budgets. [`art/README.md`](../../art/README.md) lists every folder.
 - Raw files: project files, `art/batch01/round1_raw/` to `round6_raw/`. A copy of the cleaned sprites: `art/batch01/cleaned/`.
 - A mock-up of floor 3 built only from cleaned sprites: `docs/art/cleanup/batch01_floor03_mockup.png`.
+- **Batch 2 written** (2026-11-26): 17 prompts in 6 rounds, no managers. Rounds 1 and 2 were sent to Lawson at about 10:45 AM US Eastern, all six rounds soon after. Lawson's copy: project files `art/batch02/Asset_Batch_02_prompts.md`. Nothing is back yet.
 
 ## In progress
 
@@ -57,7 +61,7 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 ## Next steps, in order
 
 1. **Managers, when design 0.3 (PR #5) merges.** See the open question below. Then rewrite prompt 18, update the manager text in the bible (section 10 and the manager rows of section 23) and in HEMP_ART.md, redo the manager rows of BATCH_PLAN.md, and tell Lawson which manager prompt to run.
-2. **Write Batch 2** as a prompt file (`ASSET_BATCH_02.md`). Not started. It waits for the coordinator to open the new thread (see "Start here" above). The agreed plan: Batch 2 without the manager prompts, then a short manager round after PR #5 merges. Ask for the same package as before: the big sheet, the true-size parts and a slices file. Try two lead workers per sheet (see BATCH_PLAN.md).
+2. **Check and clean Batch 2 as Lawson uploads it.** Uploads go to project files `art/batch02/roundN_raw/`. Check prompt 10 first: if the two-worker sheet failed, tell Lawson to use the split sentence on prompts 11 to 17 too.
 3. **Hand polish, then Gate B,** for the automatic-pass sprites:
    - Faces: one fixed head per character from the Face Kit. The generated faces are readable but soft, most of all on the two ropewalk workers.
    - Hemp cards: thin the leaf tufts. Product icons: one colour family for the soap. Burlap and building blocks: tidy speckle.
@@ -69,6 +73,6 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 
 ## Open questions
 
-- **Managers.** Lawson chose one fixed manager per floor (2026-11-25). The Game Designer's design 0.3 is PR #5, open and waiting for its audit on 2026-11-26. What it means for art, from the Game Designer's note: 50 managers in all, 34 at launch, 12 already pictured and 22 new (it was 16). A manager belongs to one room, so floor-neutral poses are no longer needed, but every floor keeps a manager spot. Thymeford needs four new sprites first: Rowan Rake (floor 3), Posy Seedwell (floor 4), Captain Kelp (floor 8) and Granny Evergreen (floor 10, Head of Thymeford). Seven new launch characters have no ability: Tansy Treadle, Kit Foldaway, Marina Bolt, Ned Knotwell, Wren Woolsey, Bertie Bundle, Purl Garter. Mayor Thyme becomes a story character. Each world's top-floor manager is its Head with an Exotic frame. Floors are in design CONTENT 2.1, hemp-floor casting in 2.4. Lawson was asked to keep holding prompt 18.
+- **Managers.** Lawson chose one fixed manager per floor (2026-11-25). The Game Designer's design 0.3 is PR #5, open and waiting for its audit on 2026-11-26. What it means for art, from the Game Designer's note: 50 managers in all, 34 at launch, 12 already pictured and 22 new (it was 16). A manager belongs to one room, so floor-neutral poses are no longer needed, but every floor keeps a manager spot. Thymeford needs four new sprites first: Rowan Rake (floor 3), Posy Seedwell (floor 4), Captain Kelp (floor 8) and Granny Evergreen (floor 10, Head of Thymeford). Seven new launch characters have no ability: Tansy Treadle, Kit Foldaway, Marina Bolt, Ned Knotwell, Wren Woolsey, Bertie Bundle, Purl Garter. Mayor Thyme becomes a story character. Each world's top-floor manager is its Head with an Exotic frame. Floors are in design CONTENT 2.1, hemp-floor casting in 2.4. Lawson was asked to keep holding prompt 18. Art Director's pick, not yet agreed with the designer: the grandmother at the desk in v2 floor 10 (green suit, white curls, green glasses, holding a sprout trophy) becomes Granny Evergreen, so she needs no new design. Batch 2 gives her no worker sheet for that reason.
 - **Six worlds in the end** (Lawson, 2026-11-25). The Moon and Nebula Nursery stay after launch in the batch plan unless the design moves them.
 - **The wall veil** is new in bible v1.3 and touches the engine: see `art/README.md`. The engine thread has not confirmed it yet.

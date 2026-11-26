@@ -7,7 +7,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 ## How the plan works
 
 - A batch is 10 to 20 images that Lawson generates in ChatGPT from a prompt file like [ASSET_BATCH_01.md](ASSET_BATCH_01.md).
-- **Only Batch 1 is written.** Each later batch becomes a prompt file once the batch before it has been checked, because the results show what to ask for next. The image counts below are estimates.
+- **Batches 1 and 2 are written** ([ASSET_BATCH_02.md](ASSET_BATCH_02.md) since 2026-11-26). Each later batch becomes a prompt file once the batch before it has been checked, because the results show what to ask for next. The image counts below are estimates.
 - The order follows what a player sees first.
 - Every prompt carries the fixed style suffix v1 and, where hemp appears, a hemp guard. Nothing on this page changes the look.
 - Each batch keeps a few places free for redos of the batch before it.
@@ -17,7 +17,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 | Batch | Theme | Images | State |
 |---|---|---|---|
 | 1 | World 1 vertical slice | 18 | 17 of 18 are back, passed with no redos and cleaned into sprites. Prompt 18 (managers) is on hold |
-| 2 | Finish World 1 | 20 | Next |
+| 2 | Finish World 1 | 17 | Written 2026-11-26, with Lawson. No manager prompts: they follow as a short round of their own |
 | 3 | Loomington rooms and collection | 17 | Planned |
 | 4 | Loomington cast and weekend events | 13 | Planned |
 | 5 | Papaya Cay rooms | 17 | Planned |
@@ -42,27 +42,28 @@ That is about **103 images after Batch 1**. Mount Mitten, the fourth launch worl
 | A world background in parallax layers | 2 per world |
 | An icon set | 1 |
 
-**The biggest block is the lead worker sheets:** 31 of the 103 images. Batch 1 prompts 8 to 10, the first three sheets, came back clean: nine frames each, the same character in every frame, and a shared head with body layers. So from Batch 2 on, a worker sheet asks for two workers. That would save about 15 images. The tables below keep one worker per sheet until the first two-worker sheet has passed.
+**The biggest block is the lead worker sheets:** 31 of the 103 images. Batch 1 prompts 8 to 10, the first three sheets, came back clean: nine frames each, the same character in every frame, and a shared head with body layers. So from Batch 2 on, a worker sheet asks for two workers. That would save about 15 images. Batch 2 puts two workers on every sheet (prompt 10 is the first). If that fails, its fallback sentence splits a sheet in two, and the later batches go back to one worker per sheet. The tables for Batches 3 to 8 below still count one worker per sheet.
 
 ## Batch 2: Finish World 1
 
-The order inside the batch is agreed with the Game Designer: what the first hour of World 1 shows comes first.
+Written as [ASSET_BATCH_02.md](ASSET_BATCH_02.md), 17 prompts in 6 rounds. The order inside the batch is agreed with the Game Designer: what the first hour of World 1 shows comes first. The managers are left out until the manager list of design 0.3 is approved; they follow as a short round of their own.
 
-| # | Images | Contents |
+| Prompts | Images | Contents |
 |---|---|---|
-| 1 | 2 | The nine managers of the World 1 chest pool. First image: Rowan Rake, Posy Seedwell, Marigold Mayhew, Hazel Thimble, Captain Kelp. Second image: Pepper Finch, Professor Thistlewick, Dame Dahlia Fairweather, Granny Evergreen |
-| 2 | 1 | Pip the seedling guide: poses and expressions |
-| 3 | 1 | The six visitors: three Golden Sprouts with their badges, Dewdrop, Mystery Crate, Busy Bee |
-| 4 | 1 | Common herb cards: Kitchen Rosemary, Garden Sage, Meadow Chamomile, Garden Thyme |
-| 5 | 1 | Soap and Scent Workshop props: soap kettle, soap moulds, drying racks, manager stool. They replace the still and flasks of v2 floor 09 |
-| 6 | 1 | Back walls for the Soap and Scent Workshop and Sprout Tower HQ |
-| 7 | 1 | Currency icons: Insight (lightbulb with a sprout), Pollen, Skill Points |
-| 8 | 2 | Uncommon and Rare herb cards. First image: Peppermint, Lemon Basil, Trailing Rosemary, Butterfly Lavender. Second image: Pineapple Sage, Double Chamomile, Lemon Thyme, Chocolate Mint, Purple Basil |
-| 9 | 1 | Growth stages for thyme, sage and chamomile |
-| 10 | 7 | Lead worker sheets for floors 4 to 10 |
-| 11 | 2 | Second workers of floors 1 to 10 on short sheets |
+| 1 | 1 | The six visitors in two frames each: three Golden Sprouts that differ only by a badge, Dewdrop, Mystery Crate, Busy Bee |
+| 2 | 1 | Six currency icons: Insight (lightbulb with a sprout), Pollen, Skill Points, and also Shells, Snowmarks and Fair Tickets, which were planned for Batches 4, 5 and 7 |
+| 3 to 5 | 3 | Every World 1 herb card still missing. Common: Kitchen Rosemary, Garden Sage, Meadow Chamomile, Garden Thyme. Uncommon: Peppermint, Lemon Basil, Trailing Rosemary, Butterfly Lavender. Then Pineapple Sage, Double Chamomile, Lemon Thyme, Chocolate Mint, Purple Basil |
+| 6 | 1 | Growth stages for thyme, sage and chamomile |
+| 7 | 1 | Soap and Scent Workshop props: soap kettle on a closed stove, soap moulds, drying rack, lotion shelf, manager's stool. They replace the still and flasks of v2 floor 09 |
+| 8 | 1 | Back walls for the Soap and Scent Workshop and Sprout Tower HQ |
+| 9 | 1 | Pip the seedling guide: poses and expressions |
+| 10 to 17 | 8 | Two workers per sheet, nine poses each: both workers of floors 4, 5, 6, 7, 8 and 9, the worker of floor 10, and the second workers of floors 1, 2 and 3 |
 
 Seed Hemp and Longstalk Hemp, the other Uncommon and Rare cards a new player meets, are already in Batch 1.
+
+The grandmother at the desk in v2 floor 10 gets no worker sheet. She is the Art Director's pick for Granny Evergreen, the Head of Thymeford, and goes to the manager round. Using her saves one new manager design.
+
+**Still owed for World 1 after Batch 2:** the four new Thymeford managers (Rowan Rake, Posy Seedwell, Captain Kelp, Granny Evergreen) and any new poses the six pictured ones need. That is the short manager round.
 
 ## Batch 3: Loomington rooms and collection
 
@@ -82,7 +83,7 @@ Seed Hemp and Longstalk Hemp, the other Uncommon and Rare cards a new player mee
 | 1 | 8 | Lead worker sheets for the eight rooms |
 | 2 | 2 | Second workers on short sheets |
 | 3 | 1 | Baron Fauxliage, the plastic-plant salesman: poses and expressions |
-| 4 | 2 | Weekend events. First image: four event emblems (Herb Fair, Night Market, Hemp Harvest Home, Blossom Parade) and the Fair Tickets icon. Second image: fair-stall dressing for World 1 rooms 1 to 5 (bunting, awning, prize table) |
+| 4 | 2 | Weekend events. First image: four event emblems (Herb Fair, Night Market, Hemp Harvest Home, Blossom Parade). The Fair Tickets icon is in Batch 2. Second image: fair-stall dressing for World 1 rooms 1 to 5 (bunting, awning, prize table) |
 
 The Hemp Harvest Home emblem is a sheaf tied with rope. It never shows a leaf.
 
@@ -95,7 +96,7 @@ The Hemp Harvest Home emblem is a sheaf tied with rope. It never shows a leaf.
 | 3 | 2 | The island background in layers. B18 is the guide for what is in it |
 | 4 | 1 | Managers: The Amazing Marrow, Skipper Papaya, Grandpa Mitten |
 | 5 | 1 | Plant cards: Golden Chamomile, Elfin Thyme, Clockwork Thyme |
-| 6 | 1 | The Shells icon and four weather signs: sunshine, rain, breeze, rainbow |
+| 6 | 1 | Four weather signs: sunshine, rain, breeze, rainbow. The Shells icon is in Batch 2 |
 
 **Grandpa Mitten** is drawn here, ahead of his world, so that no launch manager waits for the last batch. He is a lively storyteller with a big storybook, huge knitted mittens and a long red scarf. Bright-eyed and animated, never drowsy. Like every manager he is safe on a hemp floor: no pipe, no steaming mug, and no fire in the sprite.
 
@@ -115,7 +116,7 @@ The look of this world is fixed in the style bible, section 7.
 | 1 | 8 | Rooms: Cabin Windowsill, Hearthside Herb Racks, Ice-Glass Greenhouse, Hemp Knitworks, Fireside Tea Lodge, Sled Works, Aurora Garden, Summit Lodge |
 | 2 | 4 | Back walls for all eight rooms |
 | 3 | 2 | The mountain background in layers: the mitten-shaped peak, the cabin village, the snowy street |
-| 4 | 1 | The Snowmarks icon (a steel-blue coin stamped with a mitten) and the design of the Heat gauge |
+| 4 | 1 | The design of the Heat gauge. The Snowmarks icon is in Batch 2 |
 | 5 | 1 | Snow dressing for the tower: snow caps for the shell beams, roof and entrance in three thicknesses, and icicles |
 
 Fire is drawn only in a hearth or closed stove in the herb rooms. The two hemp rooms have a closed tiled stove with no visible flame, and no chimney has a smoke plume.
@@ -136,12 +137,12 @@ Every "new for launch" count in the design document's section 13 has a batch.
 | Content | New for launch | Where |
 |---|---|---|
 | Rooms | 24 | Batch 1 (1), Batch 3 (7), Batch 5 (8), Batch 7 (8) |
-| Managers | 16 | Batch 2 (9), Batch 3 (4), Batch 5 (3) |
+| Managers | 22 (design 0.3) | The manager round after design 0.3 merges, then Batches 3 and 5. To be re-planned |
 | Plants | 29 | Batch 1 (6 hemp), Batch 2 (13), Batch 3 (7), Batch 5 (3) |
 | Heirlooms | 6, and 1 redraw | Batch 3 |
 | Visitors | 6 | Batch 2 |
 | World backgrounds | 1 new, 2 drawn again as layers | Batch 7, and Batches 3 and 5 |
-| Currency icons | 6 | Batch 2 (3), Batch 4 (1), Batch 5 (1), Batch 7 (1) |
+| Currency icons | 6 | Batch 2 (all six) |
 | Story characters | 2 | Batch 2 (Pip), Batch 4 (Baron Fauxliage) |
 
 ## Made by hand, with no prompt

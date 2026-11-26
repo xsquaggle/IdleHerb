@@ -2,11 +2,7 @@
 
 Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **1**. Style suffix version: **v1**. Hemp guards version: **v1**. Written by `tools/build_asset_batch_02.py`, which copies the suffix and guards word for word from section 21 of the bible. Never edit this file by hand.
 
-**6 images so far, in 2 rounds.** The rounds below are ready to run now. These come next and will be added to this file without changing the numbers of the prompts already here:
-
-- Round 3: Soap and Scent Workshop props (soap kettle, moulds, drying racks, manager stool) and the back walls of floors 9 and 10
-- Round 4: Pip the seedling guide, and the first sheet with two workers on it
-- Rounds 5 and 6: worker sheets for the rest of floors 4 to 10, and the second workers of floors 1 to 10
+**17 images in 6 rounds.** They finish World 1: the six visitors, six currency icons, every World 1 herb card and the last three herb growth charts, the soap workshop and the walls of the top two floors, Pip, and moving workers for every floor. The worker sheets now carry two workers each, which is why the batch is shorter than planned.
 
 The manager images are not in this batch. They wait until the new manager list (one manager per floor) is approved, then follow as a short round of their own.
 
@@ -16,7 +12,7 @@ Names follow the game design document, which is still in review. Each prompt des
 
 1. Each round is **one new ChatGPT chat**.
 2. At the start of a round, **attach that round's two reference images** from your expansion pack (listed below) and paste the round's first prompt in the same message.
-3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the reference images again.
+3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the reference images again. Rounds 4 to 6 are a little different: each worker prompt also needs one or two of your floor pictures, named under the prompt's title. Attach them in the same message as that prompt.
 4. Each prompt is one grey box. Copy the whole box, change nothing.
 5. New in this batch: the end of every prompt asks ChatGPT for the zip it made on its own last time (true-size parts and a slices file). **Upload the zip as well as the picture.** If ChatGPT makes no zip, the picture alone is fine.
 6. Save each picture as it comes: **PNG, original size**. No screenshots, no JPG, no cropping or resizing.
@@ -27,6 +23,8 @@ Names follow the game design document, which is still in review. Each prompt des
 
 | Set | For | Attach these two images |
 |---|---|---|
+| **A** | Scenes | `B4_floor04_garden_shed_nursery_v2.png` and `B4_floor_frame_shell.png` |
+| **B** | People | `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png` |
 | **C** | Plants and items | `B24_plant_growth_stages.png` and `B23_exotic_plants.png` |
 
 Both are from your expansion pack, the same as in Batch 1.
@@ -37,6 +35,10 @@ Both are from your expansion pack, the same as in Batch 1.
 |---|---|---|---|---|
 | 1 | Visitors and currency icons | Set C | 1, 2 | Needed first |
 | 2 | Herbs | Set C | 3, 4, 5, 6 | Needed first |
+| 3 | The top two floors | Set A | 7, 8 | Needed next |
+| 4 | Pip and the first two-worker sheet | Set B plus floor pictures | 9, 10 | Needed first |
+| 5 | Workers of floors 5 to 7 | Set B plus floor pictures | 11, 12, 13 | Needed next |
+| 6 | Workers of floors 8 to 10 and the second workers of floors 1 to 3 | Set B plus floor pictures | 14, 15, 16, 17 | Needed next |
 
 ### All prompts at a glance
 
@@ -48,6 +50,17 @@ Both are from your expansion pack, the same as in Batch 1.
 | 4 | Herb card art: four Uncommon herbs | `b02_04_herb_cards_uncommon.png` | square 1:1 | Yes |
 | 5 | Herb card art: five more World 1 herbs | `b02_05_herb_cards_rare.png` | landscape 3:2 | Yes |
 | 6 | Herb growth stages: thyme, sage, chamomile | `b02_06_herb_growth_stages.png` | landscape 4:3 | Yes |
+| 7 | Soap and Scent Workshop: props | `b02_07_floor09_soap_workshop_props.png` | very wide landscape 3:1 | Yes |
+| 8 | Back walls: soap workshop and tower headquarters | `b02_08_backwalls_soap_hq.png` | landscape 3:2 | Around the panels only |
+| 9 | Pip, the seedling guide: poses and expressions | `b02_09_pip_guide.png` | square 1:1 | Yes |
+| 10 | Workers: Garden Shed Nursery | `b02_10_workers_floor04_garden_shed.png` | landscape 3:2 | Yes |
+| 11 | Workers: Glass Greenhouse | `b02_11_workers_floor05_greenhouse.png` | landscape 3:2 | Yes |
+| 12 | Workers: Farmers' Market Stall | `b02_12_workers_floor06_market.png` | landscape 3:2 | Yes |
+| 13 | Workers: Tea House | `b02_13_workers_floor07_tea_house.png` | landscape 3:2 | Yes |
+| 14 | Workers: Ropewalk and Twine Shop | `b02_14_workers_floor08_ropewalk.png` | landscape 3:2 | Yes |
+| 15 | Workers: Soap and Scent Workshop | `b02_15_workers_floor09_soap_workshop.png` | landscape 3:2 | Yes |
+| 16 | Workers: Sprout Tower HQ and Windowsill Planter | `b02_16_workers_floor10_floor01.png` | landscape 3:2 | Yes |
+| 17 | Workers: Balcony Boxes and Backyard Hemp Patch | `b02_17_workers_floor02_floor03.png` | landscape 3:2 | Yes |
 
 ---
 
@@ -271,6 +284,428 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ---
 
+## Round 3: The top two floors
+
+**New chat. Attach Set A:** `B4_floor04_garden_shed_nursery_v2.png` and `B4_floor_frame_shell.png`.
+
+### Prompt 7: Soap and Scent Workshop: props
+
+- **File name:** `b02_07_floor09_soap_workshop_props.png`
+- **Shape and size:** very wide landscape 3:1, about 2160×720 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Turns your v2 floor 09 into the Soap and Scent Workshop. Its copper still with a flame and its glass flasks are swapped for these, so nothing reads as a laboratory. Its two workers, perfume stand and lavender basket stay.
+- **Parts we cut from it:** Sliced into: soap kettle on its stove, mould table, drying rack, lotion shelf with the soap basket, manager's stool and side table. Brought to the 360×120 floor.
+- **Name flag:** Floor name is from the game design document, still in review.
+
+```text
+Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
+
+A row of workshop props for one floor of a cozy pixel-art idle game, arranged left to right on one shared ground line, exactly like the attached floor reference: separate objects with small gaps between them, nothing cut off by the edges. No people in this image.
+
+Left to right:
+1. A soap kettle: a big round copper kettle with a lid, sitting on a small closed black iron stove with its door shut, and a long wooden stirring paddle leaning against it. No fire, no steam.
+2. A wooden worktable with soap moulds on it: a long wooden tray holding a slab of cream soap, and three small round moulds of pale lavender soap.
+3. A tall wooden drying rack with four shelves of soap bars in cream, pale lavender and pale sage green. Each bar is stamped with a small two-leaf sprout.
+4. A small wooden shelf of round cream lotion bottles with cork stoppers, each with a small two-leaf sprout on its label, and below it a wicker basket of soap bars wrapped in paper and tied with twine.
+5. The manager's spot: an empty plum velvet stool beside a small round side table with a brass hand bell on it.
+
+HEMP PRODUCTS: everything here is made from industrial hemp fibre and seed, shown as plain farm and workshop goods. Harvested stalks are long, straight and pale, like thin bamboo canes or straw. Any mark on a product is a rope knot or a simple two-leaf sprout. No fan-shaped leaf anywhere as an emblem, pattern or decoration, no plant close-ups, no smoke, no jars of dried leaves, nothing held to a face.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: very wide landscape 3:1.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 8: Back walls: soap workshop and tower headquarters
+
+- **File name:** `b02_08_backwalls_soap_hq.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Around the panels only
+- **Purpose:** The wall layer for floor 9 (Soap and Scent Workshop) and floor 10 (Sprout Tower HQ). With Batch 1 this gives every World 1 floor a back wall.
+- **Parts we cut from it:** 2 panels at 336×104.
+- **Name flag:** Floor names are from the game design document, still in review.
+
+```text
+Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
+
+Two background wall panels for a cozy pixel-art idle game about a herb-growing tower. The two panels are stacked one above the other with a clear empty gap between them. Each panel is a wide flat rectangle, three times as wide as it is tall, seen straight from the front with no perspective. These are empty backdrops: no people, no furniture, no plants, no floor, no ceiling beams, no border frame. Keep both panels quiet: soft low-contrast colours, a little darker and cooler than the reference props, with few details, so that bright props and characters placed in front of them will stand out.
+
+TOP PANEL, inside a small soap workshop: a wall of pale sage-green plaster with a band of cream square tiles along the bottom third, a round window right of centre with golden evening light, a long wooden rail with three empty brass hooks, and a faint row of tiny lavender sprigs painted near the top.
+
+BOTTOM PANEL, the head office of a grand old garden company: dark warm wood panelling on the bottom half, deep green wallpaper with a small repeating gold two-leaf sprout pattern on the top half, a tall arched window left of centre showing a plain golden evening sky and far purple rooftops, and a round gold plaque on the right with a two-leaf sprout in relief.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha) around and between the panels. Each panel itself is fully painted edge to edge.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+---
+
+## Round 4: Pip and the first two-worker sheet
+
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Worker prompts in this round also need your floor pictures**, named under each prompt's title. Attach them in the same message as that prompt.
+
+### Prompt 9: Pip, the seedling guide: poses and expressions
+
+- **File name:** `b02_09_pip_guide.png`
+- **Shape and size:** square 1:1, about 1254×1254 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Pip pops out of a windowsill planter in the first five seconds of the game and explains each new thing. These poses are what Pip shows while talking.
+- **Parts we cut from it:** 9 poses at about 48×48 art pixels. The planter is cut out once and shared.
+- **Name flag:** Pip's name and role are from the game design document, still in review.
+
+```text
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). Do not copy their characters.
+
+A character sheet for Pip, the tutorial guide of a cozy pixel-art idle game about a herb-growing tower: the SAME little character in nine poses and expressions, in a grid of three rows and three columns, one per cell, evenly spaced, nothing touching. Same size, colours and proportions in every cell, exactly like the attached animation sheet reference.
+
+THE CHARACTER: Pip is a small, round seedling who lives in a tiny terracotta planter. Pip's body is a plump, smooth, light-brown bean shape that pokes up out of the soil in the planter, with a fresh green two-leaf sprout growing from the top of its head. Pip has two big round dark eyes, small rosy cheeks, a small mouth and two tiny stubby green leaf-shaped arms. Pip never leaves the planter: it hops and waddles about in it. No nose, no ears, no hair, no clothes. Cheerful and a bit of a chatterbox.
+
+Row 1: (1) smiling, facing the viewer. (2) the same with a happy blink. (3) talking, mouth open, one leaf-arm raised as if explaining something.
+Row 2: (4) waving with one leaf-arm. (5) jumping for joy, the planter off the ground, both arms up, the sprout leaves flung up. (6) surprised, eyes wide, the sprout leaves standing straight up.
+Row 3: (7) thinking, one leaf-arm at its chin, eyes looking up. (8) a little sad, the sprout leaves drooping, eyes looking down. (9) only the top of Pip's head and the sprout peeking out of the soil, eyes just visible over the rim.
+
+No sparkles, glints, light rays, motion lines or floating dots anywhere in the image. The game adds those.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: square 1:1.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 10: Workers: Garden Shed Nursery
+
+- **File name:** `b02_10_workers_floor04_garden_shed.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Makes both workers of floor 4, Garden Shed Nursery (from your v2 floor 04), move. This is the first sheet with two workers on it. If it works, the other sheets in this batch do the same and the whole game needs about 15 fewer images.
+- **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
+- **Name flag:** Worker names may change. The looks are taken from your v2 floor 04.
+- **Extra attachment:** With this prompt also attach `B4_floor04_garden_shed_nursery_v2.png`, so the two workers match your floor 04.
+
+```text
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The garden shed floor scene attached with this message shows the two characters to draw: CHARACTER A is the man in the orange cap at the potting bench, CHARACTER B is the young woman in purple dungarees holding a seedling tray. Keep their faces, hair, outfits and colours.
+
+A character animation sheet for a cozy pixel-art idle game with TWO different characters, nine poses each. The sheet is a grid of three rows and six columns, one pose per cell, evenly spaced, nothing touching. The left three columns are CHARACTER A and the right three columns are CHARACTER B, with a slightly wider gap between the two halves. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all nine of its poses, exactly like the attached animation sheet reference. Both are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+CHARACTER A, left three columns: a stout, jolly older man with light skin, a big curled grey moustache and grey sideburns, an orange flat cap, an orange shirt with rolled sleeves, a dark green apron, brown trousers and brown boots.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with one fist up and a little hop.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) holding a small terracotta planter in one hand and pressing soil around a seedling in it with the other. (8) scooping soil with a small hand trowel at waist height. (9) walking to the right carrying a tray of seedlings in both hands.
+
+CHARACTER B, right three columns: a cheerful young woman with light skin, long brown hair in two braids, a cream headscarf tied in a bow on top, round red glasses, a cream shirt, lavender-purple dungarees with a pencil in the front pocket, and brown boots.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with both arms up.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) holding a tray of seedlings at chest height and smiling at it. (8) setting the tray down to the right at waist height. (9) walking to the right carrying a stack of three small terracotta planters.
+
+Both characters look cheerful and wide awake in every pose. Their hands stay at chest height or lower and nothing is held up to a face.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+---
+
+## Round 5: Workers of floors 5 to 7
+
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Worker prompts in this round also need your floor pictures**, named under each prompt's title. Attach them in the same message as that prompt.
+
+### Prompt 11: Workers: Glass Greenhouse
+
+- **File name:** `b02_11_workers_floor05_greenhouse.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Makes both workers of floor 5, Glass Greenhouse (from your v2 floor 05), move. Character A uses a wheelchair, so her walk is a roll.
+- **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
+- **Name flag:** Worker names may change. The looks are taken from your v2 floor 05.
+- **Extra attachment:** With this prompt also attach `B4_floor05_greenhouse_v2.png`, so the two workers match your floor 05.
+
+```text
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The greenhouse floor scene attached with this message shows the two characters to draw: CHARACTER A is the woman in the wheelchair on the left, CHARACTER B is the young gardener in rust-brown dungarees on the right. Keep their faces, hair, outfits and colours.
+
+A character animation sheet for a cozy pixel-art idle game with TWO different characters, nine poses each. The sheet is a grid of three rows and six columns, one pose per cell, evenly spaced, nothing touching. The left three columns are CHARACTER A and the right three columns are CHARACTER B, with a slightly wider gap between the two halves. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all nine of its poses, exactly like the attached animation sheet reference. Both are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+CHARACTER A, left three columns: a cheerful older woman with deep brown skin who uses a wheelchair: a green headscarf with grey curls showing, gold hoop earrings, a cream blouse with a lavender neckerchief, a long green skirt, and a purple wheelchair with gold wheel rims. She is seated in every pose.
+Row 1: (1) sitting relaxed, facing the viewer, smiling. (2) the same with eyes closed in a happy blink. (3) cheering with both arms up.
+Row 2, rolling to the right, seen from the side: (4), (5) and (6) her hands pushing the wheel rims forward, the spokes turned a little further in each frame.
+Row 3, working, facing right: (7) holding a magnifying glass out at arm's length over a small flower in a planter on her lap. (8) writing in a small notebook on her lap. (9) rolling to the right with a planter of leafy herbs on her lap.
+
+CHARACTER B, right three columns: a young gardener with light tan skin, short messy dark brown hair, a cream shirt with rolled sleeves, rust-brown dungarees with garden shears in the pocket, and green rubber boots.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with both arms up and a little hop.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) lifting a small glass bell cover with both hands. (8) lowering the glass bell cover over a small flowering plant in a planter. (9) walking to the right carrying a planter of leafy herbs.
+
+Both characters look cheerful and wide awake in every pose. Their hands stay at chest height or lower and nothing is held up to a face.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 12: Workers: Farmers' Market Stall
+
+- **File name:** `b02_12_workers_floor06_market.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Makes both workers of floor 6, Farmers' Market Stall (from your v2 floor 06), move.
+- **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
+- **Name flag:** Worker names may change. The looks are taken from your v2 floor 06.
+- **Extra attachment:** With this prompt also attach `B4_floor06_farmers_market_v2.png`, so the two workers match your floor 06.
+
+```text
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The market floor scene attached with this message shows the two characters to draw: CHARACTER A is the woman in the red head wrap on the left, CHARACTER B is the older woman with the white braid and basket on the right. Keep their faces, hair, outfits and colours.
+
+A character animation sheet for a cozy pixel-art idle game with TWO different characters, nine poses each. The sheet is a grid of three rows and six columns, one pose per cell, evenly spaced, nothing touching. The left three columns are CHARACTER A and the right three columns are CHARACTER B, with a slightly wider gap between the two halves. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all nine of its poses, exactly like the attached animation sheet reference. Both are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+CHARACTER A, left three columns: a cheerful, plump woman with deep brown skin, a deep red head wrap tied high, gold hoop earrings, a yellow blouse with puffed sleeves, a dark green apron dress with a pocket, and brown shoes.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with a bunch of fresh basil held up high in one hand.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) holding out a bunch of fresh green basil to the right, as if offering it. (8) arranging leafy herbs in a wicker basket held at waist height. (9) walking to the right with a big wicker basket of herbs on her hip.
+
+CHARACTER B, right three columns: a cheerful, round older woman with light skin, a long white braid over one shoulder, a dark green shawl with a gold brooch, and a plum-purple dress with a cream hem.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with one arm up and a little hop.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) reaching out to the right with an open hand, as if paying. (8) putting a bunch of fresh herbs into the wicker basket on her arm. (9) walking to the right with the full basket on her arm.
+
+Both characters look cheerful and wide awake in every pose. Their hands stay at chest height or lower and nothing is held up to a face.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 13: Workers: Tea House
+
+- **File name:** `b02_13_workers_floor07_tea_house.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Makes both workers of floor 7, Tea House (from your v2 floor 07), move.
+- **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
+- **Name flag:** Worker names may change. The looks are taken from your v2 floor 07.
+- **Extra attachment:** With this prompt also attach `B4_floor07_tea_house_v2.png`, so the two workers match your floor 07.
+
+```text
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The tea house floor scene attached with this message shows the two characters to draw: CHARACTER A is the older woman pouring tea on the left, CHARACTER B is the young waiter with the tray on the right. Keep their faces, hair, outfits and colours.
+
+A character animation sheet for a cozy pixel-art idle game with TWO different characters, nine poses each. The sheet is a grid of three rows and six columns, one pose per cell, evenly spaced, nothing touching. The left three columns are CHARACTER A and the right three columns are CHARACTER B, with a slightly wider gap between the two halves. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all nine of its poses, exactly like the attached animation sheet reference. Both are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+CHARACTER A, left three columns: a gentle older woman with light skin, grey hair in a bun held with two hair sticks, rosy cheeks, a plum-purple wrap robe with cream trim and a small embroidered leaf pattern, and a purple sash.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) clapping her hands together happily.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) kneeling on a round purple cushion, pouring tea from a round brown teapot into a cup. (8) kneeling on the cushion, offering a tea cup forward with both hands. (9) walking to the right carrying the teapot on a small wooden tray.
+
+CHARACTER B, right three columns: a cheerful young waiter with light skin, curly ginger hair, a cream shirt with a small purple bow tie, a mustard-yellow waistcoat, dark plum trousers and brown shoes.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with one arm up.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) carrying a tray of four tea cups on one flat hand at shoulder height. (8) bowing slightly while setting a cup down to the right. (9) walking to the right with the tray of cups.
+
+Both characters look cheerful and wide awake in every pose. Their hands stay at chest height or lower and nothing is held up to a face. No steam rises from the tea.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+---
+
+## Round 6: Workers of floors 8 to 10 and the second workers of floors 1 to 3
+
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Worker prompts in this round also need your floor pictures**, named under each prompt's title. Attach them in the same message as that prompt.
+
+### Prompt 14: Workers: Ropewalk and Twine Shop
+
+- **File name:** `b02_14_workers_floor08_ropewalk.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Makes both workers of floor 8, Ropewalk and Twine Shop, move. They are the two you made in Batch 1 prompt 15.
+- **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
+- **Name flag:** Worker names may change. The looks are taken from your Batch 1 prompt 15 picture.
+- **Extra attachment:** With this prompt also attach your Batch 1 picture `b01_15_floor08_ropewalk_twine_shop.png`, so the two workers match it.
+
+```text
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The ropewalk picture attached with this message shows the two characters to draw: CHARACTER A is the young woman turning the rope wheel, CHARACTER B is the old man winding twine at the bench. Keep their faces, hair, outfits and colours.
+
+A character animation sheet for a cozy pixel-art idle game with TWO different characters, nine poses each. The sheet is a grid of three rows and six columns, one pose per cell, evenly spaced, nothing touching. The left three columns are CHARACTER A and the right three columns are CHARACTER B, with a slightly wider gap between the two halves. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all nine of its poses, exactly like the attached animation sheet reference. Both are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+CHARACTER A, left three columns: a stout, cheerful young woman with deep brown skin, hair in two round puffs tied with cream ribbons, a mustard-yellow shirt with rolled sleeves, a brown leather apron and sturdy boots.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with both fists up.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) both hands pushing a wooden crank handle forward at waist height. (8) both hands pulling the crank handle back up at chest height. (9) walking to the right with a big coil of cream rope over one shoulder.
+
+CHARACTER B, right three columns: a tall, thin old man with light skin, a long white moustache, round glasses, a soft plum-purple cap, a cream shirt and a plum waistcoat.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) lifting his cap with one hand in a cheerful greeting.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) winding cream twine onto a ball held at chest height. (8) holding out a finished ball of twine on his open palm at chest height. (9) walking to the right carrying a small basket of twine balls.
+
+Both characters look cheerful and wide awake in every pose. Their hands stay at chest height or lower and nothing is held up to a face.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+HEMP PRODUCTS: everything here is made from industrial hemp fibre and seed, shown as plain farm and workshop goods. Harvested stalks are long, straight and pale, like thin bamboo canes or straw. Any mark on a product is a rope knot or a simple two-leaf sprout. No fan-shaped leaf anywhere as an emblem, pattern or decoration, no plant close-ups, no smoke, no jars of dried leaves, nothing held to a face.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 15: Workers: Soap and Scent Workshop
+
+- **File name:** `b02_15_workers_floor09_soap_workshop.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Makes both workers of floor 9, Soap and Scent Workshop (from your v2 floor 09), move. Their jobs change from lab work to soap making.
+- **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
+- **Name flag:** Worker names may change. The looks are taken from your v2 floor 09.
+- **Extra attachment:** With this prompt also attach `B4_floor09_essence_lab_v2.png`, so the two workers match your floor 09.
+
+```text
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The workshop floor scene attached with this message shows the two characters to draw: CHARACTER A is the small older woman with the green headband sitting at the lavender table, CHARACTER B is the woman in the long purple coat with goggles on her head. Ignore the copper still and the glass bottles. Keep their faces, hair, outfits and colours.
+
+A character animation sheet for a cozy pixel-art idle game with TWO different characters, nine poses each. The sheet is a grid of three rows and six columns, one pose per cell, evenly spaced, nothing touching. The left three columns are CHARACTER A and the right three columns are CHARACTER B, with a slightly wider gap between the two halves. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all nine of its poses, exactly like the attached animation sheet reference. Both are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+CHARACTER A, left three columns: a small, cheerful older woman with light skin, short white hair with a green headband, a cream blouse with puffed sleeves, a dark green apron dress with small scissors in the pocket, brown trousers and brown boots.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with both arms up.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) tying a bundle of fresh purple lavender stems with a ribbon at chest height. (8) holding a small tray of lavender soap bars at waist height. (9) walking to the right carrying a wicker basket of soap bars wrapped in paper.
+
+CHARACTER B, right three columns: a stout, theatrical woman with warm tan skin, big fluffy lilac-grey hair with a white flower in it, brass goggles pushed up on top of her head, gold hoop earrings, a long plum-purple coat with gold trim and leaf embroidery, a red waistcoat, olive-green breeches and brown boots.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) throwing one arm out wide with a dramatic flourish.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) stirring with a long wooden paddle held in both hands at waist height. (8) presenting a bar of soap on her open palm at chest height, with a proud smile. (9) walking to the right carrying a small wooden crate of round cream lotion bottles.
+
+Both characters look cheerful and wide awake in every pose. Their hands stay at chest height or lower and nothing is held up to a face. No steam and no flames anywhere.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 16: Workers: Sprout Tower HQ and Windowsill Planter
+
+- **File name:** `b02_16_workers_floor10_floor01.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Makes the worker of floor 10, Sprout Tower HQ, and the second worker of floor 1, Windowsill Planter, move. The grandmother at the HQ desk is left out on purpose: she is the best fit for Granny Evergreen, the Head of Thymeford, and is drawn with the managers.
+- **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
+- **Name flag:** Worker names may change. The looks are taken from your v2 floors 10 and 01.
+- **Extra attachment:** With this prompt also attach `B4_floor10_herb_empire_hq_v2.png` and `B4_floor01_windowsill_planter_v2.png`.
+
+```text
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The two floor scenes attached with this message show the two characters to draw: CHARACTER A is the young man carrying books in the headquarters scene, CHARACTER B is the young gardener in the green bandana with a watering can in the windowsill scene. Keep their faces, hair, outfits and colours.
+
+A character animation sheet for a cozy pixel-art idle game with TWO different characters, nine poses each. The sheet is a grid of three rows and six columns, one pose per cell, evenly spaced, nothing touching. The left three columns are CHARACTER A and the right three columns are CHARACTER B, with a slightly wider gap between the two halves. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all nine of its poses, exactly like the attached animation sheet reference. Both are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+CHARACTER A, left three columns: a cheerful young man with light skin, a dark brown quiff, a cream shirt with rolled sleeves, a small purple bow tie, a dark green waistcoat, green trousers and brown shoes.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with one fist up and a little hop.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) reading a clipboard held at chest height and nodding. (8) lifting a book up to the right at shoulder height, as if putting it on a shelf. (9) walking to the right carrying a tall stack of green and purple books.
+
+CHARACTER B, right three columns: a young gardener with warm brown skin, curly dark brown hair under a green bandana, rosy cheeks, a cream shirt with rolled sleeves, a green apron with red scissors in the pocket, brown trousers and brown boots.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with both arms up.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) snipping leaves with small red scissors at waist height. (8) pouring from a small yellow watering can held at waist height, with a few water drops falling. (9) walking to the right carrying a wicker basket of seed packets.
+
+Both characters look cheerful and wide awake in every pose. Their hands stay at chest height or lower and nothing is held up to a face.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 17: Workers: Balcony Boxes and Backyard Hemp Patch
+
+- **File name:** `b02_17_workers_floor02_floor03.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Makes the second workers of floor 2, Balcony Boxes, and floor 3, Backyard Hemp Patch, move. With prompts 10 to 16 and Batch 1, every worker in your ten World 1 floor pictures can now move.
+- **Parts we cut from it:** 18 poses, 9 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame.
+- **Name flag:** Worker names may change. The looks are taken from your v2 floors 02 and 03.
+- **Extra attachment:** With this prompt also attach `B4_floor02_balcony_pots_v2.png` and `B4_floor03_backyard_patch_v2.png`.
+
+```text
+Use the attached animation sheet and manager lineup for style only (pixel size, outline, shading, colours). The two floor scenes attached with this message show the two characters to draw: CHARACTER A is the plump woman crouching to plant on the balcony, CHARACTER B is the young woman with the red braid and straw hat digging in the backyard. Keep their faces, hair, outfits and colours.
+
+A character animation sheet for a cozy pixel-art idle game with TWO different characters, nine poses each. The sheet is a grid of three rows and six columns, one pose per cell, evenly spaced, nothing touching. The left three columns are CHARACTER A and the right three columns are CHARACTER B, with a slightly wider gap between the two halves. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all nine of its poses, exactly like the attached animation sheet reference. Both are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+CHARACTER A, left three columns: a short, plump woman with light tan skin, short curly black hair with a mustard-yellow headband tied in a bow, gold hoop earrings, a cream shirt with rolled sleeves, a lavender-purple waistcoat, mustard-yellow trousers and brown boots.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with both arms up and a little hop.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) crouching to set a seedling into a planter on the ground. (8) crouching and patting the soil in the planter. (9) walking to the right carrying a planter of basil in both hands.
+
+CHARACTER B, right three columns: a young woman with fair skin and freckles, a long red-orange braid, a straw sun hat with a pink flower, a pink neckerchief, a cream shirt, a green waistcoat, brown knee breeches and brown boots.
+Row 1: (1) standing relaxed, facing the viewer, smiling. (2) the same standing pose with eyes closed in a happy blink. (3) cheering with one arm up, holding her hat on with the other.
+Row 2, walking to the right, seen from the side: (4) right leg forward, arms swinging. (5) legs passing under the body, body slightly higher. (6) left leg forward, arms swinging the other way.
+Row 3, working, facing right: (7) pushing a long garden hoe forward along the ground. (8) pulling the hoe back. (9) walking to the right carrying a tin bucket.
+
+Both characters look cheerful and wide awake in every pose. Their hands stay at chest height or lower and nothing is held up to a face.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+---
+
 ## If a result is off
 
 Send the matching sentence in the same chat.
@@ -284,6 +719,10 @@ Send the matching sentence in the same chat.
 | Text, letters or numbers appear | `Same image with all text, letters and numbers removed. Leave those areas plain.` |
 | Sparkles, glints or dots around the items | `Same image with every sparkle, glint, light ray and floating dot removed. Keep everything else.` |
 | The three Golden Sprouts look different from each other | `Redo the three sprouts as the exact same golden seed and sprout, same size and pose. Only the small badge on the front changes.` |
+| The character changes between poses | `Redo the sheet. Every pose must show the exact same character as pose 1: same face, hair, outfit, colours and body size.` |
+| On a two-worker sheet the two characters mix or change | `Redo the sheet. The left three columns show only character A and the right three columns only character B, each exactly the same in all nine of its poses.` |
+| Two workers on one sheet still fails after two tries | `Draw only character A, in nine poses in three rows of three. Then, as a second image, draw character B the same way.` |
+| A person looks like someone real or a known cartoon | `Redo with a clearly different, original face and hairstyle.` |
 | Wrong number of items | `Redo with exactly the number of items, rows and columns listed in the prompt.` |
 | Light comes from the right | `Same image with the light coming from the upper left.` |
 | Too busy or too detailed | `Same image, simpler: fewer details, bigger shapes, only 3 to 4 flat tones per material.` |
