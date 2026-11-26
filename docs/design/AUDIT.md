@@ -2,7 +2,7 @@
 
 Phase 0 design audit. It covers the brief, the Cash, Inc. game bible, the earlier idle-RPG brainstorm and both art reference packs (B1 to B29). The full design that follows from these calls is in [GDD.md](GDD.md), and the content rows are in [CONTENT.md](CONTENT.md).
 
-Each call below is a decision, not an option. Where a call is big, the reason is given in a sentence or two. Section 9 lists what changed after an independent audit of the first version.
+Each call below is a decision, not an option. Where a call is big, the reason is given in a sentence or two. Section 9 lists what changed after an independent audit of the first version. Section 10 lists what changed in version 0.3, when Lawson chose one fixed manager per floor.
 
 ## 1. Verdict
 
@@ -45,11 +45,11 @@ After a floor has a manager, every tap still pays a slice of the whole tower's i
 
 **Why:** the brief puts Clicker first. If tapping only matters for the first 90 seconds, the game is an idle game with a clicker tutorial.
 
-### 4.2 Managers become a collectible team you assign
+### 4.2 Every floor has its own manager, and managers are still cards
 
-The reference game has one fixed manager per floor. Here managers are cards. You pay a floor's hire fee in coins each run, then choose which manager takes the desk. Each manager multiplies the floor's profit, has a perk, and the rarer ones have a clickable ability.
+The reference game has one fixed manager per floor, and so does this one. There are 50 named characters, one for each floor, and 34 at launch. You pay a floor's hire fee in coins each run and its manager starts harvesting for you. Each manager multiplies the floor's profit and has a perk. The four highest floors of every world have rarer managers with a clickable ability, and the manager of the top floor is that world's Head. Managers are still cards: copies from chests level them up for good.
 
-**Why:** this is the cheapest way to get real build-crafting, and it means about 30 characters serve every world instead of one new character per floor (about 50). The hire fee is kept because it is the best pacing beat in the original loop. Story rewards guarantee you always own at least as many managers as you have floors, so nobody is ever stuck.
+**Why:** Lawson chose fixed managers on 2026-11-25 (section 8). It is what the reference game teaches, it needs no management at all, and it gives every room a face. Cards are kept so that chests still feed the tower and a manager grows over weeks. The hire fee is kept because it is the best pacing beat in the original loop. Build-crafting now lives in plants, heirlooms and the skill tree. The cost is art: 34 manager sprites at launch where version 0.2 needed 28. In versions 0.1 and 0.2 the player could place any manager on any floor.
 
 ### 4.3 "Seed cards" and "plant cards" are one thing
 
@@ -59,7 +59,7 @@ There is one collectible: the Plant card. It arrives as a seed packet inside a c
 
 ### 4.4 Exotic is earned, never gambled
 
-Exotic plants come only from cross-pollination and mutation. Exotic managers come only from mastering a world. Chests stop at Legendary.
+Exotic plants come only from cross-pollination and mutation. The six Exotic managers are the Heads of the six worlds. A Head is hired with its top floor like anyone else, and its copies come only from mastering that world and from the Starlight Chest. Chest rolls stop at Legendary.
 
 **Why:** the top rarity should be a goal you work toward, and it keeps chest odds honest and the pity timer simple. It also makes the brief's own example (mint plus a winter world gives Frosted Mint) the only way to get an Exotic plant.
 
@@ -120,7 +120,7 @@ Weekend events run from the calendar on the player's PC. Anything you miss comes
 | Hold to tap | Holding the mouse button or Space taps 6 times a second | Comfort and accessibility. Nobody needs an autoclicker |
 | Pollen | Earned from spare cards and from bees. Pays for cross-pollination and for copies of a card you choose | Bad luck protection, and it gives duplicates of maxed cards a use |
 | Tower milestones | Every floor past the same level gives the whole tower ×1.5 | Rewards levelling evenly, not only the top floor |
-| World Mastery | Ten stars per world for best-ever tower milestones | A permanent record that survives every reset, and the route to Exotic managers |
+| World Mastery | Ten stars per world for best-ever tower milestones | A permanent record that survives every reset, and the way to level up each world's Head |
 | Morning Basket | A free crate every four hours, two stored | Replaces the ad-gated boosts of the reference game |
 | Morning Dew | Two minutes of ×2 when you come back after an hour or more | Makes returning feel good |
 | Player level | Earned from quests and new records. One skill point per level | Feeds the skill tree without tying it to resets |
@@ -157,7 +157,7 @@ Several ordinary garden words have a second meaning that a hemp game cannot affo
 
 ### 7.4 Art load
 
-The design asks for 50 floor rooms, 30 managers, 38 plants and 18 heirlooms in total. Launch with four worlds needs 34 floors (10 already painted), 28 managers (12 already drawn), 36 plants (7 already drawn), 18 heirlooms (12 already drawn) and one new world background. The content rows were fitted to the existing pictures on purpose: the first ten managers a player meets and six of the eight Exotic plants already have art. Everything is listed in CONTENT.md with a launch flag and an art column, and section 13 there adds it up.
+The design asks for 50 floor rooms, 50 managers, 38 plants and 18 heirlooms in total. Launch with four worlds needs 34 floors (10 already painted), 34 managers (12 already drawn), 36 plants (7 already drawn), 18 heirlooms (12 already drawn) and one new world background. The content rows were fitted to the existing pictures on purpose: six of the first ten managers a player meets and six of the eight Exotic plants already have art. Everything is listed in CONTENT.md with a launch flag and an art column, and section 13 there adds it up.
 
 ### 7.5 Many systems
 
@@ -165,10 +165,10 @@ There are 14 systems. The unlock order in section 16 of the GDD shows at most on
 
 ## 8. Questions where the answer would change the design
 
-Only two matter enough to ask.
+Only two mattered enough to ask. Lawson answered both on 2026-11-25.
 
-1. **How far past launch.** The design has six worlds and launches with four, because the pacing reaches the fourth world in the first week. Are you happy to generate art for the Moon and the Nebula Nursery after launch (about 8 floor paintings each), or should the game be designed to feel complete at four? Four is fine. Worlds 5 and 6 only add more places for weeks 2 and 3. One detail either way: the winter world is world 4 and the Moon is world 5, so your Moon picture (its file is named "world4") is used for world 5.
-2. **Assignable managers.** Managers are cards you place on any floor, not one fixed character per floor. It adds a small "who goes where" choice each time you get a new card. If you would prefer zero management, managers can be fixed to floors with no change to the numbers.
+1. **How far past launch.** The design has six worlds and launches with four, because the pacing reaches the fourth world in the first week. The question was whether art for the Moon and the Nebula Nursery is fine after launch (about 8 floor paintings each), or whether the game should feel complete at four. **Answer: six worlds in the end.** The game launches with four, and worlds 5 and 6 follow. One detail: the winter world is world 4 and the Moon is world 5, so the Moon picture (its file is named "world4") is used for world 5.
+2. **Managers as cards for any floor, or one fixed manager per floor.** **Answer: one manager per floor.** Version 0.3 makes that change (sections 4.2 and 10).
 
 ## 9. What changed after the independent audit
 
@@ -180,7 +180,7 @@ A second reviewer who did not write the design audited version 0.1 of all three 
 | Offline bonuses reached their cap almost for free, so the idle build's cards and heirlooms did nothing | **Fixed.** Efficiency starts at 40% and the two cheap sources stop at 73%, so 100% takes a real idle build. Stored hours start at 4 and go to 33. A new player now gets more from a first night away, not less |
 | Heirloom abilities and sets hung on a 5% roll | **Fixed.** The first Harvest Festival lets the player choose one Legendary heirloom. Rolls never repeat a piece, there is a pity counter, and Pollen buys copies |
 | The weekend event's top prizes could not be reached | **Fixed.** The track now ends at about three hours of mixed play for a new player, sized with a rough script |
-| The last World Mastery stars were out of reach and the first Exotic manager came too early | **Fixed.** The ten levels now run from 25 to 600. The first Exotic manager arrives around day 11 and the tenth star around day 50 |
+| The last World Mastery stars were out of reach and the first Exotic manager came too early | **Fixed.** The ten levels now run from 25 to 600. The fifth star arrives around day 11 and the tenth around day 50 |
 | Combo refilled in three seconds, so nothing that protected it was worth having | **Fixed.** A stack now takes five taps. A full meter takes 17 to 42 seconds to build and a few seconds to lose |
 | Twelve features unlocked in nine minutes, then nothing for half an hour | **Fixed.** Achievements and the Codex move to floor 9 and the skill tree to level 6 |
 | Three worlds are too few for the pacing | **Fixed.** Four worlds at launch (section 4.11) |
@@ -188,3 +188,23 @@ A second reviewer who did not write the design audited version 0.1 of all three 
 | Eight rules an implementer could not follow as written | **Fixed**, each one in place (chest luck, what a tap harvests, one number for the first Replant, and so on) |
 
 Not done on purpose: a late skill that raises the hold-to-tap rate, and cosmetic Ribbon sinks. The first would break the exact 111-point skill tree for a small gain, so the simulator is asked to test both tap rates first. The second needs new art, so it waits until after launch.
+
+## 10. What changed in version 0.3: one fixed manager per floor
+
+Version 0.2 passed the independent audit and was merged. Lawson then answered the two questions in section 8, and the second answer changes the design: one fixed manager per floor. Version 0.3 makes that change and nothing bigger. The full list of changed rules, rows and numbers is in [CHANGES.md](CHANGES.md).
+
+| Call | What it means |
+|---|---|
+| **Changed:** managers belong to floors | 50 managers, one for each floor, 34 at launch. Nothing to seat, swap or assign (GDD 7.1) |
+| **Changed:** rarity follows the floor | The higher the floor, the rarer its manager. The top floor's manager is the world's Head and is Exotic |
+| **Changed:** abilities belong to worlds | The four highest floors of a world have the ability managers, so every world has four buttons of its own. The sixteen launch abilities are the same sixteen effects as before |
+| **Changed:** manager numbers | Rare managers now sit on the floors that earn the most, so the level 1 values are closer together and each rarity has its own step per level (GDD 7.2) |
+| **Kept:** managers are cards | Chests still give manager copies and copies still level a manager up for good. A manager's card is owned from the first time its floor opens |
+| **Kept:** hire fees | Paid once per run, as before |
+| **Kept:** Exotic is earned | Head copies come from World Mastery and the Starlight Chest, never from a chest roll |
+| **Moved:** Mayor Thyme | He was an Exotic manager. He now hosts the Harvest Festival |
+| **Also written in:** three rulings from the audit's re-check | The ceiling figures in GDD 6.7, what a counted tap is, and Autopilot taps |
+
+**What is not proven.** The rough pacing script has not been run again. Two things should be measured first by the balance simulator: manager profit on the top floors over the first two days, and the average Boost per world, which is lower than in version 0.2 because a world can only use its own four abilities (GDD 6.7, 17.6).
+
+**Art.** Launch needs 22 new manager sprites where version 0.2 needed 16. Four of them are needed for Thymeford before anything else: Rowan Rake, Posy Seedwell, Captain Kelp and Granny Evergreen. Worlds 5 and 6 need 16 more later. A manager now belongs to one room, so a sprite no longer has to fit every floor.
