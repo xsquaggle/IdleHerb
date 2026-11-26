@@ -1,0 +1,33 @@
+# Skill tree. Source of truth: CONTENT.md section 5 and GDD 9.2.
+# Tier gates count points spent in the same branch: tier 2 needs 5, tier 3 needs 15, keystone needs 30.
+# Reductions (op: reduce) add up over ranks inside the skill, then count as one source.
+- { id: skill.gt.firm_grip,        branch: green_thumb, tier: 1, ranks: 5, effect: { stat: tap.power, op: inc, value: 0.20 } }
+- { id: skill.gt.keep_the_rhythm,  branch: green_thumb, tier: 1, ranks: 5, effect: { stat: tap.comboCap, op: add, value: 4 } }
+- { id: skill.gt.bumper_crop,      branch: green_thumb, tier: 2, ranks: 5, effect: { stat: tap.critChance, op: add, value: 0.01 } }
+- { id: skill.gt.big_bumpers,      branch: green_thumb, tier: 2, ranks: 5, effect: { stat: tap.critMult, op: add, value: 1 } }
+- { id: skill.gt.long_spurt,       branch: green_thumb, tier: 2, ranks: 3, major: true, effect: { stat: spurt.duration, op: add, value: 2 } }
+- { id: skill.gt.second_wind,      branch: green_thumb, tier: 3, ranks: 5, effect: { stat: spurt.tapsNeeded, op: reduce, value: 0.06 } }
+- { id: skill.gt.sprout_spotter,   branch: green_thumb, tier: 3, ranks: 5, effect: { stat: visitor.interval, op: reduce, value: 0.05 } }
+- { id: skill.gt.steady_hands,     branch: green_thumb, tier: 3, ranks: 3, major: true, effect: { stat: tap.comboGrace, op: add, value: 1 } }
+- { id: skill.gt.thunder_thumb,    branch: green_thumb, tier: 4, ranks: 1, keystone: true, special: keystone.thunder_thumb, params: { secPerBumper: 0.25, maxExtraSec: 15 } }
+- { id: skill.gt.golden_touch,     branch: green_thumb, tier: 4, ranks: 1, keystone: true, special: keystone.golden_touch, params: { meterTaps: 60 } }
+- { id: skill.bo.green_fingers,    branch: botanist, tier: 1, ranks: 5, effect: { stat: plant.power, op: inc, value: 0.05 } }
+- { id: skill.bo.people_person,    branch: botanist, tier: 1, ranks: 5, effect: { stat: manager.power, op: inc, value: 0.05 } }
+- { id: skill.bo.lucky_dip,        branch: botanist, tier: 2, ranks: 5, effect: { stat: chest.luck, op: add, value: 0.04 } }
+- { id: skill.bo.pollinator,       branch: botanist, tier: 2, ranks: 5, effect: { stat: pollen.gain, op: inc, value: 0.10 } }
+- { id: skill.bo.home_soil,        branch: botanist, tier: 2, ranks: 3, major: true, effect: { stat: plant.affinity, op: add, value: 0.1 } }
+- { id: skill.bo.quick_study,      branch: botanist, tier: 3, ranks: 5, effect: { stat: insight.gain, op: inc, value: 0.10 } }
+- { id: skill.bo.curator,          branch: botanist, tier: 3, ranks: 5, effect: { stat: heirloom.power, op: inc, value: 0.05 } }
+- { id: skill.bo.bench_hand,       branch: botanist, tier: 3, ranks: 3, major: true, effect: { stat: bench.speed, op: inc, value: 0.10 } }
+- { id: skill.bo.companion_planting, branch: botanist, tier: 4, ranks: 1, keystone: true, special: keystone.companion_planting, params: { mult: 1.5 } }
+- { id: skill.bo.star_pupil,       branch: botanist, tier: 4, ranks: 1, keystone: true, special: keystone.star_pupil, params: { extraLevels: 2, cooldownReduction: 0.25 } }
+- { id: skill.ty.good_bookkeeping, branch: tycoon, tier: 1, ranks: 5, effect: { stat: floor.profit, op: inc, value: 0.10 } }
+- { id: skill.ty.night_owl,        branch: tycoon, tier: 1, ranks: 5, effect: { stat: offline.efficiency, op: add, value: 0.03 } }
+- { id: skill.ty.early_shift,      branch: tycoon, tier: 2, ranks: 5, effect: { stat: floor.speed, op: inc, value: 0.04 } }
+- { id: skill.ty.bulk_discount,    branch: tycoon, tier: 2, ranks: 5, effect: { stat: floor.levelCost, op: inc, value: -0.02 } }
+- { id: skill.ty.even_rows,        branch: tycoon, tier: 2, ranks: 3, major: true, effect: { stat: tower.milestoneMult, op: add, value: 0.05 } }
+- { id: skill.ty.deep_pantry,      branch: tycoon, tier: 3, ranks: 5, effect: { stat: offline.cap, op: add, value: 1 } }
+- { id: skill.ty.compost_connoisseur, branch: tycoon, tier: 3, ranks: 5, effect: { stat: compost.gain, op: inc, value: 0.04 } }
+- { id: skill.ty.warm_welcome,     branch: tycoon, tier: 3, ranks: 3, major: true, effect: { stat: dew.duration, op: add, value: 60 } }
+- { id: skill.ty.autopilot,        branch: tycoon, tier: 4, ranks: 1, keystone: true, special: keystone.autopilot, params: { tapsPerSecond: 1 } }
+- { id: skill.ty.compound_interest, branch: tycoon, tier: 4, ranks: 1, keystone: true, special: keystone.compound_interest }

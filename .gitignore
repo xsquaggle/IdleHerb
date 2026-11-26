@@ -1,0 +1,6 @@
+node_modules/
+dist/
+packages/content/generated/
+apps/sim/out/
+*.log
+.DS_Store

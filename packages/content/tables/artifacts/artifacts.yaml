@@ -1,0 +1,50 @@
+# Heirlooms (table name "artifacts"). Source of truth: CONTENT.md section 4.
+# passives: level-1 values, scaled by 1 + HEIRLOOM_PER_LEVEL x (level - 1) unless fixed: true. Global scope.
+- { id: artifact.sprouting_trowel,     n: 1,  set: toolshed,  rarity: rare,      passives: [{ stat: floor.profit, op: inc, value: 0.30 }] }
+- { id: artifact.brass_garden_key,     n: 2,  set: toolshed,  rarity: epic,      passives: [{ stat: floor.levelCost, op: inc, value: -0.08 }] }
+- id: artifact.golden_watering_can
+  n: 3
+  set: toolshed
+  rarity: legendary
+  passives: [{ stat: floor.profit, op: inc, value: 0.60 }]
+  ability: { id: ability.downpour, cooldownSec: 600, kind: buff, stat: floor.profit, scope: world, mult: 3, durationSec: 30 }
+- { id: artifact.honey_hive_charm,     n: 4,  set: lucky,     rarity: rare,      passives: [{ stat: pollen.gain, op: inc, value: 0.20 }] }
+- { id: artifact.lucky_gnome,          n: 5,  set: lucky,     rarity: epic,      passives: [{ stat: visitor.interval, op: reduce, value: 0.15 }] }
+- id: artifact.clover_locket
+  n: 6
+  set: lucky
+  rarity: legendary
+  passives: [{ stat: floor.doubleChance, op: add, value: 0.08 }]
+  ability: { id: ability.lucky_day, cooldownSec: 1200, kind: jackpot, mult: 5 }
+- { id: artifact.glass_cloche_bell,    n: 7,  set: night,     rarity: rare,      passives: [{ stat: offline.earnings, op: inc, value: 0.20 }] }
+- { id: artifact.moonstone_birdbath,   n: 8,  set: night,     rarity: epic,      passives: [{ stat: offline.cap, op: add, value: 4, fixed: true }, { stat: insight.gain, op: inc, value: 0.10 }] }
+- id: artifact.sandglass_of_seasons
+  n: 9
+  set: night
+  rarity: legendary
+  passives: [{ stat: floor.speed, op: inc, value: 0.20 }]
+  ability: { id: ability.time_skip, cooldownSec: 1800, kind: timeSkip, seconds: 600 }
+- { id: artifact.bramble_gloves,       n: 10, set: thorn,     rarity: rare,      passives: [{ stat: tap.power, op: inc, value: 0.25 }] }
+- { id: artifact.thornback_pruners,    n: 11, set: thorn,     rarity: epic,      passives: [{ stat: tap.critChance, op: add, value: 0.015 }] }
+- id: artifact.whetstone_of_plenty
+  n: 12
+  set: thorn
+  rarity: legendary
+  passives: [{ stat: tap.critMult, op: add, value: 3 }]
+  ability: { id: ability.sharp_season, cooldownSec: 600, kind: guaranteedCrits, taps: 30 }
+- { id: artifact.wayfinder_compass,    n: 13, set: rainmaker, rarity: rare,      passives: [{ stat: floor.speed, op: inc, value: 0.10 }] }
+- { id: artifact.toadstool_wind_bell,  n: 14, set: rainmaker, rarity: epic,      passives: [{ stat: spurt.duration, op: add, value: 4 }] }
+- id: artifact.rainbow_sprinkler
+  n: 15
+  set: rainmaker
+  rarity: legendary
+  passives: [{ stat: spurt.tapsNeeded, op: reduce, value: 0.20 }]
+  ability: { id: ability.rainbow_burst, cooldownSec: 480, kind: fillSpurt, fraction: 0.5 }
+- { id: artifact.heirloom_spindle,     n: 16, set: weaver,    rarity: rare,      passives: [{ stat: manager.power, op: inc, value: 0.10 }] }
+- { id: artifact.canvas_guild_banner,  n: 17, set: weaver,    rarity: epic,      passives: [{ stat: manager.cooldown, op: add, value: 0.10 }] }
+- id: artifact.golden_rope_coil
+  n: 18
+  set: weaver
+  rarity: legendary
+  passives: [{ stat: plant.power, op: inc, value: 0.50, family: hemp }]
+  ability: { id: ability.pull_together, cooldownSec: 2700, kind: resetCooldowns }

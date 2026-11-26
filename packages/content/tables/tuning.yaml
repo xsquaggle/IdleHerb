@@ -1,0 +1,213 @@
+# Global constants. Source of truth: docs/design/GDD.md version 0.2, Appendix A.
+# Every value here is the GDD's number. Proposed changes live in
+# apps/sim/proposals/ as overlays and are not applied to this file until the
+# Game Designer accepts them.
+
+# --- Floors (GDD 5.2) ---
+MILESTONES_FIRST: [25, 50, 100]      # then every MILESTONES_STEP
+MILESTONES_STEP: 100
+MILESTONE_MULT: 2
+TOWER_MILESTONE_MULT: 1.5
+TOWER_MILESTONE_CAP: 2.0
+MIN_CYCLE: 0.2                        # seconds
+COST_MULT_FLOOR: 0.25
+FLOOR_DISCOUNT_CAP: 0.5               # GDD 13.3: floor-bucket discounts, at most 0.5 off
+CONSTRUCTION_TIME: 1.5                # seconds
+
+# --- Tapping (GDD 6) ---
+HOLD_RATE: 6                          # taps per second while holding
+TAP_RATE_CAP: 12
+TAP_SECONDS: 0.05
+TAP_POWER_CAP: 3
+COMBO_PER_STACK: 0.1
+COMBO_CAP_BASE: 20
+COMBO_CAP_MAX: 50
+COMBO_GRACE: 1.5
+COMBO_GRACE_CAP: 6
+COMBO_DECAY: 10                       # stacks per second
+COMBO_TAPS_PER_STACK: 5
+CRIT_CHANCE_BASE: 0.03
+CRIT_MULT_BASE: 10
+CRIT_CHANCE_CAP: 0.12
+CRIT_MULT_CAP: 20
+SPURT_TAPS: 300
+SPURT_TAPS_MIN: 150
+SPURT_DURATION: 20
+SPURT_DURATION_CAP: 45
+SPURT_SPEED: 3
+SPURT_SPEED_CAP: 4
+
+# --- Garden Visitors (GDD 6.6) ---
+VISITOR_MIN: 90
+VISITOR_MAX: 150
+VISITOR_LIFETIME: 12
+VISITOR_INTERVAL_MIN_MULT: 0.4
+WINDFALL_SECONDS: 60
+SUNBEAM_MULT: 5
+SUNBEAM_DURATION: 30
+TAP_STORM_MULT: 10
+TAP_STORM_DURATION: 15
+DEWDROP_GEMS: 2
+VISITOR_WEIGHTS: { windfall: 55, sunbeam: 20, storm: 15, dewdrop: 7, crate: 3 }
+BEE_MIN: 240
+BEE_MAX: 360
+BEE_POLLEN: 5
+
+# --- Timed boosts (GDD 13.5) ---
+# Every timed boost in a world adds into one Boost with a cap; a Growth Spurt
+# is the only timed multiplier on top; lump sums pay from the steady rate.
+# The rule is data so the version 0.1 rule can be replayed for comparison
+# (apps/sim/proposals/gdd-v0.1-boosts.yaml): BOOST_STACKING add | multiply | strongest,
+# BOOST_CAP 0 = no cap, LUMP_SUM_USES_BOOSTS true = lump sums read the boosted rate.
+BOOST_STACKING: add
+BOOST_CAP: 15
+LUMP_SUM_USES_BOOSTS: false
+
+# --- Managers (GDD 7.2) ---
+MGR_BASE: { common: 2, uncommon: 2.5, rare: 3, epic: 4, legendary: 6, exotic: 10 }
+MGR_LEVEL_MULT: 1.2
+PERK_PER_LEVEL: 0.1
+
+# --- Cards and chests (GDD 8) ---
+CHEST_MANAGER_SHARE: 0.55
+NEW_CARD_CHESTS: 10
+PITY_EPIC: 60
+PITY_LEGENDARY: 300
+BASKET_HOURS: 4
+BASKET_STORE: 2
+POLLEN_FROM_MAXED: { common: 1, uncommon: 3, rare: 10, epic: 40, legendary: 200, exotic: 0 }
+POLLEN_COPY_COST: { common: 5, uncommon: 15, rare: 50, epic: 200, legendary: 1000 }
+GEM_CHEST_COST: { copper: 40, silver: 120, golden: 350, crystal: 1000 }
+REPLANT_CHEST_FRACTION: 0.25
+REPLANT_CHEST_COOLDOWN_HOURS: 1
+MILESTONE_CRATE_TIERS: [100, 300, 500, 700, 900]
+
+# --- Plants (GDD 8.5, 8.6) ---
+AFFINITY_BONUS: 1.5
+DUAL_TRAIT_FACTOR: 0.7
+TRAIT_PER_LEVEL: 0.2
+RARITY_FACTOR: { common: 1, uncommon: 1.5, rare: 2.2, epic: 3.2, legendary: 5, exotic: 8 }
+THRIFTY_FLOOR_CAP: 0.5
+HYBRID_POLLEN: 400
+HYBRID_HOURS: 8
+HYBRID_PARENT_LEVEL: 2
+EXOTIC_POLLEN: 1500
+EXOTIC_HOURS: 24
+EXOTIC_PARENT_LEVEL: 3
+
+# --- Heirlooms (GDD 8.7) ---
+HEIRLOOM_SLOTS_BASE: 2
+HEIRLOOM_PER_LEVEL: 0.15
+HEIRLOOM_ODDS: { rare: 70, epic: 25, legendary: 5 }
+HEIRLOOM_ODDS_STARLIGHT: { rare: 0, epic: 70, legendary: 30 }
+HEIRLOOM_POLLEN_FROM_MAXED: { rare: 25, epic: 100, legendary: 400 }
+PITY_HEIRLOOM: 10                     # heirloom pieces since the last Legendary piece; 0 = no pity
+HEIRLOOM_NO_REPEATS: true             # no repeat until a rarity is complete (GDD 8.3 rule 7)
+POLLEN_HEIRLOOM_COPY_COST: { rare: 100, epic: 400, legendary: 2000 }
+
+# --- Player level (GDD 9.1) ---
+XP_BASE: 500
+XP_PER_LEVEL: 250
+LEVEL_CAP: 112
+LEVEL_UP_GEMS: 10
+RESPEC_GEMS: 100
+XP_DAILY: 1500
+XP_DAILY_ALL: 1500
+XP_WEEKLY: 5000
+XP_WEEKLY_ALL: 10000
+XP_MILESTONE_PER_TIER: 50
+REPLANT_XP_STEP: 150                  # x n, the first time all-time Compost passes 2^n
+XP_CHEST_PER_TIER: 20
+XP_VISITOR: 5
+XP_ACHIEVEMENT: [200, 400, 800, 1500, 3000]
+XP_MASTERY_STAR: 1000
+XP_CHAPTER: 2000
+
+# --- Research (GDD 10) ---
+INSIGHT_PER_MILESTONE: 1              # per hour
+INSIGHT_TANK_HOURS: 24
+RESEARCH_QUEUE: 3
+
+# --- Quests, achievements, codex (GDD 11) ---
+DAILY_COUNT: 3
+DAILY_GEMS: 10
+DAILY_GEMS_ALL: 20
+DAILY_POLLEN: 20
+DAILY_POLLEN_ALL: 40
+WEEKLY_COUNT: 5
+WEEKLY_GEMS: 20
+WEEKLY_GEMS_ALL: 100
+ACHIEVEMENT_PCT: 0.01
+ACHIEVEMENT_GEMS: [5, 10, 15, 25, 50]
+CODEX_PCT: 0.0025
+CODEX_GEMS: 5
+
+# --- Replant (GDD 12.1) ---
+COMPOST_E0: "2e10"
+COMPOST_EXP: 0.4
+COMPOST_PCT: 0.02
+FIRST_REPLANT_MIN: 60
+
+# --- Harvest Festival (GDD 12.2) ---
+RIBBON_C0: 50000
+RIBBON_EXP: 0.5
+RIBBON_PCT: 0.10
+FIRST_FESTIVAL_MIN: 8
+FESTIVAL_NEEDS_WORLD: 3
+MASTER_COMPOSTER_PCT: 0.005
+BLUE_POLISH_PCT: 0.002
+AUTO_BUY_SHARE: 0.10
+
+# --- World Mastery (GDD 14.5) ---
+MASTERY_LEVELS: [25, 50, 100, 250, 350, 400, 450, 500, 550, 600]
+MASTERY_PCT: 0.10
+MASTERY_EXOTIC_STARS: [5, 7, 9, 10]
+
+# --- World twists (GDD 14.4) ---
+CUSTOMER_INTERVAL: 20
+CUSTOMER_QUEUE_CAP: 15
+CUSTOMER_TIP_SECONDS: 15
+CUSTOMER_SERVE_RATE: 4
+WEATHER_LOOP: { sunshine: 300, rain: 300, breeze: 300, rainbow: 60 }
+WEATHER_FAMILIES:
+  sunshine: [basil, rosemary, thyme]
+  rain: [mint, chamomile, sage]
+  breeze: [hemp, lavender]
+WEATHER_PROFIT: 3
+HEAT_PER_TAP: 0.5
+HEAT_DECAY: 0.05
+HEAT_FLOOR: 20
+HEAT_MAX: 100
+HEAT_PROFIT: 0.03
+BUBBLE_CAP_SECONDS: 120
+BUBBLE_BONUS: 2
+BUBBLE_CHAIN_WINDOW: 2
+BUBBLE_CHAIN_STEP: 0.25
+BUBBLE_CHAIN_MAX: 1.0
+ORBIT_SECONDS: 90
+SUNRISE_WINDOW: 3
+SUNRISE_BONUS: 2.5
+SUNRISE_STREAK_STEP: 0.25
+SUNRISE_BONUS_MAX: 4
+
+# --- Offline (GDD 15.1, 13.4) ---
+OFFLINE_CAP_BASE: 4                   # hours
+OFFLINE_CAP_MAX: 36
+OFFLINE_EFF_BASE: 0.4
+OFFLINE_EFF_CAP: 1.0
+DEW_AWAY_HOURS: 1
+DEW_DURATION: 120
+DEW_MULT: 2
+COMPOUND_INTEREST_PER_HOUR: 0.02
+COMPOUND_INTEREST_MAX: 0.5
+TIME_WARP: { small: { gems: 30, hours: 1 }, large: { gems: 100, hours: 4 } }
+COOLDOWN_REDUCTION_CAP: 0.5
+HIRE_FEE_MULT_MIN: 0.1
+
+# --- Weekend events (GDD 15.3) ---
+EVENT_UNLOCK_LEVEL: 12
+FAIR_FLOORS: 5
+FAIR_OFFLINE_EFF: 0.5
+FAIR_OFFLINE_CAP: 12                  # hours
+TICKET_WAYPOINTS: [0.000001, 0.0001, 0.01]   # fractions of the ticket price (GDD 14.3)
+WAYPOINT_GEMS: 5

@@ -1,0 +1,7 @@
+# Heirloom sets. Source of truth: CONTENT.md 4.2. Set bonuses never scale.
+- { id: toolshed,  two: { stat: floor.profit, op: inc, value: 0.25 },      three: { stat: tower.milestoneMult, op: add, value: 0.1 } }
+- { id: lucky,     two: { stat: visitor.lifetime, op: add, value: 6 },     three: { stat: visitor.windfall, op: add, value: 1.0 } }
+- { id: night,     two: { stat: dew.duration, op: add, value: 120 },       three: { stat: offline.efficiency, op: add, value: 0.15 } }
+- { id: thorn,     two: { stat: tap.comboCap, op: add, value: 5 },         three: { stat: spurt.bumperFill, op: add, value: 5 } }
+- { id: rainmaker, two: { stat: spurt.duration, op: add, value: 3 },       three: { stat: spurt.speed, op: add, value: 1 } }
+- { id: weaver,    two: { stat: hire.fee, op: mul, value: 0.5 },           three: { stat: manager.power, op: inc, value: 0.15 } }

@@ -1,0 +1,18 @@
+# Weekend events. Source of truth: GDD 15.3. Four events rotate by week number.
+# The reward track is shared by all four; rewards are per step.
+events:
+  - { id: event.herb_fair,          weekMod: 0, bonus: { stat: visitor.windfall, op: add, value: 1.0 } }
+  - { id: event.night_market,       weekMod: 1, bonus: { stat: offline.earnings, op: mul, value: 1.5 } }   # applied after the efficiency cap
+  - { id: event.hemp_harvest_home,  weekMod: 2, bonus: { stat: plant.power, op: inc, value: 0.5, family: hemp } }
+  - { id: event.blossom_parade,     weekMod: 3, bonus: { stat: pollen.gain, op: inc, value: 1.0 } }
+track:
+  - { step: 1,  tickets: "1e3",  reward: { chest: chest.wooden } }
+  - { step: 2,  tickets: "1e5",  reward: { gems: 20 } }
+  - { step: 3,  tickets: "1e7",  reward: { chest: chest.copper } }
+  - { step: 4,  tickets: "1e9",  reward: { pollen: 50 } }
+  - { step: 5,  tickets: "1e10", reward: { chest: chest.silver } }
+  - { step: 6,  tickets: "3e10", reward: { gems: 50 } }
+  - { step: 7,  tickets: "1e11", reward: { chest: chest.golden } }
+  - { step: 8,  tickets: "3e11", reward: { pollen: 200 } }
+  - { step: 9,  tickets: "6e11", reward: { epicCopies: 3 } }
+  - { step: 10, tickets: "1e12", reward: { chest: chest.crystal } }

@@ -1,0 +1,10 @@
+# Copies needed to go from level L to L + 1 (index 0 is level 1 to 2). Source: GDD 8.2 and 8.7.
+- { id: curve.dupes.common,    copies: [2, 4, 8, 16, 30, 50, 80, 120, 180, 260, 380, 550, 800, 1200] }
+- { id: curve.dupes.uncommon,  copies: [2, 4, 8, 14, 24, 40, 60, 90, 130, 190, 280, 400] }
+- { id: curve.dupes.rare,      copies: [2, 4, 6, 10, 16, 24, 36, 50, 70, 100] }
+- { id: curve.dupes.epic,      copies: [1, 2, 4, 6, 10, 14, 20, 30] }
+- { id: curve.dupes.legendary, copies: [1, 2, 3, 5, 8, 12] }
+- { id: curve.dupes.exotic,    copies: [1, 2, 3, 4] }
+- { id: curve.heirloom.rare,      copies: [2, 4, 6, 10, 16, 24, 36, 50] }
+- { id: curve.heirloom.epic,      copies: [1, 2, 4, 6, 10, 14, 20, 30] }
+- { id: curve.heirloom.legendary, copies: [1, 2, 3, 5, 8, 12, 18, 25] }

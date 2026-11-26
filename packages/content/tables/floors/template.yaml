@@ -1,0 +1,68 @@
+# The floor template. Source of truth: docs/design/GDD.md 5.3.
+# floors/generate.ts turns this file plus worlds/worlds.yaml into floors/wN.yaml.
+# Regenerate with `pnpm content:floors` whenever D, T or the template changes.
+ladder: 12                 # each floor's open cost is 12 times the last
+floor1: { basePayout: 1, baseCycleSec: 0.6, levelBaseCost: 4, growth: 1.07, hireFee: 1000 }
+floor2: { openCost: 60, basePayout: 50, baseCycleSec: 3, levelBaseCost: 70, growth: 1.15 }   # 70, not 69 (GDD 2.2 rule 7)
+payoutRatio: 0.75          # basePayout of floor n >= 3 is ratio x T^(n-3) x its unscaled open cost
+levelCostRatio: 1.15       # levelBaseCost = ratio x openCost (floors 3 and up)
+growthStep: 0.01           # growth drops by this per floor above floor 2
+cycleDoubling: 2           # each floor's cycle is this many times the one below (from floor 2)
+hireRatio: [200, 125, 70, 40, 25, 17, 14, 12, 12]   # floors 2 to 10, times openCost
+floors:
+  world.w1:
+    - { id: floor.w1.windowsill,    favouredFamily: mint }
+    - { id: floor.w1.balcony,       favouredFamily: basil }
+    - { id: floor.w1.hemp_patch,    favouredFamily: hemp }
+    - { id: floor.w1.garden_shed,   favouredFamily: thyme }
+    - { id: floor.w1.greenhouse,    favouredFamily: sage }
+    - { id: floor.w1.market,        favouredFamily: rosemary }
+    - { id: floor.w1.tea_house,     favouredFamily: chamomile }
+    - { id: floor.w1.ropewalk,      favouredFamily: hemp }
+    - { id: floor.w1.soap_workshop, favouredFamily: lavender }
+    - { id: floor.w1.hq,            favouredFamily: wild }
+  world.w2:
+    - { id: floor.w2.rooftop_beds,   favouredFamily: thyme }
+    - { id: floor.w2.herb_kiosk,     favouredFamily: mint }
+    - { id: floor.w2.weaving_mill,   favouredFamily: hemp }
+    - { id: floor.w2.paper_workshop, favouredFamily: hemp }
+    - { id: floor.w2.bistro,         favouredFamily: basil }
+    - { id: floor.w2.atelier,        favouredFamily: lavender }
+    - { id: floor.w2.brickyard,      favouredFamily: hemp }
+    - { id: floor.w2.emporium,       favouredFamily: wild }
+  world.w3:
+    - { id: floor.w3.beach_hut,       favouredFamily: mint }
+    - { id: floor.w3.jungle_terrace,  favouredFamily: basil }
+    - { id: floor.w3.sailcloth_loft,  favouredFamily: hemp }
+    - { id: floor.w3.net_weavers,     favouredFamily: hemp }
+    - { id: floor.w3.hot_spring,      favouredFamily: sage }
+    - { id: floor.w3.floating_market, favouredFamily: rosemary }
+    - { id: floor.w3.snack_shack,     favouredFamily: thyme }
+    - { id: floor.w3.lighthouse,      favouredFamily: wild }
+  world.w4:
+    - { id: floor.w4.cabin_windowsill, favouredFamily: mint }
+    - { id: floor.w4.herb_racks,       favouredFamily: sage }
+    - { id: floor.w4.ice_greenhouse,   favouredFamily: chamomile }
+    - { id: floor.w4.knitworks,        favouredFamily: hemp }
+    - { id: floor.w4.tea_lodge,        favouredFamily: lavender }
+    - { id: floor.w4.sled_works,       favouredFamily: hemp }
+    - { id: floor.w4.aurora_garden,    favouredFamily: thyme }
+    - { id: floor.w4.summit_lodge,     favouredFamily: wild }
+  world.w5:
+    - { id: floor.w5.lander_windowsill, favouredFamily: mint }
+    - { id: floor.w5.dome_garden,       favouredFamily: basil }
+    - { id: floor.w5.hemp_field,        favouredFamily: hemp }
+    - { id: floor.w5.hempcrete_works,   favouredFamily: hemp }
+    - { id: floor.w5.tea_room,          favouredFamily: chamomile }
+    - { id: floor.w5.soapery,           favouredFamily: lavender }
+    - { id: floor.w5.biodome,           favouredFamily: rosemary }
+    - { id: floor.w5.lunar_spire,       favouredFamily: wild }
+  world.w6:
+    - { id: floor.w6.airlock_planter,      favouredFamily: thyme }
+    - { id: floor.w6.ring_garden,          favouredFamily: mint }
+    - { id: floor.w6.sail_loom,            favouredFamily: hemp }
+    - { id: floor.w6.seed_vault,           favouredFamily: hemp }
+    - { id: floor.w6.asteroid_greenhouse,  favouredFamily: sage }
+    - { id: floor.w6.cafe,                 favouredFamily: chamomile }
+    - { id: floor.w6.shipping_dock,        favouredFamily: lavender }
+    - { id: floor.w6.garden_bridge,        favouredFamily: wild }
