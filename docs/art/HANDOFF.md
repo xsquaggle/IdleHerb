@@ -63,6 +63,7 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 
 ## In progress
 
+- **Master file for ChatGPT** (2026-11-26, 3:45 PM): Lawson's ChatGPT chat hit its maximum length, so the images still owed (prompts 1 and 18 to 23) went out as one master file plus a zip of the five reference pictures, made by `tools/build_batch02_master.py`. Lawson attaches both, then types "next" between images. Copies: project files `art/batch02/master/`. Use the same tool for later batches.
 - Nothing half-done. Every step so far is committed and pushed. Round 7 of Batch 2 (rarity reveal kit) was written 2026-11-26 about 12:45 PM and sent to Lawson; the reveal ladder it serves is in style bible section 19 (v1.4).
 
 ## Next steps, in order
