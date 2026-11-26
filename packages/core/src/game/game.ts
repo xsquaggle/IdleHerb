@@ -887,6 +887,11 @@ export class Game {
           continue;
         }
       }
+      const restarts = this.gardenerRestarts();
+      if (restarts) {
+        const f0 = ws.floors[0]!;
+        if (f0.level > 0 && !f0.hired) this.putToWork(w, 0);
+      }
       if (sp['unlock.auto_hire']) {
         for (let i = 0; i < ws.floors.length; i++) {
           const f = ws.floors[i]!;
@@ -894,6 +899,11 @@ export class Game {
         }
       }
       if (sp['unlock.auto_gardener'] && s.autoBuy) {
+        if (restarts) {
+          // Opens the next floor when it costs at most AUTO_BUY_SHARE of the coins in hand.
+          const n = this.nextFloor(w);
+          if (n >= 0 && this.content.worlds[w]!.floors[n]!.openCost.lte(ws.coins.mul(this.t.AUTO_BUY_SHARE))) this.openFloor(w);
+        }
         for (let i = ws.floors.length - 1; i >= 0; i--) {
           if (ws.floors[i]!.level <= 0) continue;
           const k = this.maxLevels(w, i, ws.coins.mul(this.t.AUTO_BUY_SHARE));
@@ -1221,13 +1231,21 @@ export class Game {
     const fee = this.hireFee(w, i);
     if (ws.coins.lt(fee)) return false;
     ws.coins = ws.coins.sub(fee);
+    this.count('hires');
+    this.putToWork(w, i);
+    return true;
+  }
+
+  /** The floor's manager starts work, paid for or not. */
+  private putToWork(w: number, i: number): void {
+    const s = this.state;
+    const f = s.worlds[w]!.floors[i]!;
     f.hired = true;
     const card = s.cards[this.content.worlds[w]!.floors[i]!.manager.id];
     if (card && !card.everHired) {
       card.everHired = true;
       this.count('managersHired');
     }
-    this.count('hires');
     if (f.ready) {
       // The new manager collects the waiting harvest at the manual rate.
       this.earn(w, this.refreshWorld(w).floors[i]!.payout.mul(this.heatFactor(w)), 'floors');
@@ -1236,7 +1254,16 @@ export class Game {
     }
     this.invalidate();
     this.emit({ type: 'hire', world: w, floor: i });
-    return true;
+  }
+
+  /**
+   * Design 0.4 (Game Designer's ruling, 2026-11-26): while the Auto-Gardener is
+   * owned and switched on, no world goes dead. Floor 1's manager stays hired
+   * through every Replant and Festival with no fee, and worlds open their next
+   * floor on their own. Off in the 0.3 tables (`AUTO_GARDENER_RESTARTS`).
+   */
+  private gardenerRestarts(): boolean {
+    return this.t.AUTO_GARDENER_RESTARTS && !!this.derived.global.specials['unlock.auto_gardener'] && this.state.autoBuy;
   }
 
   /** The first time a floor opens, in any run, its manager's card is owned at level 1. */
@@ -1305,13 +1332,14 @@ export class Game {
     const s = this.state;
     const ws = s.worlds[w]!;
     const loyal = (s.compostShop['shop.compost.loyal_staff'] ?? 0) * (this.loyalFloorsPerLevel());
+    const keepFirst = this.gardenerRestarts();
     ws.floors.forEach((f, i) => {
       if (f.constructing > 0) this.constructingCount--;
       f.level = 0;
       f.progress = 0;
       f.ready = false;
       f.constructing = 0;
-      f.hired = f.hired && i < loyal;
+      f.hired = (f.hired && i < loyal) || (i === 0 && keepFirst && ws.unlocked);
     });
     ws.coins = Num.ZERO;
     ws.bank = Num.ZERO;
@@ -2001,6 +2029,7 @@ export class Game {
       else if (ws.unlocked) {
         this.startRun(w);
         ws.floors[0]!.level = 0;
+        ws.floors[0]!.hired = false;
         ws.unlocked = false;
         this.caches[w]!.dirty = true;
       }

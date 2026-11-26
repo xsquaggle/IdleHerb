@@ -234,6 +234,8 @@ export const TuningSchema = z
     MASTER_COMPOSTER_PCT: z.number(),
     BLUE_POLISH_PCT: z.number(),
     AUTO_BUY_SHARE: z.number(),
+    /** Design 0.4: the Auto-Gardener keeps floor 1's manager hired and opens floors, so no world goes dead. */
+    AUTO_GARDENER_RESTARTS: z.boolean(),
     MASTERY_LEVELS: z.array(z.number().int().positive()),
     MASTERY_PCT: z.number(),
     MASTERY_EXOTIC_STARS: z.array(z.number().int()),

@@ -157,6 +157,8 @@ FESTIVAL_NEEDS_WORLD: 3
 MASTER_COMPOSTER_PCT: 0.005
 BLUE_POLISH_PCT: 0.002
 AUTO_BUY_SHARE: 0.10
+# Design 0.4 ruling (2026-11-26), off in 0.3: while the Auto-Gardener is on, floor 1 keeps its manager through Replants and Festivals and worlds open floors on their own.
+AUTO_GARDENER_RESTARTS: false
 
 # --- World Mastery (GDD 14.5) ---
 MASTERY_LEVELS: [25, 50, 100, 250, 350, 400, 450, 500, 550, 600]

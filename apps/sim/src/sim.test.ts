@@ -81,3 +81,39 @@ describe('economy core under play', () => {
     expect(r.timeline.some((e) => e.kind === 'world' && e.world === 1)).toBe(true);
   });
 });
+
+describe('the Auto-Gardener keeps a world going (design 0.4 ruling)', () => {
+  const g = played(40);
+  /** The 40-minute game with the Auto-Gardener owned and switched on, under the old or the new rule. */
+  const withGardener = (restarts: boolean): Game => {
+    const c = loadContent({ overlays: [{ id: 'test', title: 'test', tuning: { AUTO_GARDENER_RESTARTS: restarts } }] });
+    const state = deserializeState(serializeState(g.state));
+    state.ribbonShop['shop.ribbon.auto_gardener'] = 1;
+    state.autoBuy = true;
+    return createGame({ content: c, seed: 3, debug: true, state });
+  };
+  const minutesAlone = (x: Game, minutes: number): void => {
+    for (let s = 0; s < minutes * 60; s++) x.advance(1);
+  };
+
+  it('keeps floor 1 hired through a Replant with no fee and opens floors on its own', () => {
+    const x = withGardener(true);
+    expect(x.dispatch({ type: 'replant', world: 0 })).toBe(true);
+    const ws = x.state.worlds[0]!;
+    expect(ws.floors[0]!.hired).toBe(true);
+    const coins = ws.coins;
+    x.advance(1);
+    expect(ws.coins.gte(coins)).toBe(true);
+    minutesAlone(x, 10);
+    expect(ws.floors[1]!.level).toBeGreaterThan(0);
+  });
+
+  it('under the 0.3 rule a Replanted world with no hired manager stands still', () => {
+    const x = withGardener(false);
+    expect(x.dispatch({ type: 'replant', world: 0 })).toBe(true);
+    const ws = x.state.worlds[0]!;
+    expect(ws.floors[0]!.hired).toBe(false);
+    minutesAlone(x, 10);
+    expect(ws.floors[1]!.level).toBe(0);
+  });
+});
