@@ -179,97 +179,129 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 
 ## 2. Managers
 
-Rules are in GDD 7. There are 30 managers, 28 at launch. A manager's profit multiplier comes from its rarity and level (GDD 7.2). The perk and ability are below.
+Rules are in GDD 7. **Every floor has its own manager.** There are 50, one for each floor, and 34 at launch. A manager never moves to another floor. Rarity follows the floor's place in its world (GDD 7.1), and a manager's profit multiplier comes from its rarity and level (GDD 7.2). The perk and ability are below.
 
-`poolWorld` is the world that must be unlocked before the card can drop from chests. Exotic managers never drop from chests. They come from World Mastery (GDD 14.5).
+A manager's card is owned at level 1 from the first time its floor is opened. Chests then give copies of managers the player has met. The Exotic manager on each world's top floor is that world's **Head**. Copies of a Head never drop from chests. They come from World Mastery (GDD 14.5).
+
+`M` numbers follow floor order. They are a reading aid for this file. Code uses the `id`.
 
 ### 2.1 Manager rows
 
-| # | `id` | `name` | `rarity` | `poolWorld` | Perk at level 1 | Role (a hint for the Writer and Art Director) | Art | Launch |
+| # | `id` | `name` | `floor` | `rarity` | Perk at level 1 | Role (a hint for the Writer and Art Director) | Art | Launch |
 |---|---|---|---|---|---|---|---|---|
-| M01 | `card.manager.nana_sprig` | Nana Sprig | common | w1 | `floor.levelCost` -5% (floor) | Grandmother with a trowel who never overpays | B5, 2nd | yes |
-| M02 | `card.manager.basil_brumble` | Basil Brumble | common | w1 | `floor.profit` +20% (floor) | Jolly shopkeeper in an apron | B5, 3rd | yes |
-| M03 | `card.manager.olive_ledger` | Olive Ledger | common | w1 | `floor.speed` +10% (floor) | Brisk bookkeeper in a green suit | B5, 6th | yes |
-| M04 | `card.manager.bram_applewhite` | Bram Applewhite | common | w1 | `floor.profit` +8% (adjacent) | Beekeeper whose bees help the neighbours | B5, 4th | yes |
-| M05 | `card.manager.fern_petrie` | Fern Petrie | common | w1 | `insight.gain` +4% (global) | Curious botanist in goggles | B5, 5th | yes |
-| M06 | `card.manager.sandy_tidewell` | Sandy Tidewell | common | w1 | `offline.earnings` +8% (world) | Easygoing beach gardener. Never the default on a hemp floor | B5, 1st | yes |
-| M07 | `card.manager.juniper_jones` | Juniper Jones | uncommon | w1 | `tap.power` +8% (world) | Cheerful market runner with a basket | B21, 2nd | yes |
-| M08 | `card.manager.old_moss` | Old Moss | uncommon | w1 | `offline.earnings` +12% (world) | Serene tea master | B21, 1st | yes |
-| M09 | `card.manager.clementine_zest` | Clementine Zest | uncommon | w1 | `tap.critChance` +0.5 points (world) | Perfumer with a flair for drama | B21, 3rd | yes |
-| M10 | `card.manager.barley_biggs` | Barley Biggs | uncommon | w1 | `floor.profit` +30% (floor) | Grumpy cook with a heart of gold | B21, 4th | yes |
-| M11 | `card.manager.rowan_rake` | Rowan Rake | uncommon | w1 | `floor.speed` +15% (floor) | Hemp field hand, up before the sun | new, hemp cast | yes |
-| M12 | `card.manager.posy_seedwell` | Posy Seedwell | uncommon | w1 | `plant.power` +15% (floor) | Seed keeper with a sack on each shoulder | new, hemp cast | yes |
-| M13 | `card.manager.marigold_mayhew` | Marigold Mayhew | rare | w1 | `tap.comboCap` +5 (world) | Market drummer who keeps everyone in time | new | yes |
-| M14 | `card.manager.chip` | Chip | rare | w1 | `floor.levelCost` -8% (floor) | Garden robot with a sprout on its head | B21, 6th | yes |
-| M15 | `card.manager.hazel_thimble` | Hazel Thimble | rare | w1 | `plant.power` +25%, Hemp family only (floor) | Master tailor | new, hemp cast | yes |
-| M16 | `card.manager.captain_kelp` | Captain Kelp | rare | w1 | `floor.profit` +12% (adjacent) | Rope master and retired sailor | new, hemp cast | yes |
-| M17 | `card.manager.pepper_finch` | Pepper Finch | rare | w1 | `visitor.interval` -5% (world) | Fairground caller | new | yes |
-| M18 | `card.manager.professor_thistlewick` | Professor Thistlewick | epic | w1 | `floor.speed` +25% (floor) | Sprinkler inventor | new | yes |
-| M19 | `card.manager.dame_dahlia` | Dame Dahlia Fairweather | epic | w1 | `tap.critMult` +1 (world) | Garden-show judge | new | yes |
-| M20 | `card.manager.bjorn_barrow` | Bjorn Barrow | epic | w2 | `floor.profit` +60% (floor) | Hempcrete builder | new, hemp cast | yes |
-| M21 | `card.manager.barnaby_moonwort` | Barnaby Moonwort | epic | w2 | `offline.earnings` +20% (world) | Night-shift keeper with a lantern. Never the default on a hemp floor | B21, 5th | yes |
-| M22 | `card.manager.granny_evergreen` | Granny Evergreen | legendary | w1 | `floor.profit` +15% (world) | Matriarch of the tower | new | yes |
-| M23 | `card.manager.maestro_fennel` | Maestro Fennel | legendary | w2 | `spurt.duration` +3 s (world) | Conductor of the town band | new | yes |
-| M24 | `card.manager.amazing_marrow` | The Amazing Marrow | legendary | w3 | `floor.doubleChance` +10% (world) | Stage magician who pulls a second harvest out of his hat | new | yes |
-| M25 | `card.manager.mayor_thyme` | Mayor Thyme | exotic | Mastery, w1 | `tower.milestoneMult` +0.1 (world) | Mayor of Thymeford | new | yes |
-| M26 | `card.manager.madame_loom` | Madame Loom | exotic | Mastery, w2 | `plant.power` +50%, Hemp family only (world) | Head of the weavers' guild | new, hemp cast | yes |
-| M27 | `card.manager.skipper_papaya` | Skipper Papaya | exotic | Mastery, w3 | `visitor.reward` +100% (world) | Island ferry skipper | new | yes |
-| M28 | `card.manager.grandpa_mitten` | Grandpa Mitten | exotic | Mastery, w4 | `offline.efficiency` +25 points (world) | Storyteller by the fire | new | yes |
-| M29 | `card.manager.commander_comet` | Commander Comet | exotic | Mastery, w5 | `tap.power` +30% (world) | Moon base commander | new | later |
-| M30 | `card.manager.stargardener` | The Stargardener | exotic | Mastery, w6 | `floor.profit` +50% (world) | Keeper of the orbital greenhouse | new | later |
+| M01 | `card.manager.nana_sprig` | Nana Sprig | `floor.w1.windowsill` | common | `floor.levelCost` -5% (floor) | Grandmother with a trowel who never overpays | B5, 2nd | yes |
+| M02 | `card.manager.basil_brumble` | Basil Brumble | `floor.w1.balcony` | common | `floor.profit` +20% (floor) | Jolly shopkeeper in an apron | B5, 3rd | yes |
+| M03 | `card.manager.rowan_rake` | Rowan Rake | `floor.w1.hemp_patch` | common | `floor.speed` +10% (floor) | Hemp field hand, up before the sun | new, hemp cast | yes |
+| M04 | `card.manager.posy_seedwell` | Posy Seedwell | `floor.w1.garden_shed` | uncommon | `plant.power` +15% (floor) | Seed keeper with a sack on each shoulder | new, hemp cast | yes |
+| M05 | `card.manager.fern_petrie` | Fern Petrie | `floor.w1.greenhouse` | uncommon | `insight.gain` +4% (global) | Curious botanist in goggles | B5, 5th | yes |
+| M06 | `card.manager.juniper_jones` | Juniper Jones | `floor.w1.market` | uncommon | `tap.power` +8% (world) | Cheerful market runner with a basket | B21, 2nd | yes |
+| M07 | `card.manager.old_moss` | Old Moss | `floor.w1.tea_house` | rare | `offline.earnings` +12% (world) | Serene tea master | B21, 1st | yes |
+| M08 | `card.manager.captain_kelp` | Captain Kelp | `floor.w1.ropewalk` | epic | `floor.profit` +12% (adjacent) | Rope master and retired sailor | new, hemp cast | yes |
+| M09 | `card.manager.clementine_zest` | Clementine Zest | `floor.w1.soap_workshop` | legendary | `tap.critChance` +0.5 points (world) | Perfumer with a flair for drama | B21, 3rd | yes |
+| M10 | `card.manager.granny_evergreen` | Granny Evergreen | `floor.w1.hq` | exotic | `tower.milestoneMult` +0.1 (world) | Head of Thymeford. Matriarch of the tower | new | yes |
+| M11 | `card.manager.bram_applewhite` | Bram Applewhite | `floor.w2.rooftop_beds` | common | `floor.profit` +8% (adjacent) | Rooftop beekeeper whose bees help the neighbours | B5, 4th | yes |
+| M12 | `card.manager.olive_ledger` | Olive Ledger | `floor.w2.herb_kiosk` | common | `floor.speed` +10% (floor) | Brisk bookkeeper in a green suit, now running a kiosk | B5, 6th | yes |
+| M13 | `card.manager.tansy_treadle` | Tansy Treadle | `floor.w2.weaving_mill` | uncommon | `floor.profit` +30% (floor) | Weaver who hums in time with the loom | new, hemp cast | yes |
+| M14 | `card.manager.kit_foldaway` | Kit Foldaway | `floor.w2.paper_workshop` | uncommon | `floor.speed` +15% (floor) | Papermaker and kite builder | new, hemp cast | yes |
+| M15 | `card.manager.barley_biggs` | Barley Biggs | `floor.w2.bistro` | rare | `floor.profit` +40% (floor) | Grumpy cook with a heart of gold | B21, 4th | yes |
+| M16 | `card.manager.hazel_thimble` | Hazel Thimble | `floor.w2.atelier` | epic | `plant.power` +25%, Hemp family only (floor) | Master tailor | new, hemp cast | yes |
+| M17 | `card.manager.bjorn_barrow` | Bjorn Barrow | `floor.w2.brickyard` | legendary | `floor.profit` +60% (floor) | Hempcrete builder | new, hemp cast | yes |
+| M18 | `card.manager.madame_loom` | Madame Loom | `floor.w2.emporium` | exotic | `plant.power` +50%, Hemp family only (world) | Head of Loomington and of the weavers' guild | new, hemp cast | yes |
+| M19 | `card.manager.sandy_tidewell` | Sandy Tidewell | `floor.w3.beach_hut` | common | `offline.earnings` +8% (world) | Easygoing beach gardener | B5, 1st | yes |
+| M20 | `card.manager.marigold_mayhew` | Marigold Mayhew | `floor.w3.jungle_terrace` | common | `tap.comboCap` +2 (world) | Island drummer who keeps the terrace in time | new | yes |
+| M21 | `card.manager.marina_bolt` | Marina Bolt | `floor.w3.sailcloth_loft` | uncommon | `floor.profit` +30% (floor) | Sailmaker with a needle the size of an oar | new, hemp cast | yes |
+| M22 | `card.manager.ned_knotwell` | Ned Knotwell | `floor.w3.net_weavers` | uncommon | `floor.levelCost` -6% (floor) | Net weaver who can tie forty knots | new, hemp cast | yes |
+| M23 | `card.manager.professor_thistlewick` | Professor Thistlewick | `floor.w3.hot_spring` | rare | `floor.speed` +25% (floor) | Sprinkler inventor | new | yes |
+| M24 | `card.manager.amazing_marrow` | The Amazing Marrow | `floor.w3.floating_market` | epic | `floor.doubleChance` +10% (world) | Stage magician who pulls a second harvest out of his hat | new | yes |
+| M25 | `card.manager.pepper_finch` | Pepper Finch | `floor.w3.snack_shack` | legendary | `visitor.interval` -5% (world) | Fairground caller with a tray of seed bars | new | yes |
+| M26 | `card.manager.skipper_papaya` | Skipper Papaya | `floor.w3.lighthouse` | exotic | `visitor.reward` +100% (world) | Head of Papaya Cay. Island ferry skipper | new | yes |
+| M27 | `card.manager.wren_woolsey` | Wren Woolsey | `floor.w4.cabin_windowsill` | common | `floor.levelCost` -5% (floor) | Cabin keeper in three scarves | new | yes |
+| M28 | `card.manager.bertie_bundle` | Bertie Bundle | `floor.w4.herb_racks` | common | `floor.profit` +20% (floor) | Ties herbs in tidy bundles and labels every one | new | yes |
+| M29 | `card.manager.dame_dahlia` | Dame Dahlia Fairweather | `floor.w4.ice_greenhouse` | uncommon | `tap.critMult` +0.5 (world) | Garden-show judge who winters in the mountains | new | yes |
+| M30 | `card.manager.purl_garter` | Purl Garter | `floor.w4.knitworks` | uncommon | `floor.speed` +15% (floor) | Knitter whose needles never stop | new, hemp cast | yes |
+| M31 | `card.manager.maestro_fennel` | Maestro Fennel | `floor.w4.tea_lodge` | rare | `spurt.duration` +2 s (world) | Conductor of the lodge band | new | yes |
+| M32 | `card.manager.chip` | Chip | `floor.w4.sled_works` | epic | `floor.levelCost` -8% (floor) | Garden robot with a sprout on its head | B21, 6th | yes |
+| M33 | `card.manager.barnaby_moonwort` | Barnaby Moonwort | `floor.w4.aurora_garden` | legendary | `offline.earnings` +20% (world) | Night-shift keeper with a lantern | B21, 5th | yes |
+| M34 | `card.manager.grandpa_mitten` | Grandpa Mitten | `floor.w4.summit_lodge` | exotic | `offline.efficiency` +25 points (world) | Head of Mount Mitten. Storyteller by the fire | new | yes |
+| M35 | `card.manager.tilly_touchdown` | Tilly Touchdown | `floor.w5.lander_windowsill` | common | `floor.levelCost` -5% (floor) | Lander pilot who gardens between flights | new | later |
+| M36 | `card.manager.domingo_pane` | Domingo Pane | `floor.w5.dome_garden` | common | `floor.profit` +20% (floor) | Glazier who polishes the dome every morning | new | later |
+| M37 | `card.manager.stilts_mccrae` | Stilts McCrae | `floor.w5.hemp_field` | uncommon | `floor.speed` +15% (floor) | Field hand on stilts, for the very tall hemp | new, hemp cast | later |
+| M38 | `card.manager.petra_blockley` | Petra Blockley | `floor.w5.hempcrete_works` | uncommon | `floor.profit` +30% (floor) | Moon mason, proud of every block | new, hemp cast | later |
+| M39 | `card.manager.auntie_gravity` | Auntie Gravity | `floor.w5.tea_room` | rare | `offline.earnings` +12% (world) | Serves tea that stays in the cup, mostly | new | later |
+| M40 | `card.manager.stella_lather` | Stella Lather | `floor.w5.soapery` | epic | `floor.profit` +12% (adjacent) | Soap maker who stamps a star on every bar | new | later |
+| M41 | `card.manager.grover_crater` | Grover Crater | `floor.w5.biodome` | legendary | `plant.power` +20% (world) | Grove keeper who has named every tree | new | later |
+| M42 | `card.manager.commander_comet` | Commander Comet | `floor.w5.lunar_spire` | exotic | `tap.power` +30% (world) | Head of the Moon. Moon base commander | new | later |
+| M43 | `card.manager.dot_hatchley` | Dot Hatchley | `floor.w6.airlock_planter` | common | `floor.speed` +10% (floor) | Airlock keeper, always counting to three | new | later |
+| M44 | `card.manager.gus_gyro` | Gus Gyro | `floor.w6.ring_garden` | common | `floor.profit` +20% (floor) | Gardener who has not been dizzy in years | new | later |
+| M45 | `card.manager.luma_weft` | Luma Weft | `floor.w6.sail_loom` | uncommon | `floor.profit` +30% (floor) | Weaver of sails a mile wide | new, hemp cast | later |
+| M46 | `card.manager.major_kernel` | Major Kernel | `floor.w6.seed_vault` | uncommon | `plant.power` +15% (floor) | Vault keeper who salutes every seed | new, hemp cast | later |
+| M47 | `card.manager.rocky_bloom` | Rocky Bloom | `floor.w6.asteroid_greenhouse` | rare | `visitor.interval` -5% (world) | Grows sage on a rock and waves at passing comets | new | later |
+| M48 | `card.manager.celeste_crema` | Celeste Crema | `floor.w6.cafe` | epic | `tap.critChance` +0.5 points (world) | Draws constellations in the foam | new | later |
+| M49 | `card.manager.dash_parcelli` | Dash Parcelli | `floor.w6.shipping_dock` | legendary | `floor.profit` +60% (floor) | Dock chief who has never lost a parcel | new | later |
+| M50 | `card.manager.stargardener` | The Stargardener | `floor.w6.garden_bridge` | exotic | `floor.profit` +50% (world) | Head of the Nebula Nursery. Keeper of the orbital greenhouse | new | later |
 
-A `global` perk counts once while that manager is hired anywhere. A `world` perk works in each world where that manager is hired.
+A perk works only while its manager is hired in the current run. `floor` is the manager's own floor, `adjacent` the floors directly above and below it, `world` every floor in the manager's world, and `global` everything.
+
+Mayor Thyme, an Exotic manager in version 0.2, is no longer a manager. He hosts the Harvest Festival and pins on the Ribbons (GDD 12.2).
 
 ### 2.2 Abilities
 
-Rare and better managers have one ability. Strength is fixed. "This world" is the world where the manager is hired, and the ability button is on that floor. A **boost** is a timed bonus that adds into the world's one capped Boost and never multiplies another boost (GDD 13.5).
+Rare and better managers have one ability, so every world has four: the managers of its four highest floors. Strength is fixed. An ability works in its manager's own world, and its button is on that manager's floor. "This world" and "this floor" below mean the manager's own. A **boost** is a timed bonus that adds into the world's one capped Boost and never multiplies another boost (GDD 13.5).
 
-| Manager | `ability` | Effect | `cooldown` |
-|---|---|---|---|
-| M13 Marigold Mayhew | Keep the Beat | Combo jumps to full and cannot fall for 60 s | 8 min |
-| M14 Chip | Dig In | This floor's level costs ×0.5 for 30 s | 15 min |
-| M15 Hazel Thimble | Stitch in Time | This floor pays 60 s of its own steady income at once | 6 min |
-| M16 Captain Kelp | All Hands | A ×2 boost in this world for 30 s, shown as speed | 12 min |
-| M17 Pepper Finch | Step Right Up | A Golden Sprout appears now | 10 min |
-| M18 Professor Thistlewick | Sprinkler Surge | A ×10 boost on this floor for 30 s | 10 min |
-| M19 Dame Dahlia Fairweather | Best in Show | The next 20 taps are Bumpers | 8 min |
-| M20 Bjorn Barrow | Heave-Ho | Pays 120 s of this world's steady income at once | 20 min |
-| M21 Barnaby Moonwort | Night Shift | A ×2 boost in this world for 60 s | 15 min |
-| M22 Granny Evergreen | Sunday Best | A ×5 boost in this world for 30 s | 15 min |
-| M23 Maestro Fennel | Crescendo | Fills the Growth Spurt meter | 10 min |
-| M24 The Amazing Marrow | Abracadabra | The next chest opened rolls with double the Rare, Epic and Legendary weights | 60 min |
-| M25 Mayor Thyme | Town Fair | A Growth Spurt of normal length starts now. It does not use the meter | 30 min |
-| M26 Madame Loom | Golden Thread | A ×10 boost in this world for 20 s | 20 min |
-| M27 Skipper Papaya | Treasure Map | Three Golden Sprouts appear | 20 min |
-| M28 Grandpa Mitten | Fireside Story | In Mount Mitten, Heat jumps to 100. In any other world, a ×3 boost for 30 s, shown as speed | 20 min |
-| M29 Commander Comet | Liftoff | A ×5 tap boost for the next 50 taps | 15 min |
-| M30 The Stargardener | Supernova | Pays 10 minutes of this world's steady income at once | 60 min |
+| Manager | World | `ability` | Effect | `cooldown` |
+|---|---|---|---|---|
+| M07 Old Moss | 1 | Tea Break | Combo jumps to full and cannot fall for 60 s | 8 min |
+| M08 Captain Kelp | 1 | All Hands | A ×2 boost in this world for 30 s, shown as speed | 12 min |
+| M09 Clementine Zest | 1 | Showstopper | The next 20 taps are Bumpers | 8 min |
+| M10 Granny Evergreen | 1 | Sunday Best | A ×5 boost in this world for 30 s | 15 min |
+| M15 Barley Biggs | 2 | Lunch Rush | Fills the Growth Spurt meter | 10 min |
+| M16 Hazel Thimble | 2 | Stitch in Time | This floor pays 60 s of its own steady income at once | 6 min |
+| M17 Bjorn Barrow | 2 | Heave-Ho | Pays 120 s of this world's steady income at once | 20 min |
+| M18 Madame Loom | 2 | Golden Thread | A ×10 boost in this world for 20 s | 20 min |
+| M23 Professor Thistlewick | 3 | Sprinkler Surge | A ×10 boost on this floor for 30 s | 10 min |
+| M24 The Amazing Marrow | 3 | Abracadabra | The next chest opened rolls with double the Rare, Epic and Legendary weights | 60 min |
+| M25 Pepper Finch | 3 | Step Right Up | A Golden Sprout appears now | 10 min |
+| M26 Skipper Papaya | 3 | Treasure Map | Three Golden Sprouts appear | 20 min |
+| M31 Maestro Fennel | 4 | Strike Up the Band | A Growth Spurt of normal length starts now. It does not use the meter | 30 min |
+| M32 Chip | 4 | Dig In | This floor's level costs ×0.5 for 30 s | 15 min |
+| M33 Barnaby Moonwort | 4 | Night Shift | A ×2 boost in this world for 60 s | 15 min |
+| M34 Grandpa Mitten | 4 | Fireside Story | Heat jumps to 100 | 20 min |
+| M39 Auntie Gravity | 5 | Tea Party | Every bubble in this world fills at once, each with 120 s of its floor's steady income | 20 min |
+| M40 Stella Lather | 5 | Lather Up | A ×3 boost in this world for 30 s | 12 min |
+| M41 Grover Crater | 5 | Moonrise | A ×5 boost in this world for 30 s | 15 min |
+| M42 Commander Comet | 5 | Liftoff | A ×5 tap boost for the next 50 taps | 15 min |
+| M47 Rocky Bloom | 6 | Meteor Shower | Two Golden Sprouts appear | 15 min |
+| M48 Celeste Crema | 6 | Wake-Up Call | The next sunrise pays as if it was caught, even if the player misses it | 10 min |
+| M49 Dash Parcelli | 6 | Express Delivery | Pays 5 minutes of this world's steady income at once | 30 min |
+| M50 The Stargardener | 6 | Supernova | Pays 10 minutes of this world's steady income at once | 60 min |
 
-Boosts add. Sunday Best and Night Shift together are ×6 (1 + 4 + 1), and the Boost stops at ×15. A boost that is already running restarts its timer when it is triggered again. Abilities that pay income at once use the steady rate, with no Boost and no Growth Spurt in it (GDD 13.5, rule 4).
+The sixteen launch abilities are the same sixteen effects as in version 0.2. Four of them have a new name to suit a new owner: Tea Break was Keep the Beat, Showstopper was Best in Show, Lunch Rush was Crescendo and Strike Up the Band was Town Fair. Fireside Story lost its second half, because Grandpa Mitten never leaves Mount Mitten. The six abilities of worlds 5 and 6 other than Liftoff and Supernova are new and first-pass.
+
+Boosts add. Sunday Best and All Hands together are ×6 (1 + 4 + 1), and the Boost stops at ×15. A boost that is already running restarts its timer when it is triggered again. Abilities that pay income at once use the steady rate, with no Boost and no Growth Spurt in it (GDD 13.5, rule 4).
 
 ### 2.3 Who a new player meets first
 
-The first ten managers are fixed, so the first session never depends on luck and every one of them already has a picture.
+A manager arrives with their floor, so the first session never depends on luck. In World 1 the player meets M01 to M10 in floor order.
 
-| When | Managers |
+| When | What the player gets |
 |---|---|
-| Welcome Chest (the first time the player holds 1,000 Coins with floor 3 open) | M01 Nana Sprig, M02 Basil Brumble, M03 Olive Ledger |
-| Hiring Crates, as World 1 floors 4 to 10 open for the first time | M04, M05, M06, M07, M08, M09, M10, in that order |
+| A floor opens for the first time | That floor's manager, owned at level 1 and waiting to be hired |
+| Welcome Chest (the first time the player holds 1,000 Coins with floor 3 open) | 2 copies each of M01 Nana Sprig, M02 Basil Brumble and M03 Rowan Rake. That is enough to take each of them to level 2 |
+| Hiring Crate, as each of World 1 floors 4 to 10 opens for the first time | 2 copies of that floor's manager, plus 2 Wooden Crate slots |
 
-A Hiring Crate gives the unowned manager of the lowest rarity, lowest number first. If luck already gave the player that card, the crate gives the next one.
-
-The Welcome Chest arrives at the moment the player can pay the first hire fee (1,000 Coins), so the first manager is hired seconds after the chest opens. The first three hires are floors 1 to 3, which include the Backyard Hemp Patch. None of the three Welcome Chest managers is the beach gardener or the night-shift keeper, which keeps the Art Director's hemp-floor rule for default hires. A player may still seat any manager anywhere.
+The Welcome Chest arrives at the moment the player can pay the first hire fee (1,000 Coins). It teaches both halves of a manager in one beat: hire Nana Sprig, then level her up. The Head on floor 10 is Exotic, so the Hiring Crate is the only chest that ever holds her copies.
 
 ### 2.4 Art status
 
-- **Pictured (12):** M01 to M10, M14 and M21.
-- **New for the World 1 chest pool (9):** M11, M12, M13, M15, M16, M17, M18, M19, M22.
-- **New for worlds 2 to 4 (7):** M20, M23, M24, M25, M26, M27, M28.
-- **Later (2):** M29, M30.
-- **Hemp cast** (brisk, proud craftspeople): M11 Rowan Rake, M12 Posy Seedwell, M15 Hazel Thimble, M16 Captain Kelp, M20 Bjorn Barrow, M26 Madame Loom.
-- Managers sit at any floor in any world, so every floor needs one manager spot and every manager needs a floor-neutral pose.
-- For the same reason every manager sprite must be safe on a hemp floor. The Art Director keeps mortars, pipes, steam and smoke puffs off manager sprites. Role hints, bios and ability text stay clear of them too.
-- World 1 has three grandmothers: the lead worker on floor 1 (Lawson's art), Nana Sprig and Granny Evergreen. A hint for the Writer: the floor 1 worker and Nana Sprig can be sisters, so the likeness reads as a joke.
+- **Pictured (12):** M01, M02, M05, M06, M07, M09 in World 1. M11, M12, M15 in Loomington. M19 in Papaya Cay. M32, M33 in Mount Mitten.
+- **New for World 1 (4):** M03 Rowan Rake, M04 Posy Seedwell, M08 Captain Kelp, M10 Granny Evergreen. They are needed before anything else, because the player meets them in the first half hour.
+- **New for worlds 2 to 4 (18):** M13, M14, M16, M17, M18, M20 to M26, M27 to M31, M34.
+- **Later (16):** M35 to M50.
+- **New characters in version 0.3 (7 at launch):** Tansy Treadle, Kit Foldaway, Marina Bolt, Ned Knotwell, Wren Woolsey, Bertie Bundle, Purl Garter. Fourteen more belong to worlds 5 and 6.
+- **Hemp cast** (brisk, proud craftspeople): every manager of a hemp floor. At launch: M03 Rowan Rake, M04 Posy Seedwell, M08 Captain Kelp, M13 Tansy Treadle, M14 Kit Foldaway, M16 Hazel Thimble, M17 Bjorn Barrow, M18 Madame Loom, M21 Marina Bolt, M22 Ned Knotwell, M30 Purl Garter. Chip runs the Sled Works and is a robot, which reads as neither.
+- A manager now belongs to one room, so a sprite can be drawn for that room and no longer needs a floor-neutral pose. Every floor still needs one manager spot. Whether the pictured twelve need new poses is the Art Director's call.
+- The hemp-floor rule is now a casting rule: the easygoing beach gardener (M19) and the night-shift keeper (M33) are on herb floors and stay there. The Art Director still keeps mortars, pipes, steam and smoke puffs off every manager sprite. Role hints, bios and ability text stay clear of them too.
+- World 1 has three grandmothers: the lead worker on floor 1 (Lawson's art), Nana Sprig, who manages that same floor, and Granny Evergreen. A hint for the Writer: the floor 1 worker and Nana Sprig can be sisters, so the likeness reads as a joke.
 
 ## 3. Plants
 
