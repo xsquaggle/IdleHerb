@@ -683,10 +683,10 @@ Twenty families with five tiers each: 100 achievements. Rows are in CONTENT.md s
 
 ### 11.5 Codex
 
-A collection log: every floor, manager, plant, heirloom, visitor and world. 148 entries (CONTENT.md section 12).
+A collection log: every floor, manager, plant, heirloom, visitor and world. 168 entries, 132 of them at launch (CONTENT.md section 12).
 
 - An entry is filled the first time the thing is owned, opened or caught.
-- Each entry gives 5 Gems once and **+0.25% profit** permanently (`CODEX_PCT = 0.0025`), so the full codex is +37%.
+- Each entry gives 5 Gems once and **+0.25% profit** permanently (`CODEX_PCT = 0.0025`), so the full codex is +42%, and +33% with the four launch worlds.
 - Plant and manager entries hold the Writer's bios. Hybrid and Exotic entries show their recipe hints.
 
 ## 12. Reset layers
@@ -706,7 +706,7 @@ pending(w)      = max(0, compostTotal(w) - claimed(w))
 - `COMPOST_E0 = 2e10`, `COMPOST_EXP = 0.4`, `COMPOST_K = 5, 15, 40, 100, 250, 600` for worlds 1 to 6.
 - **Replant is available** in a world when its top floor is open in the current run and `pending >= 1`. The very first Replant of a save needs `pending >= FIRST_REPLANT_MIN = 60`.
 - `compostGainMult` comes only from skills and the Compost Shop, never from a card or an heirloom, so there is nothing to swap in for the click. If a respec lowers it, `pending` stays at 0 until lifetime earnings catch up.
-- **On Replant:** `claimed(w) += pending(w)`, `compostEra += pending(w)`, `compostAllTime += pending(w)`. That world's currency, floor levels and hires reset. Floor 1 is open at level 1. Manager and plant placements are remembered and come back as floors reopen.
+- **On Replant:** `claimed(w) += pending(w)`, `compostEra += pending(w)`, `compostAllTime += pending(w)`. That world's currency, floor levels and hires reset. Floor 1 is open at level 1. Plant placements are remembered and come back as floors reopen. Managers stay met and keep their card levels, and each one is hired again with its floor's fee.
 - **Passive:** every Compost earned this era gives `COMPOST_PCT = +2%` profit in every world. Spending Compost in the Compost Shop does not reduce this.
 - **Compost Shop:** rows in CONTENT.md section 7. Every item has a level cap. Rich Soil (×1.25 profit, 10 levels) is the only one that multiplies profit. After the first Harvest Festival the shop has a Buy All button, because it is rebuilt every era.
 
@@ -718,7 +718,7 @@ First Replant: the button unlocks at 60 pending Compost, which is about 1e13 lif
 
 ### 12.2 Harvest Festival (the big reset)
 
-**Fiction:** the whole brand goes to the Grand Harvest Festival. The judges hand out Prize Ribbons, and a new generation starts over with the ribbons on the wall.
+**Fiction:** the whole brand goes to the Grand Harvest Festival. Mayor Thyme hosts it and pins on the Prize Ribbons, and a new generation starts over with the ribbons on the wall.
 
 ```
 ribbonsTotal   = floor( (compostAllTime / RIBBON_C0) ^ RIBBON_EXP )
@@ -780,7 +780,7 @@ speedMult(floor) = 2 ^ milestoneCount x towerMilestoneMult ^ towerMilestoneCount
 
 Abilities written as speed (All Hands, Fireside Story) are timed boosts. They count in the Boost of section 13.5, not here.
 
-`towerMilestoneMult` is `TOWER_MILESTONE_MULT` plus any flat additions (a Tycoon skill, a set bonus, Mayor Thyme), capped at `TOWER_MILESTONE_CAP = 2.0`.
+`towerMilestoneMult` is `TOWER_MILESTONE_MULT` plus any flat additions (a Tycoon skill, a set bonus, Granny Evergreen in Thymeford), capped at `TOWER_MILESTONE_CAP = 2.0`.
 
 ### 13.3 Level cost
 
@@ -821,11 +821,11 @@ A reduction that comes in ranks or levels adds up inside its own source first. F
 
 The tap caps are there so that active play stays a bounded multiple of idle play (section 6.7).
 
-World-scoped effects count only from managers and plants placed in that world.
+A manager's effects count only while it is hired. Its world-scoped effects count in its own world, and its `adjacent` effects on the floors directly above and below its own. A plant's world-scoped effects count in the world where it is planted.
 
-**Offline numbers add up like this.** Efficiency starts at 40 points. Night Owl adds up to 15 and Overnight Growth up to 18, so the two cheap sources stop at 73. The Night Garden set adds 15 and Grandpa Mitten 25 or more in the world where he works. Every "offline earnings" percentage (Evergreen plants, three managers, the Glass Cloche Bell) multiplies the points. Reaching 100% therefore takes a real idle build and every piece of it counts. Stored hours: 4 to start, +20 from research, +5 from Deep Pantry, +4 from the Moonstone Birdbath.
+**Offline numbers add up like this.** Efficiency starts at 40 points. Night Owl adds up to 15 and Overnight Growth up to 18, so the two cheap sources stop at 73. The Night Garden set adds 15, and Grandpa Mitten adds 25 or more in Mount Mitten. Every "offline earnings" percentage (Evergreen plants, the managers with an offline perk in their own worlds, the Glass Cloche Bell) multiplies the points. Reaching 100% therefore takes a real idle build and every piece of it counts. Stored hours: 4 to start, +20 from research, +5 from Deep Pantry, +4 from the Moonstone Birdbath.
 
-**Bonuses are read when they are used.** Swapping a card or an heirloom in for a single click is allowed, and nothing strong depends on it: chest luck and Compost gain come only from skills, research and shops.
+**Bonuses are read when they are used.** Swapping a plant or an heirloom in for a single click is allowed, and nothing strong depends on it: chest luck and Compost gain come only from skills, research and shops.
 
 ### 13.5 Timed boosts
 
@@ -852,31 +852,33 @@ steadyIPS              = the world's income with boost = 1 and spurt = 1
 |---|---|---|---|---|
 | Sunbeam | world | ×5 | 30 s | Golden Sprout |
 | Morning Dew | world, in every world | ×2 | 120 s | returning after an hour away |
-| All Hands | world, shown as speed | ×2 | 30 s | Captain Kelp |
-| Night Shift | world | ×2 | 60 s | Barnaby Moonwort |
-| Sunday Best | world | ×5 | 30 s | Granny Evergreen |
-| Golden Thread | world | ×10 | 20 s | Madame Loom |
-| Fireside Story, outside Mount Mitten | world, shown as speed | ×3 | 30 s | Grandpa Mitten |
+| All Hands | world, shown as speed | ×2 | 30 s | Captain Kelp, in Thymeford |
+| Night Shift | world | ×2 | 60 s | Barnaby Moonwort, in Mount Mitten |
+| Sunday Best | world | ×5 | 30 s | Granny Evergreen, in Thymeford |
+| Golden Thread | world | ×10 | 20 s | Madame Loom, in Loomington |
+| Lather Up | world | ×3 | 30 s | Stella Lather, on the Moon |
+| Moonrise | world | ×5 | 30 s | Grover Crater, on the Moon |
 | Downpour | the world on screen | ×3 | 30 s | Golden Watering Can |
-| Sprinkler Surge | one floor | ×10 | 30 s | Professor Thistlewick |
+| Sprinkler Surge | one floor | ×10 | 30 s | Professor Thistlewick, in Papaya Cay |
 | Tap Storm | taps | ×10 | 15 s | Golden Sprout |
-| Liftoff | taps | ×5 | 50 taps | Commander Comet |
+| Liftoff | taps | ×5 | 50 taps | Commander Comet, on the Moon |
 
 Rules:
 
-1. **Bonuses add.** A Sunbeam and Sunday Best together are ×9 (1 + 4 + 4), not ×25. Golden Thread, Sunday Best and Night Shift together are ×15, which is the cap.
+1. **Bonuses add.** A Sunbeam and Sunday Best together are ×9 (1 + 4 + 4), not ×25. In Loomington, Golden Thread, a Sunbeam and a Downpour together would be ×16, and the cap holds them at ×15.
 2. **A boost never stacks with itself.** Triggering it again restarts its timer.
 3. **A Growth Spurt is the only timed effect that multiplies the Boost.** With the Spurt speed cap of 4, nothing timed can lift a world's income by more than `BOOST_CAP x SPURT_SPEED_CAP = 60` times, and only for as long as the shortest boost lasts.
-4. **Lump sums pay from the steady rate.** Anything that pays "N seconds of income at once" uses `steadyIPS`, with no Boost and no Growth Spurt in it: Windfalls and Jackpots, customer tips, Stitch in Time, Heave-Ho, Supernova, Time Skip and Time Warp. A world's twist counts at its current value where the twist is a profit multiplier (Weather, Hearth Heat).
+4. **Lump sums pay from the steady rate.** Anything that pays "N seconds of income at once" uses `steadyIPS`, with no Boost and no Growth Spurt in it: Windfalls and Jackpots, customer tips, Stitch in Time, Heave-Ho, Tea Party, Express Delivery, Supernova, Time Skip and Time Warp. A world's twist counts at its current value where the twist is a profit multiplier (Weather, Hearth Heat).
 5. Whether a boost is written as speed or as profit only changes how it looks on screen. Both raise income by the same factor (section 5.2) and both count toward the same Boost.
-6. Guaranteed Bumpers (Best in Show, Sharp Season) are not boosts. They turn taps into Bumpers, and the Bumper multiplier has its own cap (section 13.4). Dig In is not a boost either. It is a timed discount on one floor's level costs (section 13.3).
+6. Guaranteed Bumpers (Showstopper, Sharp Season) are not boosts. They turn taps into Bumpers, and the Bumper multiplier has its own cap (section 13.4). Dig In is not a boost either. It is a timed discount on one floor's level costs (section 13.3).
 7. The HUD shows one Boost badge per world with the current total, for example "Boost ×9". It glows at the cap.
 8. Boosts do not run in the fair stall and are never part of offline earnings.
 9. World twists are not boosts. A twist (section 14.4) is part of a world's steady income at its current value. Each has its own ceiling there (×3 for Weather, ×4 for Hearth Heat), and it multiplies the Boost like every permanent bucket in section 13.1.
+10. **A manager's boost stays in its own world.** A world's Boost can only hold the boosts of its own four ability managers, Golden Sprout boosts, Morning Dew and the ability of an heirloom the player carries. That is at most ×13 in Thymeford and ×14 on the Moon. So the cap is only reached in Loomington, on the Sprinkler Surge floor in Papaya Cay, and on taps during a Tap Storm.
 
 **Why boosts add.** In version 0.1 each boost was its own multiplier, and abilities that pay income at once read the boosted rate. The independent audit showed that one player pressing every button together got about ×74,000 for 20 seconds, and about 100 days of income from a single Heave-Ho inside that window. Adding fixes both. A boost is now worth the same whenever it is used, so lining two or three up is a satisfying burst and not a requirement, and the most a burst can do is known in advance.
 
-What boosts are worth on average is in section 6.7. A player who owns every ability and uses each one on cooldown averages a Boost of about ×3.
+What boosts are worth on average is in section 6.7. A finished account that uses every ability on cooldown averages a Boost of about ×2 in its best world.
 
 ### 13.6 Why this is safe
 
@@ -967,7 +969,7 @@ A permanent record for each world. It never resets.
 
 - A world has 10 stars. Star `n` is earned the first time every floor in that world is at or above level `MASTERY_LEVELS[n]` = 25, 50, 100, 250, 350, 400, 450, 500, 550, 600.
 - Each star gives `MASTERY_PCT = +10%` profit in that world.
-- **Star 5** gives the first copy of that world's **Exotic manager**. Stars 7, 9 and 10 give one more copy each.
+- **Star 5** gives one copy of that world's **Head**, the Exotic manager of its top floor (section 7.1). Stars 7, 9 and 10 give one more copy each. Those four copies take a Head from level 1 to level 3. The last two levels come from Starlight Chests.
 - The ten levels are first-pass values from the rough script. In Thymeford an active player earns star 4 on day 5, star 5 on about day 11, star 8 on about day 19 and star 10 on about day 50. Each later world trails by one to three weeks. The low floors grow at 1.15 a level, so a threshold much above 600 cannot be reached in any sensible time. The simulator should set the ten levels from cost.
 
 ## 15. Events, offline time and the clock
@@ -1042,32 +1044,33 @@ One new thing at a time. Conditions are exact. Times are targets for a new playe
 | 2 | Floor levels | first harvest | 0:10 |
 | 3 | Milestones panel and buy modes | any floor reaches level 25 | 0:35 |
 | 4 | More floors | coins | 0:40 onward |
-| 5 | Chests and managers | holding 1,000 Coins with floor 3 open (Welcome Chest) | 1:30 |
+| 5 | Managers and chests | holding 1,000 Coins with floor 3 open (Welcome Chest). Hire buttons appear from this moment | 1:30 |
 | 6 | Tap bonus and Combo | first manager hired | 1:40 |
 | 7 | Quests panel (story and daily) | world 1 floor 4 opened | 2:15 |
 | 8 | Plants and planters | world 1 floor 5 opened (first seed packet) | 3:30 |
 | 9 | Bumper taps | player level 2 | about 4:00 |
 | 10 | Garden Visitors | world 1 floor 6 opened | 5:30 |
-| 11 | Growth Spurt | world 1 floor 8 opened | 13:00 |
-| 12 | Morning Basket | 15 minutes of play | 15:00 |
-| 13 | Achievements and Codex | world 1 floor 9 opened | 21:00 |
-| 14 | Skill tree | player level 6 | about 26:00 |
-| 15 | Offline earnings screen | first return after 5 minutes away with a manager hired | first return |
-| 16 | Replant | world 1 floor 10 opened (32:00). The button is live at 60 Compost pending | about 50:00 |
-| 17 | Compost Shop and Research | first Replant | about 55:00 |
-| 18 | Heirlooms | third Replant (the story gives the Sprouting Trowel) | about 1 h 30 |
-| 19 | World 2, Customers, World Mastery, weekly quests | ticket: 5e19 Coins | end of day 1 |
-| 20 | Bees and Pollen | research "Bee Hotel" | day 1 to 2 |
-| 21 | Weekend events | player level 12 | day 1 to 2 |
-| 22 | Cross-pollination | research "Pollination Bench" (needs world 2) | day 2 |
-| 23 | World 3, Weather | ticket: 2e19 Notes | day 3 |
-| 24 | Mutation and Exotic plants | research "Mutation Chamber" (needs world 3) | day 5 to 7 |
-| 25 | Harvest Festival, Ribbon Shop and the Heirloom Pick | world 3 reached and 8 Ribbons pending | day 4 to 5 |
-| 26 | Auto-buy (the Auto-Gardener) | Ribbon Shop, 4 Ribbons | after the first Festival |
-| 27 | World 4, Hearth Heat | deed (8 Ribbons) and ticket | week 1 to 2 |
-| 28 | Exotic managers | 5 Mastery stars in a world | week 2 (about day 11) |
-| 29 | World 5, Floating Harvests (after launch) | deed (60 Ribbons) and ticket | week 2 to 3 |
-| 30 | World 6, Orbital Sunrise (after launch) | deed (600 Ribbons) and ticket | week 3 to 4 |
+| 11 | Manager abilities | the manager of world 1 floor 7 is hired (Old Moss, Tea Break) | about 11:00 |
+| 12 | Growth Spurt | world 1 floor 8 opened | 13:00 |
+| 13 | Morning Basket | 15 minutes of play | 15:00 |
+| 14 | Achievements and Codex | world 1 floor 9 opened | 21:00 |
+| 15 | Skill tree | player level 6 | about 26:00 |
+| 16 | Offline earnings screen | first return after 5 minutes away with a manager hired | first return |
+| 17 | Replant | world 1 floor 10 opened (32:00). The button is live at 60 Compost pending | about 50:00 |
+| 18 | Compost Shop and Research | first Replant | about 55:00 |
+| 19 | Heirlooms | third Replant (the story gives the Sprouting Trowel) | about 1 h 30 |
+| 20 | World 2, Customers, World Mastery, weekly quests | ticket: 5e19 Coins | end of day 1 |
+| 21 | Bees and Pollen | research "Bee Hotel" | day 1 to 2 |
+| 22 | Weekend events | player level 12 | day 1 to 2 |
+| 23 | Cross-pollination | research "Pollination Bench" (needs world 2) | day 2 |
+| 24 | World 3, Weather | ticket: 2e19 Notes | day 3 |
+| 25 | Mutation and Exotic plants | research "Mutation Chamber" (needs world 3) | day 5 to 7 |
+| 26 | Harvest Festival, Ribbon Shop and the Heirloom Pick | world 3 reached and 8 Ribbons pending | day 4 to 5 |
+| 27 | Auto-buy (the Auto-Gardener) | Ribbon Shop, 4 Ribbons | after the first Festival |
+| 28 | World 4, Hearth Heat | deed (8 Ribbons) and ticket | week 1 to 2 |
+| 29 | Head copies | 5 Mastery stars in a world (the first copy of that world's Head) | week 2 (about day 11) |
+| 30 | World 5, Floating Harvests (after launch) | deed (60 Ribbons) and ticket | week 2 to 3 |
+| 31 | World 6, Orbital Sunrise (after launch) | deed (600 Ribbons) and ticket | week 3 to 4 |
 
 Nothing that is locked shows more than a silhouette and a one-line hint. The bottom bar starts with no buttons and gains them as features unlock.
 
@@ -1086,30 +1089,31 @@ All times in 17.1 to 17.4 are design targets for a real new player. Section 17.6
 | 0:35 | Windowsill level 25 | Milestones, buy modes |
 | 0:40 | Floor 2, Balcony Boxes | |
 | 1:05 | Floor 3, Backyard Hemp Patch | Hemp |
-| 1:30 | Welcome Chest: the first chest opening, three managers | Chests, managers |
-| 1:40 | First hire. Taps now pay a bonus and build Combo | Combo |
+| 1:30 | Welcome Chest: the first chest opening. Two copies each of the first three managers | Chests, managers |
+| 1:40 | Nana Sprig is hired and levelled up. Taps now pay a bonus and build Combo | Combo |
 | 2:15 | Floor 4. Hiring Crate. First story quest pinned | Quests |
 | 3:30 | Floor 5. First seed packet. Mint goes in the windowsill, hemp in the patch | Plants |
 | 4:00 | Level 2. First Bumper tap: ×10 with a hit-pause | Bumpers |
 | 5:30 | Floor 6. A Golden Sprout drifts past | Visitors |
 | 7:00 | Level 3. A Copper Chest and 10 Gems | |
-| 8:30 | Floor 7, the Tea House. Another Hiring Crate | |
-| 10:00 | Seven floors, five of them managed, seven or more managers owned, three plants, one card level-up, level 3 | |
+| 8:30 | Floor 7, the Tea House. Another Hiring Crate. Old Moss's card shows the first ability, Tea Break | |
+| 10:00 | Seven floors, five of them managed, seven managers met, three plants, several card level-ups, level 3 | |
 
-A new thing roughly every 60 to 90 seconds for the first six minutes, each one taught by doing it once. Then the pace eases on purpose: minutes 6 to 13 are for playing with what is already there. The skill tree, achievements and the Codex wait for the quieter stretch before the first Replant (section 17.2).
+A new thing roughly every 60 to 90 seconds for the first six minutes, each one taught by doing it once. Then the pace eases on purpose: minutes 6 to 13 are for playing with what is already there, and the only new thing in them is the first ability. The skill tree, achievements and the Codex wait for the quieter stretch before the first Replant (section 17.2).
 
 ### 17.2 First hour
 
 | Time | Beat |
 |---|---|
+| 11 min | Old Moss is hired. The first ability button: Tea Break fills the Combo meter |
 | 13 min | Floor 8, the Ropewalk. First Growth Spurt |
 | 15 min | The Morning Basket appears |
 | 21 min | Floor 9. Achievements and the Codex open, and the first handful of achievements pop at once |
 | 26 min | Level 6. The skill tree opens with five points to spend |
-| 32 min | Floor 10, Sprout Tower HQ. The ticket plate to Loomington appears far out of reach, with its first waypoint mark. Pip mentions the compost heap, and the Replant button shows a bar toward 60 Compost |
+| 32 min | Floor 10, Sprout Tower HQ, run by Granny Evergreen, the Head of Thymeford. The ticket plate to Loomington appears far out of reach, with its first waypoint mark. Pip mentions the compost heap, and the Replant button shows a bar toward 60 Compost |
 | 32 to 50 min | Push floors to 50 and 100, hit the first tower milestones. Pending Compost climbs to 60 |
 | 50 to 60 min | **First Replant.** ×2.2 profit, two levels of Rich Soil, the Compost Shop and Research open |
-| 60 min | Level 8. About 12 managers, 5 plants. The second run reaches HQ in about 12 minutes |
+| 60 min | Level 8. All ten Thymeford managers met, 5 plants. The second run reaches HQ in about 12 minutes |
 
 ### 17.3 Day 1 (about 3 hours of play)
 
@@ -1130,28 +1134,29 @@ A new thing roughly every 60 to 90 seconds for the first six minutes, each one t
 | 4 to 5 | **First Harvest Festival.** 8 Ribbons, Golden Hour, auto-buy, and a Legendary heirloom of the player's choice | Ribbon Shop, Heirloom Pick |
 | 5 to 7 | Mutation Chamber built. First Exotic plant around day 7 (Ember Basil is the easy one) | Exotics |
 | 6 to 7 | Deed and ticket to Mount Mitten | Hearth Heat |
-| 7 | Level about 40. Commons at level 5, Rares at 3, a first Legendary. 12 to 15 research projects done. 3 to 4 Festivals | |
+| 7 | Level about 40. Commons at level 5, Old Moss (Rare) at level 4, Clementine Zest (Legendary) at level 2. 12 to 15 research projects done. 3 to 4 Festivals | |
 
 ### 17.5 Weeks 2 to 8
 
 | When (active player) | Beat |
 |---|---|
-| Week 2 | First Exotic manager, Mayor Thyme, around day 11. Frosted Mint and Crystal Sage from the Frost climate. A first full heirloom set. Festivals every one to two days. The Moon, once it ships |
+| Week 2 | The first Head copy, for Granny Evergreen, around day 11 (Mastery star 5 in Thymeford). Frosted Mint and Crystal Sage from the Frost climate. A first full heirloom set. Festivals every one to two days. The Moon, once it ships |
 | Week 3 | Mastery stars 7 and 8 in Thymeford, star 5 in Loomington and Papaya Cay. All six heirloom slots. Nebula Nursery, once it ships |
 | Week 4 | Level about 70. Research about half done. Commons at level 8 to 9. Festivals every three to five days |
 | Weeks 5 to 8 | Mastery stars 9 and 10 in Thymeford and stars 6 to 8 in the later worlds. Last research projects. Level about 90, with the cap of 112 around month 3. Hybrids and Exotics levelling up |
 
-With four worlds at launch, new places stop arriving around day 7. From there the game is carried by Exotic plants and managers, heirloom sets, World Mastery, research (two to three months), the Ribbon Shop and card levels. Worlds 5 and 6 slot into weeks 2 and 3 when they ship.
+With four worlds at launch, new places stop arriving around day 7. From there the game is carried by Exotic plants, levelling the Heads, heirloom sets, World Mastery, research (two to three months), the Ribbon Shop and card levels. Worlds 5 and 6 slot into weeks 2 and 3 when they ship.
 
-Card levels over time for an active player (about 100 cards a day):
+Card levels over time for an active player (about 100 cards a day). The figures are for Thymeford's managers, who are met first. Managers of later worlds trail them, because the copies of a rarity are shared among every met manager of that rarity. This is rough arithmetic from the chest odds, not a measurement.
 
 | Rarity | Week 1 | Month 1 | Manager profit at that level |
 |---|---|---|---|
-| Common | level 5 | level 8 to 9 | ×4.1, then ×8.6 |
-| Uncommon | level 4 | level 7 | ×4.3, then ×7.5 |
-| Rare | level 3 | level 6 | ×4.3, then ×7.5 |
-| Epic | level 2 | level 4 | ×4.8, then ×6.9 |
-| Legendary | level 1 | level 2 to 3 | ×6, then ×8.6 |
+| Common | level 5 | level 7 to 8 | ×4.1, then ×6.0 to ×7.2 |
+| Uncommon | level 4 | level 6 | ×4.3, then ×6.2 |
+| Rare | level 4 | level 5 to 6 | ×5.2, then ×6.2 to ×7.5 |
+| Epic | level 3 | level 4 | ×5.2, then ×6.4 |
+| Legendary | level 2 | level 3 | ×5.1, then ×6.6 |
+| Exotic (the Head) | level 1 | level 2 | ×5, then ×7.2 |
 
 ### 17.6 What has been checked, and how
 
@@ -1179,6 +1184,8 @@ The script buys greedily (lowest wait plus payback time), Replants when pending 
 | 30 | ×9 | ×7,000 | 10 |
 | 60 | ×13 | ×20,000 | 14 |
 
+**The manager column has not been measured for version 0.3.** It was set when a manager could be seated on any floor, and the rough script has not been run again. With one fixed manager per floor, the floors that earn the most have the rarest managers. Those start at ×3 to ×5 on day 0, where the column says ×2. By day 7 the two agree (×4 to ×5). At day 30 the fixed managers are a little lower (×6 to ×7.5 against ×9), because rare cards level slowly (section 17.5). So the first days should run a little ahead of the results below, and the second month a little behind. Measuring this column again is the simulator's first job on version 0.3. The knobs are `MGR_BASE` and `MGR_STEP` (section 7.2).
+
 **Where the budget comes from.** This is a rough estimate of the middle column, built from the rows in CONTENT.md for an active player. The budget is the product of these parts.
 
 | Part | Day 7 | Day 30 |
@@ -1190,12 +1197,12 @@ The script buys greedily (lowest wait plus payback time), Replants when pending 
 | Heirlooms and set bonuses | ×1.6 | ×4 |
 | Plants and manager perks | ×1.6 | ×3.5 |
 | World twists | ×1.5 | ×1.6 |
-| Timed boosts, as average uptime (section 6.7) | ×1.4 | ×1.9 |
+| Timed boosts, as average uptime (section 6.7) | ×1.3 | ×1.5 |
 | Cheaper levels (a discount is worth about as much as the same factor of income) | ×1.5 | ×2.2 |
 | Master Composter | ×1 | ×1.75 |
-| **Product** | **about ×160** | **about ×15,000** |
+| **Product** | **about ×150** | **about ×11,500** |
 
-Both land within about a factor of two of the budget (×120 and ×7,000), on the high side. So the content can carry the pacing in the results below, and the simulator is more likely to trim a little than to need more. The timed-boost row is the tower average for the abilities a player is likely to own by then, discounted because nobody presses every button on cooldown. If the simulator finds it high, ability strengths in CONTENT.md 2.2 are the first thing to trim, before `BOOST_CAP`.
+Both land within about a factor of two of the budget (×120 and ×7,000), on the high side. So the content can carry the pacing in the results below, and the simulator is more likely to trim a little than to need more. The timed-boost row is the tower average in the world on screen (section 6.7), discounted because nobody presses every button on cooldown. The row for plants and manager perks was estimated for version 0.2 and has not been estimated again for the fixed perks. If the simulator finds it high, ability strengths in CONTENT.md 2.2 are the first thing to trim, before `BOOST_CAP`.
 
 **Results** (days from first launch):
 
@@ -1264,7 +1271,8 @@ In the order to reach for them. Change one at a time.
 | 11 | Chest rates and duplicate curves | section 8 | Collection speed |
 | 12 | Research times | CONTENT.md section 6 | The idle cadence |
 | 13 | Ability strengths, then the Boost cap | CONTENT.md section 2.2, `BOOST_CAP` | What timed boosts add on average, and how big a lined-up burst can get |
-| 14 | Mastery levels and event steps | `MASTERY_LEVELS`, section 15.3 | When Exotic managers arrive, and how long a weekend event takes |
+| 14 | Mastery levels and event steps | `MASTERY_LEVELS`, section 15.3 | When Head copies arrive, and how long a weekend event takes |
+| 15 | Manager level 1 values and steps | `MGR_BASE`, `MGR_STEP` | How strong the first day is, and what a manager copy is worth |
 
 ## Appendix A. Constants
 
@@ -1295,8 +1303,8 @@ In the order to reach for them. Change one at a time.
 | `VISITOR_LIFETIME` | 12 s | 6.6 |
 | `WINDFALL_SECONDS` | 60 | 6.6 |
 | `BEE_POLLEN` | 5 | 6.6 |
-| `MGR_BASE` | 2, 2.5, 3, 4, 6, 10 | 7.2 |
-| `MGR_LEVEL_MULT` | 1.2 | 7.2 |
+| `MGR_BASE` | 2, 2.5, 3, 3.5, 4, 5 | 7.2 |
+| `MGR_STEP` | 1.2, 1.2, 1.2, 1.22, 1.28, 1.43 | 7.2 |
 | `PERK_PER_LEVEL` | 0.1 | 7.2 |
 | `CHEST_MANAGER_SHARE` | 0.55 | 8.3 |
 | `NEW_CARD_CHESTS` | 10 | 8.3 |
