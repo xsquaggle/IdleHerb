@@ -34,7 +34,7 @@ A consequence players never see but code must respect: adding 1 to 1e30 changes 
 
 1. **Compare with methods, never with operators.** `coins.gte(cost)`, not `>=`.
 2. **Check before subtracting.** A purchase is `if (coins.gte(cost)) coins = coins.sub(cost)`. Checked over 200,000 random cases: when `a >= b`, `a - b` is never negative, and `a - a` is exactly zero.
-3. **Bulk purchases use closed forms, then verify.** Cost of `k` levels from level `n` is `base * g^n * (g^k - 1) / (g - 1)`. The most levels affordable is `floor(log_g(1 + coins * (g - 1) / (base * g^n)))`. Because logarithms round, the result is then confirmed against the cost formula and stepped down or up by one if needed. Checked against a buy-one-at-a-time loop in 3,000 random cases with no mismatches.
+3. **Bulk purchases use closed forms, then verify.** In the form of GDD 5.2, where a floor is level 1 when it opens: the cost of `k` levels from level `L` is `levelBaseCost * growth^(L - 1) * (growth^k - 1) / (growth - 1) * costMult`. The most levels affordable is `floor(log_growth(1 + coins * (growth - 1) / (levelBaseCost * growth^(L - 1) * costMult)))`. Because logarithms round, the result is then confirmed against the cost formula and stepped down or up by one if needed. Checked against a buy-one-at-a-time loop in 3,000 random cases with no mismatches.
 4. **Use `Num.pow` for any growth curve.** `Math.pow` overflows silently, as above.
 5. **Apply income in one step per source per tick** (rate times elapsed time), not as many tiny additions.
 6. **No `Num` is ever NaN or infinite.** Development and test builds check every result and fail loudly. Release builds refuse to save a non-finite value and keep the last good save.

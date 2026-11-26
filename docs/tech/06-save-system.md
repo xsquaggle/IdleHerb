@@ -56,7 +56,7 @@ SPROUTSAVE 1 sha256=9f2c...e1 bytes=48213
 }
 ```
 
-- The header carries the byte length and a SHA-256 of the body, so truncation and corruption are caught before the body is even parsed.
+- The header carries the byte length and a SHA-256 of the body, so truncation and corruption are caught before the body is even parsed. The hash is a small pure TypeScript function in the kernel, tested against the published test vectors, because the core may not use Node or browser crypto. The game, the simulator, the browser preview and the tests therefore all compute it the same way.
 - `seq` goes up by one on every write. Recovery uses it to find the newest good file.
 - Each system owns one slice with its own version number `v`. This is what lets several programmers change their own save data without colliding on one global version.
 - Big numbers are exact strings (see 05). Content is referred to by id.

@@ -95,7 +95,7 @@ Things that would cost money, none of which are in the plan: code signing (see b
 | Unsigned installer puts players off | Medium | Documented with screenshots and checksums; signing can be added later |
 | Download size and memory from bundling a browser engine | Certain, low impact | About 100 MB download; fine for a PC game. The shell is swappable behind the platform interface |
 | Music memory use from decoded stems | Low | Stem count and loop length budget for the Audio Director; one world's music loaded at a time |
-| Parallel agents collide in the same files | Medium | Folder-per-system, mirrored ownership, small content files, nothing generated committed ([09](09-repo-layout-and-ownership.md)) |
+| Parallel agents collide in the same files | Medium | Folder-per-system, mirrored ownership, small content files, no build output committed ([09](09-repo-layout-and-ownership.md)) |
 | Library updates break things mid-project | Low | Pinned versions, a lockfile, upgrades only on purpose |
 | The repository is public, so work in progress and art are visible to anyone | Certain | Lawson's call; noted so it is a choice rather than a surprise |
 

@@ -1,30 +1,28 @@
 # Tech plan thread: handoff note
 
-Kept current so the work can be picked up after any stop. Newest state first. Delete this file when the thread closes.
+Kept current so the work can be picked up after any stop. Delete this file when the thread closes.
 
 Last updated: 2026-11-26.
 
 ## Done
 
-- Tech plan (TECH_PLAN.md and 01 to 09), delivered as PR #1.
-- 03 matched to the final style bible numbers.
-- 04 brought in line with design 0.2: generated floor rows, the design's stat names, buckets and scopes, chest and ability shapes, table list, compiler guard checks.
-- Phone preview: `.github/workflows/preview.yml` and the holding page in `tools/preview/` are pushed. Lawson was given the steps to switch on GitHub Pages (2026-11-26). The workflow has not run yet: it first runs when PR #1 is merged to main.
-- 02 brought in line with design 0.2: stat rules and caps, the Boost and the steady rate, systems in the design's words, two reset layers, background play at the full online rate.
-
-- 07 brought in line with design 0.2: what time away pays (efficiency, stored hours, twists, Morning Dew, Time Warp, the fair stall), background play is not time away, tests for the five rules of GDD 15.2.
-- Old vocabulary replaced with the design's words in 03, 05, 06 and 09.
+- Tech plan (TECH_PLAN.md and 01 to 09), merged to main as PR #1 on 2026-11-26 after a fresh-eyes audit passed it.
+- The plan is in line with design 0.2 and the final style bible. The manager section of 04 follows the Game Designer's in-progress design 0.3 (one fixed manager per floor).
+- Phone preview: live at https://xsquaggle.github.io/IdleHerb/ since 2026-11-26. The first Preview run (push to main) built and published the holding page, and the address was checked. GitHub Pages is switched on (Lawson).
+- The audit's notes 1 to 7 and 9 are folded in, in a follow-up pull request from the same branch: the bulk-buy formula in the GDD's form (05), the committed `.gen.yaml` exception (09), a wall-clock jump alone is not time away (07), the luck and Compost gain guards per stat (02, 04), timed specials and hybrids out of chest pools (04), art folders and file names as the style bible sets them (04, 09), where the save hash comes from (06).
 
 ## In progress
 
-- Nothing. The plan is in line with design 0.2 and the style bible.
+- Nothing.
 
 ## Next
 
-1. When design 0.3 is merged: check the manager and ability records in 04 against it. They were written on 2026-11-26 from the Game Designer's in-progress notes (one manager per floor, the "met" flag, no `poolWorld` on managers, `MGR_STEP` per rarity, four abilities per world).
-2. After PR #1 is merged: check the first Preview run and the public address, and fix the workflow if it fails. GitHub Pages is switched on (Lawson, 2026-11-26). The workflow can also be started by hand from the Actions tab (workflow "Preview").
+1. When design 0.3 is merged: check the manager and ability records in 04 against it (`ability.tea_break`, `card.manager.old_moss`, the "met" flag, no `poolWorld` on managers, `MGR_STEP` per rarity), and whether the Starlight Chest still gives an Exotic manager copy.
+2. Phase 1 Step 0 (the scaffold) replaces the "Assemble the site" step in `.github/workflows/preview.yml` with the real web build, and shows a "turn your phone sideways" prompt in portrait.
 3. Keep the copy in the shared project files (`/mnt/project-files/tech-plan/`) current after each change.
 
 ## Open
 
-- Design 0.3 (fixed managers) is not merged or audited yet. The Game Designer confirmed two engine readings of GDD 15.1 on 2026-11-26: boosts run out while away and pay nothing offline, and weather uses loop averages plus the exact part-loop.
+- Audit note 8 is for the Game Designer: GDD 15.2 rule 5 lists Morning Baskets under the day counter, while GDD 15.1 and 07 treat them as game-time timers. `MAX_AWAY` (30 days) could join the GDD's constants.
+- Audit note 9, optional and not done: the Pages permissions could sit on the deploy job alone. Left as it is because the workflow works and the reviewer called the current form acceptable.
+- Not verified by anyone: the package versions listed in 01.

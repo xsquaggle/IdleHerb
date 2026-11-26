@@ -154,7 +154,7 @@ These few shapes are reused by every table. Learning them once is learning the w
 - **Scope is relative to where the owner is.** For a manager it is their own floor. For a plant it is the floor it is planted on. `adjacent` is the floors directly above and below, `world` is every floor in that world, and `global` is everything, counted once. Things that are not placed anywhere (skills, research, shop items, heirlooms) use `global` or name their target, as in `scope: { world: world.w4 }`.
 - **The bucket is not written on the row.** It comes from the kind of owner, as CONTENT.md 0.1 lists them: a manager's own multiplier is `manager`, manager perks and plant traits share `floor`, heirlooms and their sets are `heirloom`, then `skill`, `research`, `compost`, `ribbon`, `achievement`, `codex`, `mastery` and `twist`. A row cannot land in the wrong bucket through a typo.
 - **Scaling with level is not written on the row either.** It is one rule per kind of owner (CONTENT.md 0.1): a manager perk grows by `PERK_PER_LEVEL`, an heirloom passive by `HEIRLOOM_PER_LEVEL` unless the row says `fixed: true`, a plant trait by the formula in GDD 8.5. Abilities and set bonuses never scale.
-- **Anything that lasts a set time is a `boost`**, not an effect: a target (`world`, `floor` or `tap`), a size, and seconds or taps. Boosts add into one capped Boost per world and never multiply each other (GDD 13.5). The schema has no way to write a timed multiplier, on purpose.
+- **A timed bonus to income or taps is a `boost`**, not an effect: a target (`world`, `floor` or `tap`), a size, and seconds or taps. Boosts add into one capped Boost per world and never multiply each other (GDD 13.5). The schema has no way to write a timed multiplier, on purpose. The few timed things that are not boosts (GDD 13.5 rule 6) are named specials: Dig In, which is a timed discount on one floor's level costs, and the guaranteed Bumpers of Best in Show and Sharp Season.
 
 How each stat combines its bonuses, and where it is capped, is declared once with the stat (see 02).
 
@@ -227,7 +227,7 @@ Schemas live next to the system that uses them (`packages/core/src/systems/<name
    - every stat named by an effect is registered; every special and formula named has an implementation
    - cost growth is above 1, cycles are positive, weights sum above zero, pity rules are satisfiable
    - **the generated floor rows match the template** for the world parameters in `worlds.yaml`
-   - **the design's guard rules hold.** `chest.luck` and `compost.gain` are granted only by skills, research and shops. Anything bought with Compost or Ribbons that multiplies profit per level has a level cap. No Exotic card is in a chest pool. Each stat only takes the operations its rule allows
+   - **the design's guard rules hold.** Each stat lists the buckets that may feed it: `chest.luck` takes skills and research only, and `compost.gain` takes skills and the Compost Shop only (GDD 13.4). Anything bought with Compost or Ribbons that multiplies profit per level has a level cap. No Exotic card and no hybrid is in a chest pool (GDD 8.3 rule 3). Each stat only takes the operations its rule allows
    - **the unlock graph has no cycles and everything is reachable** from a new game, which catches orphaned content and one class of dead zone before the simulator even runs
    - every entity has its text keys; every art and audio key exists (a warning until Phase 3, an error after)
    - **the word check.** Every line of text is checked against the do-not-use list in GDD 2.3 and `docs/art/HEMP_ART.md`. Words that are never acceptable fail the build. Words that are only wrong in some uses are listed in the report for the reviewer, with an allow file for lines a person has approved. A hand-written 420 or 69 in a table or in text is listed the same way (GDD 2.2 rule 7)
@@ -245,7 +245,8 @@ All player-facing text is in `text/en/`, keyed by id, with named placeholders (`
 
 ```
 art/
-  sprites/          cleaned, palette-locked PNG sprites. The source of truth
+  floors/ actors/ plants/ props/ cards/ icons/ ui/ vfx/ bg/
+                    cleaned, palette-locked PNG sprites by class. The source of truth
   rigs/             rig JSON (see 03)
   fx/               effect YAML
   fonts/            bitmap font sources
@@ -254,11 +255,12 @@ audio/
   sfx/  amb/
 ```
 
-- **Raw generated images do not go in git.** They are large and get replaced often. They stay in the project's shared files (`/mnt/project-files/art/raw/batchNN/`), with the batch number matching the prompt batch. Only the cleaned sprites that the clean-up step produces are committed. This keeps the repository small and avoids any paid storage.
+- **The style bible sets where sprites go and what they are called** (STYLE_BIBLE section 3): one folder per class under `art/`, and lowercase snake case file names such as `plant_mint_stage3.png`. The scaffold follows it. An art key in a content table is the file name without `.png`, so the art keys in the examples on this page are stand-ins until the real files exist.
+- **Raw generated images do not go in git.** They are large and get replaced often. They stay in the project's shared files, in the batch folders the Art Director keeps under `/mnt/project-files/art/`. Only the cleaned sprites that the clean-up step produces are committed. This keeps the repository small and avoids any paid storage.
 - The clean-up route (palette quantising, pixel snapping, slicing, splitting parts for rigs) belongs to the Art Director; its scripts live in `tools/art/` and run headless.
 - `pnpm assets:build` packs sprites into atlases and writes an asset manifest. Atlases are build output and are not committed.
-- **Art lint** runs in CI on `art/sprites/`: only palette colours, hard alpha unless flagged as a soft layer, correct canvas size for the asset class, correct naming. It is the automated half of the art-consistency review.
-- Content refers to art by key (`rooms/w1/windowsill`), never by file path or atlas position.
+- **Art lint** runs in CI on the sprite folders: only palette colours, hard alpha unless flagged as a soft layer, correct canvas size for the asset class, correct naming. It is the automated half of the art-consistency review.
+- Content refers to art by key, never by file path or atlas position.
 
 ## Who edits what
 
