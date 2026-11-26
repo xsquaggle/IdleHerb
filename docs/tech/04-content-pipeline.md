@@ -105,7 +105,7 @@ Every world's floors come from one template and two numbers per world, the cost 
 - A manager is still a card with a rarity, copies and levels. There are 50, one per floor.
 - The card is owned at level 1 from the first time its floor is ever opened. That "met" flag is save state and survives a Replant and a Harvest Festival.
 - Hiring is paying the floor's `hireFee`, once per run. It switches on the floor's automation, the manager's perk and its ability. The fee stays on the floor row.
-- Copies come from chests. A manager slot picks among the managers the player has met at the rolled rarity, so managers have no `poolWorld`. Exotic managers never come from chests.
+- Copies come from chests. A manager slot picks among the managers the player has met at the rolled rarity, so managers have no `poolWorld`. Exotic managers are never in a chest pool: their copies come from World Mastery and from the Starlight Chest's fixed slot.
 - A perk's scope is read from the manager's own floor and counts only while that manager is hired.
 
 An ability is its own record. It is a timed boost, a payout or a named special, with a cooldown:
