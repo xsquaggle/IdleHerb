@@ -103,7 +103,9 @@ const by = (d: number): Window => ({ lo: d * 0.67, hi: d, at: d, label: `by ${da
 /**
  * The pacing targets in force: the GDD 17.6 table with the Game Designer's
  * rulings of 2026-11-26 (active first Replant 30 to 55 minutes, every first
- * Replant inside day 1, new idle targets, Festival counts as ranges).
+ * Replant inside day 1, new idle targets, Festival counts as ranges), widened
+ * after the final run for design 0.4: Festivals by day 30 9 to 12 for active
+ * and mixed, idle World 5 by day 27.
  */
 export const TARGETS: Record<string, { topFloor: Window; replant: Window; worlds: (Window | null)[]; festival: Window; festivalsBy30: [number, number] }> = {
   active: {
@@ -111,19 +113,19 @@ export const TARGETS: Record<string, { topFloor: Window; replant: Window; worlds
     replant: { lo: 30 / 1440, hi: 55 / 1440, at: 41 / 1440, label: '30 to 55 min' },
     worlds: [null, around(0.5), around(2.6), around(6.7), around(12.2), around(19.5)],
     festival: around(4.1),
-    festivalsBy30: [9, 11],
+    festivalsBy30: [9, 12],
   },
   mixed: {
     topFloor: around(30 / 1440),
     replant: { lo: (4.4 / 24) * 0.67, hi: 1, at: 4.4 / 24, label: 'inside day 1' },
     worlds: [null, around(1.4), around(4.1), around(10.1), around(18.1), around(30.5)],
     festival: around(5.4),
-    festivalsBy30: [9, 11],
+    festivalsBy30: [9, 12],
   },
   idle: {
     topFloor: around(11 / 24),
     replant: { lo: (16 / 24) * 0.67, hi: 1, at: 16 / 24, label: 'inside day 1' },
-    worlds: [null, by(8), by(13), by(20), by(26), { lo: 30, hi: 60, at: 30, label: 'day 30 or later' }],
+    worlds: [null, by(8), by(13), by(20), by(27), { lo: 30, hi: 60, at: 30, label: 'day 30 or later' }],
     festival: by(16),
     festivalsBy30: [6, 8],
   },

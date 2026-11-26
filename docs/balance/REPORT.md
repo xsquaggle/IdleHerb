@@ -8,14 +8,14 @@ Inputs: the GDD and CONTENT of design 0.3 (one fixed manager per floor), as tabl
 
 ## The verdict in plain words
 
-**Pacing targets (GDD 17.6).** With the GDD's numbers 4 of 27 checks are on target. The targets are the GDD 17.6 table with the Game Designer's rulings of 2026-11-26 (first Replant inside day 1 for everyone, active first Replant 30 to 55 minutes, new idle targets, Festival counts as ranges). A point target counts as met from a third early to half late. With the proposed numbers 22 of 27 are.
+**Pacing targets (GDD 17.6).** With the GDD's numbers 4 of 27 checks are on target. The targets are the GDD 17.6 table with the Game Designer's rulings of 2026-11-26 (first Replant inside day 1 for everyone, active first Replant 30 to 55 minutes, new idle targets, Festival counts as ranges, and after the final run Festivals by day 30 widened to 9 to 12 for active and mixed and idle World 5 to by day 27). A point target counts as met from a third early to half late. With the proposed numbers 25 of 27 are.
 
-- Active, GDD numbers: Top floor of Thymeford 19 min against 32 min (1.1 times early); First Replant 27 min against 30 to 55 min (1.1 times early); World 2 3.6 h against 12.0 h (2.2 times early); World 3 6.2 h against day 2.6 (6.7 times early); First Harvest Festival 14.1 h against day 4.1 (4.7 times early); World 4 day 1.5 against day 6.7 (3.1 times early); World 5 day 3.5 against day 12.2 (2.4 times early); World 6 day 8.1 against day 19.5 (1.6 times early); Festivals by day 30 15 against 9 to 11 (4 too many).
-- Mixed, GDD numbers: First Replant 28 min against inside day 1 (6.3 times early); World 3 day 1.4 against day 4.1 (1.9 times early); First Harvest Festival day 2.1 against day 5.4 (1.7 times early); World 4 day 3.3 against day 10.1 (2.1 times early); World 5 day 6.1 against day 18.1 (2.0 times early); World 6 day 10.4 against day 30.5 (2.0 times early); Festivals by day 30 14 against 9 to 11 (3 too many).
-- Idle, GDD numbers: World 2 day 4.7 against by day 8.0 (1.1 times early); World 3 day 5.2 against by day 13.0 (1.7 times early); First Harvest Festival day 6.5 against by day 16.0 (1.7 times early); World 4 day 9.5 against by day 20.0 (1.4 times early); World 5 day 13.2 against by day 26.0 (1.3 times early); World 6 day 20.2 against day 30 or later (1.5 times early); Festivals by day 30 12 against 6 to 8 (4 too many).
-- Active, proposed numbers: Top floor of Thymeford 20 min against 32 min (1.1 times early); Festivals by day 30 12 against 9 to 11 (1 too many).
-- Mixed, proposed numbers: World 2 day 2.3 against day 1.4 (1.1 times late); Festivals by day 30 12 against 9 to 11 (1 too many).
-- Idle, proposed numbers: World 5 day 26.2 against by day 26.0 (1.0 times late).
+- Active, GDD numbers: Top floor of Thymeford 19 min against 32 min (1.1 times early); First Replant 27 min against 30 to 55 min (1.1 times early); World 2 3.6 h against 12.0 h (2.2 times early); World 3 6.2 h against day 2.6 (6.7 times early); First Harvest Festival 14.1 h against day 4.1 (4.7 times early); World 4 day 1.5 against day 6.7 (3.1 times early); World 5 day 3.5 against day 12.2 (2.4 times early); World 6 day 8.1 against day 19.5 (1.6 times early); Festivals by day 30 15 against 9 to 12 (3 too many).
+- Mixed, GDD numbers: First Replant 28 min against inside day 1 (6.3 times early); World 3 day 1.4 against day 4.1 (1.9 times early); First Harvest Festival day 2.1 against day 5.4 (1.7 times early); World 4 day 3.3 against day 10.1 (2.1 times early); World 5 day 6.1 against day 18.1 (2.0 times early); World 6 day 10.4 against day 30.5 (2.0 times early); Festivals by day 30 14 against 9 to 12 (2 too many).
+- Idle, GDD numbers: World 2 day 4.7 against by day 8.0 (1.1 times early); World 3 day 5.2 against by day 13.0 (1.7 times early); First Harvest Festival day 6.5 against by day 16.0 (1.7 times early); World 4 day 9.5 against by day 20.0 (1.4 times early); World 5 day 13.2 against by day 27.0 (1.4 times early); World 6 day 20.2 against day 30 or later (1.5 times early); Festivals by day 30 12 against 6 to 8 (4 too many).
+- Active, proposed numbers: Top floor of Thymeford 20 min against 32 min (1.1 times early).
+- Mixed, proposed numbers: World 2 day 2.3 against day 1.4 (1.1 times late).
+- Idle, proposed numbers: every gate on target.
 
 **Dead zones.** A dead zone here is more than 30 minutes of open game in which the player buys nothing (time spent saving for a world ticket does not count, and the Auto-Gardener's own purchases do not end a stretch), or two Festivals more than 10 days apart after day 14 (the Game Designer's limit). GDD 0.3 numbers: the active player has 59:50 of open game with nothing to buy (day 24.6); active, mixed, idle have Festival gaps above 10 days after day 14. Proposed numbers: the active player has 52:06 of open game with nothing to buy (day 51.3). The Festival rhythm against the designer's shape (gaps of 1 to 3 days to day 10, 3 to 6 to day 30, 5 to 9 after, no jump above about twice the gap before) is under "Dead zones".
 
@@ -101,7 +101,7 @@ Inputs: the GDD and CONTENT of design 0.3 (one fixed manager per floor), as tabl
 | World 4 | day 6.7 | day 1.5 (3.1 times early) | day 7.6 (on target) |
 | World 5 | day 12.2 | day 3.5 (2.4 times early) | day 12.1 (on target) |
 | World 6 | day 19.5 | day 8.1 (1.6 times early) | day 20.1 (on target) |
-| Festivals by day 30 | 9 to 11 | 15 (4 too many) | 12 (1 too many) |
+| Festivals by day 30 | 9 to 12 | 15 (3 too many) | 12 (on target) |
 
 **Mixed**
 
@@ -115,7 +115,7 @@ Inputs: the GDD and CONTENT of design 0.3 (one fixed manager per floor), as tabl
 | World 4 | day 10.1 | day 3.3 (2.1 times early) | day 9.3 (on target) |
 | World 5 | day 18.1 | day 6.1 (2.0 times early) | day 13.6 (on target) |
 | World 6 | day 30.5 | day 10.4 (2.0 times early) | day 23.1 (on target) |
-| Festivals by day 30 | 9 to 11 | 14 (3 too many) | 12 (1 too many) |
+| Festivals by day 30 | 9 to 12 | 14 (2 too many) | 12 (on target) |
 
 **Idle**
 
@@ -127,7 +127,7 @@ Inputs: the GDD and CONTENT of design 0.3 (one fixed manager per floor), as tabl
 | World 3 | by day 13.0 | day 5.2 (1.7 times early) | day 12.5 (on target) |
 | First Harvest Festival | by day 16.0 | day 6.5 (1.7 times early) | day 15.2 (on target) |
 | World 4 | by day 20.0 | day 9.5 (1.4 times early) | day 19.7 (on target) |
-| World 5 | by day 26.0 | day 13.2 (1.3 times early) | day 26.2 (1.0 times late) |
+| World 5 | by day 27.0 | day 13.2 (1.4 times early) | day 26.2 (on target) |
 | World 6 | day 30 or later | day 20.2 (1.5 times early) | day 37.7 (on target) |
 | Festivals by day 30 | 6 to 8 | 12 (4 too many) | 8 (on target) |
 
@@ -206,7 +206,7 @@ Every unlock, Replant, Festival and world arrival of each run is in `data/timeli
 | World 3 | 6.2 h (day 2.6) | day 1.4 (day 4.1) | day 5.2 (by day 13.0) |
 | First Harvest Festival | 14.1 h (day 4.1) | day 2.1 (day 5.4) | day 6.5 (by day 16.0) |
 | World 4 | day 1.5 (day 6.7) | day 3.3 (day 10.1) | day 9.5 (by day 20.0) |
-| World 5 | day 3.5 (day 12.2) | day 6.1 (day 18.1) | day 13.2 (by day 26.0) |
+| World 5 | day 3.5 (day 12.2) | day 6.1 (day 18.1) | day 13.2 (by day 27.0) |
 | World 6 | day 8.1 (day 19.5) | day 10.4 (day 30.5) | day 20.2 (day 30 or later) |
 
 **Proposed numbers**
@@ -219,7 +219,7 @@ Every unlock, Replant, Festival and world arrival of each run is in `data/timeli
 | World 3 | day 3.1 (day 2.6) | day 5.5 (day 4.1) | day 12.5 (by day 13.0) |
 | First Harvest Festival | day 4.6 (day 4.1) | day 7.1 (day 5.4) | day 15.2 (by day 16.0) |
 | World 4 | day 7.6 (day 6.7) | day 9.3 (day 10.1) | day 19.7 (by day 20.0) |
-| World 5 | day 12.1 (day 12.2) | day 13.6 (day 18.1) | day 26.2 (by day 26.0) |
+| World 5 | day 12.1 (day 12.2) | day 13.6 (day 18.1) | day 26.2 (by day 27.0) |
 | World 6 | day 20.1 (day 19.5) | day 23.1 (day 30.5) | day 37.7 (day 30 or later) |
 
 ## Dead zones
@@ -492,7 +492,6 @@ On design 0.2 the bare perfect player landed on the script (16:30 to the top flo
 
 - **Late research (the Game Designer's p5).** Festival gaps above 10 days after day 14: the active player none, the mixed player none, the idle player none. The shortest gap after day 30 is 5.0 (active), 5.8 (mixed), 3.4 (idle) days. Without the late research the active and mixed players had gaps of 10 to 13 days, which Golden Hour prices and `RIBBON_C0` only moved around. Three changes to the designer's first pass, all in `p5-late-research`: the costs are the designer's times 0.06 (the Insight rate is about 11,000 to 13,000 a day from day 20 to day 65, and the 40 existing projects use nearly all of it); Living Soil I follows Soil Science III instead of Soil Science V, because Soil Science V costs 150,000 and lands on day 64 for the active player, so no factor could start the chain sooner; and Living Soil is ×1.3 each instead of ×2: ×2 gave the active player gaps of 3.0 to 3.7 days after day 30 and ×1.7 gaps of 3.6 and 3.9, under the designer's floor of 4, so the first run used ×1.6; with the Auto-Gardener rule ×1.6 gave gaps of 3.2 to 4.0 days, and ×1.3 is the refit (the designer's rule: lower the multiplier before touching the costs). When they finish, active player (90-day run): living soil 1 day 25.6, living soil 2 day 30.7, living soil 3 day 36.4, living soil 4 day 41.4, crop rotation 4 day 45.7, living soil 5 day 47.5, living soil 6 day 54.1, training day 4 day 60.1. Mixed player: living soil 1 day 27.4, living soil 2 day 32.6, living soil 3 day 38.3, living soil 4 day 43.3, crop rotation 4 day 47.6, living soil 5 day 49.6, living soil 6 day 56.3, training day 4 day 62.3.
 - **The Auto-Gardener rule (the Game Designer's ruling of 2026-11-26).** In the core behind `AUTO_GARDENER_RESTARTS` (off in the 0.3 tables, on in `p5-late-research`). No world goes dead after a Replant any more: Thymeford keeps climbing and all six Mastery lists were picked again from measured days, Thymeford's stars 7 to 10 included. Older worlds bring in more Compost (Thymeford alone 57% of the active player's after day 30), so on the first run with the rule Festivals came faster: 12 and 13 by day 30 for the active and mixed players, the mixed player in World 6 on day 17.4, the idle player in World 5 on day 27.2, and gaps of 3.0 to 4.0 days after day 30. The refit: `RIBBON_C0` 650,000 to 900,000, the World 4 ticket 1e26 to 1e25, World 5 7.3e31 to 3e30 and World 6 6e34 to 3e35 (all in `p4-gates`), and Living Soil ×1.6 to ×1.3 each (in `p5-late-research`, the designer's rule for gaps under 4 days). Sixteen combinations of these were run. `RIBBON_C0` pulls two ways: a higher value means fewer Festivals by day 30 for the active and mixed players but a later first Festival and later World 4 and 5 for the idle player.
-- **Pacing checks still off target.** The active player's Festivals by day 30 12 against 9 to 11 (1 too many); the mixed player's Festivals by day 30 12 against 9 to 11 (1 too many); the idle player's World 5 day 26.2 against by day 26.0 (1.0 times late). They are the only misses that the designer has not accepted.
 - **Accepted by the Game Designer (2026-11-26).** The active player's top floor of Thymeford at 20 min (window from 21 minutes; floor prices were not part of the refit), the mixed player's World 2 on day 2.3 (window to day 2.1; it does not follow the ticket, the mixed player's short sessions set it), the step in the Festival rhythm near day 13, and buying Golden Hour first as the player model. A real player can buy the cheaper Ribbon items first, so the Ribbon Shop could show Golden Hour first or mark it as the best buy (a note for the UI).
 - **Design 0.4.** The designer folds `p1-levels`, `p2-taps`, `p4-gates` and `p5-late-research` into the GDD and CONTENT once PR #5 has merged. Then the tables change, the overlays go, and `pnpm sim` reruns on the new tables. `RIBBON_C0` and the World 4 to 6 tickets were set by hand after the fit (for the late research and the Auto-Gardener rule), so a later `pnpm sim calibrate` that includes the Festival or World 4 to 6 steps moves them back; refit with `--only` for the gates that move.
 

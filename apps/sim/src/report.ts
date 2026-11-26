@@ -214,7 +214,7 @@ function verdictSection(R: Runs): string {
   };
   const b = tally(R.base);
   const f = R.fix ? tally(R.fix) : null;
-  out.push(`**Pacing targets (GDD 17.6).** With the GDD's numbers ${b.ok} of ${b.total} checks are on target. The targets are the GDD 17.6 table with the Game Designer's rulings of 2026-11-26 (first Replant inside day 1 for everyone, active first Replant 30 to 55 minutes, new idle targets, Festival counts as ranges). A point target counts as met from a third early to half late. ${f ? `With the proposed numbers ${f.ok} of ${f.total} are.` : ''}`);
+  out.push(`**Pacing targets (GDD 17.6).** With the GDD's numbers ${b.ok} of ${b.total} checks are on target. The targets are the GDD 17.6 table with the Game Designer's rulings of 2026-11-26 (first Replant inside day 1 for everyone, active first Replant 30 to 55 minutes, new idle targets, Festival counts as ranges, and after the final run Festivals by day 30 widened to 9 to 12 for active and mixed and idle World 5 to by day 27). A point target counts as met from a third early to half late. ${f ? `With the proposed numbers ${f.ok} of ${f.total} are.` : ''}`);
   out.push('');
   for (const p of PROFILES) {
     const miss = b.misses[p];
