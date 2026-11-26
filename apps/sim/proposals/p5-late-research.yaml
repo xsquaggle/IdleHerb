@@ -1,0 +1,27 @@
+id: p5-late-research
+title: Late research tiers and one Mastery list per world (Game Designer's p5)
+why: |-
+  The Game Designer's eight late research rows (proposal p5, 2026-11-26), run on top of p1-levels, p2-taps and p4-gates.
+  Costs: the designer's first-pass costs times 0.06 (Crop Rotation IV 12,000 up to Living Soil VI 36,000). The Insight rate is about 11,000 to 13,000 a day for the active player from day 20 to day 65, and the 40 existing projects (626,000 Insight in all) use nearly all of it up to day 64.
+  Living Soil I hangs on Soil Science III instead of Soil Science V: Soil Science V costs 150,000 and lands on day 64 for the active player, so with it as the requirement no factor can start the chain before then.
+  Living Soil profit x1.6 each instead of x2: at x2 the active player had Festival gaps of 3.0 to 3.7 days after day 30 and at x1.7 gaps of 3.6 and 3.9, below the designer's floor of 4. The designer's rule was to lower the multiplier before touching the costs.
+  Crop Rotation IV is floor speed x1.4, like Crop Rotation I to III.
+  Mastery: each world gets its own ten levels (multiples of 25), picked from the crossing data of 90-day active runs and refit three times on runs with the lists in place so the active player's stars land near the designer's days after arrival (under 1, 1-2, 3-4, 5-6, 8-10, 12-14, 18-22, 28-34, 40-46, 55-65), with one star on arrival day and star 5 not before day 8. Thymeford's stars 7 to 10 (625, 700, 775, 850) are not measured: its lowest floor stops at about level 565 in week 2 (see the report).
+addRows:
+  research:
+    - { id: research.soil.crop_rotation_4, lane: soil, requires: [research.soil.crop_rotation_3], cost: 12000, timeSec: 345600, effect: { stat: floor.speed, op: mul, value: 1.4 } }
+    - { id: research.people.training_day_4, lane: people, requires: [research.people.training_day_3], cost: 15000, timeSec: 345600, effect: { stat: manager.power, op: inc, value: 0.25 } }
+    - { id: research.soil.living_soil_1, lane: soil, requires: [research.soil.soil_science_3], cost: 18000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.6 } }
+    - { id: research.soil.living_soil_2, lane: soil, requires: [research.soil.living_soil_1], cost: 21000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.6 } }
+    - { id: research.soil.living_soil_3, lane: soil, requires: [research.soil.living_soil_2], cost: 24000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.6 } }
+    - { id: research.soil.living_soil_4, lane: soil, requires: [research.soil.living_soil_3], cost: 27000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.6 } }
+    - { id: research.soil.living_soil_5, lane: soil, requires: [research.soil.living_soil_4], cost: 30000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.6 } }
+    - { id: research.soil.living_soil_6, lane: soil, requires: [research.soil.living_soil_5], cost: 36000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.6 } }
+rows:
+  worlds:
+    world.w1: { mastery: [25, 325, 350, 400, 475, 550, 625, 700, 775, 850] }
+    world.w2: { mastery: [150, 225, 250, 275, 350, 425, 475, 525, 600, 650] }
+    world.w3: { mastery: [25, 150, 250, 275, 350, 400, 450, 500, 550, 625] }
+    world.w4: { mastery: [175, 225, 275, 300, 350, 375, 400, 450, 525, 575] }
+    world.w5: { mastery: [100, 175, 200, 225, 275, 300, 325, 350, 425, 475] }
+    world.w6: { mastery: [100, 125, 150, 175, 200, 225, 250, 325, 375, 425] }

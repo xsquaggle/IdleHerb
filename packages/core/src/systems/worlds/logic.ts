@@ -76,8 +76,8 @@ export function sunriseAverage(p: number, t: Pick<Tuning, 'SUNRISE_BONUS' | 'SUN
 }
 
 /** Mastery stars earned for a best-ever "lowest floor level" in a world. */
-export function masteryStars(bestMinLevel: number, t: Pick<Tuning, 'MASTERY_LEVELS'>): number {
+export function masteryStars(bestMinLevel: number, levels: readonly number[]): number {
   let stars = 0;
-  for (const lv of t.MASTERY_LEVELS) if (bestMinLevel >= lv) stars++;
+  for (const lv of levels) if (bestMinLevel >= lv) stars++;
   return stars;
 }

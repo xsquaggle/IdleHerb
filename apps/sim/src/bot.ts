@@ -50,6 +50,11 @@ export class Bot {
   lastActionAt = 0;
   /** The longest stretch of open-game time with nothing bought or claimed. */
   longestQuiet = { seconds: 0, endedAtPlay: 0, endedAt: 0 };
+  /** The same, not counting time spent saving for a world ticket: a true dead zone. */
+  longestDead = { seconds: 0, endedAtPlay: 0, endedAt: 0 };
+  /** Per world: is the player holding back purchases to save for the next ticket? */
+  private saving: boolean[] = [];
+  private deadSince = 0;
   /** Replants forced by the six-hour rule rather than by the Compost rule. */
   valveReplants = 0;
   /** Seconds of tapping, and taps sent, per world (for the tap-value table). */
@@ -169,6 +174,9 @@ export class Bot {
 
     const quiet = s.playTime - this.lastActionAt;
     if (quiet > this.longestQuiet.seconds) this.longestQuiet = { seconds: quiet, endedAtPlay: s.playTime, endedAt: s.time };
+    if (this.saving.some((x, w) => x && s.worlds[w]!.unlocked)) this.deadSince = s.playTime;
+    const dead = s.playTime - Math.max(this.lastActionAt, this.deadSince);
+    if (dead > this.longestDead.seconds) this.longestDead = { seconds: dead, endedAtPlay: s.playTime, endedAt: s.time };
   }
 
   private frontier(): number {
@@ -372,6 +380,7 @@ export class Bot {
         const deedOk = nextDef.deedRibbons <= 0 || g.derived.global.specials[`deed.w${next + 1}`];
         if (deedOk) horizon = coins.gte(def.ticket) ? 0 : 10 ** (lg(def.ticket.sub(coins)) - lr);
       }
+      this.saving[w] = Number.isFinite(horizon);
 
       let best: Candidate | null = null;
       const consider = (cost: Num, gain: Num, commands: Command[]): void => {

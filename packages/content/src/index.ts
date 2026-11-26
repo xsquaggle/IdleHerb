@@ -29,6 +29,8 @@ export interface Overlay {
   tuning?: Record<string, unknown>;
   /** Rows to patch by id, per table: { worlds: { "world.w2": { T: 0.92 } } }. */
   rows?: Record<string, Record<string, Record<string, unknown>>>;
+  /** New rows to append, per table: { research: [{ id: ..., ... }] }. Applied before `rows`. */
+  addRows?: Record<string, Record<string, unknown>[]>;
   /** Keys of floors/template.yaml to replace. Floors are generated again from it. */
   floorTemplate?: Record<string, unknown>;
   /** Keys of events/fair.yaml to replace. */
@@ -124,6 +126,14 @@ export function applyOverlay(tables: Record<string, unknown>, overlay: Overlay):
   if (overlay.floorTemplate) {
     out.floorTemplate = deepMerge(out.floorTemplate, overlay.floorTemplate);
     floorsStale = true;
+  }
+  for (const [table, added] of Object.entries(overlay.addRows ?? {})) {
+    const rows = out[table];
+    if (!Array.isArray(rows)) throw new Error(`overlay ${overlay.id}: no row table called ${table}`);
+    for (const r of added) {
+      if (rows.some((x) => (x as Record<string, unknown>).id === r.id)) throw new Error(`overlay ${overlay.id}: ${table} already has a row ${String(r.id)}`);
+    }
+    out[table] = [...rows, ...added];
   }
   for (const [table, patches] of Object.entries(overlay.rows ?? {})) {
     const rows = out[table];

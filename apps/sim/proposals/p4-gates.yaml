@@ -9,7 +9,7 @@ why: |-
   First Harvest Festival: 50000 -> 6.5e+5, set by hand after the fit (8.6e+5 put the active player's first Festival on day 4.35) to smooth the Festival rhythm: first Festival on day 3.5 active, 5.6 mixed, 14.2 idle, and 18 gaps that break the designer's rhythm across the three play styles instead of 24. Eight Golden Hour price lists were tried as well; none beat the GDD's own.
   World 4: 1e24 -> 1.0e+26 (target day 6.70, lands day 6.70)
   World 5: 2e29 -> 7.3e+31 (target day 12.20, lands day 12.47)
-  World 6: 1e34 -> 1.4e+34 (target day 19.50, lands day 19.13)
+  World 6: 1e34 -> 6e+34, set by hand once the late research (p5-late-research) was in: the fitted 1.4e+34 put the mixed player in World 6 on day 19.4, before its window; 6e+34 gives day 20.1 active, 22.4 mixed (30-day runs).
 tuning:
   FIRST_REPLANT_MIN: 440
   RIBBON_C0: 650000
@@ -24,7 +24,7 @@ rows:
     world.w4:
       ticket: "7.3e31"
     world.w5:
-      ticket: "1.4e34"
+      ticket: "6e34"
   ribbonShop:
     shop.ribbon.deed_nebula:
       costs:

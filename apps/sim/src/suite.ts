@@ -66,6 +66,9 @@ export function suite(proposal: string | null): RunSpec[] {
       { name: `${tag}-active-tap12`, profile: 'active', days: 30, maxWorld: 6, tapRate: 12, proposals, group: 'proposal' },
       { name: `${tag}-perfect`, profile: 'active', days: 3, skill: 'perfect', maxWorld: 6, proposals, group: 'proposal' },
       { name: `${tag}-launch-active`, profile: 'active', days: 60, maxWorld: 4, proposals, group: 'proposal' },
+      // 90 days, for Mastery stars that land up to 65 days after a world opens.
+      { name: `${tag}-long-active`, profile: 'active', days: 90, maxWorld: 6, proposals, group: 'proposal' },
+      { name: `${tag}-long-mixed`, profile: 'mixed', days: 90, maxWorld: 6, proposals, group: 'proposal' },
     );
   }
   return runs;

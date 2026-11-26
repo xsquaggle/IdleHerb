@@ -9,7 +9,7 @@
    "days": 60,
    "maxWorld": 6,
    "rules": "gdd-0.2",
-   "seconds": 115.772
+   "seconds": 115.898
   },
   "gates": {
    "topFloor": 1130,
@@ -47,7 +47,7 @@
    "days": 60,
    "maxWorld": 6,
    "rules": "gdd-0.2",
-   "seconds": 37.148
+   "seconds": 36.328
   },
   "gates": {
    "topFloor": 1524,
@@ -85,7 +85,7 @@
    "days": 60,
    "maxWorld": 6,
    "rules": "gdd-0.2",
-   "seconds": 17.979
+   "seconds": 14.855
   },
   "gates": {
    "topFloor": 39245,
@@ -123,7 +123,7 @@
    "days": 60,
    "maxWorld": 4,
    "rules": "gdd-0.2",
-   "seconds": 86.725
+   "seconds": 84.253
   },
   "gates": {
    "topFloor": 1130,
@@ -161,7 +161,7 @@
    "days": 60,
    "maxWorld": 4,
    "rules": "gdd-0.2",
-   "seconds": 13.314
+   "seconds": 12.71
   },
   "gates": {
    "topFloor": 39245,
@@ -198,30 +198,30 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 6,
-   "rules": "p1-levels+p2-taps+p4-gates",
-   "seconds": 108.4
+   "rules": "p1-levels+p2-taps+p4-gates+p5-late-research",
+   "seconds": 110.687
   },
   "gates": {
    "topFloor": 1203,
    "replant": 2265,
-   "festival": 300730,
+   "festival": 357025,
    "worlds": [
     0,
     41997,
-    224235,
-    549451,
-    1010776,
-    1413117
+    271088,
+    636027,
+    981870,
+    1672965
    ]
   },
-  "festivalsBy30": 10,
+  "festivalsBy30": 11,
   "levels": {
-   "day1": 23,
-   "day7": 42,
-   "day30": 70,
-   "day60": 88
+   "day1": 22,
+   "day7": 39,
+   "day30": 71,
+   "day60": 93
   },
-  "quietSeconds": 2610,
+  "quietSeconds": 3399,
   "firstLevel": {
    "6": 964,
    "8": 1207
@@ -236,30 +236,30 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 6,
-   "rules": "p1-levels+p2-taps+p4-gates",
-   "seconds": 35.501
+   "rules": "p1-levels+p2-taps+p4-gates+p5-late-research",
+   "seconds": 36.808
   },
   "gates": {
    "topFloor": 1555,
    "replant": 23255,
-   "festival": 484085,
+   "festival": 527270,
    "worlds": [
     0,
     196128,
-    462241,
-    664012,
-    1095841,
-    1873557
+    476641,
+    721601,
+    1131929,
+    2024762
    ]
   },
-  "festivalsBy30": 10,
+  "festivalsBy30": 11,
   "levels": {
    "day1": 15,
-   "day7": 37,
+   "day7": 34,
    "day30": 67,
-   "day60": 82
+   "day60": 89
   },
-  "quietSeconds": 714,
+  "quietSeconds": 715,
   "firstLevel": {
    "6": 1101,
    "8": 1561
@@ -274,8 +274,8 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 6,
-   "rules": "p1-levels+p2-taps+p4-gates",
-   "seconds": 15.823
+   "rules": "p1-levels+p2-taps+p4-gates+p5-late-research",
+   "seconds": 15.015
   },
   "gates": {
    "topFloor": 39230,
@@ -285,19 +285,19 @@
     0,
     624661,
     1075861,
-    1699861,
-    2199187,
-    2871061
+    1661461,
+    2199073,
+    2890261
    ]
   },
   "festivalsBy30": 8,
   "levels": {
    "day1": 9,
    "day7": 19,
-   "day30": 54,
-   "day60": 69
+   "day30": 53,
+   "day60": 72
   },
-  "quietSeconds": 239,
+  "quietSeconds": 235,
   "firstLevel": {
    "6": 39196,
    "8": 58460
@@ -312,30 +312,30 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 4,
-   "rules": "p1-levels+p2-taps+p4-gates",
-   "seconds": 82.928
+   "rules": "p1-levels+p2-taps+p4-gates+p5-late-research",
+   "seconds": 83.164
   },
   "gates": {
    "topFloor": 1203,
    "replant": 2265,
-   "festival": 300730,
+   "festival": 357025,
    "worlds": [
     0,
     41997,
-    224235,
-    549451,
+    271088,
+    636027,
     null,
     null
    ]
   },
   "festivalsBy30": 11,
   "levels": {
-   "day1": 23,
-   "day7": 42,
+   "day1": 22,
+   "day7": 39,
    "day30": 70,
-   "day60": 88
+   "day60": 91
   },
-  "quietSeconds": 3595,
+  "quietSeconds": 3590,
   "firstLevel": {
    "6": 964,
    "8": 1207

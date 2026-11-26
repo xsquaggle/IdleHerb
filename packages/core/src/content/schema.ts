@@ -295,8 +295,11 @@ export const WorldRowSchema = z
     deedRibbons: z.number().nonnegative(),
     twist: z.enum(['none', 'customers', 'weather', 'heat', 'bubbles', 'sunrise']),
     launch: z.boolean(),
+    /** This world's own ten Mastery levels (design 0.4 proposal). Absent: tuning MASTERY_LEVELS. */
+    mastery: z.array(z.number().int().positive()).length(10).optional(),
   })
-  .strict();
+  .strict()
+  .refine((w) => !w.mastery || w.mastery.every((lv, i) => i === 0 || lv > w.mastery![i - 1]!), { message: 'mastery levels must rise strictly' });
 export type WorldRow = z.infer<typeof WorldRowSchema>;
 
 export const FloorRowSchema = z

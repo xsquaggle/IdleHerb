@@ -128,6 +128,8 @@ export interface RunResult {
   chests: Record<string, number>;
   spent: { gems: number; pollen: number; insight: number };
   quiet: { seconds: number; endedAtPlay: number; endedAt: number };
+  /** The longest stretch with nothing bought that was not spent saving for a world ticket. */
+  dead: { seconds: number; endedAtPlay: number; endedAt: number };
   valveReplants: number;
   actions: number;
   fairWeekends: { week: number; step: number; tickets: number | null }[];
@@ -497,6 +499,7 @@ export function runSim(o: RunOptions): RunResult {
     chests: rec.chests,
     spent: rec.spent,
     quiet: bot.longestQuiet,
+    dead: bot.longestDead,
     valveReplants: bot.valveReplants,
     actions: bot.actions,
     fairWeekends: rec.fairWeekends,

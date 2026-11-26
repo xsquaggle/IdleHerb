@@ -1157,7 +1157,7 @@ export class Game {
     // World Mastery starts when the player first reaches world 2 (GDD 16, row 19).
     if (s.worldReached < 2) return;
     const ws = s.worlds[w]!;
-    const stars = masteryStars(ws.bestMinLevel, t);
+    const stars = masteryStars(ws.bestMinLevel, this.content.worlds[w]!.mastery);
     while (ws.stars < stars) {
       ws.stars++;
       this.count('masteryStars');

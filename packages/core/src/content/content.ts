@@ -38,6 +38,8 @@ export interface WorldDef {
   deedRibbons: number;
   twist: 'none' | 'customers' | 'weather' | 'heat' | 'bubbles' | 'sunrise';
   launch: boolean;
+  /** The ten levels of the lowest floor that give Mastery stars in this world. */
+  mastery: number[];
   floors: FloorDef[];
 }
 
@@ -152,6 +154,7 @@ export function hydrateContent(raw: RawContent): Content {
         deedRibbons: w.deedRibbons,
         twist: w.twist,
         launch: w.launch,
+        mastery: w.mastery ?? raw.tuning.MASTERY_LEVELS,
         floors: floorDefs,
       };
     });
