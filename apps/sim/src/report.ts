@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 import { loadRaw, readOverlay, type Overlay } from '@sprout/content';
 import { SERIES, barChart, budgetChart, gateChart, lineChart, stripChart, type GatePanel } from './charts';
 import {
-  BUDGET, DAY, HOUR, MIN, TARGETS, budgetAt, levelCrossings, rhythmBreaks, windowVerdict, type Window, compostGrowth, countBy, festivalGaps, floorTime, gates, levelAt,
+  BUDGET, DAY, HOUR, MIN, TARGETS, budgetAt, compostShare, levelCrossings, rhythmBreaks, windowVerdict, type Window, compostGrowth, countBy, festivalGaps, floorTime, gates, levelAt,
   levelTime, load, longestBeatGap, progressPerDay, sampleAt, sessionAverage, totalXp, unlockTime, verdictOf, when, type Gates, type Loaded,
 } from './metrics';
 import type { RunResult } from './run';
@@ -104,7 +104,7 @@ interface Check {
   ok: boolean;
 }
 
-function checks(r: RunResult, p: ProfileId): Check[] {
+export function checks(r: RunResult, p: ProfileId): Check[] {
   const g = gates(r);
   const out: Check[] = GATE_ROWS.map((row) => {
     const m = row.get(g);
@@ -662,7 +662,7 @@ function designerAsksSection(R: Runs): string {
     return STAR_WIN.map((_, k) => ts[k] ?? null);
   };
   const inWindow = (ds: (number | null)[]): number => ds.filter((d, k) => d !== null && d >= STAR_WIN[k]![0] - 0.05 && d <= STAR_WIN[k]![1] + 0.05).length;
-  out.push(`Each world now has its own ten levels (multiples of 25), picked from the crossing data of 90-day runs so the active player\'s stars land as near as possible to the designer\'s days after arrival, with one star on the day of arrival and star 5 (the first Head copy) not before day 8. The picker finds the list with the least squared distance from the windows. The best level of a world rises in steps, once per Festival cycle, so some stars cannot land inside their window and land at the nearest step instead.`);
+  out.push(`Each world now has its own ten levels (multiples of 25), picked from the crossing data of 90-day runs so the active player\'s stars land as near as possible to the designer\'s days after arrival, with one star on the day of arrival and star 5 (the first Head copy) not before day 8. The picker finds the list with the least squared distance from the windows. The best level of a world rises in steps, once per Festival cycle, so some stars cannot land inside their window and land at the nearest step instead. The same list moves star days by about a day from one run to the next (the Festival days move), so the lists come from the mean of four 90-day active runs, and star 5 was picked at day 9 or later on that mean to keep the first Head copy after day 8.`);
   out.push('');
   out.push(table(['World', 'GDD 0.3 (one list for all)', 'Proposed'], WORLD.map((name, w) => [name, gddLevels.join(', '), proposedLevels(w).join(', ')])));
   out.push('');
@@ -688,6 +688,7 @@ function designerAsksSection(R: Runs): string {
   };
   const stA = stall(longA, 0);
   const stM = stall(longM, 0);
+  const bestEnd = (r: RunResult, w: number): number => Math.max(...r.samples.map((x) => x.worlds[w]?.best ?? 0));
   out.push('**For checking the lists.** Days after each world\'s first arrival when its lowest floor first reached each level (best ever; floors restart at every Festival), from the 90-day runs. Measured at the end of each session, so a value is accurate to a session. A dash: not reached.');
   out.push('');
   const LEVELS = [100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750];
@@ -701,7 +702,12 @@ function designerAsksSection(R: Runs): string {
   }
   out.push(table(['Run (proposed numbers)', ...LEVELS.map(String)], mrows2));
   out.push('');
-  out.push(`**Do the players keep levelling older worlds?** Worlds 2 to 6, yes: every Festival locks them again, the player climbs through them to the next ticket, and their best levels keep rising to the end of the run. While the game is open the player also buys in every open world every third second, and the Auto-Gardener (Ribbon Shop) buys levels in every open world with a share of its coins (\`AUTO_BUY_SHARE\` = 0.10). **Thymeford is the exception.**${stA ? ` Its lowest floor stops at level ${stA.level} on day ${stA.day.toFixed(1)} for the active player` : ''}${stM ? ` and at ${stM.level} on day ${stM.day.toFixed(1)} for the mixed player` : ''}. From then on the World 2 ticket is paid within the first minute after each Festival, before any Thymeford manager is hired, and the player Replants Thymeford straight away and plays the newest world. A world with no hired manager earns nothing until someone plays it, so the Auto-Gardener has no coins to spend there, and Thymeford stays at floor 1, level 1 until the next Festival. That is the player model (it always plays the newest world) meeting the design (a world earns nothing until a manager is hired). So no list can put Thymeford\'s stars 7 to 10 at 18 to 65 days for this player: the proposed list keeps the designer\'s rule and extends them by the step between stars 5 and 6 (${proposedLevels(0).slice(6).join(', ')}, not measured). A player who goes back to Thymeford on purpose can earn them.`);
+  if (!stA && !stM) {
+    const share = compostShare(longA, 0, 30, longA.meta.days);
+    out.push(`**Do the players keep levelling older worlds?** Yes, all six. Every Festival locks Worlds 2 to 6 again, the player climbs through them to the next ticket, and their best levels keep rising to the end of the run. Thymeford climbs too, since the Game Designer's Auto-Gardener rule (\`AUTO_GARDENER_RESTARTS\` in \`p5-late-research\`): while the Auto-Gardener is switched on, floor 1's manager stays hired through every Replant and Festival with no fee, and each world opens its next floor when that costs at most \`AUTO_BUY_SHARE\` (0.10) of its coins. Thymeford's lowest floor reaches level ${bestEnd(longA, 0)} by day ${longA.meta.days} for the active player and ${bestEnd(longM, 0)} for the mixed player (before the rule it stopped at about 565 in week 2). A side effect: with its floors managed and opening on their own, Thymeford earns all the time, and after day 30 it gives ${share === null ? '-' : Math.round(share * 100)}% of the active player's Compost (Replants weighed by the Compost they paid). Older worlds now feed the Festival rhythm about as much as the newest one, which is why the gates and \`RIBBON_C0\` were refit (see "Open items").`);
+  } else {
+    out.push(`**Do the players keep levelling older worlds?** Worlds 2 to 6, yes: every Festival locks them again, the player climbs through them to the next ticket, and their best levels keep rising to the end of the run. While the game is open the player also buys in every open world every third second, and the Auto-Gardener (Ribbon Shop) buys levels in every open world with a share of its coins (\`AUTO_BUY_SHARE\` = 0.10). **Thymeford is the exception.**${stA ? ` Its lowest floor stops at level ${stA.level} on day ${stA.day.toFixed(1)} for the active player` : ''}${stM ? ` and at ${stM.level} on day ${stM.day.toFixed(1)} for the mixed player` : ''}. From then on the World 2 ticket is paid within the first minute after each Festival, before any Thymeford manager is hired, and the player Replants Thymeford straight away and plays the newest world. A world with no hired manager earns nothing until someone plays it, so the Auto-Gardener has no coins to spend there, and Thymeford stays at floor 1, level 1 until the next Festival. That is the player model (it always plays the newest world) meeting the design (a world earns nothing until a manager is hired). So no list can put Thymeford\'s stars 7 to 10 at 18 to 65 days for this player: the proposed list keeps the designer\'s rule and extends them by the step between stars 5 and 6 (${proposedLevels(0).slice(6).join(', ')}, not measured). A player who goes back to Thymeford on purpose can earn them.`);
+  }
   out.push('');
   // (f) XP.
   out.push('### Where the XP comes from');
@@ -763,15 +769,22 @@ function openItemsSection(R: Runs): string {
   };
   const hasLate = R.proposals.some((id) => (readOverlay(join(PROPOSALS_DIR, `${id}.yaml`)).addRows?.research ?? []).length > 0);
   if (hasLate) {
-    out.push(`- **Late research (the Game Designer's p5).** Festival gaps above 10 days after day 14: ${long.join(', ')}. The shortest gap after day 30 is ${shortest.join(', ')} days. Without the late research the active and mixed players had gaps of 10 to 13 days, which Golden Hour prices and \`RIBBON_C0\` only moved around. Three changes to the designer's first pass, all in \`p5-late-research\`: the costs are the designer's times 0.06 (the Insight rate is about 11,000 to 13,000 a day from day 20 to day 65, and the 40 existing projects use nearly all of it); Living Soil I follows Soil Science III instead of Soil Science V, because Soil Science V costs 150,000 and lands on day 64 for the active player, so no factor could start the chain sooner; and Living Soil is ×1.6 each instead of ×2, because ×2 gave the active player gaps of 3.0 to 3.7 days after day 30 and ×1.7 gaps of 3.6 and 3.9, under the designer's floor of 4 (the designer's rule: lower the multiplier before touching the costs). When they finish, active player (90-day run): ${lateDays(R.get('fix-long-active'))}. Mixed player: ${lateDays(R.get('fix-long-mixed'))}.`);
+    out.push(`- **Late research (the Game Designer's p5).** Festival gaps above 10 days after day 14: ${long.join(', ')}. The shortest gap after day 30 is ${shortest.join(', ')} days. Without the late research the active and mixed players had gaps of 10 to 13 days, which Golden Hour prices and \`RIBBON_C0\` only moved around. Three changes to the designer's first pass, all in \`p5-late-research\`: the costs are the designer's times 0.06 (the Insight rate is about 11,000 to 13,000 a day from day 20 to day 65, and the 40 existing projects use nearly all of it); Living Soil I follows Soil Science III instead of Soil Science V, because Soil Science V costs 150,000 and lands on day 64 for the active player, so no factor could start the chain sooner; and Living Soil is ×1.3 each instead of ×2: ×2 gave the active player gaps of 3.0 to 3.7 days after day 30 and ×1.7 gaps of 3.6 and 3.9, under the designer's floor of 4, so the first run used ×1.6; with the Auto-Gardener rule ×1.6 gave gaps of 3.2 to 4.0 days, and ×1.3 is the refit (the designer's rule: lower the multiplier before touching the costs). When they finish, active player (90-day run): ${lateDays(R.get('fix-long-active'))}. Mixed player: ${lateDays(R.get('fix-long-mixed'))}.`);
   }
-  out.push('- **Thymeford\'s late Mastery stars (for the Game Designer).** Thymeford\'s lowest floor stops rising in week 2, because the World 2 ticket is paid within a minute of each Festival and nothing earns in a world without a hired manager. Stars 7 to 10 (three Head copies) are out of reach for a player who always plays the newest world. Either accept that they reward going back on purpose, or give the player a reason or a way to restart Thymeford (for example the Auto-Gardener hiring the first manager). Details under "Mastery stars".');
+  const longA = R.get('fix-long-active');
+  const restarts = R.proposals.some((id) => (readOverlay(join(PROPOSALS_DIR, `${id}.yaml`)).tuning as Record<string, unknown> | undefined)?.AUTO_GARDENER_RESTARTS === true);
+  if (restarts) {
+    const share = longA ? compostShare(longA, 0, 30, longA.meta.days) : null;
+    out.push(`- **The Auto-Gardener rule (the Game Designer's ruling of 2026-11-26).** In the core behind \`AUTO_GARDENER_RESTARTS\` (off in the 0.3 tables, on in \`p5-late-research\`). No world goes dead after a Replant any more: Thymeford keeps climbing and all six Mastery lists were picked again from measured days, Thymeford's stars 7 to 10 included. Older worlds bring in more Compost (Thymeford alone ${share === null ? 'a large share' : `${Math.round(share * 100)}%`} of the active player's after day 30), so on the first run with the rule Festivals came faster: 12 and 13 by day 30 for the active and mixed players, the mixed player in World 6 on day 17.4, the idle player in World 5 on day 27.2, and gaps of 3.0 to 4.0 days after day 30. The refit: \`RIBBON_C0\` 650,000 to 900,000, the World 4 ticket 1e26 to 1e25, World 5 7.3e31 to 3e30 and World 6 6e34 to 3e35 (all in \`p4-gates\`), and Living Soil ×1.6 to ×1.3 each (in \`p5-late-research\`, the designer's rule for gaps under 4 days). Sixteen combinations of these were run. \`RIBBON_C0\` pulls two ways: a higher value means fewer Festivals by day 30 for the active and mixed players but a later first Festival and later World 4 and 5 for the idle player.`);
+  } else {
+    out.push('- **Thymeford\'s late Mastery stars (for the Game Designer).** Thymeford\'s lowest floor stops rising in week 2, because the World 2 ticket is paid within a minute of each Festival and nothing earns in a world without a hired manager. Stars 7 to 10 (three Head copies) are out of reach for a player who always plays the newest world. Either accept that they reward going back on purpose, or give the player a reason or a way to restart Thymeford (for example the Auto-Gardener hiring the first manager). Details under "Mastery stars".');
+  }
   const accepted = new Set(['active:Top floor of Thymeford', 'mixed:World 2']);
   const misses: string[] = [];
   for (const p of PROFILES) for (const c of checks(set[p], p)) if (!c.ok && !accepted.has(`${p}:${c.label}`)) misses.push(`${NAME[p].toLowerCase()} player's ${c.label} ${c.measured} against ${c.target} (${c.verdict})`);
   if (misses.length) out.push(`- **Pacing checks still off target.** The ${misses.join('; the ')}. ${misses.length === 1 ? 'It is' : 'They are'} the only miss${misses.length === 1 ? '' : 'es'} that the designer has not accepted.`);
   out.push(`- **Accepted by the Game Designer (2026-11-26).** The active player's top floor of Thymeford at ${when(floorTime(set.active, 10))} (window from 21 minutes; floor prices were not part of the refit), the mixed player's World 2 on day ${(gates(set.mixed).worlds[1]! / DAY).toFixed(1)} (window to day 2.1; it does not follow the ticket, the mixed player's short sessions set it), the step in the Festival rhythm near day 13, and buying Golden Hour first as the player model. A real player can buy the cheaper Ribbon items first, so the Ribbon Shop could show Golden Hour first or mark it as the best buy (a note for the UI).`);
-  out.push('- **Design 0.4.** The designer folds `p1-levels`, `p2-taps`, `p4-gates` and `p5-late-research` into the GDD and CONTENT once PR #5 has merged. Then the tables change, the overlays go, and `pnpm sim` reruns on the new tables. `RIBBON_C0` and the World 6 ticket (raised to 6e34 once the late research was in, so the mixed player does not reach World 6 before its window) were set by hand after the fit, so a later `pnpm sim calibrate` that includes the Festival or World 6 step moves them back; refit with `--only` for the gates that move.');
+  out.push('- **Design 0.4.** The designer folds `p1-levels`, `p2-taps`, `p4-gates` and `p5-late-research` into the GDD and CONTENT once PR #5 has merged. Then the tables change, the overlays go, and `pnpm sim` reruns on the new tables. `RIBBON_C0` and the World 4 to 6 tickets were set by hand after the fit (for the late research and the Auto-Gardener rule), so a later `pnpm sim calibrate` that includes the Festival or World 4 to 6 steps moves them back; refit with `--only` for the gates that move.');
   out.push('');
   return out.join('\n');
 }
@@ -789,14 +802,14 @@ __OPEN_ITEMS__
 
 ## Tests
 
-\`pnpm test\` runs 57 tests (Vitest and fast-check) in about 10 seconds:
+\`pnpm test\` runs 59 tests (Vitest and fast-check) in about 10 seconds:
 
 - **Big numbers.** Save text round-trips bit for bit at any size; multiply then divide keeps 15 significant digits; integers are exact to 15 digits and within one part in 1e15 past that; comparisons agree with logarithms; a 10,000-level cost curve and 1e(2e12) stay finite; NaN, infinity and junk text are refused.
 - **One formatter.** A golden table (1,234, 1.23M, 12.3M, 123M, 1.00Dc, 1.00Ce, 1.00e306, long names, scientific, engineering, durations, multipliers), and properties over a million random sizes: always three significant digits once abbreviated, holdings round down and prices round up, never more than one step in the third digit.
 - **Formulas.** Bulk buy equals buying one level at a time; max affordable buys the most the cash covers and no more; Compost and its inverse; Compost and Ribbons never fall as lifetime rises; Compost-record XP; shop prices.
 - **Chests on design 0.3.** One fixed manager per floor with the Head on top; manager cards only from managers already met and never a Head; the Starlight Head copy only for a Head with five stars; card counts and guarantees; same seed, same chest.
 - **Content.** Tables validate; floor tables equal what the template generates; every proposal overlay applies and validates; an overlay can add rows and give a world its own Mastery levels; a typo, a duplicate row or falling Mastery levels are errors.
-- **Under play.** A save reads back to the same state and carries on identically; ten one-second ticks equal one ten-second tick; offline pay is proportional to time away up to the cap and stops at the cap; a two-day active soak stays finite and inside the Boost cap.
+- **Under play.** A save reads back to the same state and carries on identically; ten one-second ticks equal one ten-second tick; offline pay is proportional to time away up to the cap and stops at the cap; a two-day active soak stays finite and inside the Boost cap; with the Auto-Gardener rule floor 1 stays hired through a Replant with no fee and the world opens floors on its own, and under the 0.3 rule a Replanted world with no hired manager stands still.
 
 One thing the tests found: the big-number library turns a NaN or infinite part into 0 without a word, so the core's NaN guard (\`assertFinite\`) could never fire for a broken formula. \`Num.fromParts\` now refuses non-finite parts. Division by zero still gives 0 in the library, so code that divides must check its divisor; a test pins that behaviour down so a library change cannot slip by.
 

@@ -157,6 +157,21 @@ export function rhythmBreaks(r: RunResult): string[] {
   return out;
 }
 
+/** Share of the Compost paid by Replants of one world between two days (Replant events carry log10 of their Compost). */
+export function compostShare(r: RunResult, world: number, fromDay: number, toDay: number): number | null {
+  const ev = r.timeline.filter((e) => e.kind === 'replant' && e.t >= fromDay * DAY && e.t < toDay * DAY && typeof e.amount === 'number');
+  if (!ev.length) return null;
+  const top = Math.max(...ev.map((e) => e.amount!));
+  let all = 0;
+  let mine = 0;
+  for (const e of ev) {
+    const v = 10 ** (e.amount! - top);
+    all += v;
+    if (e.world === world) mine += v;
+  }
+  return mine / all;
+}
+
 /** Days after a world's first arrival when its lowest floor first reached each level (best ever, from the samples). */
 export function levelCrossings(r: RunResult, world: number, levels: number[]): (number | null)[] {
   const arrival = world === 0 ? 0 : first(r, (e) => e.kind === 'world' && e.world === world && e.n === 1);
