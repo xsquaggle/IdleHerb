@@ -17,7 +17,7 @@ Kept current so that work can stop at any moment and resume cleanly. Last update
 ## Next steps, in order
 
 1. **Managers, when design 0.3 (PR #5) merges.** See the open question below. Then rewrite prompt 18, update the manager text in the bible (section 10 and the manager rows of section 23) and in HEMP_ART.md, redo the manager rows of BATCH_PLAN.md, and tell Lawson which manager prompt to run.
-2. **Write Batch 2** as a prompt file (`ASSET_BATCH_02.md`). Batch 1 is checked, so nothing blocks it except the manager list. Ask for the same package as before: the big sheet, the true-size parts and a slices file. Try two lead workers per sheet (see BATCH_PLAN.md).
+2. **Write Batch 2** as a prompt file (`ASSET_BATCH_02.md`). On hold since 2026-11-26: the coordinator asked to start nothing new until Lawson says whether to go on or hold for usage. The agreed plan once they say go: Batch 2 without the manager prompts, then a short manager round after PR #5 merges. Ask for the same package as before: the big sheet, the true-size parts and a slices file. Try two lead workers per sheet (see BATCH_PLAN.md).
 3. **Hand polish, then Gate B,** for the automatic-pass sprites:
    - Faces: one fixed head per character from the Face Kit. The generated faces are readable but soft, most of all on the two ropewalk workers.
    - Hemp cards: thin the leaf tufts. Product icons: one colour family for the soap. Burlap and building blocks: tidy speckle.
