@@ -72,7 +72,11 @@ export const Num: NumStatic = Object.assign((value: NumLike) => from(value), {
   ZERO: new D(0),
   ONE: new D(1),
   from,
-  fromParts: (mantissa: number, exponent: number): Num => D.fromMantissaExponent(mantissa, exponent),
+  fromParts: (mantissa: number, exponent: number): Num => {
+    // The library turns a NaN or infinite part into 0 without a word, which would hide a broken formula.
+    if (!Number.isFinite(mantissa) || !Number.isFinite(exponent)) throw new RangeError(`Num.fromParts: non-finite part (${mantissa}, ${exponent})`);
+    return D.fromMantissaExponent(mantissa, exponent);
+  },
   pow: (base: NumLike, power: number): Num => D.pow(from(base), power),
   pow10: (power: number): Num => D.pow10(power),
   isNum: (value: unknown): value is Num => value instanceof (Decimal as unknown as new () => object),

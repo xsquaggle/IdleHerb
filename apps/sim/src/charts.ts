@@ -44,11 +44,11 @@ function dot(x: number, y: number, color: string, hollow = false): string {
   return `<circle cx="${n1(x)}" cy="${n1(y)}" r="6" fill="${color}" stroke="${C.surface}" stroke-width="2"/>`;
 }
 
-function legend(x: number, y: number, items: { name: string; color: string; hollow?: boolean; line?: boolean }[]): string {
+function legend(x: number, y: number, items: { name: string; color: string; hollow?: boolean; line?: boolean; dashed?: boolean }[]): string {
   let out = '';
   let at = x;
   for (const it of items) {
-    if (it.line) out += `<line x1="${at}" y1="${y - 4}" x2="${at + 16}" y2="${y - 4}" stroke="${it.color}" stroke-width="2" stroke-linecap="round"/>`;
+    if (it.line) out += `<line x1="${at}" y1="${y - 4}" x2="${at + 16}" y2="${y - 4}" stroke="${it.color}" stroke-width="2"${it.dashed ? ' stroke-dasharray="5 4"' : ' stroke-linecap="round"'}/>`;
     else out += dot(at + 8, y - 4, it.color, it.hollow);
     out += text(at + 22, y, it.name);
     at += 30 + it.name.length * 6.4;
@@ -119,10 +119,10 @@ export interface LineSeries {
 /** Lines over days. `step` draws a staircase (for counts). */
 export function lineChart(title: string, subtitle: string, yLabel: string, series: LineSeries[], o: { step?: boolean; xMax: number; yMax?: number; yTicks?: number[]; targetName?: string } = { xMax: 60 }): string {
   const w = 860;
-  const h = 380;
+  const h = 392;
   const left = 64;
   const right = 110;
-  const top = 92;
+  const top = 104;
   const bottom = 44;
   const all = series.flatMap((s) => [...s.points, ...(s.targets ?? [])]);
   const yMax = o.yMax ?? Math.max(...all.map((p) => p[1])) * 1.08;
@@ -164,6 +164,8 @@ export function lineChart(title: string, subtitle: string, yLabel: string, serie
 export interface BudgetPanel {
   title: string;
   days: number[];
+  /** Axis labels, one per point; the days themselves when left out. */
+  labels?: string[];
   budget: number[];
   measured: { name: string; color: string; values: (number | null)[] }[];
 }
@@ -175,7 +177,7 @@ export function budgetChart(title: string, subtitle: string, panels: BudgetPanel
   const gap = 16;
   const w = 20 * 2 + panels.length * pw + (panels.length - 1) * gap;
   const names = panels[0]!.measured.map((m) => ({ name: m.name, color: m.color, line: true }));
-  let body = legend(20, 70, [...names, { name: 'Budget (GDD 17.6)', color: C.neutral, line: true }]);
+  let body = legend(20, 70, [...names, { name: 'Budget (GDD 17.6)', color: C.neutral, line: true, dashed: true }]);
   panels.forEach((p, k) => {
     const x0 = 20 + k * (pw + gap);
     const left = x0 + 46;
@@ -192,7 +194,7 @@ export function budgetChart(title: string, subtitle: string, panels: BudgetPanel
       body += `<line x1="${left}" y1="${n1(y(10 ** e))}" x2="${rightEdge}" y2="${n1(y(10 ** e))}" stroke="${e === lo ? C.axis : C.grid}"/>`;
       body += text(left - 6, y(10 ** e) + 4, e >= 3 ? `${10 ** (e - 3)}K` : String(10 ** e), { size: 10, anchor: 'end' });
     }
-    p.days.forEach((d, i) => (body += text(x(i), bottom + 16, i === 0 ? `day ${d}` : String(d), { size: 10, anchor: 'middle' })));
+    p.days.forEach((d, i) => (body += text(x(i), bottom + 16, p.labels?.[i] ?? (i === 0 ? `day ${d}` : String(d)), { size: 10, anchor: 'middle' })));
     const path = (vs: (number | null)[]): string => {
       let d = '';
       let pen = false;
@@ -256,8 +258,8 @@ export function stripChart(title: string, subtitle: string, rows: { name: string
 
 /** Horizontal bars with the value at the tip. `muted` rows are reference rows. */
 export function barChart(title: string, subtitle: string, rows: { label: string; value: number; text: string; muted?: boolean }[]): string {
-  const w = 860;
-  const left = 250;
+  const w = 900;
+  const left = 330;
   const right = 110;
   const rowH = 26;
   const top = 70;

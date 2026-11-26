@@ -196,12 +196,12 @@ function verdictSection(R: Runs): string {
   out.push('');
   for (const p of PROFILES) {
     const miss = b.misses[p];
-    out.push(`- ${NAME[p]}, GDD numbers: ${miss.length === 0 ? 'every gate on target.' : miss.map((c) => `${c.label} ${c.measured} against ${c.target} (${c.verdict})`).join('; ')}.`);
+    out.push(`- ${NAME[p]}, GDD numbers: ${miss.length === 0 ? 'every gate on target' : miss.map((c) => `${c.label} ${c.measured} against ${c.target} (${c.verdict})`).join('; ')}.`);
   }
   if (f) {
     for (const p of PROFILES) {
       const miss = f.misses[p];
-      out.push(`- ${NAME[p]}, proposed numbers: ${miss.length === 0 ? 'every gate on target.' : miss.map((c) => `${c.label} ${c.measured} against ${c.target} (${c.verdict})`).join('; ')}.`);
+      out.push(`- ${NAME[p]}, proposed numbers: ${miss.length === 0 ? 'every gate on target' : miss.map((c) => `${c.label} ${c.measured} against ${c.target} (${c.verdict})`).join('; ')}.`);
     }
   }
   out.push('');
@@ -459,6 +459,7 @@ function longevitySection(R: Runs): string {
 }
 
 const BUDGET_DAYS = [0.04, 1, 3, 7, 14, 30, 60];
+const BUDGET_LABELS = ['hour 1', 'day 1', '3', '7', '14', '30', '60'];
 
 function worthSection(R: Runs): string {
   const out: string[] = ['## What each system is worth', ''];
@@ -481,20 +482,23 @@ function worthSection(R: Runs): string {
   out.push('');
   out.push('### Each system switched off (active player, first 3 days)');
   out.push('');
-  out.push('![Each system switched off](charts/ablation.svg)');
-  out.push('');
   const base = R.base.active;
   const arows: string[][] = [];
   const line = (label: string, r: RunResult): string[] => {
     const g = gates(r);
-    return [label, when(g.worlds[1]), when(g.worlds[2]), when(g.festival), String(countBy(r, 'replant', 0, 3 * DAY)), String(levelAt(r, 3 * DAY))];
+    const play = r.timeline.find((e) => e.kind === 'world' && e.world === 1 && e.n === 1)?.play ?? null;
+    return [label, play === null ? '-' : `${Math.round(play / MIN)} min`, when(g.worlds[1]), when(g.worlds[2]), when(g.festival), String(countBy(r, 'replant', 0, 3 * DAY)), String(levelAt(r, 3 * DAY))];
   };
   arows.push(line('Everything on', base));
   for (const sys of SYSTEMS) {
     const r = R.get(`off-${sys}`);
     if (r) arows.push(line(`Without: ${SYSTEM_LABEL[sys]}`, r));
   }
-  out.push(table(['Run', 'World 2', 'World 3', 'First Festival', 'Replants by day 3', 'Level on day 3'], arows));
+  out.push('On design 0.3 no single content system moves World 2 by more than a few percent of play time: the early rush comes from what every run has, the fixed managers of the top floors and tapping (see the budget table above).');
+  out.push('');
+  out.push('Game time moves in steps of whole sessions (World 2 either arrives in a session or at the start of the next one), so the first column, minutes of play, is the fair comparison.');
+  out.push('');
+  out.push(table(['Run', 'World 2, minutes of play', 'World 2', 'World 3', 'First Festival', 'Replants by day 3', 'Level on day 3'], arows));
   out.push('');
   return out.join('\n');
 }
@@ -625,9 +629,23 @@ function staticSections(): string {
 
 ## Open items
 
-- **The late game after week 2.** The content multiplier ("everything else") falls behind the budget from about day 14 and ends far below it on day 60 (table under "What each system is worth"). That is why Festivals stretch beyond eight days in weeks 4 to 8 for every play style, with the GDD's numbers and with the proposed ones. Two ways out, the designer's choice: lower the budget rows for days 30 and 60 and the week 4 and later rows of the pacing table to what the content gives, or add late power (more research tiers, higher card level caps for Rares and up, a second endless Ribbon item). The proposed overlays do not touch this.
+- **The idle player's first two weeks.** One price list serves all three play styles. Fitted for the active player, it puts the mixed player on target too, but the idle player reaches the first Replant, World 2, World 3 and the first Festival two to four times late, and is back on target from World 4. The cause is the spread between play styles: with the GDD's numbers the active player reaches World 2 31 times sooner than the idle player, where the pacing table expects 6.4 times; the proposed content changes narrow that to about 18 times, not to 6.4. Two things that do not close it, measured: an 8-hour base offline cap (\`OFFLINE_CAP_BASE\` 4 to 8) moves no gate, because in a game that grows this fast a third more income saves only hours; a first-Replant minimum of 120 puts the idle player's first Replant on target (16 hours) but leaves World 2 on day 7.7 and makes the active and mixed players' first Replant early. The designer's choice: accept a slower idle week 1 (idle players check in three times a day for four minutes), move the idle targets for weeks 1 and 2, or give idle players a catch-up of their own in week 1 (for example offline efficiency that starts higher and is not bought).
+- **The late game after week 2.** The content multiplier ("everything else") falls behind the budget from about day 7 and ends far below it on day 60 (table under "What each system is worth"). That is why Festivals stretch beyond eight days in weeks 4 to 8 for every play style, with the GDD's numbers and with the proposed ones, and why the active player holds 9 Festivals by day 30 against 13. The proposed manager numbers add to it after week 1: lower level-1 values with larger steps only pay once cards reach high levels, so the income-weighted manager multiplier is ×3.6 on day 30 against a budget of ×9 (×6.9 with the GDD's numbers). Two ways out, the designer's choice: lower the budget rows for days 30 and 60 and the week 4 and later rows of the pacing table to what the content gives, or add late power (more research tiers, higher card level caps for Rares and up, a second endless Ribbon item). The proposed overlays do not touch this.
+- **Level at one hour.** 11 with the proposed numbers against the GDD's 8. Most of what is left is Compost-record XP at the first Replant (\`REPLANT_XP_STEP\`).
 - **Mastery levels from cost.** Set the ten \`MASTERY_LEVELS\` so stars land at even steps of floor cost after arrival, not on arrival. The simulator records every star in the timelines, so the designer can check a new list with one run.
-- **Idle player from World 4.** See the before-and-after tables: the gate prices are fitted to the active player, so the idle and mixed players' late gates move with them.
+
+## Tests
+
+\`pnpm test\` runs 56 tests (Vitest and fast-check) in about 10 seconds:
+
+- **Big numbers.** Save text round-trips bit for bit at any size; multiply then divide keeps 15 significant digits; integers are exact to 15 digits and within one part in 1e15 past that; comparisons agree with logarithms; a 10,000-level cost curve and 1e(2e12) stay finite; NaN, infinity and junk text are refused.
+- **One formatter.** A golden table (1,234, 1.23M, 12.3M, 123M, 1.00Dc, 1.00Ce, 1.00e306, long names, scientific, engineering, durations, multipliers), and properties over a million random sizes: always three significant digits once abbreviated, holdings round down and prices round up, never more than one step in the third digit.
+- **Formulas.** Bulk buy equals buying one level at a time; max affordable buys the most the cash covers and no more; Compost and its inverse; Compost and Ribbons never fall as lifetime rises; Compost-record XP; shop prices.
+- **Chests on design 0.3.** One fixed manager per floor with the Head on top; manager cards only from managers already met and never a Head; the Starlight Head copy only for a Head with five stars; card counts and guarantees; same seed, same chest.
+- **Content.** Tables validate; floor tables equal what the template generates; every proposal overlay applies and validates; a typo in an overlay is an error.
+- **Under play.** A save reads back to the same state and carries on identically; ten one-second ticks equal one ten-second tick; offline pay is proportional to time away up to the cap and stops at the cap; a two-day active soak stays finite and inside the Boost cap.
+
+One thing the tests found: the big-number library turns a NaN or infinite part into 0 without a word, so the core's NaN guard (\`assertFinite\`) could never fire for a broken formula. \`Num.fromParts\` now refuses non-finite parts. Division by zero still gives 0 in the library, so code that divides must check its divisor; a test pins that behaviour down so a library change cannot slip by.
 
 ## Assumptions the simulator makes
 
@@ -685,21 +703,11 @@ function writeCharts(R: Runs): void {
   // Budget.
   const series = [{ name: 'Active, GDD numbers', color: SERIES.active, r: R.base.active }, ...(R.fix ? [{ name: 'Active, proposed numbers', color: SERIES.mixed, r: R.fix.active }] : [])];
   const pick = (f: (s: RunResult['samples'][number]) => number) => series.map((x) => ({ name: x.name, color: x.color, values: BUDGET_DAYS.map((d) => { const s = sampleOrNull(x.r, d * DAY); return s ? f(s) : null; }) }));
-  writeFileSync(join(CHARTS, 'budget.svg'), budgetChart('Multipliers against the budget', 'GDD 17.6 budget (dashed) and the active player as measured. Log scale; x axis in days (first point: hour 1).', [
-    { title: 'Managers (income-weighted)', days: BUDGET_DAYS.map((d) => (d < 1 ? 0 : d)), budget: BUDGET_DAYS.map((d) => budgetAt(BUDGET.manager, d)), measured: pick((s) => s.mult.managerWeighted) },
-    { title: 'Everything else', days: BUDGET_DAYS.map((d) => (d < 1 ? 0 : d)), budget: BUDGET_DAYS.map((d) => budgetAt(BUDGET.everythingElse, d)), measured: pick((s) => s.mult.permanent) },
-    { title: 'Tap income (6 taps a second)', days: BUDGET_DAYS.map((d) => (d < 1 ? 0 : d)), budget: BUDGET_DAYS.map((d) => budgetAt(BUDGET.tapMultiple, d)), measured: pick((s) => s.tapFactor6) },
+  writeFileSync(join(CHARTS, 'budget.svg'), budgetChart('Multipliers against the budget', 'GDD 17.6 budget (dashed) and the active player as measured, on its newest world. Log scale.', [
+    { title: 'Managers (income-weighted)', days: BUDGET_DAYS, labels: BUDGET_LABELS, budget: BUDGET_DAYS.map((d) => budgetAt(BUDGET.manager, d)), measured: pick((s) => s.mult.managerWeighted) },
+    { title: 'Everything else', days: BUDGET_DAYS, labels: BUDGET_LABELS, budget: BUDGET_DAYS.map((d) => budgetAt(BUDGET.everythingElse, d)), measured: pick((s) => s.mult.permanent) },
+    { title: 'Tap income (6 taps a second)', days: BUDGET_DAYS, labels: BUDGET_LABELS, budget: BUDGET_DAYS.map((d) => budgetAt(BUDGET.tapMultiple, d)), measured: pick((s) => s.tapFactor6) },
   ]));
-  // Ablation.
-  const base = gates(R.base.active).worlds[1];
-  const bars = [{ label: 'Everything on', value: (base ?? 0) / HOUR, text: when(base), muted: true }];
-  for (const sys of SYSTEMS) {
-    const r = R.get(`off-${sys}`);
-    if (!r) continue;
-    const t = gates(r).worlds[1];
-    bars.push({ label: `Without ${SYSTEM_LABEL[sys]!.toLowerCase()}`, value: (t ?? 3 * DAY) / HOUR, text: when(t), muted: false });
-  }
-  writeFileSync(join(CHARTS, 'ablation.svg'), barChart('World 2 arrival with one system switched off', 'Active player, GDD numbers, game time. A longer bar means that system was doing more of the work.', bars));
 }
 
 // ---------------------------------------------------------------- main

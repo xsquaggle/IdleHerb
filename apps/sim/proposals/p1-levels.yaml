@@ -1,14 +1,18 @@
 id: p1-levels
-title: Slower early levels
+title: Fewer one-off XP gifts in the first hour
 why: >
-  At GDD 0.2 the player has 38,000 XP after one hour against the 8,750 that
-  level 8 needs, so the skill tree opens at minute 11 instead of minute 26 and
-  the Green Thumb branch is full on day 1. Three one-off sources pay most of
-  it: the first three daily quests (6,000 XP by minute 15), the achievements
-  that are already earned when the achievement book opens (6,700 XP at
-  minute 14) and all-time Compost records.
+  On design 0.3 a new active player has 27,430 XP after one hour (level 13)
+  against the 8,750 that level 8 needs, and the skill tree opens at minute 13
+  instead of minute 26. Most of it comes in lumps: the first Compost records
+  (8,250 XP), the first daily quests (6,000 XP) and the achievements that are
+  already earned when the achievement book opens (4,600 XP). Halving the
+  achievement rewards and cutting the daily quests to 1,000 XP leaves 19,450
+  XP at one hour (level 11) and the skill tree at minute 16. A stronger cut
+  (XP_BASE 1000 as well) reaches level 9 at one hour, but it pushes the mixed
+  player's top floor past the end of the first session (from 28 minutes to
+  2.4 hours), so it is not proposed. The rest of the gap is Compost-record XP
+  at the first Replant, which REPLANT_XP_STEP controls.
 tuning:
-  XP_BASE: 1000
-  XP_DAILY: 500
-  XP_DAILY_ALL: 500
+  XP_DAILY: 1000
+  XP_DAILY_ALL: 1000
   XP_ACHIEVEMENT: [100, 200, 400, 750, 1500]
