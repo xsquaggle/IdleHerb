@@ -15,7 +15,7 @@ Use **break_infinity.js** (MIT, the long-standing standard for incremental games
 - Representation: a mantissa (a double between 1 and 10) and a power-of-ten exponent. About 16 significant digits at any size.
 - Range: up to about 1e(9e15). Checked: 1.15^6000 gives 1.538e364.
 - Speed: one million multiply-and-add pairs took 109 ms in the build session. The game does a few thousand per frame.
-- The wrapper means that if a future prestige layer ever needs numbers beyond that range, we swap in break_eternity.js in one file.
+- The wrapper means that if a future reset layer ever needs numbers beyond that range, we swap in break_eternity.js in one file.
 
 ## Which values are big numbers and which are not
 
@@ -23,7 +23,7 @@ This rule is what "never lose precision" means in practice.
 
 | Kind of value | Type | Why |
 |---|---|---|
-| Cash and world currencies, payouts, costs, income rates, lifetime earnings, multiplier products, prestige-style currencies | `Num` | They grow without bound. 16 significant digits is far more than is ever shown |
+| World currencies (Coins, Notes and the rest), payouts, costs, income rates, lifetime earnings, multiplier products, Compost and Ribbons | `Num` | They grow without bound. 16 significant digits is far more than is ever shown |
 | Levels, counts, card copies, chest counts, pity counters, quest progress, gems and other small spendable currencies | integer | They must be exact to the unit. Integers are exact up to 9 quadrillion |
 | Probabilities, cycle seconds, small multipliers in tables | plain number | Small and bounded |
 | Time | integer milliseconds | Exact |
@@ -32,9 +32,9 @@ A consequence players never see but code must respect: adding 1 to 1e30 changes 
 
 ## Rules for gameplay code
 
-1. **Compare with methods, never with operators.** `cash.gte(cost)`, not `>=`.
-2. **Check before subtracting.** A purchase is `if (cash.gte(cost)) cash = cash.sub(cost)`. Checked over 200,000 random cases: when `a >= b`, `a - b` is never negative, and `a - a` is exactly zero.
-3. **Bulk purchases use closed forms, then verify.** Cost of `k` levels from level `n` is `base * g^n * (g^k - 1) / (g - 1)`. The most levels affordable is `floor(log_g(1 + cash * (g - 1) / (base * g^n)))`. Because logarithms round, the result is then confirmed against the cost formula and stepped down or up by one if needed. Checked against a buy-one-at-a-time loop in 3,000 random cases with no mismatches.
+1. **Compare with methods, never with operators.** `coins.gte(cost)`, not `>=`.
+2. **Check before subtracting.** A purchase is `if (coins.gte(cost)) coins = coins.sub(cost)`. Checked over 200,000 random cases: when `a >= b`, `a - b` is never negative, and `a - a` is exactly zero.
+3. **Bulk purchases use closed forms, then verify.** In the form of GDD 5.2, where a floor is level 1 when it opens: the cost of `k` levels from level `L` is `levelBaseCost * growth^(L - 1) * (growth^k - 1) / (growth - 1) * costMult`. The most levels affordable is `floor(log_growth(1 + coins * (growth - 1) / (levelBaseCost * growth^(L - 1) * costMult)))`. Because logarithms round, the result is then confirmed against the cost formula and stepped down or up by one if needed. Checked against a buy-one-at-a-time loop in 3,000 random cases with no mismatches.
 4. **Use `Num.pow` for any growth curve.** `Math.pow` overflows silently, as above.
 5. **Apply income in one step per source per tick** (rate times elapsed time), not as many tiny additions.
 6. **No `Num` is ever NaN or infinite.** Development and test builds check every result and fail loudly. Release builds refuse to save a non-finite value and keep the last good save.

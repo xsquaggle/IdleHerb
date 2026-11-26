@@ -1,6 +1,6 @@
 # 02. Architecture
 
-Status: recommended, Phase 0. Owner: Engine Architect.
+Status: recommended, Phase 0. Owner: Engine Architect. Brought in line with design version 0.2 on 2026-11-26.
 
 The one rule everything else follows from: **the game's rules live in a core that knows nothing about rendering, files, clocks or randomness sources.** The core is given time, random seeds and content, and it returns state and events. That is what lets the simulator, the tests, the offline catch-up and the real game all run the same code.
 
@@ -68,11 +68,11 @@ export interface Game {
 
 Three ideas carry the design.
 
-**Commands in.** Every player action is a plain serialisable object: `{ type: 'floor.collect', floorId }`, `{ type: 'floor.buyLevels', floorId, count: 'max' }`, `{ type: 'chest.open', chestId }`. The UI sends commands. The simulator's bots send the same commands. Tests replay recorded lists of them. A command returns `{ ok: true }` or `{ ok: false, reason }`, never throws for a normal refusal such as not enough cash.
+**Commands in.** Every player action is a plain serialisable object: `{ type: 'floor.collect', floorId }`, `{ type: 'floor.buyLevels', floorId, count: 'max' }`, `{ type: 'chest.open', chestId }`. The UI sends commands. The simulator's bots send the same commands. Tests replay recorded lists of them. A command returns `{ ok: true }` or `{ ok: false, reason }`, never throws for a normal refusal such as not enough Coins.
 
 **Events out.** The core announces what happened: `floor.collected { floorId, amount, crit, combo }`, `chest.opened { rolls }`, `milestone.reached`, `unlock.revealed`. The presentation layer turns events into juice (coin bursts, popups, sounds). The core never knows whether anyone is listening.
 
-**Queries for reading.** Views read cheap continuous values each frame (cycle progress, cash) and ask for derived values through `q` (income per second, next milestone, whether a button is affordable, the full breakdown of a stat for a tooltip).
+**Queries for reading.** Views read cheap continuous values each frame (cycle progress, Coins) and ask for derived values through `q` (a world's steady income per second, next milestone, whether a button is affordable, the full breakdown of a stat for a tooltip).
 
 ### State
 
@@ -104,7 +104,8 @@ export interface SystemModule<S> {
   tick?(ctx: Ctx, dtMs: number): void;
   fastForward?(ctx: Ctx, awayMs: number, report: OfflineReport): void;
   modifiers?(ctx: Ctx, out: ModifierSink): void;      // what this system adds to stats
-  reset: Record<ResetLayer, 'wipe' | 'keep' | ((s: S, ctx: Ctx) => void)>;   // required for every layer
+  reset: Record<ResetLayer, 'wipe' | 'keep' | ((s: S, ctx: Ctx, at: ResetScope) => void)>;
+                                    // required for both layers: 'replant' (one world) and 'festival'
   stats?: StatDecl[];               // stat keys it introduces
   specials?: Record<string, SpecialHandler>;          // code hooks that data can name
 }
@@ -112,33 +113,49 @@ export interface SystemModule<S> {
 
 Systems are listed in one registry file, `systems/index.ts`, one line each in alphabetical order. That file and the kernel are the only shared touch points.
 
-Planned systems, each one folder: `wallet` (currencies), `floors` (cycles, levels, milestones), `tapping` (crits, combo, frenzy), `pickups` (golden sprouts), `managers`, `cards`, `plants` (seeds, traits), `mutations`, `chests` (loot, pity), `artifacts` (slots, sets, actives), `skills`, `research`, `quests`, `resets` (rebirth, prestige and their shops), `worlds`, `achievements`, `codex`, `events`, `unlocks` (the slow reveal), `tutorial`, `offline`, `time`. The GDD has the final list; adding or removing one is adding or removing a folder and a registry line.
+Planned systems, each one folder, in the design's words: `wallet` (currencies), `floors` (cycles, levels, milestones, buying), `tapping` (counted taps, Combo, Bumper taps, Growth Spurt), `visitors` (Garden Visitors), `boosts` (the one capped Boost per world), `managers` (one per floor: met, hired, perks, abilities), `cards` (copies and levels), `plants` (planters, families, traits), `bench` (cross-pollination and mutation jobs), `chests` (rolls, pity, shown odds), `artifacts` (heirlooms: slots, sets, abilities), `level` (Green Thumb level and XP), `skills`, `research` (Insight and the desks), `quests` (story, daily, weekly), `resets` (Replant, Harvest Festival, the Compost Shop and the Ribbon Shop), `worlds` (tickets, deeds, twists, World Mastery), `achievements`, `codex`, `events` (weekend events and the fair stall), `unlocks` (the reveal order), `tutorial`, `offline`, `time`. Adding or removing one is adding or removing a folder and a registry line.
 
-**Resets are declared, not coded centrally.** Each system states what a rebirth or a prestige does to its own slice (`wipe`, `keep` or a function). The reset code simply walks the systems. A new system cannot be forgotten by a reset, because the type requires it to answer for every reset layer.
+**Resets are declared, not coded centrally.** There are two reset layers (GDD 12): a Replant resets one world, and a Harvest Festival resets every world. Each system states what each layer does to its own slice (`wipe`, `keep` or a function, which is told the world for a Replant). The reset code simply walks the systems. A new system cannot be forgotten by a reset, because the type requires it to answer for both layers.
 
 ### Stats and modifiers
 
-Almost everything in an idle game is "something changes a number". One mechanism handles all of it.
+Almost everything in an idle game is "something changes a number". One mechanism handles all of it, and it follows the one rule of GDD 13: bonuses of the same kind from the same bucket add together, and buckets multiply each other.
 
-- A **stat** is a named value such as `floor.payoutMult`, `floor.speedMult`, `tap.critChance`, `offline.capHours`, `chest.luck`. Systems declare the stats they introduce.
-- A **modifier** is a contribution to a stat: its source (which card, artifact, skill, milestone), a scope (global, a world, a floor, a plant type, a tag), an operation and a value.
-- Final value, default rule: `(base + sum of flat adds) x product over buckets of (1 + sum of percent bonuses in that bucket) x product of multipliers`, then any cap. Bonuses from the same kind of source add; different kinds multiply. The Economy thread owns the bucket policy and can change the stacking rule in one function.
-- Modifiers are recomputed only when something that grants them changes (a purchase, an equip, a level-up), not every frame.
-- Because every contribution keeps its source, `q.breakdown(stat, scope)` returns the full list for free. That is the "tooltips with full stat breakdowns" requirement, and it also gives the balance simulator a way to attribute income to systems.
+- A **stat** is a named value. The names are the design's (CONTENT.md 0.2): `floor.profit`, `floor.speed`, `floor.levelCost`, `tap.power`, `tap.critChance`, `offline.cap`, `chest.luck` and the rest. Systems declare the stats they introduce.
+- A **modifier** is one contribution to a stat: its source (which manager, plant, heirloom, skill, research project or shop item), its bucket, its scope (a floor, the floors next to it, a world, or everything), an operation and a value.
+- **Each stat declares how it combines and where it stops.** Three rules cover nearly all of GDD 13:
 
-Cards, traits, artifacts, set bonuses, skills, research, shop upgrades, milestones, achievements and world twists all express their effects as modifiers written in the data tables (see 04). Behaviour that cannot be a number change (a keystone such as "taps also add a level") is a named **special**: the data names it, the owning system implements it, and the content compiler refuses data that names a special nobody implemented.
+  | Rule | Value | Used by |
+  |---|---|---|
+  | Buckets | product over buckets of (1 + the sum of that bucket's percentages), times every multiplier | `floor.profit`, `floor.speed`, `tap.power` |
+  | Sum | base plus every amount added | `tap.critChance`, `tap.critMult`, `tap.comboCap`, `spurt.duration`, `offline.cap`, `chest.luck`, the gain stats |
+  | Reductions | product of (1 - reduction) over the sources | `spurt.tapsNeeded`, `visitor.interval`, `hire.fee` |
+
+  A stat also declares its cap or floor, read from the constants table (`TAP_POWER_CAP`, `CRIT_CHANCE_CAP`, `COST_MULT_FLOOR`), and which buckets may feed it where the design limits that (`chest.luck` takes skills and research only, `compost.gain` takes skills and the Compost Shop only). The two stats with a one-off formula, level cost (GDD 13.3) and offline efficiency (GDD 13.4), supply their own combine function and are still fed by the same modifier list.
+- Multipliers that grow with a count (`1.5 ^ projects done`, `2 ^ level`, the Compost and Ribbon percentages) are ordinary modifiers whose value the owning system computes.
+- **The Boost is one more stat**, with the rule "one plus the sum, capped at `BOOST_CAP`", asked for a floor or for taps (GDD 13.5). Income is multiplied by the Boost and the Growth Spurt as the last step. `q.steadyIPS(world)` is income without that step, and every lump sum in the game pays from it, so no combination of buttons can multiply.
+- Modifiers are recomputed only when something that grants them changes (a purchase, a level-up, a plant moved, a boost starting or ending), not every frame. A value is always read at the moment it is used, as GDD 13.4 requires.
+- Because every contribution keeps its source, `q.breakdown(stat, target)` returns the full list for free. That is the "tooltips with full stat breakdowns" requirement, and it also gives the balance simulator a way to attribute income to systems.
+- The Economy thread owns the rules and the caps. Changing how a stat combines is a change to its one declaration.
+
+Manager perks, plant traits, heirlooms, set bonuses, skills, research, shop items, achievements, the codex, World Mastery and world twists all express their effects as modifiers written in the data tables (see 04). Behaviour that cannot be a number change (a keystone such as Thunder Thumb, where Combo cannot fall during a Growth Spurt) is a named **special**: the data names it, the owning system implements it, and the content compiler refuses data that names a special nobody implemented.
 
 ### Time, ticks and determinism
 
 - `tick(dt)` is exact for any `dt`. Floors compute how many cycles completed inside the step with division, not by looping, so `tick(a + b)` gives the same result as `tick(a)` then `tick(b)`. Frame rate cannot change the economy. A property test holds this.
-- `fastForward(awayMs)` is the same maths over a long span, plus the offline rules (cap, offline multipliers, no random events). See 07.
-- Timers (buffs, cooldowns, research, expeditions) store **time remaining in game time**, never a wall-clock end time. The system clock cannot touch them.
-- Randomness comes from seeded generator streams whose state is in the save: one each for loot, crits, events and mutations. Consequences: a simulator run is reproducible from its seed, and reopening the game cannot reroll a chest. Visual-only randomness (particle scatter) uses a separate unsaved generator so effects never disturb gameplay results.
+- **Rules that react to state run on a fixed step.** Anything that is a pure function of time (cycles, timers, Hearth Heat falling, the weather loop) is exact for any `dt`. The few rules that look at the state and act (the Auto-Gardener buying a level, Auto-Replant) run on a fixed step of 100 ms inside the core, so they behave the same at 30 fps, at 240 fps and in the background. The simulator may pick a coarser step for long runs and says so in its report.
+- `fastForward(awayMs)` is the same maths over a long span, plus the offline rules (efficiency, stored hours, no visitors). See 07.
+- **Every unlocked world runs all the time.** Managed floors in every world earn at the full rate whichever world is on screen (GDD 14.1). Taps, Combo, Spurts and visitors belong to the world on screen, which the core is told through a `world.show` command. Fifty floors of closed-form maths is far inside the budget.
+- **Open in the background is still playing.** While the window is unfocused, hidden or minimised, the simulation keeps ticking at the full online rate (GDD 15.1). Only drawing slows or stops. Only a real stop of the process, such as the PC sleeping, counts as time away (see 07).
+- **What the screen is doing reaches the core as commands.** A few rules depend on it: Garden Visitors appear only while the window has focus (GDD 6.6), and the Combo timer pauses during a reveal or a full-screen panel (GDD 6.3). The view sends `session.focus` and `session.hold`, so the rule itself stays in the core and a simulator bot can drive it the same way.
+- Input limits are core rules too. The cap of `TAP_RATE_CAP` counted taps per second is enforced against game time, so a bot, a held key and a fast clicker get the same limit.
+- Timers (boosts, cooldowns, research, bench jobs, Morning Baskets) store **time remaining in game time**, never a wall-clock end time. The system clock cannot touch them.
+- Randomness comes from seeded generator streams whose state is in the save: one each for chests, Bumper taps, harvests that can pay double, visitors and quest draws. Consequences: a simulator run is reproducible from its seed, and reopening the game cannot reroll a chest. Visual-only randomness (particle scatter) uses a separate unsaved generator so effects never disturb gameplay results.
 - The core never asks what time it is. Time is handed in by the platform layer after it has been checked (see 07).
 
 ### Formulas
 
-Every formula that both the simulator and the game need (level cost, bulk buy cost, maximum affordable levels, payout, cycle time with the speed cap, prestige currency gain) is a pure function in `core`, written once. Data tables carry the parameters. Where a table needs a formula it names one with parameters (`{ id: 'prestige.root', params: { divisor: '1e9', power: 0.5 } }`); there are no formula strings to evaluate.
+Every formula that both the simulator and the game need (level cost, bulk buy cost, maximum affordable levels, payout, cycle time with the speed cap, the floor template, Compost and Ribbon gain) is a pure function in `core`, written once from the GDD. Data tables carry the parameters and the named constants. Where a table needs a curve it names one with parameters (`{ formula: geometric, base: 20, growth: 1.8 }`); there are no formula strings to evaluate.
 
 ## The presentation layer
 
@@ -158,11 +175,11 @@ Rules:
 
 1. **No rules in views.** A view may read state, send commands and react to events. It never computes a price, a payout or an unlock. If a view needs a number, the core exposes a query for it. Lint blocks imports of core internals; only the public surface is importable.
 2. **Push for moments, pull for continuous values.** Discrete things arrive as events. Progress bars and counters read state each frame.
-3. **Two clocks.** The simulation runs on real elapsed time. Effects, tweens and animations run on a presentation clock that can be slowed or frozen for hit-pause and scaled or simplified for the reduce-motion setting, without affecting earnings. In tests the presentation clock is stepped by hand, which makes screenshots repeatable.
+3. **Two clocks.** The simulation runs on real elapsed time, on its own timer, whether or not anything is being drawn. Effects, tweens and animations run on a presentation clock that can be slowed or frozen for hit-pause and scaled or simplified for the reduce-motion setting, without affecting earnings. In tests the presentation clock is stepped by hand, which makes screenshots repeatable.
 4. **Every effect declares a motion class** (`essential`, `decorative`, `shake`, `flash`). The reduce-motion and screen-shake settings are applied centrally from that tag, so no effect can ignore them.
 5. **Feature folders mirror system folders.** Whoever owns the `chests` system owns `core/src/systems/chests` and `game/src/features/chests`.
 
-Main loop, per frame: read the monotonic clock, hand `dt` to the core (or route a long gap through the away path), drain core events into the feature views, advance the presentation clock, render.
+Main loop: a simulation timer that does not depend on drawing reads the monotonic clock and hands `dt` to the core (a gap that shows the process was stopped goes through the away path, see 07). Each drawn frame tops the simulation up to the present, drains core events into the feature views, advances the presentation clock and renders.
 
 ## The platform interface
 
@@ -199,7 +216,7 @@ Adapters: `ElectronPlatform` (the product; file work happens in the main process
 - The app loads its own bundled files and nothing else. Navigation and new windows are blocked. **The game makes no network requests at all**; the shell blocks them, which also means no firewall prompt and nothing to worry about on privacy.
 - Single-instance lock, so two copies cannot write the same save.
 - The main process always holds the latest save snapshot the renderer sent, so it can write it out if the renderer crashes or Windows is shutting down (see 06).
-- Background throttling is disabled; the game does its own slowing down: 30 fps when unfocused, rendering paused when minimised, and any gap is settled through the same away-time path as offline earnings.
+- Background throttling is disabled, so the simulation timer keeps its pace when the window is unfocused, hidden or minimised and the game goes on earning at the full online rate (GDD 15.1). The game does its own slowing down of drawing: 30 fps when unfocused, none when minimised or hidden.
 - Autoplay is allowed so music starts without a click.
 - Windows display scaling (125 percent, 150 percent) is handled in the resolution manager by sizing the canvas in true device pixels (see 03).
 

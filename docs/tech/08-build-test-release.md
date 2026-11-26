@@ -13,6 +13,7 @@ Everything here runs without a person at a desktop. Cost is $0: the repository i
 | `pnpm check` | Type check, lint, import-boundary rules |
 | `pnpm test` | Unit and property tests (core, content, save-io) |
 | `pnpm content:build` | Validates and compiles the data tables |
+| `pnpm content:floors` | Regenerates the floor rows from the world parameters (see 04) |
 | `pnpm assets:build` | Packs sprites into atlases, runs the art lint |
 | `pnpm sim` | Balance simulator |
 | `pnpm e2e` | Drives the real game in headless Chromium |
@@ -41,7 +42,7 @@ All triggered by pushes, pull requests, tags or a manual button. **Nothing is sc
 |---|---|---|
 | `ci.yml` | Every pull request and push to `main` | Install, check, unit tests, content build, short simulator run, web build, end-to-end tests, screenshot tour uploaded as an artifact |
 | `desktop.yml` | Push to `main`, tags, manual | On a Windows runner: save-io tests, package, launch the packaged app with Playwright, smoke test, upload installer and portable build |
-| `preview.yml` | Push to `main` | Publish the web build, content report, screenshot gallery and latest balance charts to GitHub Pages |
+| `preview.yml` | Push to `main`, manual | Publish the web build, content report, screenshot gallery and latest balance charts to GitHub Pages. In the repository since Phase 0, publishing a holding page until the first web build exists |
 | `release.yml` | Tag `vX.Y.Z` | Build, generate save fixtures for this version, create a GitHub Release with installer, portable build, checksums and changelog |
 
 Runs for the same branch cancel their predecessors, and dependency and Electron downloads are cached, to keep each run short.
@@ -106,11 +107,21 @@ Prices are approximate and should be rechecked at Phase 5.
 
 ## Phone preview
 
-The web build runs in a phone browser, so every merge to `main` can publish a playable preview at `https://xsquaggle.github.io/IdleHerb/`, alongside the content report, the screenshot gallery and the balance charts.
+**Decided: Lawson said yes on 2026-11-26.** The web build runs in a phone browser, so every merge to `main` publishes a playable preview at `https://xsquaggle.github.io/IdleHerb/`, alongside the content report, the screenshot gallery and the balance charts.
 
-- It is a public address, like the repository itself.
-- It is the same game code, saving to the browser instead of to disk. It is a review tool, not a second product: layouts target desktop, and it works best with the phone held sideways.
-- It needs one setting switched on by the repository owner: Settings, Pages, Source: GitHub Actions.
+- It is a public address, like the repository itself. The page asks search engines not to list it.
+- It is the same game code, saving to the browser instead of to disk. It is a review tool, not a second product: layouts target desktop. A phone held upright only has room for a 1x scale, so the playable preview asks for the phone to be turned sideways.
+- It is free, because the repository is public.
+
+**What exists now.** `.github/workflows/preview.yml` and a holding page in `tools/preview/`. There is no game to play in Phase 0, so the address shows the holding page with the build it was published from. Phase 1 Step 0 swaps the workflow's "Assemble the site" step for the real web build, and nothing else changes.
+
+**The one setting, switched on once by the repository owner:**
+
+1. Open `https://github.com/xsquaggle/IdleHerb/settings/pages` in a web browser and sign in. On a phone this is the browser, not the GitHub app.
+2. Under "Build and deployment", open the "Source" list and choose "GitHub Actions".
+3. That is all. There is nothing to save.
+
+Until that setting is on, the workflow ends green with a notice and publishes nothing. Once it is on, the next merge to `main` publishes the page, or the workflow can be run by hand from the Actions tab. GitHub only lets the default branch publish, so nothing appears before the workflow itself is merged.
 
 ## Checking on the real PC
 

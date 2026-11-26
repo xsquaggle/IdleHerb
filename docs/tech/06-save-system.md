@@ -48,7 +48,7 @@ SPROUTSAVE 1 sha256=9f2c...e1 bytes=48213
   "savedAt": 1795706400000,
   "content": "a1b2c3d4",
   "slices": {
-    "wallet": { "v": 1, "d": { "cur.cash": "1.2345678901234567e12" } },
+    "wallet": { "v": 1, "d": { "cur.coins": "1.2345678901234567e12" } },
     "floors": { "v": 3, "d": { } },
     "time":   { "v": 1, "d": { } },
     "rng":    { "v": 1, "d": { } }
@@ -56,7 +56,7 @@ SPROUTSAVE 1 sha256=9f2c...e1 bytes=48213
 }
 ```
 
-- The header carries the byte length and a SHA-256 of the body, so truncation and corruption are caught before the body is even parsed.
+- The header carries the byte length and a SHA-256 of the body, so truncation and corruption are caught before the body is even parsed. The hash is a small pure TypeScript function in the kernel, tested against the published test vectors, because the core may not use Node or browser crypto. The game, the simulator, the browser preview and the tests therefore all compute it the same way.
 - `seq` goes up by one on every write. Recovery uses it to find the newest good file.
 - Each system owns one slice with its own version number `v`. This is what lets several programmers change their own save data without colliding on one global version.
 - Big numbers are exact strings (see 05). Content is referred to by id.
@@ -80,7 +80,7 @@ There is no moment at which the only copy of the player's progress is a half-wri
 ## When saves happen
 
 - Every 30 seconds.
-- Within 2 seconds of an important action (opening a floor, opening a chest, a rebirth or prestige, a large purchase). Commands are flagged for this in the core.
+- Within 2 seconds of an important action (opening a floor, opening a chest, a Replant or a Harvest Festival, a large purchase). Commands are flagged for this in the core.
 - When the window loses focus, is minimised, or the PC is about to sleep.
 - On quit. The main process asks the renderer for a final snapshot, writes it, then closes the window.
 - If the renderer crashes or Windows is shutting down and the renderer cannot answer, the main process writes the newest snapshot it already holds.
@@ -112,7 +112,7 @@ After a successful load a sanitising pass runs: unknown content ids are resolved
 - Each system keeps its own ordered upgrade functions in `migrations.ts`: version 1 to 2, 2 to 3, and so on. They run in sequence from whatever version the file has.
 - A separate short list of structural migrations handles the rare change that moves data between systems.
 - Migrations are pure, never deleted, and never depend on current content tables being unchanged.
-- **Fixtures.** At every released version a deterministic bot plays to several stages (fresh, ten minutes, first rebirth, first prestige, late game) and the resulting saves are committed under `tests/fixtures/saves/<version>/`. CI loads every fixture ever committed into the current build, checks invariants (no NaN, no negative currency, all ids known), saves it again and confirms the reload is identical. This is the "save-migration test from every prior version" the brief asks for at ship, running from the first tagged build of Phase 1 onward, so Lawson's own test saves keep working throughout development.
+- **Fixtures.** At every released version a deterministic bot plays to several stages (fresh, ten minutes, first Replant, first Harvest Festival, late game) and the resulting saves are committed under `tests/fixtures/saves/<version>/`. CI loads every fixture ever committed into the current build, checks invariants (no NaN, no negative currency, all ids known), saves it again and confirms the reload is identical. This is the "save-migration test from every prior version" the brief asks for at ship, running from the first tagged build of Phase 1 onward, so Lawson's own test saves keep working throughout development.
 
 ## Export and import
 

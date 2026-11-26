@@ -38,20 +38,23 @@ Status: recommended, Phase 0. Owner: Engine Architect.
     sim/                         balance simulator
 
   art/
-    sprites/  rigs/  fx/  fonts/ cleaned production assets only
+    floors/ actors/ plants/ props/ cards/ icons/ ui/ vfx/ bg/
+                                 cleaned sprites by class, as STYLE_BIBLE section 3 sets them
+    rigs/  fx/  fonts/           rig JSON, effect definitions, font sources
   audio/
     music/  sfx/  amb/
 
   tools/
     art/                         clean-up, slicing, palette and lint scripts
     capture/                     screenshot tour, rig preview, video capture
+    preview/                     the phone preview's holding page, until the first web build replaces it
 
   tests/
     e2e/                         Playwright tests against the running game
     fixtures/saves/<version>/    saves from every released version
 ```
 
-Not committed: compiled content, atlases, build output, screenshots other than the small set of baselines, raw generated art, uncompressed audio masters.
+Not committed: compiled content, atlases, build output, screenshots other than the small set of baselines, raw generated art, uncompressed audio masters. Committed although generated: the floor rows in `*.gen.yaml` (see 04).
 
 ## Ownership
 
@@ -64,7 +67,7 @@ One owner per folder. Work in someone else's folder goes through its owner or a 
 | Save and Offline Programmer | `packages/save-io/`, `core/src/kernel/save/`, `core/src/systems/time/`, `core/src/systems/offline/`, platform adapters, `apps/desktop/` main process |
 | UI/UX | `game/src/engine/ui/`, the UI kit gallery, screen layouts inside feature folders by agreement with the system owner |
 | Animation and VFX | `game/src/engine/fx/`, `game/src/engine/rig/`, shaders, `art/rigs/`, `art/fx/` |
-| Art Director | `docs/art/`, `art/sprites/`, `tools/art/` |
+| Art Director | `docs/art/`, the sprite class folders under `art/`, `tools/art/` |
 | Audio Director | `docs/audio/`, `audio/`, mix settings |
 | Game Designer | `docs/design/`, structure of `content/tables/` |
 | Economy and Balance | `apps/sim/`, numeric content, formulas in `core/src/kernel/formulas/` by agreement with the architect |
@@ -79,7 +82,7 @@ One owner per folder. Work in someone else's folder goes through its owner or a 
 2. **Core and features mirror each other** by name, so ownership is obvious.
 3. **Interfaces before implementations.** The kernel contracts (the system module shape, commands, events, stats, the platform interface) are agreed first. A change to a contract is its own pull request, reviewed by the architect, announced to the other threads.
 4. **Content is split into small files** by world, kind and owner, and words are separate from numbers (see 04).
-5. **Nothing generated is committed**, so generated files never conflict.
+5. **Build output is never committed**, so generated files never conflict. The one exception is on purpose: the generated floor rows (`*.gen.yaml`, see 04) are committed so that a change to a world parameter can be reviewed, and CI fails if they are out of date.
 6. **Dependencies are added on purpose.** A new package or a lockfile change is its own pull request through the integration owner. Versions are pinned.
 7. **Baseline images** change only in the pull request that means to change them.
 8. **Every pull request** stays inside one owner's area where possible, passes `pnpm check` and its tests, and attaches screenshots or a clip for anything visible.
@@ -87,13 +90,13 @@ One owner per folder. Work in someone else's folder goes through its owner or a 
 ## Conventions
 
 - TypeScript strict. No `any` in `packages/core`. Named exports.
-- Ids are lowercase and dotted (see 04). Files are kebab-case.
+- Ids are lowercase and dotted (see 04). Code files are kebab-case. Art files are lowercase snake case, named as the style bible sets (`class_subject_variant_state_frame.png`).
 - No display text in code; no number formatting outside the formatter; no rules in views. Each is a lint rule, not a guideline.
 - Decisions that change this plan are recorded as short notes in `docs/tech/adr/`.
 
 ## Starting Phase 1
 
-The vertical slice is World 1 with four or five floors, tap feel, managers, a first chest, a first card upgrade and a first rebirth, at final quality.
+The vertical slice is World 1 with four or five floors, tap feel, managers, a first chest, a first card level-up and a first Replant, at final quality.
 
 **Step 0: scaffold. One thread, before anything else.**
 Workspace, configs, lint and import rules, `CLAUDE.md`, empty packages, CI, a calibration scene on the 640x360 grid, the crispness test, and the Windows workflow producing an installer that opens that scene. Done when: CI is green, the preview link shows the scene, and Lawson can install and launch a build. This flushes out every toolchain surprise on day one.
@@ -113,7 +116,7 @@ If the balance simulator is built before Phase 1, it should be built inside this
 | D. Rigs | Rig runtime, preview tool, first actor and plant | A, first cleaned sprites |
 | E. Audio | Mixer, stems, SFX voices | A |
 | F. Saves and shell | save-io, platform adapters, Electron main process, torture tests, time and offline | Step 1 |
-| G. Gameplay | wallet, floors, tapping, managers, then chests and cards, then rebirth; each with its feature views | Step 1 for the core half; A and B for the views |
+| G. Gameplay | wallet, floors, tapping, managers, then chests and cards, then Replant; each with its feature views | Step 1 for the core half; A and B for the views |
 
 **Step 3: slice assembly and polish.** Tower and floor views with real art, the chest opening sequence, the welcome-back screen, tutorial beats, the audio mix, then the verification run in 08 and a build for Lawson.
 
