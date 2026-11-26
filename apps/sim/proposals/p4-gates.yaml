@@ -1,24 +1,21 @@
 id: p4-gates
-tuning:
-  FIRST_REPLANT_MIN: 460
-  RIBBON_C0: 550000
 title: Gate prices fitted to the GDD 17.6 pacing table (active profile)
 why: |-
-  Fitted by "pnpm sim calibrate" on top of p1-levels, p2-taps, p3-managers.
-  First Replant: 60.0 -> 4.6e+2 (target 55 min, lands 55 min; was 25 min)
-  World 2: 5.00e+19 -> 3.7e+22 (target 12.0 h, lands 11.7 h; was 6.1 h)
-  World 3: 2.00e+19 -> 9.2e+22 (target day 2.60, lands day 2.48; was 14.0 h)
-  First Harvest Festival: 5.00e+4 -> 5.5e+5 (target day 4.10, lands day 4.24; was day 2.48)
-  World 4: 1.00e+24 -> 2.6e+25 (target day 6.70, lands day 6.70; was day 6.13)
-  World 5: 2.00e+29 -> 2.6e+29 (target day 12.20, lands day 12.15; was day 12.14)
-  World 6: 1.00e+34 -> 6.1e+30 (target day 19.50, lands day 19.49; was day 33.26)
-  The World 6 deed comes down from 600 to 250 Ribbons first: at 600 even a free ticket lands World 6 on day 23.4, because the slower Ribbons of RIBBON_C0 = 550000 reach 600 too late.
+  Fitted by "pnpm sim calibrate" on top of p1-levels, p2-taps.
+  First Replant: 60 -> 440, set by rule rather than fitted: every play style's first Replant must land inside its first 24 hours, and 448 is the largest minimum that keeps the idle player's inside day 1 (16.2 h; the active player's lands at 38 min, the mixed player's at 6.5 h).
+  World 6 deed: 600 -> 250 Ribbons, so the deed does not hold World 6 back once Ribbons come more slowly.
+  World 2: 3.70e+22 -> 3.0e+23 (target 12.0 h, lands 11.7 h; was 9.0 h)
+  World 3: 9.20e+22 -> 4.5e+23 (target day 2.60, lands day 2.60; was day 1.70)
+  First Harvest Festival: 5.50e+5 -> 8.6e+5 (target day 4.10, lands day 4.35; was day 3.14)
+tuning:
+  FIRST_REPLANT_MIN: 440
+  RIBBON_C0: 860000
 rows:
   worlds:
     world.w1:
-      ticket: "3.7e22"
+      ticket: "3e23"
     world.w2:
-      ticket: "9.2e22"
+      ticket: "4.5e23"
     world.w3:
       ticket: "2.6e25"
     world.w4:

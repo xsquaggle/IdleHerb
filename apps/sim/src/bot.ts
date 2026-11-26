@@ -600,10 +600,14 @@ export class Bot {
       if (!pick || !this.act({ type: 'buyCompostShop', id: pick })) break;
     }
 
-    // Ribbon Shop: Golden Hour and the Auto-Gardener, then a deed that opens the next world, then the cheapest.
+    // Ribbon Shop: Golden Hour (every level, as soon as it is affordable: it doubles profit) and the
+    // Auto-Gardener, then a deed that opens the next world, then the cheapest.
     if (s.festivals > 0) {
       for (;;) {
-        const first = ['shop.ribbon.golden_hour', 'shop.ribbon.auto_gardener'].find((id) => (s.ribbonShop[id] ?? 0) === 0);
+        const gh = 'shop.ribbon.golden_hour';
+        const ghPrice = this.off.has(gh) ? null : g.ribbonShopCost(gh);
+        if (ghPrice && s.ribbons.gte(ghPrice) && this.act({ type: 'buyRibbonShop', id: gh })) continue;
+        const first = [gh, 'shop.ribbon.auto_gardener'].find((id) => (s.ribbonShop[id] ?? 0) === 0);
         let pick: string | null = null;
         let cost: Num | null = null;
         for (const row of c.ribbonShop) {
