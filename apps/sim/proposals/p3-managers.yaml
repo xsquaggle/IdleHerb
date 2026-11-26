@@ -1,0 +1,10 @@
+id: p3-managers
+title: Managers start closer together
+why: >
+  With one fixed manager per floor the rarest managers sit on the floors that
+  earn the most, so the income-weighted manager multiplier is about 5 on days 0
+  to 3 against a budget of 2 to 2.5. Lower level 1 values with larger steps
+  keep every rarity's profit at max level where design 0.3 has it.
+tuning:
+  MGR_BASE: { common: 2, uncommon: 2.2, rare: 2.4, epic: 2.6, legendary: 2.8, exotic: 3 }
+  MGR_STEP: { common: 1.2, uncommon: 1.213, rare: 1.227, epic: 1.266, legendary: 1.358, exotic: 1.625 }
