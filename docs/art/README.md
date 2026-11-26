@@ -19,7 +19,7 @@ Everything about how the game looks lives here.
 | `cleanup/` | Before/after figures and true-size cleaned sprites from the proof |
 | `hemp/` | The hemp silhouette chart |
 | `boards/` | Do and don't boards built from the reference packs |
-| `tools/` | `cleanup_prototype.py` (the clean-up proof) and `build_asset_batch_01.py` (writes the batch file so every prompt carries the identical style suffix) |
+| `tools/` | `build_asset_batch_01.py` (writes the batch file so every prompt carries the identical style suffix), `cleanlib.py` with `clean_batch01_parts.py` and `clean_batch01_round4.py` (the automatic pass that made the sprites in `art/`), `cleanup_prototype.py` (the first clean-up proof), and three small helpers: `zoom_parts.py` (enlarged review sheet), `veil_fit.py` (how the wall veil was measured) and `mock_floor03.py` (the floor 3 mock-up) |
 
 ## The short version
 

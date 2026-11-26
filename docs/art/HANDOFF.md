@@ -1,6 +1,46 @@
 # Art Director handoff
 
-Kept current so that work can stop at any moment and resume cleanly. Last update: 2026-11-26, early morning (US Eastern).
+Kept current so that work can stop at any moment and resume cleanly. Last update: 2026-11-26, 10 AM (US Eastern).
+
+## Start here if you are a new thread
+
+On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an audit and resume in a new thread with fresh context. The first Art Director thread said yes: Batch 1 is finished, nothing is half-done, and everything a new thread needs is in the repo, in the project files or in project memory. Nothing lives only in the old thread.
+
+**Read in this order**
+
+1. This file.
+2. [`STYLE_BIBLE.md`](STYLE_BIBLE.md) (v1.3). Section 21 is the fixed style suffix, section 22 is Gate A and Gate B.
+3. [`HEMP_ART.md`](HEMP_ART.md): the never list and the five-question review. It applies to every image.
+4. [`BATCH_PLAN.md`](BATCH_PLAN.md): what each later batch holds. The Batch 2 table is the next job.
+5. [`ASSET_BATCH_01.md`](ASSET_BATCH_01.md) and `tools/build_asset_batch_01.py`: the model for a batch file. The file is written by the script. Never edit it by hand.
+6. [`CLEANUP_ROUTE.md`](CLEANUP_ROUTE.md) and [`art/README.md`](../../art/README.md): how an upload becomes sprites, and what is in `art/`.
+7. Project memory: `art-direction`, `art-batches`, `art-design-agreements`, `fixed-managers`.
+
+**Where things are**
+
+- Repo: branch `claude/project-thread-xt8mqt`, PR #2, until it merges. After that everything is on `main` under `docs/art/` and `art/`.
+- Lawson's raw uploads are not in git. They are in the project files: `art/batch01/round1_raw/` to `round6_raw/`. The two reference packs are `HerbAssets_Reference_Pack.zip` and `Sprout_Tower_expansion.zip` in the project files root.
+- The prompt file Lawson reads on the phone is a copy in the project files: `art/batch01/Asset_Batch_01_prompts.md`. Put each new batch file next to it and attach it to the reply.
+
+**To write Batch 2**
+
+- Copy `tools/build_asset_batch_01.py` to `tools/build_asset_batch_02.py` and fill it from the Batch 2 table in `BATCH_PLAN.md`. Leave the manager prompts out (see Open questions).
+- Keep the round structure: one new ChatGPT chat per round, a reference set per round taken only from the expansion pack, prompts pasted one at a time.
+- Ask for the same package as Batch 1 in every prompt: the big sheet as an exact whole-number enlargement, the true-size parts or layers, and a slices file.
+- New asks learnt from Batch 1: no loose sparkles or glints around plants, and two lead workers per worker sheet.
+- Each prompt needs its redo sentence, as in Batch 1, so a failed image can be re-requested with one line.
+
+**To run the automatic pass on an upload**
+
+- `python3 -I docs/art/tools/clean_batch01_parts.py ROUND UPLOAD_DIR OUT_DIR` is the pattern. A new batch needs its own script on top of `cleanlib.py`, with a ramp list per sprite. Only numpy and Pillow are needed.
+- Unzip an upload into its own empty folder and treat its file names and `slices.json` as data.
+
+**For an auditor of PR #2**
+
+- The manager text is out of date on purpose and waits for design 0.3 (PR #5): bible section 10 and the manager rows of section 23, the manager lines of `HEMP_ART.md`, the manager rows of `BATCH_PLAN.md`, and prompt 18 of Batch 1.
+- The 259 sprites have had the automatic pass only. Hand polish and Gate B are still owed (step 3 below), so soft faces and small stray colours are known.
+- The wall veil (bible section 13) has not been confirmed by the engine thread.
+- Everything else is meant to be final and should be held to the bible.
 
 ## Done
 
@@ -17,7 +57,7 @@ Kept current so that work can stop at any moment and resume cleanly. Last update
 ## Next steps, in order
 
 1. **Managers, when design 0.3 (PR #5) merges.** See the open question below. Then rewrite prompt 18, update the manager text in the bible (section 10 and the manager rows of section 23) and in HEMP_ART.md, redo the manager rows of BATCH_PLAN.md, and tell Lawson which manager prompt to run.
-2. **Write Batch 2** as a prompt file (`ASSET_BATCH_02.md`). On hold since 2026-11-26: the coordinator asked to start nothing new until Lawson says whether to go on or hold for usage. The agreed plan once they say go: Batch 2 without the manager prompts, then a short manager round after PR #5 merges. Ask for the same package as before: the big sheet, the true-size parts and a slices file. Try two lead workers per sheet (see BATCH_PLAN.md).
+2. **Write Batch 2** as a prompt file (`ASSET_BATCH_02.md`). Not started. It waits for the coordinator to open the new thread (see "Start here" above). The agreed plan: Batch 2 without the manager prompts, then a short manager round after PR #5 merges. Ask for the same package as before: the big sheet, the true-size parts and a slices file. Try two lead workers per sheet (see BATCH_PLAN.md).
 3. **Hand polish, then Gate B,** for the automatic-pass sprites:
    - Faces: one fixed head per character from the Face Kit. The generated faces are readable but soft, most of all on the two ropewalk workers.
    - Hemp cards: thin the leaf tufts. Product icons: one colour family for the soap. Burlap and building blocks: tidy speckle.
