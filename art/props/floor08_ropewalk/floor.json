@@ -1,0 +1,93 @@
+{
+ "size": [
+  360,
+  120
+ ],
+ "baseline_y": 92,
+ "parts": {
+  "fibre_shelf": {
+   "file": "fibre_shelf_44x47.png",
+   "size": [
+    44,
+    47
+   ],
+   "origin_on_floor": [
+    4,
+    45
+   ],
+   "cls": "prop"
+  },
+  "rope_wheel": {
+   "file": "rope_wheel_45x44.png",
+   "size": [
+    45,
+    44
+   ],
+   "origin_on_floor": [
+    51,
+    48
+   ],
+   "cls": "prop"
+  },
+  "crank_worker": {
+   "file": "../../actors/floor08_ropewalk/crank_worker_46x62.png",
+   "size": [
+    46,
+    62
+   ],
+   "origin_on_floor": [
+    99,
+    30
+   ],
+   "cls": "actor"
+  },
+  "rope_run_and_post": {
+   "file": "rope_run_and_post_50x31.png",
+   "size": [
+    50,
+    31
+   ],
+   "origin_on_floor": [
+    148,
+    61
+   ],
+   "cls": "prop"
+  },
+  "twine_bench": {
+   "file": "twine_bench_49x32.png",
+   "size": [
+    49,
+    32
+   ],
+   "origin_on_floor": [
+    201,
+    60
+   ],
+   "cls": "prop"
+  },
+  "twine_worker": {
+   "file": "../../actors/floor08_ropewalk/twine_worker_32x57.png",
+   "size": [
+    32,
+    57
+   ],
+   "origin_on_floor": [
+    253,
+    35
+   ],
+   "cls": "actor"
+  },
+  "shop_counter_and_stool": {
+   "file": "shop_counter_and_stool_68x62.png",
+   "size": [
+    68,
+    62
+   ],
+   "origin_on_floor": [
+    288,
+    30
+   ],
+   "cls": "prop"
+  }
+ }
+}

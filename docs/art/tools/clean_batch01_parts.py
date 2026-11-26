@@ -7,21 +7,32 @@ drop baked sparkles, rebuild the ink outline, hold the colour budget, write the 
 Usage: python3 -I clean_batch01_parts.py ROUND UPLOAD_DIR OUT_DIR
 
 ROUND is 1, 2, 3, 5 or 6. UPLOAD_DIR is that round's unpacked zip.
-OUT_DIR receives the sprite folders and review/ with before/after sheets and a report.
+OUT_DIR receives the sprite folders and review/roundN/ with before/after sheets and a report.
+Run every round into the same OUT_DIR: the JSON files next to the sprites are added to, not replaced.
 """
 import sys, os, json
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from PIL import Image  # noqa: E402
 from cleanlib import (load, snap_many, reduce_many, outline, drop_small, drop_sparkles, save, used,  # noqa: E402
-                      sheet, to_rgba, INK, NO_SKIN)
+                      sheet, to_rgba, veil, VEIL, INK, NO_SKIN)
 
 ROUND, SRC, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
 SLICES = json.load(open(os.path.join(SRC, 'slices.json')))['sheets']
+REVIEW = os.path.join(OUT, 'review', 'round' + ROUND)
 REPORT = []
-MANIFEST = {}
-MANIFEST_FILE = {'1': 'props/floor03_hemp_patch/props.json', '2': 'plants/plants.json', '3': 'actors/workers.json',
-                 '5': 'props/floor08_ropewalk/props.json', '6': 'icons/ui/icons.json'}
+MANIFESTS = {}
+
+
+def manifest(rel):
+    """A JSON file next to the sprites. Rounds add to it, so one OUT_DIR can take every round."""
+    if rel not in MANIFESTS:
+        path = os.path.join(OUT, rel)
+        MANIFESTS[rel] = json.load(open(path)) if os.path.exists(path) else {}
+    return MANIFESTS[rel]
+
+
 INKSET = {'ink'}
 
 
@@ -44,13 +55,13 @@ def note(cls, name, idxs, st, fixed, budget):
                        max_move=round(st['max'], 3), palette=cols))
 
 
-def clean(cls, name, items, ramps, budget, drop=0, edge=True, thin=False, over=None, lift=0.0):
+def clean(cls, name, items, ramps, budget, drop=0, edge=True, thin=False, over=None, lift=0.0, dim=0.0):
     """items = [(source file, output file)]. All items share one colour map and one budget.
     Returns [(raw, cleaned index image)] for the review sheet."""
     raws = [src(a) for a, _ in items]
     if drop:
         raws = [drop_small(r, drop)[0] for r in raws]
-    idxs, st = snap_many(raws, set(ramps) | INKSET, over, lift)
+    idxs, st = snap_many(raws, set(ramps) | INKSET, over, lift, dim)
     fixed = 0
     if edge:
         for i in range(len(idxs)):
@@ -78,7 +89,7 @@ def round2():
     items = [('parts/05_fibre_growth/%s.png' % k, 'plants/hemp_fibre_%d_%s_32x96.png' % (i + 1, k))
              for i, k in enumerate(order)]
     p5 = clean('plant', 'hemp_fibre (5 growth stages)', items, HEMP, 16, edge=False, lift=LIFT)
-    MANIFEST['hemp_fibre'] = dict(frame=[32, 96], anchor_bottom_center=[16, 96],
+    manifest('plants/plants.json')['hemp_fibre'] = dict(frame=[32, 96], anchor_bottom_center=[16, 96],
                                   stages=[os.path.basename(o) for _, o in items])
 
     # prompt 6: two more hemp plants and the harvest props
@@ -102,7 +113,7 @@ def round2():
         (ga['repeat']['file'], 'plants/hemp_giant_cane_repeat_25x40.png'),
         (ga['base']['file'], 'plants/hemp_giant_cane_base_81x112.png')],
         HEMP | {'sky', 'steel'}, 16, edge=False, lift=LIFT)
-    MANIFEST['hemp_giant_cane'] = dict(
+    manifest('plants/plants.json')['hemp_giant_cane'] = dict(
         stack_top_to_bottom=['top', 'repeat (zero or more)', 'base'],
         shaft_center_x=dict(top=ga['top']['shaft_center_x_in_part'], repeat=ga['repeat']['shaft_center_x_in_part'],
                             base=ga['base']['shaft_center_x_in_part']),
@@ -155,7 +166,8 @@ def round2():
                 planter[ys - py, xs - px] = INK
     out(planter, 'plants/herb_layers/planter_36x33.png')
     out(seeds, 'plants/herb_layers/seeds_21x10.png')
-    MANIFEST['herbs'] = dict(frame=[72, 90], anchor_bottom_center=s7['parts']['basil_seed']['anchor_bottom_center'],
+    mh = manifest('plants/plants.json')
+    mh['herbs'] = dict(frame=[72, 90], anchor_bottom_center=s7['parts']['basil_seed']['anchor_bottom_center'],
                              planter=dict(file='herb_layers/planter_36x33.png', offset_in_frame=[px, py]), stages={})
     for herb, (keys, fol, st) in herbs.items():
         frames = []
@@ -172,25 +184,118 @@ def round2():
             if not k.endswith('_seed'):
                 lname = 'herb_layers/%s_%d_%s_foliage_%dx%d.png' % (herb, i + 1, stage, top.shape[1], top.shape[0])
                 out(top, 'plants/' + lname)
-            MANIFEST['herbs']['stages'][k] = dict(frame=fname, layer=lname, offset_in_frame=[ox, oy])
+            mh['herbs']['stages'][k] = dict(frame=fname, layer=lname, offset_in_frame=[ox, oy])
             frames.append(comp)
             raw = src(s7['parts'][k]['file'])
             p7.append((raw, comp))
         note('plant', '%s (5 growth stages, planter + foliage)' % herb, frames,
              dict(src=st['src'] + st_pl['src'], mean=st['mean'], max=max(st['max'], st_pl['max'])), 0, 16)
     REPORT[-1]['outline_pixels_fixed'] = fixed
-    sheet(p5, 5, 4, os.path.join(OUT, 'review', 'p05_hemp_growth_before_after.png'))
-    sheet(p6, 5, 2, os.path.join(OUT, 'review', 'p06_hemp_varieties_before_after.png'))
-    sheet(p7, 5, 3, os.path.join(OUT, 'review', 'p07_herb_growth_before_after.png'))
+    sheet(p5, 5, 4, os.path.join(REVIEW, 'p05_hemp_growth_before_after.png'))
+    sheet(p6, 5, 2, os.path.join(REVIEW, 'p06_hemp_varieties_before_after.png'))
+    sheet(p7, 5, 3, os.path.join(REVIEW, 'p07_herb_growth_before_after.png'))
 
 
-ROUNDS = {'2': round2}
+# ---------------------------------------------------------------- back walls and floor props (rounds 1 and 5)
+def walls(sheet_key, table, tag):
+    """table = [(part name, floor number, short name, ramps)]. Walls are full panels: no outline pass.
+    The flat sky colour of open-air walls arrives already cut out, so the game's own sky shows there.
+    Each wall is written twice: in plain master colours, and under veiled/ as the game shows it."""
+    parts = SLICES[sheet_key]['parts']
+    rows = []
+    for name, floor, short, ramps in table:
+        fname = 'w1_floor%02d_%s_336x104.png' % (floor, short)
+        raw, idx = clean('wall', 'w1_floor%02d_%s' % (floor, short), [(parts[name]['file'], 'walls/' + fname)],
+                         ramps, 32, edge=False)[0]
+        shown = veil(to_rgba(idx))
+        os.makedirs(os.path.join(OUT, 'walls', 'veiled'), exist_ok=True)
+        Image.fromarray(shown, 'RGBA').save(os.path.join(OUT, 'walls', 'veiled', fname))
+        mw = manifest('walls/walls.json')
+        mw.setdefault('walls', {})[fname] = dict(
+            world=1, floor=floor, size=[336, 104], open_sky=bool(parts[name].get('sky_removed')))
+        mw['veil'] = dict(colour=VEIL[0], alpha=VEIL[1], note='veiled/ holds each wall as the game shows it')
+        rows.append((raw, to_rgba(idx), shown))
+    # review sheet: raw, plain master colours, veiled
+    def on_bg(x):
+        o = np.zeros(x.shape[:2] + (3,), np.uint8)
+        o[:] = (247, 188, 102)
+        m = x[..., 3] == 255
+        o[m] = x[m][:, :3]
+        return np.repeat(np.repeat(o, 2, 0), 2, 1)
+    lines = []
+    for r in rows:
+        gap = np.full((208, 8, 3), 255, np.uint8)
+        lines.append(np.concatenate([on_bg(r[0]), gap, on_bg(r[1]), gap, on_bg(r[2])], 1))
+        lines.append(np.full((8, lines[-1].shape[1], 3), 255, np.uint8))
+    os.makedirs(REVIEW, exist_ok=True)
+    Image.fromarray(np.concatenate(lines[:-1], 0)).save(os.path.join(REVIEW, '%s_walls_raw_plain_veiled.png' % tag))
+
+
+def floor_props(sheet_key, table, folder, tag, cols):
+    """table = [(part name, class, budget, ramps, thin)]. Positions on the 360x120 floor go to the manifest."""
+    s = SLICES[sheet_key]
+    pairs = []
+    mf = manifest('props/%s/floor.json' % folder)
+    mf.update(size=[360, 120], baseline_y=s['native_baseline_y_exclusive'], parts={})
+    for name, cls, budget, ramps, thin in table:
+        part = s['parts'][name]
+        w, h = part['native_size']
+        sub = 'actors' if cls == 'actor' else 'props'
+        rel = '%s/%s/%s_%dx%d.png' % (sub, folder, name, w, h)
+        pairs += clean(cls, name, [(part['file'], rel)], ramps, budget, thin=thin)
+        mf['parts'][name] = dict(file='../../' + rel if cls == 'actor' else os.path.basename(rel),
+                                               size=[w, h], origin_on_floor=part['native_origin_on_sheet'], cls=cls)
+    sheet(pairs, cols, 4, os.path.join(REVIEW, '%s_before_after.png' % tag))
+
+
+# Back walls are snapped to plain master colours here. They are made quiet by the wall veil (see walls()).
+WALL = {'wood', 'cream', 'gold', 'stone', 'ash', 'steel', 'clay', 'lavender'}
+CUT = {'cream', 'gold-1', 'gold-2', 'gold-5', 'sage-4', 'sage-5'}
+DARKWOOD = {'wood-1', 'wood-2', 'wood-3', 'wood-4'}
+
+
+def round1():
+    walls('b01_01_backwalls_windowsill_balcony.png', [('windowsill_room', 1, 'windowsill', WALL | {'rose', 'sage'}),
+                                                     ('balcony_wall', 2, 'balcony', WALL | {'rose', 'sage'})], 'p01')
+    p = SLICES['b01_02_backwalls_backyard_shed.png']['parts']
+    walls('b01_02_backwalls_backyard_shed.png', [('backyard', 3, 'backyard', {'leaf', 'wood', 'clay', 'red', 'cream', 'gold', 'steel', 'stone'}),
+                                                ('garden_shed', 4, 'garden_shed', WALL)], 'p02')
+    walls('b01_03_backwalls_greenhouse_ropewalk.png', [('greenhouse', 5, 'greenhouse', {'steel', 'cream', 'stone-1', 'stone-2', 'teal-1', 'teal-2'}),
+                                                      ('ropewalk', 8, 'ropewalk', WALL)], 'p03')
+    floor_props('b01_04_floor03_hemp_patch_props.png', [
+        ('scarecrow_fence', 'prop', 16, {'wood', 'gold', 'cream', 'clay', 'red', 'sage'}, False),
+        ('tied_stook', 'prop', 16, CUT, False),
+        ('loaded_wheelbarrow', 'prop', 16, CUT | DARKWOOD | {'steel'}, False),
+        ('empty_raised_bed', 'prop', 16, {'wood', 'clay', 'gold'}, False),
+        ('tool_rack', 'prop', 16, {'wood', 'steel', 'ash', 'gold', 'clay'}, True),
+        ('barrel_and_watering_can', 'prop', 16, {'wood', 'steel', 'ash', 'gold', 'sky'}, False),
+        ('stool_crate_and_bell', 'prop', 16, {'wood', 'gold', 'cream'}, False),
+    ], 'floor03_hemp_patch', 'p04_hemp_patch_props', 4)
+
+
+def round5():
+    floor_props('b01_15_floor08_ropewalk_twine_shop.png', [
+        ('fibre_shelf', 'prop', 16, {'wood', 'cream', 'gold'}, False),
+        ('rope_wheel', 'prop', 16, {'wood', 'cream', 'gold', 'steel', 'stone'}, True),
+        ('crank_worker', 'actor', 24, {'skin', 'blush', 'wood', 'gold', 'cream', 'sage', 'clay', 'white'}, False),
+        ('rope_run_and_post', 'prop', 16, {'wood', 'cream', 'gold', 'steel', 'stone'}, True),
+        ('twine_bench', 'prop', 16, {'wood', 'cream', 'gold', 'steel', 'stone'}, False),
+        ('twine_worker', 'actor', 24, {'skin', 'blush', 'ash', 'white', 'rose-1', 'stone', 'cream', 'wood',
+                                       'gold', 'steel'}, False),
+        ('shop_counter_and_stool', 'prop', 16, {'wood', 'cream', 'gold', 'lavender', 'stone'}, False),
+    ], 'floor08_ropewalk', 'p15_ropewalk', 4)
+    walls('b01_16_backwalls_market_teahouse.png', [('farmers_market', 6, 'market', {'cream', 'stone-1', 'stone-2', 'stone-3', 'gold', 'lavender', 'rose',
+                                                                         'wood-1', 'wood-2'}),
+                                                  ('tea_house', 7, 'tea_house', WALL | {'sage'})], 'p16')
+
+
+ROUNDS = {'1': round1, '2': round2, '5': round5}
 ROUNDS[ROUND]()
-os.makedirs(os.path.join(OUT, 'review'), exist_ok=True)
-json.dump(REPORT, open(os.path.join(OUT, 'review', 'report.json'), 'w'), indent=1)
-if MANIFEST:
-    os.makedirs(os.path.dirname(os.path.join(OUT, MANIFEST_FILE[ROUND])), exist_ok=True)
-    json.dump(MANIFEST, open(os.path.join(OUT, MANIFEST_FILE[ROUND]), 'w'), indent=1)
+os.makedirs(REVIEW, exist_ok=True)
+json.dump(REPORT, open(os.path.join(REVIEW, 'report.json'), 'w'), indent=1)
+for rel, data in MANIFESTS.items():
+    os.makedirs(os.path.dirname(os.path.join(OUT, rel)), exist_ok=True)
+    json.dump(data, open(os.path.join(OUT, rel), 'w'), indent=1)
 for r in REPORT:
     print('%-6s %-46s %3dx%-3d colours %2d -> %2d (budget %d %s) outline fixed %3d  move mean %.3f max %.3f' % (
         r['cls'], r['name'], r['size'][0], r['size'][1], r['source_colours'], r['colours'], r['budget'],

@@ -52,7 +52,7 @@ def allowed(ramps):
     return np.array([(n.rsplit('-', 1)[0] in ramps) or (n in ramps) for n in P_NAMES])
 
 
-def snap_map(colors, ramps, overrides=None, green_lift=0.0):
+def snap_map(colors, ramps, overrides=None, green_lift=0.0, all_lift=0.0):
     """Nearest master colour for each source colour, inside the allowed ramps.
     Greens stay green, blues stay blue and purples stay purple when the sprite has such a ramp.
     green_lift raises the lightness of green source colours before matching. The sage ramp is
@@ -60,9 +60,11 @@ def snap_map(colors, ramps, overrides=None, green_lift=0.0):
     lands one step too dark; a small lift keeps the canes pale."""
     allow = allowed(ramps)
     lab = rgb_to_oklab(colors.astype(np.float64))
-    if green_lift:
+    if green_lift or all_lift:
+        # all_lift (negative) is for back walls, which must sit a step darker than the props
         lab = lab.copy()
         lab[hue_class(lab) == 2, 0] += green_lift
+        lab[..., 0] += all_lift
     d = np.sqrt(((lab[:, None, :] - P_LAB[None, :, :]) ** 2).sum(-1))
     d[:, ~allow] = 9
     cls = hue_class(lab)
@@ -80,11 +82,11 @@ def snap_map(colors, ramps, overrides=None, green_lift=0.0):
     return near, d.min(1)
 
 
-def snap_many(imgs, ramps, overrides=None, green_lift=0.0):
+def snap_many(imgs, ramps, overrides=None, green_lift=0.0, all_lift=0.0):
     """One shared colour map for several images, so frames of one thing cannot flicker.
     Returns the index images and the stats of the move."""
     cols = np.unique(np.concatenate([im[im[..., 3] == 255][:, :3] for im in imgs]), axis=0)
-    near, dist = snap_map(cols, ramps, overrides, green_lift)
+    near, dist = snap_map(cols, ramps, overrides, green_lift, all_lift)
     key = (cols[:, 0].astype(np.int64) << 16) | (cols[:, 1].astype(np.int64) << 8) | cols[:, 2]
     out, total, moved = [], 0, 0.0
     for im in imgs:
@@ -223,6 +225,21 @@ def to_rgba(idx):
     a = idx >= 0
     out[a, :3] = P_RGB[idx[a]]
     out[a, 3] = 255
+    return out
+
+
+VEIL = ('stone-3', 0.25)
+
+
+def veil(rgba, colour=VEIL[0], alpha=VEIL[1]):
+    """The wall veil: every wall pixel moves a quarter of the way to stone-3.
+    Back walls are drawn in plain master colours and shown through this veil, which makes them
+    quieter, a little darker and cooler than the props in front. Each master colour has exactly
+    one veiled twin, so a veiled wall still holds at most as many colours as before."""
+    c = P_RGB[P_NAMES.index(colour)].astype(np.float64)
+    out = rgba.copy()
+    out[..., :3] = np.round((1 - alpha) * rgba[..., :3].astype(np.float64) + alpha * c).astype(np.uint8)
+    out[rgba[..., 3] == 0] = 0
     return out
 
 

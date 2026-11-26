@@ -1,0 +1,93 @@
+{
+ "size": [
+  360,
+  120
+ ],
+ "baseline_y": 88,
+ "parts": {
+  "scarecrow_fence": {
+   "file": "scarecrow_fence_46x56.png",
+   "size": [
+    46,
+    56
+   ],
+   "origin_on_floor": [
+    5,
+    32
+   ],
+   "cls": "prop"
+  },
+  "tied_stook": {
+   "file": "tied_stook_24x30.png",
+   "size": [
+    24,
+    30
+   ],
+   "origin_on_floor": [
+    54,
+    58
+   ],
+   "cls": "prop"
+  },
+  "loaded_wheelbarrow": {
+   "file": "loaded_wheelbarrow_44x37.png",
+   "size": [
+    44,
+    37
+   ],
+   "origin_on_floor": [
+    81,
+    51
+   ],
+   "cls": "prop"
+  },
+  "empty_raised_bed": {
+   "file": "empty_raised_bed_116x18.png",
+   "size": [
+    116,
+    18
+   ],
+   "origin_on_floor": [
+    128,
+    70
+   ],
+   "cls": "prop"
+  },
+  "tool_rack": {
+   "file": "tool_rack_37x36.png",
+   "size": [
+    37,
+    36
+   ],
+   "origin_on_floor": [
+    247,
+    52
+   ],
+   "cls": "prop"
+  },
+  "barrel_and_watering_can": {
+   "file": "barrel_and_watering_can_34x24.png",
+   "size": [
+    34,
+    24
+   ],
+   "origin_on_floor": [
+    287,
+    64
+   ],
+   "cls": "prop"
+  },
+  "stool_crate_and_bell": {
+   "file": "stool_crate_and_bell_31x23.png",
+   "size": [
+    31,
+    23
+   ],
+   "origin_on_floor": [
+    324,
+    65
+   ],
+   "cls": "prop"
+  }
+ }
+}
