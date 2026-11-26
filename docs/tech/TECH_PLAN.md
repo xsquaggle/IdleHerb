@@ -1,6 +1,6 @@
 # Sprout Tower tech plan
 
-Phase 0 deliverable. Owner: Engine Architect. Date: 2026-11-25.
+Phase 0 deliverable. Owner: Engine Architect. Date: 2026-11-25. Updated 2026-11-26 for design version 0.2 ([GDD](../design/GDD.md), [content tables](../design/CONTENT.md)), the final style bible and Lawson's answers.
 
 This page is the summary. Each decision links to a short document with the detail a programmer needs.
 
@@ -103,11 +103,13 @@ Things that would cost money, none of which are in the plan: code signing (see b
 
 1. This plan reviewed by the coordinator.
 2. The scaffold (Phase 1 Step 0 in [09](09-repo-layout-and-ownership.md)). If the balance simulator is written in Phase 0, the scaffold should land first so the simulator is built inside `packages/core` and its formulas become the game's.
-3. From Lawson: nothing is required. One optional switch is described below.
+3. From Lawson: one setting to switch on for the phone preview, described below. Nothing else.
 
-## Question for Lawson
+## Lawson's answers (2026-11-26)
 
-**Do you want a playable preview you can open on your phone?** After each merge the game would be published at a public web address (the repository is already public), together with a readable page of the current game data and a screenshot gallery. It is free and needs you to switch on one setting in the repository (Settings, Pages, Source: GitHub Actions). If you would rather not have a public link, previews will be screenshots, videos and Windows builds only, and nothing else in the plan changes.
+- **A playable preview at a public web link: yes.** The publishing workflow and a holding page are in the repository. The address is `https://xsquaggle.github.io/IdleHerb/`. It shows the holding page until the first playable build in Phase 1, then the game, a readable page of the current game data and a screenshot gallery after every merge. It needs one setting switched on once: open `https://github.com/xsquaggle/IdleHerb/settings/pages` in a browser, and under "Build and deployment" set "Source" to "GitHub Actions". Detail in [08](08-build-test-release.md).
+- **One fixed manager per floor**, not cards seated at any desk. The Game Designer is revising the GDD. The manager table in [04](04-content-pipeline.md) keeps a `floor` field and takes its other fields from that revision.
+- **Six worlds in the end.** Worlds are rows in the content tables, so this changes no part of the plan.
 
 ## Documents
 
