@@ -63,6 +63,8 @@ export interface Sample {
   worlds: WorldSample[];
   cards: number;
   managerLevels: Record<string, number>;
+  /** Mean card level of the managers met so far, per world (0 where none is met). */
+  managerLevelByWorld: number[];
   research: number;
   heirlooms: number;
   achievements: number;
@@ -358,6 +360,15 @@ class Recorder {
       seen[m.rarity] = (seen[m.rarity] ?? 0) + 1;
     }
     for (const r of Object.keys(managerLevels)) managerLevels[r] = managerLevels[r]! / seen[r]!;
+    const lvSum = s.worlds.map(() => 0);
+    const lvN = s.worlds.map(() => 0);
+    for (const m of g.content.managers) {
+      const own = s.cards[m.id];
+      if (!own) continue;
+      lvSum[m.world] = (lvSum[m.world] ?? 0) + own.level;
+      lvN[m.world] = (lvN[m.world] ?? 0) + 1;
+    }
+    const managerLevelByWorld = lvSum.map((v, i) => (lvN[i]! > 0 ? v / lvN[i]! : 0));
 
     // The frontier world's best open floor stands for "a typical floor".
     const ws = s.worlds[frontier]!;
@@ -391,7 +402,7 @@ class Recorder {
       t: s.time, play: s.playTime, level: s.level, gems: s.gems, pollen: s.pollen, insight: s.insight,
       compostEra: l10(s.compostEra), compostAll: l10(s.compostAllTime), ribbons: l10(s.ribbonsClaimed),
       festivals: s.festivals, replants: g.counter('replants'), frontier, worlds,
-      cards: Object.keys(s.cards).length, managerLevels,
+      cards: Object.keys(s.cards).length, managerLevels, managerLevelByWorld,
       research: Object.keys(s.researchDone).length, heirlooms: Object.keys(s.heirlooms).length, achievements: s.achievementCount,
       offlineEff: wd.offlineEfficiency, offlineCapH: d.global.offlineCapSec / 3600,
       tapFactor6: tapIncomeFactor(t.HOLD_RATE, wdTap.tapPower, wdTap.comboCap, wdTap.critChance, wdTap.critMult, t),

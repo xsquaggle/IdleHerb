@@ -1,0 +1,31 @@
+id: p4-gates
+tuning:
+  FIRST_REPLANT_MIN: 460
+  RIBBON_C0: 550000
+title: Gate prices fitted to the GDD 17.6 pacing table (active profile)
+why: |-
+  Fitted by "pnpm sim calibrate" on top of p1-levels, p2-taps, p3-managers.
+  First Replant: 60.0 -> 4.6e+2 (target 55 min, lands 55 min; was 25 min)
+  World 2: 5.00e+19 -> 3.7e+22 (target 12.0 h, lands 11.7 h; was 6.1 h)
+  World 3: 2.00e+19 -> 9.2e+22 (target day 2.60, lands day 2.48; was 14.0 h)
+  First Harvest Festival: 5.00e+4 -> 5.5e+5 (target day 4.10, lands day 4.24; was day 2.48)
+  World 4: 1.00e+24 -> 2.6e+25 (target day 6.70, lands day 6.70; was day 6.13)
+  World 5: 2.00e+29 -> 2.6e+29 (target day 12.20, lands day 12.15; was day 12.14)
+  World 6: 1.00e+34 -> 6.1e+30 (target day 19.50, lands day 19.49; was day 33.26)
+  The World 6 deed comes down from 600 to 250 Ribbons first: at 600 even a free ticket lands World 6 on day 23.4, because the slower Ribbons of RIBBON_C0 = 550000 reach 600 too late.
+rows:
+  worlds:
+    world.w1:
+      ticket: "3.7e22"
+    world.w2:
+      ticket: "9.2e22"
+    world.w3:
+      ticket: "2.6e25"
+    world.w4:
+      ticket: "2.6e29"
+    world.w5:
+      ticket: "6.1e30"
+  ribbonShop:
+    shop.ribbon.deed_nebula:
+      costs:
+        - 250

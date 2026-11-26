@@ -142,7 +142,11 @@ export async function calibrate(argv: string[]): Promise<void> {
       // No earlier fit.
     }
   }
-  const notes: string[] = [];
+  // Keep the notes of the gates that are not fitted again.
+  const notes: string[] = (fitted.why ?? '')
+    .split('\n')
+    .slice(1)
+    .filter((l) => l.trim() !== '' && !STEPS.some((st) => (!only || only.has(st.id)) && l.startsWith(`${st.label}:`)));
 
   for (const step of STEPS) {
     if (only && !only.has(step.id)) continue;
@@ -195,6 +199,13 @@ export async function calibrate(argv: string[]): Promise<void> {
         }
         if (seen.get(hi)! <= target) hi = next[next.length - 1]!;
       }
+    }
+    // Nothing in reach lands the gate in time: some other number binds it. Leave this one alone.
+    if (seen.get(lo)! > target) {
+      const line = `${step.label}: not fitted. Even ${(10 ** lo).toPrecision(2)} lands ${show(seen.get(lo)!)} against ${show(target)}, so another gate binds it.`;
+      notes.push(line);
+      console.log(line);
+      continue;
     }
     // Narrow the bracket: four points inside it per round.
     for (let round = 0; round < 4 && hi - lo > 0.04; round++) {

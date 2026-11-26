@@ -62,7 +62,7 @@ const TIME_TICKS: [number, string][] = [
 
 export interface GatePanel {
   title: string;
-  rows: { label: string; target: number | null; points: { series: string; t: number | null }[] }[];
+  rows: { label: string; target: number | null; targets?: { series: string; t: number }[]; points: { series: string; t: number | null }[] }[];
 }
 
 /**
@@ -78,7 +78,8 @@ export function gateChart(title: string, subtitle: string, panels: GatePanel[], 
   const t1 = Math.log10(75 * 86400);
   const x = (t: number): number => left + ((Math.log10(Math.max(t, 240)) - t0) / (t1 - t0)) * (w - left - right);
   let y = 96;
-  let body = legend(20, 70, [...series.map((s) => ({ name: s.name, color: s.color })), { name: 'GDD target', color: C.neutral, hollow: true }]);
+  const perSeries = panels.some((p) => p.rows.some((r) => r.targets?.length));
+  let body = legend(20, 70, [...series.map((s) => ({ name: s.name, color: s.color })), perSeries ? { name: 'ring: GDD target, same colour', color: C.neutral, hollow: true } : { name: 'GDD target', color: C.neutral, hollow: true }]);
   for (const p of panels) {
     body += text(20, y, p.title, { size: 13, fill: C.ink, weight: 600 });
     const top = y + 8;
@@ -92,8 +93,10 @@ export function gateChart(title: string, subtitle: string, panels: GatePanel[], 
       body += text(left - 12, cy + 4, row.label, { anchor: 'end', fill: C.ink });
       const xs = row.points.filter((q) => q.t !== null).map((q) => x(q.t!));
       if (row.target !== null) xs.push(x(row.target));
+      for (const q of row.targets ?? []) xs.push(x(q.t));
       if (xs.length > 1) body += `<line x1="${n1(Math.min(...xs))}" y1="${cy}" x2="${n1(Math.max(...xs))}" y2="${cy}" stroke="${C.axis}" stroke-width="2"/>`;
       if (row.target !== null) body += dot(x(row.target), cy, C.neutral, true);
+      for (const q of row.targets ?? []) body += dot(x(q.t), cy, series.find((k) => k.key === q.series)!.color, true);
       for (const q of row.points) {
         const s = series.find((k) => k.key === q.series)!;
         if (q.t !== null) body += dot(x(q.t), cy, s.color);
@@ -162,25 +165,26 @@ export interface BudgetPanel {
   title: string;
   days: number[];
   budget: number[];
-  measured: (number | null)[];
+  measured: { name: string; color: string; values: (number | null)[] }[];
 }
 
 /** Budget against measured, one small panel per multiplier, log scale. */
-export function budgetChart(title: string, subtitle: string, panels: BudgetPanel[], measuredName: string): string {
+export function budgetChart(title: string, subtitle: string, panels: BudgetPanel[]): string {
   const pw = 270;
   const ph = 230;
   const gap = 16;
   const w = 20 * 2 + panels.length * pw + (panels.length - 1) * gap;
-  let body = legend(20, 70, [{ name: measuredName, color: SERIES.active, line: true }, { name: 'Budget (GDD 17.6)', color: C.neutral, line: true }]);
+  const names = panels[0]!.measured.map((m) => ({ name: m.name, color: m.color, line: true }));
+  let body = legend(20, 70, [...names, { name: 'Budget (GDD 17.6)', color: C.neutral, line: true }]);
   panels.forEach((p, k) => {
     const x0 = 20 + k * (pw + gap);
     const left = x0 + 46;
     const rightEdge = x0 + pw - 12;
     const top = 112;
     const bottom = top + ph - 60;
-    const vals = [...p.budget, ...p.measured.filter((v): v is number => v !== null)];
+    const vals = [...p.budget, ...p.measured.flatMap((m) => m.values.filter((v): v is number => v !== null && v > 0))];
     const lo = Math.floor(Math.log10(Math.min(...vals)));
-    const hi = Math.ceil(Math.log10(Math.max(...vals)) + 0.05);
+    const hi = Math.max(lo + 1, Math.ceil(Math.log10(Math.max(...vals)) + 0.05));
     const x = (i: number): number => left + (i / (p.days.length - 1)) * (rightEdge - left);
     const y = (v: number): number => bottom - ((Math.log10(v) - lo) / (hi - lo)) * (bottom - top);
     body += text(x0, 96, p.title, { size: 13, fill: C.ink, weight: 600 });
@@ -188,22 +192,36 @@ export function budgetChart(title: string, subtitle: string, panels: BudgetPanel
       body += `<line x1="${left}" y1="${n1(y(10 ** e))}" x2="${rightEdge}" y2="${n1(y(10 ** e))}" stroke="${e === lo ? C.axis : C.grid}"/>`;
       body += text(left - 6, y(10 ** e) + 4, e >= 3 ? `${10 ** (e - 3)}K` : String(10 ** e), { size: 10, anchor: 'end' });
     }
-    p.days.forEach((d, i) => (body += text(x(i), bottom + 16, i === 0 ? 'day 0' : String(d), { size: 10, anchor: 'middle' })));
-    const path = (vs: (number | null)[]): string => vs.map((v, i) => (v === null ? '' : `${i === 0 ? 'M' : 'L'}${n1(x(i))},${n1(y(v))}`)).join('');
-    body += `<path d="${path(p.budget)}" fill="none" stroke="${C.neutral}" stroke-width="2" stroke-linejoin="round"/>`;
-    body += `<path d="${path(p.measured)}" fill="none" stroke="${SERIES.active}" stroke-width="2" stroke-linejoin="round"/>`;
-    p.measured.forEach((v, i) => {
-      if (v !== null) body += `<circle cx="${n1(x(i))}" cy="${n1(y(v))}" r="4" fill="${SERIES.active}" stroke="${C.surface}" stroke-width="2"/>`;
-    });
+    p.days.forEach((d, i) => (body += text(x(i), bottom + 16, i === 0 ? `day ${d}` : String(d), { size: 10, anchor: 'middle' })));
+    const path = (vs: (number | null)[]): string => {
+      let d = '';
+      let pen = false;
+      vs.forEach((v, i) => {
+        if (v === null || v <= 0) {
+          pen = false;
+          return;
+        }
+        d += `${pen ? 'L' : 'M'}${n1(x(i))},${n1(y(v))}`;
+        pen = true;
+      });
+      return d;
+    };
+    body += `<path d="${path(p.budget)}" fill="none" stroke="${C.neutral}" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>`;
+    for (const m of p.measured) {
+      body += `<path d="${path(m.values)}" fill="none" stroke="${m.color}" stroke-width="2" stroke-linejoin="round"/>`;
+      m.values.forEach((v, i) => {
+        if (v !== null && v > 0) body += `<circle cx="${n1(x(i))}" cy="${n1(y(v))}" r="4" fill="${m.color}" stroke="${C.surface}" stroke-width="2"/>`;
+      });
+    }
   });
   return frame(w, 112 + ph - 20, title, subtitle, body);
 }
 
 /** One row of day cells per play style: darker means more happened that day, an empty cell means nothing did. */
 export function stripChart(title: string, subtitle: string, rows: { name: string; days: number[] }[], bins: number[]): string {
-  const w = 860;
-  const left = 80;
-  const cell = 12;
+  const w = 900;
+  const left = 140;
+  const cell = 11;
   const gapX = 1;
   const rowH = 30;
   const top = 100;
