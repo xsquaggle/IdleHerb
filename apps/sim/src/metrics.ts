@@ -85,6 +85,88 @@ export function unlockTime(r: RunResult, id: string): number | null {
   return r.unlocks.find((u) => u.id === id)?.t ?? null;
 }
 
+/** A target as a window of days: on target anywhere inside it. */
+export interface Window {
+  lo: number;
+  hi: number;
+  /** Where the chart draws the target ring. */
+  at: number;
+  label: string;
+}
+
+const dayLabel = (d: number): string => when(d * DAY);
+/** A point target from the GDD 17.6 table: a third early to half late counts as on target. */
+const around = (d: number): Window => ({ lo: d * 0.67, hi: d * 1.5, at: d, label: dayLabel(d) });
+/** "By day d": up to d, and no more than a third earlier. */
+const by = (d: number): Window => ({ lo: d * 0.67, hi: d, at: d, label: `by ${dayLabel(d)}` });
+
+/**
+ * The pacing targets in force: the GDD 17.6 table with the Game Designer's
+ * rulings of 2026-11-26 (active first Replant 30 to 55 minutes, every first
+ * Replant inside day 1, new idle targets, Festival counts as ranges).
+ */
+export const TARGETS: Record<string, { topFloor: Window; replant: Window; worlds: (Window | null)[]; festival: Window; festivalsBy30: [number, number] }> = {
+  active: {
+    topFloor: around(32 / 1440),
+    replant: { lo: 30 / 1440, hi: 55 / 1440, at: 41 / 1440, label: '30 to 55 min' },
+    worlds: [null, around(0.5), around(2.6), around(6.7), around(12.2), around(19.5)],
+    festival: around(4.1),
+    festivalsBy30: [9, 11],
+  },
+  mixed: {
+    topFloor: around(30 / 1440),
+    replant: { lo: (4.4 / 24) * 0.67, hi: 1, at: 4.4 / 24, label: 'inside day 1' },
+    worlds: [null, around(1.4), around(4.1), around(10.1), around(18.1), around(30.5)],
+    festival: around(5.4),
+    festivalsBy30: [9, 11],
+  },
+  idle: {
+    topFloor: around(11 / 24),
+    replant: { lo: (16 / 24) * 0.67, hi: 1, at: 16 / 24, label: 'inside day 1' },
+    worlds: [null, by(8), by(13), by(20), by(26), { lo: 30, hi: 60, at: 30, label: 'day 30 or later' }],
+    festival: by(16),
+    festivalsBy30: [6, 8],
+  },
+};
+
+/** How a measured time (seconds) sits against a window of days. */
+export function windowVerdict(measured: number | null, w: Window): { text: string; ok: boolean } {
+  if (measured === null) return { text: 'not reached', ok: false };
+  const d = measured / DAY;
+  if (d < w.lo) return { text: `${(w.lo / d).toFixed(1)} times early`, ok: false };
+  if (d > w.hi) return { text: `${(d / w.hi).toFixed(1)} times late`, ok: false };
+  return { text: 'on target', ok: true };
+}
+
+/**
+ * The Festival rhythm the Game Designer set on 2026-11-26: gaps of 1 to 3 days
+ * up to day 10, 3 to 6 days up to day 30, 5 to 9 days after, never more than
+ * 10, and no gap more than about twice the one before.
+ */
+export function rhythmBreaks(r: RunResult): string[] {
+  const out: string[] = [];
+  const gaps = festivalGaps(r);
+  gaps.forEach((g, i) => {
+    const [lo, hi] = g.from < 10 ? [1, 3] : g.from < 30 ? [3, 6] : [5, 9];
+    const where = `day ${g.from.toFixed(1)}`;
+    if (g.days > 10) out.push(`${g.days.toFixed(1)} days from ${where}${g.open ? ' (still open at the end)' : ''}, above the 10-day limit`);
+    else if (!g.open && (g.days < lo * 0.8 || g.days > hi * 1.2)) out.push(`${g.days.toFixed(1)} days from ${where} (wanted ${lo} to ${hi})`);
+    const prev = gaps[i - 1];
+    if (prev && !g.open && g.days > 2.2 * prev.days && g.days > 2) out.push(`a jump from ${prev.days.toFixed(1)} to ${g.days.toFixed(1)} days at ${where}`);
+  });
+  return out;
+}
+
+/** Days after a world's first arrival when its lowest floor first reached each level (best ever, from the samples). */
+export function levelCrossings(r: RunResult, world: number, levels: number[]): (number | null)[] {
+  const arrival = world === 0 ? 0 : first(r, (e) => e.kind === 'world' && e.world === world && e.n === 1);
+  if (arrival === null) return levels.map(() => null);
+  return levels.map((lv) => {
+    const s = r.samples.find((x) => (x.worlds[world]?.best ?? 0) >= lv);
+    return s ? Math.max(0, (s.t - arrival) / DAY) : null;
+  });
+}
+
 /** How a measured time compares with its target. Within a third early or a half late counts as on target. */
 export function verdictOf(measured: number | null, target: number): { ratio: number | null; text: string; ok: boolean } {
   if (measured === null) return { ratio: null, text: 'not reached', ok: false };

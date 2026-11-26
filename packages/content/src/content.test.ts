@@ -27,7 +27,7 @@ describe('content tables', () => {
     const files = readdirSync(PROPOSALS).filter((f) => f.endsWith('.yaml') && !f.startsWith('tmp-'));
     expect(files.length).toBeGreaterThan(0);
     for (const f of files) expect(() => loadContent({ overlays: [readOverlay(join(PROPOSALS, f))] })).not.toThrow();
-    const all = ['p1-levels', 'p2-taps', 'p3-managers', 'p4-gates'].map((id) => readOverlay(join(PROPOSALS, `${id}.yaml`)));
+    const all = ['p1-levels', 'p2-taps', 'p4-gates'].map((id) => readOverlay(join(PROPOSALS, `${id}.yaml`)));
     expect(() => loadContent({ overlays: all })).not.toThrow();
   });
 

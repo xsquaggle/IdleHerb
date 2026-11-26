@@ -2,7 +2,7 @@
  * Writes docs/balance/REPORT.md, its charts (docs/balance/charts/*.svg) and the
  * CSV timelines (docs/balance/data/) from the runs in apps/sim/out/.
  *
- *   pnpm sim report        after `pnpm sim suite --proposal p1-levels,p2-taps,p3-managers,p4-gates`
+ *   pnpm sim report        after `pnpm sim suite --proposal p1-levels,p2-taps,p4-gates`
  *   pnpm sim               runs everything, then this
  *
  * Every number in the report is read from a run. The words around the numbers
@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 import { loadRaw, readOverlay, type Overlay } from '@sprout/content';
 import { SERIES, barChart, budgetChart, gateChart, lineChart, stripChart, type GatePanel } from './charts';
 import {
-  BUDGET, DAY, HOUR, MIN, PACING, budgetAt, compostGrowth, countBy, festivalGaps, floorTime, gates, levelAt,
+  BUDGET, DAY, HOUR, MIN, TARGETS, budgetAt, levelCrossings, rhythmBreaks, windowVerdict, type Window, compostGrowth, countBy, festivalGaps, floorTime, gates, levelAt,
   levelTime, load, longestBeatGap, progressPerDay, sampleAt, sessionAverage, totalXp, unlockTime, verdictOf, when, type Gates, type Loaded,
 } from './metrics';
 import type { RunResult } from './run';
@@ -34,10 +34,8 @@ const DATA = join(DOCS, 'data');
 const VERDICT = {
   /** Open-game time with nothing to buy that counts as a dead zone. */
   quietMinutes: 30,
-  /** GDD 17.6: after week 2 Festivals "stretch to every three to eight days". */
-  festivalGapDays: 8,
-  /** Festivals by day 30 within this share of the target count as on target. */
-  festivalCountTolerance: 0.25,
+  /** The Game Designer's rhythm (2026-11-26): no gap between Festivals above 10 days. */
+  festivalGapDays: 10,
   /** Growth per week may rise by this factor before it counts as a runaway. */
   runawayRise: 1.2,
 };
@@ -80,18 +78,22 @@ interface GateRow {
   key: string;
   label: string;
   get: (g: Gates) => number | null;
+  win: (p: ProfileId) => Window;
+  /** Where the chart draws the target, in seconds. */
   target: (p: ProfileId) => number;
 }
 
+const gate = (key: string, label: string, get: (g: Gates) => number | null, win: (p: ProfileId) => Window): GateRow => ({ key, label, get, win, target: (p) => win(p).at * DAY });
+
 const GATE_ROWS: GateRow[] = [
-  { key: 'topFloor', label: 'Top floor of Thymeford', get: (g) => g.topFloor, target: (p) => PACING[p]!.topFloor * DAY },
-  { key: 'replant', label: 'First Replant', get: (g) => g.replant, target: (p) => PACING[p]!.replant * DAY },
-  { key: 'w2', label: 'World 2', get: (g) => g.worlds[1] ?? null, target: (p) => PACING[p]!.worlds[1]! * DAY },
-  { key: 'w3', label: 'World 3', get: (g) => g.worlds[2] ?? null, target: (p) => PACING[p]!.worlds[2]! * DAY },
-  { key: 'festival', label: 'First Harvest Festival', get: (g) => g.festival, target: (p) => PACING[p]!.festival * DAY },
-  { key: 'w4', label: 'World 4', get: (g) => g.worlds[3] ?? null, target: (p) => PACING[p]!.worlds[3]! * DAY },
-  { key: 'w5', label: 'World 5', get: (g) => g.worlds[4] ?? null, target: (p) => PACING[p]!.worlds[4]! * DAY },
-  { key: 'w6', label: 'World 6', get: (g) => g.worlds[5] ?? null, target: (p) => PACING[p]!.worlds[5]! * DAY },
+  gate('topFloor', 'Top floor of Thymeford', (g) => g.topFloor, (p) => TARGETS[p]!.topFloor),
+  gate('replant', 'First Replant', (g) => g.replant, (p) => TARGETS[p]!.replant),
+  gate('w2', 'World 2', (g) => g.worlds[1] ?? null, (p) => TARGETS[p]!.worlds[1]!),
+  gate('w3', 'World 3', (g) => g.worlds[2] ?? null, (p) => TARGETS[p]!.worlds[2]!),
+  gate('festival', 'First Harvest Festival', (g) => g.festival, (p) => TARGETS[p]!.festival),
+  gate('w4', 'World 4', (g) => g.worlds[3] ?? null, (p) => TARGETS[p]!.worlds[3]!),
+  gate('w5', 'World 5', (g) => g.worlds[4] ?? null, (p) => TARGETS[p]!.worlds[4]!),
+  gate('w6', 'World 6', (g) => g.worlds[5] ?? null, (p) => TARGETS[p]!.worlds[5]!),
 ];
 
 interface Check {
@@ -106,13 +108,13 @@ function checks(r: RunResult, p: ProfileId): Check[] {
   const g = gates(r);
   const out: Check[] = GATE_ROWS.map((row) => {
     const m = row.get(g);
-    const v = verdictOf(m, row.target(p));
-    return { label: row.label, measured: when(m), target: when(row.target(p)), verdict: v.text, ok: v.ok };
+    const v = windowVerdict(m, row.win(p));
+    return { label: row.label, measured: when(m), target: row.win(p).label, verdict: v.text, ok: v.ok };
   });
   const n = countBy(r, 'festival', 0, 30 * DAY);
-  const want = PACING[p]!.festivalsBy30;
-  const ok = Math.abs(n - want) <= want * VERDICT.festivalCountTolerance;
-  out.push({ label: 'Festivals by day 30', measured: String(n), target: String(want), verdict: ok ? 'on target' : n < want ? `${want - n} short` : `${n - want} too many`, ok });
+  const [lo, hi] = TARGETS[p]!.festivalsBy30;
+  const ok = n >= lo && n <= hi;
+  out.push({ label: 'Festivals by day 30', measured: String(n), target: `${lo} to ${hi}`, verdict: ok ? 'on target' : n < lo ? `${lo - n} short` : `${n - hi} too many`, ok });
   return out;
 }
 
@@ -192,7 +194,7 @@ function verdictSection(R: Runs): string {
   };
   const b = tally(R.base);
   const f = R.fix ? tally(R.fix) : null;
-  out.push(`**Pacing targets (GDD 17.6).** With the GDD's numbers ${b.ok} of ${b.total} checks are on target (within a third early or half late). ${f ? `With the proposed numbers ${f.ok} of ${f.total} are.` : ''}`);
+  out.push(`**Pacing targets (GDD 17.6).** With the GDD's numbers ${b.ok} of ${b.total} checks are on target. The targets are the GDD 17.6 table with the Game Designer's rulings of 2026-11-26 (first Replant inside day 1 for everyone, active first Replant 30 to 55 minutes, new idle targets, Festival counts as ranges). A point target counts as met from a third early to half late. ${f ? `With the proposed numbers ${f.ok} of ${f.total} are.` : ''}`);
   out.push('');
   for (const p of PROFILES) {
     const miss = b.misses[p];
@@ -221,7 +223,7 @@ function verdictSection(R: Runs): string {
       dz.push(`- ${NAME[p]}, ${label.toLowerCase()}: longest open-game stretch with nothing to buy ${clock(r.quiet.seconds)} (day ${(r.quiet.endedAt / DAY).toFixed(1)}); ${empty} of the first 30 days with no progress event; longest gap between Festivals ${early ? `${early.days.toFixed(1)} days before day 14` : 'none before day 14'}, ${late ? `${late.days.toFixed(1)} days after day 14${late.open ? ' (still open when the run ended)' : ''}` : 'no Festival after day 14'}.`);
     }
   }
-  out.push(`**Dead zones.** ${dead ? `No dead zone inside a session in the first two weeks, but the game goes quiet later: either a session has more than ${VERDICT.quietMinutes} minutes with nothing to buy, or Festivals are more than ${VERDICT.festivalGapDays} days apart after day 14 (GDD 17.6 expects three to eight days).` : `None found: no session has more than ${VERDICT.quietMinutes} minutes with nothing to buy, and Festivals stay within ${VERDICT.festivalGapDays} days of each other.`}`);
+  out.push(`**Dead zones.** ${dead ? `No dead zone inside a session in the first two weeks, but the game goes quiet later: either a session has more than ${VERDICT.quietMinutes} minutes with nothing to buy, or two Festivals are more than ${VERDICT.festivalGapDays} days apart after day 14 (the Game Designer's limit).` : `None found: no session has more than ${VERDICT.quietMinutes} minutes with nothing to buy, and no two Festivals are more than ${VERDICT.festivalGapDays} days apart.`} The Festival rhythm against the designer's shape (gaps of 1 to 3 days to day 10, 3 to 6 to day 30, 5 to 9 after, no jump above about twice the gap before) is under "Dead zones".`);
   out.push('');
   out.push(...dz);
   out.push('');
@@ -271,7 +273,7 @@ function changesSection(R: Runs): string {
   if (!R.fix || R.proposals.length === 0) return '';
   const raw = loadRaw() as unknown as Record<string, unknown>;
   const out: string[] = ['## Recommended number changes', ''];
-  out.push(`Four overlays in \`apps/sim/proposals/\`, applied in this order: ${R.proposals.map((p) => `\`${p}\``).join(', ')}. Each is a plain list of table values. None is in the GDD tables yet: they are proposals for the Game Designer, who owns the numbers. The last one was fitted by \`pnpm sim calibrate\` on top of the first three, so the gate prices are only right together with them.`);
+  out.push(`${R.proposals.length} overlays in \`apps/sim/proposals/\`, applied in this order: ${R.proposals.map((p) => `\`${p}\``).join(', ')}. Each is a plain list of table values. None is in the GDD tables yet: the Game Designer accepted the level and tap changes and the method for the gates on 2026-11-26 and folds them into design 0.4. The gate overlay was fitted by \`pnpm sim calibrate\` on top of the others, so its prices are only right together with them. A manager change (lower level-1 values, larger steps) was tried and not accepted: managers multiply every play style alike, so they do not cause the spread between active and idle, and it halved manager power on days 30 and 60.`);
   out.push('');
   const rows: string[][] = [];
   for (const id of R.proposals) {
@@ -356,7 +358,7 @@ function gatesSection(R: Runs): string {
   for (const [label, set] of sets) {
     out.push(`**${label}**`);
     out.push('');
-    out.push(table(['Gate', ...PROFILES.map((p) => `${NAME[p]} (target)`)], GATE_ROWS.map((row) => [row.label, ...PROFILES.map((p) => `${when(row.get(gates(set[p])))} (${when(row.target(p))})`)])));
+    out.push(table(['Gate', ...PROFILES.map((p) => `${NAME[p]} (target)`)], GATE_ROWS.map((row) => [row.label, ...PROFILES.map((p) => `${when(row.get(gates(set[p])))} (${row.win(p).label})`)])));
     out.push('');
   }
   return out.join('\n');
@@ -390,6 +392,19 @@ function deadZoneSection(R: Runs): string {
     }
   }
   out.push(table(['Run', 'Days between Festivals, in order'], frows));
+  out.push('');
+  out.push('### Festival rhythm');
+  out.push('');
+  out.push('The Game Designer\'s shape (2026-11-26): first Festival about day 4 for the active player, then gaps of 1 to 3 days up to day 10, 3 to 6 days up to day 30 and 5 to 9 days after, never more than 10, and no gap more than about twice the one before. Listed: every gap that breaks it (a fifth of slack on the ranges).');
+  out.push('');
+  const rrows: string[][] = [];
+  for (const [label, set] of sets) {
+    for (const p of PROFILES) {
+      const br = rhythmBreaks(set[p]);
+      rrows.push([`${NAME[p]}, ${label === RULES_GDD ? 'GDD' : 'proposed'}`, br.length === 0 ? 'none' : br.join('; ')]);
+    }
+  }
+  out.push(table(['Run', 'Gaps that break the rhythm'], rrows));
   out.push('');
   return out.join('\n');
 }
@@ -427,7 +442,7 @@ function runawaySection(R: Runs): string {
   out.push(table(['Run', 'Highest tower income over steady income', 'World 5', 'World 6', 'Festivals in 10 days', 'Tap income over steady, day 7, at 6 taps/s', 'at 12 taps/s'], brows));
   out.push('');
   const last = sampleAt(R.base.active, R.base.active.meta.days * DAY);
-  out.push(`Reviewer note 1 asks for both tap rates with every ability in. On day ${R.base.active.meta.days} of the active run, taps pay ${fx(last.tapFactor6)} times steady income at 6 taps a second and ${fx(last.tapFactor12)} times at 12, before Boost and Growth Spurt. With the Boost at its cap of ${loadRaw().tuning.BOOST_CAP} and a Spurt (×${loadRaw().tuning.SPURT_SPEED_CAP ?? 4} at most) the ceiling is about ${Math.round(last.tapFactor12 * 15 * 4)} times steady income at the tap limit for the length of a Spurt. That is inside the reviewer's 450 to 650 range for a finished account and is only reached for 20 seconds at a time.`);
+  out.push(`Reviewer note 1 asks for both tap rates with every ability in. On day ${R.base.active.meta.days} of the active run, taps pay ${fx(last.tapFactor6)} times steady income at 6 taps a second and ${fx(last.tapFactor12)} times at 12, before Boost and Growth Spurt. A fully stacked moment multiplies that by at most 60 (Boost cap ${loadRaw().tuning.BOOST_CAP} times a Spurt of 4) for the 20 seconds a Spurt lasts, as GDD 13.5 rule 3 intends. That 20-second peak is not the same measure as the reviewer's 450 to 650, which is average active income over a session; the session averages are in the Boost table under the Game Designer's questions.`);
   out.push('');
   return out.join('\n');
 }
@@ -465,7 +480,7 @@ function worthSection(R: Runs): string {
   const out: string[] = ['## What each system is worth', ''];
   out.push('![Multipliers against the budget](charts/budget.svg)');
   out.push('');
-  out.push('The designer\'s pacing script (GDD 17.6) runs on a budget: what managers, taps and "everything else" (skills, plants, card levels, research, heirlooms, achievements, codex, Mastery) multiply income by on each day. The simulator measures the same three numbers on the active player\'s newest world: the income-weighted manager multiplier, the permanent multiplier on the best floor without Rich Soil and Golden Hour (those are modelled by the script itself), and tap income at 6 taps a second as a multiple of steady income.');
+  out.push('The designer\'s rough pacing script (GDD 17.6) ran on a budget: what managers, taps and "everything else" (skills, plants, card levels, research, heirlooms, achievements, codex, Mastery) multiply income by on each day. **The Game Designer retired this budget as a target on 2026-11-26**: the targets are the gate table and the Festival rhythm. It stays here as a reading aid. The simulator measures the same three numbers on the active player\'s newest world: the income-weighted manager multiplier, the permanent multiplier on the best floor without Rich Soil and Golden Hour (those are modelled by the script itself), and tap income at 6 taps a second as a multiple of steady income.');
   out.push('');
   const cols: [string, RunResult][] = [['GDD', R.base.active], ...(R.fix ? ([['proposed', R.fix.active]] as [string, RunResult][]) : [])];
   const rows: string[][] = [];
@@ -494,7 +509,7 @@ function worthSection(R: Runs): string {
     const r = R.get(`off-${sys}`);
     if (r) arows.push(line(`Without: ${SYSTEM_LABEL[sys]}`, r));
   }
-  out.push('On design 0.3 no single content system moves World 2 by more than a few percent of play time: the early rush comes from what every run has, the fixed managers of the top floors and tapping (see the budget table above).');
+  out.push('On design 0.3 no single content system moves World 2 by more than a few percent of play time: the early rush comes from what every run has, the fixed managers of the top floors and tapping (see the table above).');
   out.push('');
   out.push('Game time moves in steps of whole sessions (World 2 either arrives in a session or at the start of the next one), so the first column, minutes of play, is the fair comparison.');
   out.push('');
@@ -509,7 +524,7 @@ function designerAsksSection(R: Runs): string {
   // (a) Manager profit days 0 to 2.
   out.push('### Manager profit on the top floors, days 0 to 2 (CHANGES A.7, item 2)');
   out.push('');
-  out.push('With one fixed manager per floor the rarest managers sit on the floors that earn most. Measured on the active player\'s newest world: the median hired manager, the mean of the three highest hired floors, and the income-weighted mean (what managers multiply that world\'s income by).');
+  out.push('With one fixed manager per floor the rarest managers sit on the floors that earn most. Measured on the active player\'s newest world: the median hired manager, the mean of the three highest hired floors, and the income-weighted mean (what managers multiply that world\'s income by). The Game Designer kept the 0.3 manager numbers and retired the budget column as a target; the gate prices absorb the managers\' early strength.');
   out.push('');
   const mrows: string[][] = [];
   for (const t of [10 * MIN, HOUR, 6 * HOUR, DAY, 2 * DAY]) {
@@ -575,7 +590,23 @@ function designerAsksSection(R: Runs): string {
   };
   out.push(table(['Run', ...WORLD.slice(0, 3).map((w) => `${w}: star days`)], cols.map(([n, r]) => [`Active, ${n}`, stars(r, 0), stars(r, 1), stars(r, 2)])));
   out.push('');
-  out.push('Stars 1 to 3 still land together on arrival in each world, because `MASTERY_LEVELS` starts at 25, 50 and 100 and a new world\'s floors pass those levels within minutes. Setting the ten levels from cost is not done in this pass; the recommendation is under "Open items".');
+  out.push('Stars 1 to 3 still land together on arrival in each world, because `MASTERY_LEVELS` starts at 25, 50 and 100 and a new world\'s floors pass those levels within minutes.');
+  out.push('');
+  out.push('**For setting the ten levels.** Days after each world\'s first arrival when its lowest floor first reached each level (best ever; floors restart at every Festival). Measured at the end of each session, so a value is accurate to a session. A dash: not reached in 60 days.');
+  out.push('');
+  const LEVELS = [100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600];
+  const mrows2: string[][] = [];
+  const crossRuns: [string, RunResult][] = [['Active', (R.fix ?? R.base).active], ['Mixed', (R.fix ?? R.base).mixed]];
+  for (const [n, r] of crossRuns) {
+    for (let w = 0; w < WORLD.length; w++) {
+      const xs = levelCrossings(r, w, LEVELS);
+      if (xs.every((x) => x === null)) continue;
+      mrows2.push([`${n}, ${WORLD[w]}`, ...xs.map((x) => (x === null ? '-' : x.toFixed(1)))]);
+    }
+  }
+  out.push(table(['Run (proposed numbers)', ...LEVELS.map(String)], mrows2));
+  out.push('');
+  out.push('**Do the players keep levelling older worlds?** Yes, while the game is open. The simulated player buys in the world on screen every second and in every other open world every third second, and once the Auto-Gardener is bought (Ribbon Shop, after the first Festival) the game buys levels in every open world on its own while the game is open. Nothing is bought while the game is closed: offline earnings pile up as coins. Thymeford falling behind comes from both sides. The design restarts every world\'s floors at each Festival, and the Auto-Gardener spends only a share of coins (`AUTO_BUY_SHARE` = 0.10) each time. The player model buys in the world on screen four times as often as in the others, so most of each session goes to the newest world, as it would for a real player chasing the next ticket. A player who levels Thymeford on purpose would get its stars sooner, but nothing in the game asks them to.');
   out.push('');
   // (f) XP.
   out.push('### Where the XP comes from');
@@ -688,7 +719,7 @@ function writeCharts(R: Runs): void {
       const pts: [number, number][] = [[0, 0]];
       let n = 0;
       for (const e of r.timeline) if (e.kind === 'festival') pts.push([e.t / DAY, ++n]);
-      return { name: NAME[p], color: SERIES[p], points: pts, targets: [[PACING[p]!.festival, 1], [30, PACING[p]!.festivalsBy30]] as [number, number][] };
+      return { name: NAME[p], color: SERIES[p], points: pts, targets: [[TARGETS[p]!.festival.at, 1], [30, (TARGETS[p]!.festivalsBy30[0] + TARGETS[p]!.festivalsBy30[1]) / 2]] as [number, number][] };
     }), { step: true, xMax: 60, targetName: 'GDD target' });
   writeFileSync(join(CHARTS, 'festivals-gdd.svg'), fest(R.base, `Harvest Festivals, ${RULES_GDD}`));
   if (R.fix) writeFileSync(join(CHARTS, 'festivals-fix.svg'), fest(R.fix, `Harvest Festivals, ${RULES_FIX.toLowerCase()}`));
@@ -765,7 +796,7 @@ export async function writeReport(): Promise<void> {
     '',
     'Inputs: the GDD and CONTENT of design 0.3 (one fixed manager per floor), as tables in `packages/content/tables`. Three play styles from GDD 17.6 (active, mixed, idle), 60 days each, all six planned worlds, plus the four-world launch build. Proposed changes are overlays in `apps/sim/proposals/`.',
     '',
-    '**How to run.** From the repository root: `pnpm install`, then `pnpm sim` (every run and this report, about 4 minutes on 4 processors). One player as a printed timeline: `pnpm sim run --profile idle --days 14`. Fit the gate prices again after a design change: `pnpm sim calibrate --base p1-levels,p2-taps,p3-managers --out p4-gates`.',
+    '**How to run.** From the repository root: `pnpm install`, then `pnpm sim` (every run and this report, about 4 minutes on 4 processors). One player as a printed timeline: `pnpm sim run --profile idle --days 14`. Fit the gate prices again after a design change: `pnpm sim calibrate --base p1-levels,p2-taps --out p4-gates`.',
     '',
     verdictSection(R),
     changesSection(R),

@@ -43,15 +43,19 @@ interface Step {
 
 const firstWorld = (w: number) => (e: TimelineEvent) => e.kind === 'world' && e.world === w && e.n === 1;
 
-/** GDD 17.6 pacing table (days) and the first-hour table (first Replant). */
+/**
+ * GDD 17.6 pacing table (days) with the Game Designer's rulings of 2026-11-26:
+ * active first Replant 30 to 55 minutes, every first Replant inside day 1,
+ * and the new idle targets (a new world about every six days).
+ */
 export const STEPS: Step[] = [
-  { id: 'replant', label: 'First Replant', knob: { tuning: 'FIRST_REPLANT_MIN' }, target: { active: 55 * 60, mixed: 4.4 * 3600, idle: 16 * 3600 }, event: (e) => e.kind === 'replant', stride: 0.5 },
-  { id: 'w2', label: 'World 2', knob: { ticketOf: 'world.w1' }, target: { active: 0.5 * DAY, mixed: 1.4 * DAY, idle: 3.2 * DAY }, event: firstWorld(1), stride: 2 },
-  { id: 'w3', label: 'World 3', knob: { ticketOf: 'world.w2' }, target: { active: 2.6 * DAY, mixed: 4.1 * DAY, idle: 5.2 * DAY }, event: firstWorld(2), stride: 2 },
-  { id: 'festival', label: 'First Harvest Festival', knob: { tuning: 'RIBBON_C0' }, target: { active: 4.1 * DAY, mixed: 5.4 * DAY, idle: 8.2 * DAY }, event: (e) => e.kind === 'festival', stride: 2 },
-  { id: 'w4', label: 'World 4', knob: { ticketOf: 'world.w3' }, target: { active: 6.7 * DAY, mixed: 10.1 * DAY, idle: 16.2 * DAY }, event: firstWorld(3), stride: 3 },
-  { id: 'w5', label: 'World 5', knob: { ticketOf: 'world.w4' }, target: { active: 12.2 * DAY, mixed: 18.1 * DAY, idle: 27.2 * DAY }, event: firstWorld(4), stride: 3 },
-  { id: 'w6', label: 'World 6', knob: { ticketOf: 'world.w5' }, target: { active: 19.5 * DAY, mixed: 30.5 * DAY, idle: 52.2 * DAY }, event: firstWorld(5), stride: 3 },
+  { id: 'replant', label: 'First Replant', knob: { tuning: 'FIRST_REPLANT_MIN' }, target: { active: 41 * 60, mixed: 4.4 * 3600, idle: 16 * 3600 }, event: (e) => e.kind === 'replant', stride: 0.5 },
+  { id: 'w2', label: 'World 2', knob: { ticketOf: 'world.w1' }, target: { active: 0.5 * DAY, mixed: 1.4 * DAY, idle: 8 * DAY }, event: firstWorld(1), stride: 2 },
+  { id: 'w3', label: 'World 3', knob: { ticketOf: 'world.w2' }, target: { active: 2.6 * DAY, mixed: 4.1 * DAY, idle: 13 * DAY }, event: firstWorld(2), stride: 2 },
+  { id: 'festival', label: 'First Harvest Festival', knob: { tuning: 'RIBBON_C0' }, target: { active: 4.1 * DAY, mixed: 5.4 * DAY, idle: 16 * DAY }, event: (e) => e.kind === 'festival', stride: 2 },
+  { id: 'w4', label: 'World 4', knob: { ticketOf: 'world.w3' }, target: { active: 6.7 * DAY, mixed: 10.1 * DAY, idle: 20 * DAY }, event: firstWorld(3), stride: 3 },
+  { id: 'w5', label: 'World 5', knob: { ticketOf: 'world.w4' }, target: { active: 12.2 * DAY, mixed: 18.1 * DAY, idle: 26 * DAY }, event: firstWorld(4), stride: 3 },
+  { id: 'w6', label: 'World 6', knob: { ticketOf: 'world.w5' }, target: { active: 19.5 * DAY, mixed: 30.5 * DAY, idle: 30 * DAY }, event: firstWorld(5), stride: 3 },
 ];
 
 function flags(argv: string[]): Record<string, string> {
