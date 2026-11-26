@@ -1,6 +1,6 @@
 # Sprout Tower: Content Tables
 
-Version 0.2, Phase 0, revised after the independent design audit (what changed is in [CHANGES.md](CHANGES.md)). Owner: Game Designer thread. This file holds every content row. Rules and formulas are in [GDD.md](GDD.md). The reasons behind the big calls are in [AUDIT.md](AUDIT.md).
+Version 0.3, Phase 0: one fixed manager per floor (what changed is in [CHANGES.md](CHANGES.md)). Owner: Game Designer thread. This file holds every content row. Rules and formulas are in [GDD.md](GDD.md). The reasons behind the big calls are in [AUDIT.md](AUDIT.md).
 
 ## 0. How to read this file
 
@@ -22,7 +22,7 @@ Every bonus in this file is an effect with four parts: a `stat`, a scope, an ope
 | `x2` | `mul` | Multiplies the stat |
 | "unlocks", "sets" | `set` | Switches something on or replaces a value. Implemented as a named special |
 
-**Scopes:** `floor` (the floor the card sits on), `adjacent` (the floors directly above and below it), `world` (every floor in the world where the card is placed), `global` (everything, counted once per card).
+**Scopes:** `floor` (a manager's own floor, or the floor a plant is planted on), `adjacent` (the floors directly above and below that floor), `world` (every floor in that floor's world), `global` (everything, counted once per card). A manager's effects count only while it is hired.
 
 **Buckets:** a manager's own profit multiplier is the `manager` bucket. Manager perks and plant traits share the `floor` bucket. Heirlooms and their set bonuses are the `heirloom` bucket. Then `skill`, `research`, `compost`, `ribbon`, `achievement`, `codex`, `mastery`, `twist` and `boost`. The `boost` bucket holds everything that lasts a set time. It is the one bucket that adds across every source and has a cap (GDD 13.5).
 
@@ -181,7 +181,7 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 
 Rules are in GDD 7. **Every floor has its own manager.** There are 50, one for each floor, and 34 at launch. A manager never moves to another floor. Rarity follows the floor's place in its world (GDD 7.1), and a manager's profit multiplier comes from its rarity and level (GDD 7.2). The perk and ability are below.
 
-A manager's card is owned at level 1 from the first time its floor is opened. Chests then give copies of managers the player has met. The Exotic manager on each world's top floor is that world's **Head**. Copies of a Head never drop from chests. They come from World Mastery (GDD 14.5).
+A manager's card is owned at level 1 from the first time its floor is opened. Chests then give copies of managers the player has met. The Exotic manager on each world's top floor is that world's **Head**. Copies of a Head never come from a chest roll. They come from World Mastery (GDD 14.5) and the Starlight Chest (GDD 8.3).
 
 `M` numbers follow floor order. They are a reading aid for this file. Code uses the `id`.
 
@@ -287,9 +287,9 @@ A manager arrives with their floor, so the first session never depends on luck. 
 |---|---|
 | A floor opens for the first time | That floor's manager, owned at level 1 and waiting to be hired |
 | Welcome Chest (the first time the player holds 1,000 Coins with floor 3 open) | 2 copies each of M01 Nana Sprig, M02 Basil Brumble and M03 Rowan Rake. That is enough to take each of them to level 2 |
-| Hiring Crate, as each of World 1 floors 4 to 10 opens for the first time | 2 copies of that floor's manager, plus 2 Wooden Crate slots |
+| Hiring Crate, as each of World 1 floors 4 to 9 opens for the first time | 2 copies of that floor's manager, plus 2 Wooden Crate slots |
 
-The Welcome Chest arrives at the moment the player can pay the first hire fee (1,000 Coins). It teaches both halves of a manager in one beat: hire Nana Sprig, then level her up. The Head on floor 10 is Exotic, so the Hiring Crate is the only chest that ever holds her copies.
+The Welcome Chest arrives at the moment the player can pay the first hire fee (1,000 Coins). It teaches both halves of a manager in one beat: hire Nana Sprig, then level her up. Hire buttons appear once the Welcome Chest has been opened. Floor 10 has no Hiring Crate, because its manager is the Head and Head copies never come from a crate.
 
 ### 2.4 Art status
 
@@ -465,7 +465,7 @@ Rules are in GDD 9.2. Three branches of 37 points. A branch has six minor skills
 | `skill.bo.curator` | Curator | 3 | 5 | `heirloom.power` +5% |
 | `skill.bo.bench_hand` | Bench Hand | 3, major | 3 | `bench.speed` +10% |
 | `skill.bo.companion_planting` | **Companion Planting** | keystone | 1 | A floor gets ×1.5 profit while every floor directly next to it holds a plant of the same family as one of its own plants. A middle floor has two neighbours. The top and bottom floors have one |
-| `skill.bo.star_pupil` | **Star Pupil** | keystone | 1 | In each world, the highest-level hired manager counts as 2 levels higher, even past its max level. `manager.cooldown` -25% |
+| `skill.bo.star_pupil` | **Star Pupil** | keystone | 1 | In each world, the Head counts as 1 level higher while hired, even past its max level. `manager.cooldown` -25% |
 
 ### 5.3 Tycoon (automation)
 
@@ -479,7 +479,7 @@ Rules are in GDD 9.2. Three branches of 37 points. A branch has six minor skills
 | `skill.ty.deep_pantry` | Deep Pantry | 3 | 5 | `offline.cap` +1 h |
 | `skill.ty.compost_connoisseur` | Compost Connoisseur | 3 | 5 | `compost.gain` +4% |
 | `skill.ty.warm_welcome` | Warm Welcome | 3, major | 3 | `dew.duration` +60 s |
-| `skill.ty.autopilot` | **Autopilot** | keystone | 1 | While the game is open, every hired manager in every unlocked world taps once a second. Each of these taps pays `TAP_SECONDS x tapPowerMult x steadyIPS` of its own world: no Combo, no Bumpers, no Boost and no Growth Spurt. They do not fill the Spurt meter or build Combo |
+| `skill.ty.autopilot` | **Autopilot** | keystone | 1 | While the game is open, every hired manager in every unlocked world taps once a second. Each of these taps pays `TAP_SECONDS x tapPowerMult x steadyIPS` of its own world: no Combo, no Bumpers, no Boost and no Growth Spurt. They are not counted taps (GDD 6.1): they do not fill the Spurt meter, build Combo or add Hearth Heat, and they do not count for quests or achievements |
 | `skill.ty.compound_interest` | **Compound Interest** | keystone | 1 | Offline earnings grow by +2% for every hour away, up to +50%. This is applied after the efficiency cap |
 
 ## 6. Research
@@ -637,7 +637,7 @@ Rules are in GDD 11.1. One step is active at a time. A step whose goal is alread
 | 39 | `quest.story.blue_ribbon` | Blue Ribbon | Hold a Harvest Festival | 50 Gems (the Festival itself gives a Crystal Chest and the Heirloom Pick) | Ribbon Shop | 2,500 |
 | 40 | `quest.story.snow_day` | Snow Day | Arrive in Mount Mitten | Golden Chest | World 4, Hearth Heat | 2,500 |
 | 41 | `quest.story.something_strange` | Something Strange in the Greenhouse | Grow an Exotic plant | 100 Gems | | 2,500 |
-| 42 | `quest.story.local_legend` | Local Legend | Earn 5 Mastery stars in one world | 50 Gems (the star itself gives the Exotic manager) | | 3,000 |
+| 42 | `quest.story.local_legend` | Local Legend | Earn 5 Mastery stars in one world | 50 Gems (the star itself gives a copy of that world's Head) | | 3,000 |
 | 43 | `quest.story.small_step` | Small Step | Arrive on the Moon | Crystal Chest | World 5, Floating Harvests | 4,000 |
 | 44 | `quest.story.among_the_stars` | Among the Stars | Arrive in the Nebula Nursery | Starlight Chest | World 6, Orbital Sunrise | 5,000 |
 
@@ -702,7 +702,7 @@ Rules are in GDD 11.4. Twenty families with five tiers each. Ids are `ach.<famil
 | `levels` | Floor levels bought | 500 | 5,000 | 25,000 | 100,000 | 500,000 |
 | `milestones` | Floor milestones reached | 25 | 250 | 1,000 | 5,000 | 20,000 |
 | `floors` | Floors opened | 10 | 100 | 500 | 2,500 | 10,000 |
-| `managers` | Managers owned | 5 | 10 | 15 | 20 | 28 |
+| `managers` | Different managers hired | 5 | 10 | 18 | 26 | 34 |
 | `plants` | Plants owned | 5 | 10 | 20 | 28 | 36 |
 | `heirlooms` | Heirlooms owned | 2 | 6 | 10 | 14 | 18 |
 | `card_levels` | Card level-ups | 5 | 25 | 100 | 250 | 500 |
@@ -739,12 +739,12 @@ The three Golden Sprouts look alike from a distance and differ by a small badge,
 | Kind | Entries in total | At launch |
 |---|---|---|
 | Floors | 50 | 34 |
-| Managers | 30 | 28 |
+| Managers | 50 | 34 |
 | Plants | 38 | 36 |
 | Heirlooms | 18 | 18 |
 | Visitors | 6 | 6 |
 | Worlds | 6 | 4 |
-| **Total** | **148** | **126** |
+| **Total** | **168** | **132** |
 
 Each entry gives 5 Gems once and +0.25% profit forever (GDD 11.5).
 
@@ -753,12 +753,12 @@ Each entry gives 5 Gems once and +0.25% profit forever (GDD 11.5).
 | Content | In the design | Needed at launch | Already pictured | New for launch |
 |---|---|---|---|---|
 | Floor rooms | 50 | 34 | 10 (B4 v2 set, two of them re-dressed for hemp wording; the Spice Kitchen moves to World 2) | 24 |
-| Managers | 30 | 28 | 12 (B5, B21) | 16 |
+| Managers | 50 | 34 | 12 (B5, B21) | 22 |
 | Plants | 38 | 36 | 7 (Garden Mint, Sweet Basil, Field Lavender, Ember Basil, Thunder Rosemary, Frosted Mint, Crystal Sage) | 29 |
 | Heirlooms | 18 | 18 | 12 (B11, one of them redrawn) | 6 |
 | Visitors | 6 | 6 | 0 | 6 |
 | World backgrounds | 6 | 4 | 3 (B3 and B26, B17, B18) | 1 (Mount Mitten) |
 | Currency icons | 13 | 11 | 5 (B12: Coins, Notes, Gems, Compost, Ribbons) | 6 (Shells, Snowmarks, Insight, Pollen, Skill Points, Fair Tickets) |
-| Story characters | 2 | 2 | 0 | 2 (Pip, Baron Fauxliage) |
+| Story characters | 3 | 3 | 0 | 3 (Pip, Baron Fauxliage, and Mayor Thyme, who hosts the Harvest Festival) |
 
 Two more plants are already pictured for the later worlds: Moonlit Lavender and Starlight Chamomile. The Moon's background (B27) exists too.
