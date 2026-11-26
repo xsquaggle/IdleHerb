@@ -79,7 +79,7 @@ export function gateChart(title: string, subtitle: string, panels: GatePanel[], 
   const x = (t: number): number => left + ((Math.log10(Math.max(t, 240)) - t0) / (t1 - t0)) * (w - left - right);
   let y = 96;
   const perSeries = panels.some((p) => p.rows.some((r) => r.targets?.length));
-  let body = legend(20, 70, [...series.map((s) => ({ name: s.name, color: s.color })), perSeries ? { name: 'ring: GDD target, same colour', color: C.neutral, hollow: true } : { name: 'GDD target', color: C.neutral, hollow: true }]);
+  let body = legend(20, 70, [...series.map((s) => ({ name: s.name, color: s.color })), perSeries ? { name: 'ring: target, same colour', color: C.neutral, hollow: true } : { name: 'GDD target', color: C.neutral, hollow: true }]);
   for (const p of panels) {
     body += text(20, y, p.title, { size: 13, fill: C.ink, weight: 600 });
     const top = y + 8;

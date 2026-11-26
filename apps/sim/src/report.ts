@@ -130,8 +130,28 @@ function growthPerWeek(r: RunResult): { label: string; perWeek: number | null }[
 
 function isRunaway(r: RunResult): boolean {
   const g = growthPerWeek(r).map((x) => x.perWeek).filter((v): v is number => v !== null);
-  for (let i = 1; i < g.length; i++) if (g[i]! > g[i - 1]! * VERDICT.runawayRise) return true;
+  // A runaway grows faster than it ever has before. A rise after a slow stretch that stays below an
+  // earlier pace is a catch-up (new worlds opening), not a runaway.
+  let best = g[0] ?? 0;
+  for (let i = 1; i < g.length; i++) {
+    if (g[i]! > best * VERDICT.runawayRise) return true;
+    best = Math.max(best, g[i]!);
+  }
   return false;
+}
+
+/** Periods where weekly growth rose over the period before without beating an earlier pace. */
+function catchUps(r: RunResult): string[] {
+  const g = growthPerWeek(r);
+  const out: string[] = [];
+  for (let i = 1; i < g.length; i++) {
+    const a = g[i - 1]!.perWeek;
+    const b = g[i]!.perWeek;
+    if (a === null || b === null || b <= a * VERDICT.runawayRise) continue;
+    const next = g[i + 1]?.perWeek ?? null;
+    out.push(`${fx(b)} orders of magnitude a week in ${g[i]!.label} against ${fx(a)} in ${g[i - 1]!.label}${next !== null && next < b ? `, then ${fx(next)} in ${g[i + 1]!.label}` : ''}`);
+  }
+  return out;
 }
 
 function maxFestivalGap(r: RunResult, fromDay: number, toDay: number): { days: number; from: number; open: boolean } | null {
@@ -212,6 +232,8 @@ function verdictSection(R: Runs): string {
   const sets: [string, Record<ProfileId, RunResult>][] = [[RULES_GDD, R.base], ...(R.fix ? ([[RULES_FIX, R.fix]] as [string, Record<ProfileId, RunResult>][]) : [])];
   const dz: string[] = [];
   let dead = false;
+  let quietDead = false;
+  let gapDead = false;
   for (const [label, set] of sets) {
     for (const p of PROFILES) {
       const r = set[p];
@@ -219,11 +241,13 @@ function verdictSection(R: Runs): string {
       const early = maxFestivalGap(r, 0, 14);
       const late = maxFestivalGap(r, 14, r.meta.days);
       const empty = emptyDays(r, 30).length;
-      if (q > VERDICT.quietMinutes || (late && late.days > VERDICT.festivalGapDays)) dead = true;
+      if (q > VERDICT.quietMinutes) quietDead = true;
+      if (late && late.days > VERDICT.festivalGapDays) gapDead = true;
+      dead = quietDead || gapDead;
       dz.push(`- ${NAME[p]}, ${label.toLowerCase()}: longest open-game stretch with nothing to buy ${clock(r.quiet.seconds)} (day ${(r.quiet.endedAt / DAY).toFixed(1)}); ${empty} of the first 30 days with no progress event; longest gap between Festivals ${early ? `${early.days.toFixed(1)} days before day 14` : 'none before day 14'}, ${late ? `${late.days.toFixed(1)} days after day 14${late.open ? ' (still open when the run ended)' : ''}` : 'no Festival after day 14'}.`);
     }
   }
-  out.push(`**Dead zones.** ${dead ? `No dead zone inside a session in the first two weeks, but the game goes quiet later: either a session has more than ${VERDICT.quietMinutes} minutes with nothing to buy, or two Festivals are more than ${VERDICT.festivalGapDays} days apart after day 14 (the Game Designer's limit).` : `None found: no session has more than ${VERDICT.quietMinutes} minutes with nothing to buy, and no two Festivals are more than ${VERDICT.festivalGapDays} days apart.`} The Festival rhythm against the designer's shape (gaps of 1 to 3 days to day 10, 3 to 6 to day 30, 5 to 9 after, no jump above about twice the gap before) is under "Dead zones".`);
+  out.push(`**Dead zones.** ${dead ? `The game goes quiet late in the run: ${[quietDead ? `some runs have more than ${VERDICT.quietMinutes} minutes of open game in a row with nothing to buy` : '', gapDead ? `some runs have two Festivals more than ${VERDICT.festivalGapDays} days apart after day 14 (the Game Designer's limit)` : ''].filter(Boolean).join(', and ')}. Both come from the same late-game shortage of power (see "Open items").` : `None found: no session has more than ${VERDICT.quietMinutes} minutes with nothing to buy, and no two Festivals are more than ${VERDICT.festivalGapDays} days apart.`} The Festival rhythm against the designer's shape (gaps of 1 to 3 days to day 10, 3 to 6 to day 30, 5 to 9 after, no jump above about twice the gap before) is under "Dead zones".`);
   out.push('');
   out.push(...dz);
   out.push('');
@@ -241,7 +265,10 @@ function verdictSection(R: Runs): string {
   const burst01 = R.get('burst-v01');
   const burst02 = R.get('burst-v02');
   const peak = (r: RunResult | null): number | null => (r ? Math.max(...r.sessions.map((s) => s.peakFactor)) : null);
-  out.push(`**Runaway growth.** ${runaway ? 'Growth speeds up somewhere in the run (see the lines below): that is a runaway.' : 'None. Growth slows from week to week for every play style, as it should with exponents below 1 (GDD 17.6 note 1).'} ${burst01 && burst02 ? `The burst the first audit found (every timed ability held and fired together at 12 taps a second) put the tower at ${times(peak(burst01))} its steady income under the 0.1 stacking rule, and at most ${times(peak(burst02))} under the 0.2 rule (one Boost capped at ${loadRaw().tuning.BOOST_CAP}, Spurt the only multiplier on it). The exploit is gone.` : ''}`);
+  const rises: string[] = [];
+  for (const [label, set] of sets) for (const p of PROFILES) for (const c of catchUps(set[p])) rises.push(`${NAME[p]}, ${label.toLowerCase()}: ${c}.`);
+  const riseText = rises.length === 0 ? '' : ` Growth rises again after a slow stretch in ${rises.length === 1 ? 'one run' : `${rises.length} runs`} (${rises.join(' ')}) That is a catch-up as new worlds open, never faster than the run's own week 1.`;
+  out.push(`**Runaway growth.** ${runaway ? 'Growth somewhere in the run is faster than it ever was before (see the lines below): that is a runaway.' : `None. No play style ever grows faster than in its first week, as it should with exponents below 1 (GDD 17.6 note 1).${riseText}`} ${burst01 && burst02 ? `The burst the first audit found (every timed ability held and fired together at 12 taps a second) put the tower at ${times(peak(burst01))} its steady income under the 0.1 stacking rule, and at most ${times(peak(burst02))} under the 0.2 rule (one Boost capped at ${loadRaw().tuning.BOOST_CAP}, Spurt the only multiplier on it). The exploit is gone.` : ''}`);
   out.push('');
   out.push(...rw);
   out.push('');
@@ -262,7 +289,9 @@ function verdictSection(R: Runs): string {
     const s60 = sampleAt(r, r.meta.days * DAY);
     lines.push(`- Idle, ${label.toLowerCase()}, six worlds: level ${s60.level} on day ${r.meta.days}, ${s60.festivals} Festivals, World 6 ${when(gates(r).worlds[5])}.`);
   }
-  out.push(`**Longevity.** Days to weeks, yes: the gates are spread over the first three to eight weeks for every play style and new things still arrive in week 8. The risk is the other way round: after week 2 the content runs out of power before the budget does, so the late game stretches (see "What each system is worth").`);
+  const lateGrowth = (R.fix ?? R.base);
+  const g58 = (p: ProfileId): string => fx(growthPerWeek(lateGrowth[p]).at(-1)?.perWeek ?? null);
+  out.push(`**Longevity.** Days to weeks, yes: the gates are spread over the first three to five weeks for every play style and new things still arrive in week 8. The risk is the other way round: in weeks 5 to 8 all-time Compost grows ${g58('active')} (active), ${g58('mixed')} (mixed) and ${g58('idle')} (idle) orders of magnitude a week, and each Festival needs about 0.6 (four times the Compost, because Ribbons grow with its square root), so Festivals drift towards 8 to 13 days apart late in the run (see "Open items").`);
   out.push('');
   out.push(...lines);
   out.push('');
@@ -322,17 +351,19 @@ function pacingSection(R: Runs): string {
   const floorsBy = (t: number) => (r: RunResult): string => String(1 + countBy(r, 'floor', 0, t + 1));
   add('Level at 10 minutes', 'about 3 to 4', lvAt(10 * MIN));
   add('Floors open at 10 minutes', '7', floorsBy(10 * MIN));
-  add('Level at 1 hour', '8', lvAt(HOUR));
+  add('Level at 1 hour', '10 to 11 (ruling; GDD 8)', lvAt(HOUR));
   add('Top floor (floor 10)', '32 min', (r) => when(floorTime(r, 10)));
-  add('First Replant', '50 to 60 min', (r) => when(gates(r).replant));
+  add('First Replant', '30 to 55 min (ruling; GDD 50 to 60)', (r) => when(gates(r).replant));
   add('Replants by day 1', '6 to 10', (r) => String(countBy(r, 'replant', 0, DAY)));
-  add('Level at day 1', 'about 18', lvAt(DAY));
+  add('Level at day 1', 'about 23 (ruling; GDD 18)', lvAt(DAY));
   add('Level at day 7', 'about 40', lvAt(7 * DAY));
   add('Research projects by day 7', '12 to 15', (r) => String(sampleAt(r, 7 * DAY).research));
   add('Festivals by day 7', '3 to 4', (r) => String(countBy(r, 'festival', 0, 7 * DAY)));
   add('Level at day 30', 'about 70', lvAt(30 * DAY));
   add('Level at day 60', 'cap 112 about month 3', lvAt(60 * DAY));
-  out.push(table(['Active player', 'GDD target', ...cols.map(([n]) => `${n} numbers`)], rows));
+  out.push(table(['Active player', 'Target', ...cols.map(([n]) => `${n} numbers`)], rows));
+  out.push('');
+  out.push('"Ruling": a target the Game Designer moved on 2026-11-26 when accepting the level overlay and the first-Replant rule. The skill tree is now expected at about minute 16.');
   out.push('');
   out.push('### The reveal order (GDD section 16, 31 rows)');
   out.push('');
@@ -649,6 +680,26 @@ function checkSection(R: Runs): string {
   return out.join('\n');
 }
 
+function openItemsSection(R: Runs): string {
+  const set = R.fix ?? R.base;
+  const out: string[] = ['## Open items', ''];
+  const long = PROFILES.map((p) => {
+    const gaps = festivalGaps(set[p]).filter((g) => g.from >= 14 && g.days > VERDICT.festivalGapDays);
+    return gaps.length === 0 ? `the ${NAME[p].toLowerCase()} player has none` : `the ${NAME[p].toLowerCase()} player has ${gaps.length === 1 ? 'one' : 'gaps'} of ${gaps.map((g) => `${g.days.toFixed(1)} days from day ${g.from.toFixed(1)}${g.open ? ' (still open when the run ended)' : ''}`).join(' and ')}`;
+  });
+  const g = (p: ProfileId, i: number): string => fx(growthPerWeek(set[p])[i]?.perWeek ?? null);
+  const quiet = set.active.quiet;
+  out.push(`- **Festival gaps above 10 days after day 14 (for the Game Designer).** With the proposed numbers ${long.join(', ')}. Eight Golden Hour price lists (the GDD's 3, 10, 40, 150, 600, cheaper ones, steeper ones and ones with later last levels; three of them on the final tickets) and three values of \`RIBBON_C0\` (500,000, 650,000 and the fitted 860,000) only move which gap is the long one; none removes it for both the active and the mixed player. The GDD's prices are as good as any, so they stay. The cause is late growth: in weeks 5 to 8 all-time Compost grows ${g('active', 3)} (active) and ${g('mixed', 3)} (mixed) orders of magnitude a week, and a Festival under the hold rule needs about 0.6, four times the Compost of the one before. A Festival every 7 days needs about 0.6 a week and one every 9 days about 0.47, so late power has to lift late Compost growth by a fifth to a half. That is the case the designer named: late research tiers (rows only), and one run of the simulator checks a list. The same shortage gives the active player's longest stretch of open game with nothing to buy (${clock(quiet.seconds)} over two sessions, day ${(quiet.endedAt / DAY).toFixed(1)}).`);
+  out.push(`- **The step in the Festival rhythm around day 13.** Gaps stay at 1 to 2 days until about day 13, where the designer asked for 3 to 6 from day 10, then jump to about 4.6 days (more than twice the gap before). It is the same growth curve seen from the other end: Compost grows ${g('active', 1)} orders of magnitude a week in week 2 and ${g('active', 2)} in weeks 3 and 4 for the active player. Late tiers smooth the back half; slowing week 2 would be a separate choice and is not proposed here.`);
+  out.push(`- **The mixed player's World 2.** Day ${(gates(set.mixed).worlds[1]! / DAY).toFixed(1)} against a window that closes on day 2.1. It does not follow the ticket: World 2 tickets from 1e23 to 3e23 all give day 2.2 to 2.35, so the mixed player's short sessions set it, not the price. Left as it is.`);
+  out.push(`- **Top floor of Thymeford for the active player.** ${when(floorTime(set.active, 10))} against 32 minutes (the window opens at 21). Floor prices were not part of the refit, and the first Replant that follows is on target.`);
+  out.push('- **Golden Hour first.** The simulated player now buys each Golden Hour level as soon as it can pay for it, because each level doubles profit. Before, it bought the cheapest Ribbon item first and late Festival gaps ran to 10 to 18 days. A real player can make the same mistake, so the Ribbon Shop could show Golden Hour first or mark it as the best buy (a note for the designer and the UI).');
+  out.push('- **Mastery levels.** The data for setting the ten `MASTERY_LEVELS` is under "Mastery stars": the days after arrival when each world\'s lowest floor first passes level 100 to 600. The designer sets the list; the simulator records every star, so one run checks it.');
+  out.push('- **Design 0.4.** The designer folds `p1-levels`, `p2-taps` and `p4-gates` into the GDD and CONTENT once PR #5 has merged. Then the tables change, the overlays go, and `pnpm sim` reruns on the new tables. `RIBBON_C0` was set by hand after the fit, so a later `pnpm sim calibrate` that includes the Festival step moves it back; refit with `--only` for the gates that move.');
+  out.push('');
+  return out.join('\n');
+}
+
 function staticSections(): string {
   return `## Reviewer's five notes (re-check of PR #3)
 
@@ -656,14 +707,9 @@ function staticSections(): string {
 2. **Combo for a mouse-only player.** Not a number the simulator can settle. The simulated player taps without pauses while tapping, and its purchases do not interrupt the Combo (assumption below). A playtest should decide.
 3. **Autopilot taps and counted taps.** The simulator follows the ruling: Autopilot taps fill neither Spurt, Combo, Hearth Heat, tap quests nor the \`taps\` achievement.
 4. **Event track every weekend.** Played every weekend; its chests are in all card and heirloom rates (table above).
-5. **Mastery spacing.** Measured above; levels from cost are an open item.
+5. **Mastery spacing.** Measured above, with the level crossings the designer asked for to set the ten levels.
 
-## Open items
-
-- **The idle player's first two weeks.** One price list serves all three play styles. Fitted for the active player, it puts the mixed player on target too, but the idle player reaches the first Replant, World 2, World 3 and the first Festival two to four times late, and is back on target from World 4. The cause is the spread between play styles: with the GDD's numbers the active player reaches World 2 31 times sooner than the idle player, where the pacing table expects 6.4 times; the proposed content changes narrow that to about 18 times, not to 6.4. Two things that do not close it, measured: an 8-hour base offline cap (\`OFFLINE_CAP_BASE\` 4 to 8) moves no gate, because in a game that grows this fast a third more income saves only hours; a first-Replant minimum of 120 puts the idle player's first Replant on target (16 hours) but leaves World 2 on day 7.7 and makes the active and mixed players' first Replant early. The designer's choice: accept a slower idle week 1 (idle players check in three times a day for four minutes), move the idle targets for weeks 1 and 2, or give idle players a catch-up of their own in week 1 (for example offline efficiency that starts higher and is not bought).
-- **The late game after week 2.** The content multiplier ("everything else") falls behind the budget from about day 7 and ends far below it on day 60 (table under "What each system is worth"). That is why Festivals stretch beyond eight days in weeks 4 to 8 for every play style, with the GDD's numbers and with the proposed ones, and why the active player holds 9 Festivals by day 30 against 13. The proposed manager numbers add to it after week 1: lower level-1 values with larger steps only pay once cards reach high levels, so the income-weighted manager multiplier is ×3.6 on day 30 against a budget of ×9 (×6.9 with the GDD's numbers). Two ways out, the designer's choice: lower the budget rows for days 30 and 60 and the week 4 and later rows of the pacing table to what the content gives, or add late power (more research tiers, higher card level caps for Rares and up, a second endless Ribbon item). The proposed overlays do not touch this.
-- **Level at one hour.** 11 with the proposed numbers against the GDD's 8. Most of what is left is Compost-record XP at the first Replant (\`REPLANT_XP_STEP\`).
-- **Mastery levels from cost.** Set the ten \`MASTERY_LEVELS\` so stars land at even steps of floor cost after arrival, not on arrival. The simulator records every star in the timelines, so the designer can check a new list with one run.
+__OPEN_ITEMS__
 
 ## Tests
 
@@ -711,16 +757,16 @@ function writeCharts(R: Runs): void {
     })),
   });
   const panels = [panel(RULES_GDD, R.base), ...(R.fix ? [panel(RULES_FIX, R.fix)] : [])];
-  writeFileSync(join(CHARTS, 'gates.svg'), gateChart('When each gate arrives', 'Dot: simulated player. Ring: GDD 17.6 target, same colour. Log time axis.', panels, PSERIES));
+  writeFileSync(join(CHARTS, 'gates.svg'), gateChart('When each gate arrives', 'Dot: simulated player. Ring: target (GDD 17.6 with the 2026-11-26 rulings), same colour. Log time axis.', panels, PSERIES));
   // Festivals.
   const fest = (set: Record<ProfileId, RunResult>, title: string): string =>
-    lineChart(title, 'Harvest Festivals held so far. Rings: GDD 17.6 targets (first Festival, Festivals by day 30).', 'Festivals', PROFILES.map((p) => {
+    lineChart(title, 'Harvest Festivals held so far. Rings: targets for the first Festival and Festivals by day 30.', 'Festivals', PROFILES.map((p) => {
       const r = set[p];
       const pts: [number, number][] = [[0, 0]];
       let n = 0;
       for (const e of r.timeline) if (e.kind === 'festival') pts.push([e.t / DAY, ++n]);
       return { name: NAME[p], color: SERIES[p], points: pts, targets: [[TARGETS[p]!.festival.at, 1], [30, (TARGETS[p]!.festivalsBy30[0] + TARGETS[p]!.festivalsBy30[1]) / 2]] as [number, number][] };
-    }), { step: true, xMax: 60, targetName: 'GDD target' });
+    }), { step: true, xMax: 60, targetName: 'Target' });
   writeFileSync(join(CHARTS, 'festivals-gdd.svg'), fest(R.base, `Harvest Festivals, ${RULES_GDD}`));
   if (R.fix) writeFileSync(join(CHARTS, 'festivals-fix.svg'), fest(R.fix, `Harvest Festivals, ${RULES_FIX.toLowerCase()}`));
   // Compost.
@@ -808,7 +854,7 @@ export async function writeReport(): Promise<void> {
     worthSection(R),
     designerAsksSection(R),
     checkSection(R),
-    staticSections(),
+    staticSections().replace('__OPEN_ITEMS__', openItemsSection(R)),
   ];
   writeFileSync(join(DOCS, 'REPORT.md'), parts.join('\n'));
   console.log(`wrote docs/balance/REPORT.md, ${CHARTS.replace(REPO_DIR + '/', '')}/*.svg and ${DATA.replace(REPO_DIR + '/', '')}/`);

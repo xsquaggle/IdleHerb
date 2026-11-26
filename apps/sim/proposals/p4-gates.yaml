@@ -1,15 +1,18 @@
 id: p4-gates
-title: Gate prices fitted to the GDD 17.6 pacing table (active profile)
+title: Gate prices fitted to the pacing targets (active profile)
 why: |-
   Fitted by "pnpm sim calibrate" on top of p1-levels, p2-taps.
   First Replant: 60 -> 440, set by rule rather than fitted: every play style's first Replant must land inside its first 24 hours, and 448 is the largest minimum that keeps the idle player's inside day 1 (16.2 h; the active player's lands at 38 min, the mixed player's at 6.5 h).
   World 6 deed: 600 -> 250 Ribbons, so the deed does not hold World 6 back once Ribbons come more slowly.
-  World 2: 3.70e+22 -> 3.0e+23 (target 12.0 h, lands 11.7 h; was 9.0 h)
-  World 3: 9.20e+22 -> 4.5e+23 (target day 2.60, lands day 2.60; was day 1.70)
-  First Harvest Festival: 5.50e+5 -> 8.6e+5 (target day 4.10, lands day 4.35; was day 3.14)
+  World 2: 5e19 -> 3.0e+23 (target 12.0 h, lands 11.7 h)
+  World 3: 2e19 -> 4.5e+23 (target day 2.60, lands day 2.60)
+  First Harvest Festival: 50000 -> 6.5e+5, set by hand after the fit (8.6e+5 put the active player's first Festival on day 4.35) to smooth the Festival rhythm: first Festival on day 3.5 active, 5.6 mixed, 14.2 idle, and 18 gaps that break the designer's rhythm across the three play styles instead of 24. Eight Golden Hour price lists were tried as well; none beat the GDD's own.
+  World 4: 1e24 -> 1.0e+26 (target day 6.70, lands day 6.70)
+  World 5: 2e29 -> 7.3e+31 (target day 12.20, lands day 12.47)
+  World 6: 1e34 -> 1.4e+34 (target day 19.50, lands day 19.13)
 tuning:
   FIRST_REPLANT_MIN: 440
-  RIBBON_C0: 860000
+  RIBBON_C0: 650000
 rows:
   worlds:
     world.w1:
@@ -17,11 +20,11 @@ rows:
     world.w2:
       ticket: "4.5e23"
     world.w3:
-      ticket: "2.6e25"
+      ticket: "1e26"
     world.w4:
-      ticket: "2.6e29"
+      ticket: "7.3e31"
     world.w5:
-      ticket: "6.1e30"
+      ticket: "1.4e34"
   ribbonShop:
     shop.ribbon.deed_nebula:
       costs:

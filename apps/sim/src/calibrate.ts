@@ -236,7 +236,7 @@ export async function calibrate(argv: string[]): Promise<void> {
     notes.push(line);
     console.log(line);
     fitted.id = outId;
-    fitted.title = `Gate prices fitted to the GDD 17.6 pacing table (${profile} profile)`;
+    fitted.title = `Gate prices fitted to the pacing targets (${profile} profile)`;
     fitted.why = `Fitted by "pnpm sim calibrate" on top of ${base.length ? base.join(', ') : 'the GDD tables'}.\n${notes.join('\n')}`;
     writeOverlay(join(PROPOSALS_DIR, `${outId}.yaml`), fitted);
   }

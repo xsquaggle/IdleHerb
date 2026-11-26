@@ -9,7 +9,7 @@
    "days": 60,
    "maxWorld": 6,
    "rules": "gdd-0.2",
-   "seconds": 112.749
+   "seconds": 115.772
   },
   "gates": {
    "topFloor": 1130,
@@ -19,19 +19,19 @@
     0,
     13010,
     22343,
-    146001,
-    385936,
-    905019
+    127069,
+    299401,
+    703555
    ]
   },
   "festivalsBy30": 15,
   "levels": {
    "day1": 29,
-   "day7": 49,
+   "day7": 52,
    "day30": 78,
-   "day60": 97
+   "day60": 98
   },
-  "quietSeconds": 2589,
+  "quietSeconds": 3590,
   "firstLevel": {
    "6": 801,
    "8": 1106
@@ -47,7 +47,7 @@
    "days": 60,
    "maxWorld": 6,
    "rules": "gdd-0.2",
-   "seconds": 36.481
+   "seconds": 37.148
   },
   "gates": {
    "topFloor": 1524,
@@ -58,18 +58,18 @@
     95041,
     123841,
     282298,
-    548839,
-    1132016
+    527041,
+    901557
    ]
   },
   "festivalsBy30": 14,
   "levels": {
    "day1": 16,
-   "day7": 47,
+   "day7": 48,
    "day30": 75,
-   "day60": 92
+   "day60": 91
   },
-  "quietSeconds": 715,
+  "quietSeconds": 714,
   "firstLevel": {
    "6": 1051,
    "8": 1502
@@ -85,7 +85,7 @@
    "days": 60,
    "maxWorld": 6,
    "rules": "gdd-0.2",
-   "seconds": 18.986
+   "seconds": 17.979
   },
   "gates": {
    "topFloor": 39245,
@@ -95,12 +95,12 @@
     0,
     403861,
     451861,
-    797461,
+    816661,
     1143061,
-    2007061
+    1747861
    ]
   },
-  "festivalsBy30": 11,
+  "festivalsBy30": 12,
   "levels": {
    "day1": 10,
    "day7": 29,
@@ -123,7 +123,7 @@
    "days": 60,
    "maxWorld": 4,
    "rules": "gdd-0.2",
-   "seconds": 81.682
+   "seconds": 86.725
   },
   "gates": {
    "topFloor": 1130,
@@ -133,7 +133,7 @@
     0,
     13010,
     22343,
-    146001,
+    127069,
     null,
     null
    ]
@@ -141,11 +141,11 @@
   "festivalsBy30": 15,
   "levels": {
    "day1": 29,
-   "day7": 52,
-   "day30": 76,
+   "day7": 53,
+   "day30": 78,
    "day60": 95
   },
-  "quietSeconds": 3059,
+  "quietSeconds": 3598,
   "firstLevel": {
    "6": 801,
    "8": 1106
@@ -161,7 +161,7 @@
    "days": 60,
    "maxWorld": 4,
    "rules": "gdd-0.2",
-   "seconds": 13.254
+   "seconds": 13.314
   },
   "gates": {
    "topFloor": 39245,
@@ -171,17 +171,17 @@
     0,
     403861,
     451861,
-    797461,
+    816661,
     null,
     null
    ]
   },
-  "festivalsBy30": 10,
+  "festivalsBy30": 11,
   "levels": {
    "day1": 10,
    "day7": 29,
-   "day30": 59,
-   "day60": 71
+   "day30": 60,
+   "day60": 73
   },
   "quietSeconds": 239,
   "firstLevel": {
@@ -198,33 +198,33 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 6,
-   "rules": "p1-levels+p2-taps+p3-managers+p4-gates",
-   "seconds": 95.106
+   "rules": "p1-levels+p2-taps+p4-gates",
+   "seconds": 108.4
   },
   "gates": {
-   "topFloor": 1250,
-   "replant": 2880,
-   "festival": 319300,
+   "topFloor": 1203,
+   "replant": 2265,
+   "festival": 300730,
    "worlds": [
     0,
-    41063,
-    195082,
-    578857,
-    1049843,
-    1499642
+    41997,
+    224235,
+    549451,
+    1010776,
+    1413117
    ]
   },
-  "festivalsBy30": 9,
+  "festivalsBy30": 10,
   "levels": {
    "day1": 23,
-   "day7": 41,
-   "day30": 68,
+   "day7": 42,
+   "day30": 70,
    "day60": 88
   },
-  "quietSeconds": 3594,
+  "quietSeconds": 2610,
   "firstLevel": {
-   "6": 969,
-   "8": 1291
+   "6": 964,
+   "8": 1207
   }
  },
  "fix-mixed": {
@@ -236,33 +236,33 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 6,
-   "rules": "p1-levels+p2-taps+p3-managers+p4-gates",
-   "seconds": 35.206
+   "rules": "p1-levels+p2-taps+p4-gates",
+   "seconds": 35.501
   },
   "gates": {
-   "topFloor": 1658,
-   "replant": 16140,
-   "festival": 462260,
+   "topFloor": 1555,
+   "replant": 23255,
+   "festival": 484085,
    "worlds": [
     0,
-    138252,
-    368678,
-    642416,
-    1095952,
-    1787206
+    196128,
+    462241,
+    664012,
+    1095841,
+    1873557
    ]
   },
-  "festivalsBy30": 9,
+  "festivalsBy30": 10,
   "levels": {
-   "day1": 14,
-   "day7": 38,
-   "day30": 65,
-   "day60": 84
+   "day1": 15,
+   "day7": 37,
+   "day30": 67,
+   "day60": 82
   },
   "quietSeconds": 714,
   "firstLevel": {
-   "6": 1234,
-   "8": 1698
+   "6": 1101,
+   "8": 1561
   }
  },
  "fix-idle": {
@@ -274,33 +274,33 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 6,
-   "rules": "p1-levels+p2-taps+p3-managers+p4-gates",
-   "seconds": 12.638
+   "rules": "p1-levels+p2-taps+p4-gates",
+   "seconds": 15.823
   },
   "gates": {
-   "topFloor": 39250,
-   "replant": 211990,
-   "festival": 1354435,
+   "topFloor": 39230,
+   "replant": 58460,
+   "festival": 1229645,
    "worlds": [
     0,
-    749461,
-    1143061,
+    624661,
+    1075861,
     1699861,
-    2266261,
-    2631061
+    2199187,
+    2871061
    ]
   },
-  "festivalsBy30": 7,
+  "festivalsBy30": 8,
   "levels": {
-   "day1": 6,
-   "day7": 18,
-   "day30": 50,
-   "day60": 68
+   "day1": 9,
+   "day7": 19,
+   "day30": 54,
+   "day60": 69
   },
-  "quietSeconds": 238,
+  "quietSeconds": 239,
   "firstLevel": {
-   "6": 39231,
-   "8": 125463
+   "6": 39196,
+   "8": 58460
   }
  },
  "fix-launch-active": {
@@ -312,18 +312,18 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 4,
-   "rules": "p1-levels+p2-taps+p3-managers+p4-gates",
-   "seconds": 77.402
+   "rules": "p1-levels+p2-taps+p4-gates",
+   "seconds": 82.928
   },
   "gates": {
-   "topFloor": 1250,
-   "replant": 2880,
-   "festival": 319300,
+   "topFloor": 1203,
+   "replant": 2265,
+   "festival": 300730,
    "worlds": [
     0,
-    41063,
-    195082,
-    578857,
+    41997,
+    224235,
+    549451,
     null,
     null
    ]
@@ -331,14 +331,14 @@
   "festivalsBy30": 11,
   "levels": {
    "day1": 23,
-   "day7": 41,
-   "day30": 69,
-   "day60": 87
+   "day7": 42,
+   "day30": 70,
+   "day60": 88
   },
-  "quietSeconds": 3279,
+  "quietSeconds": 3595,
   "firstLevel": {
-   "6": 969,
-   "8": 1291
+   "6": 964,
+   "8": 1207
   }
  }
 }
