@@ -1,0 +1,191 @@
+{
+ "frame": [
+  48,
+  48
+ ],
+ "poses": [
+  {
+   "name": "smile",
+   "file": "01_smile_48x48.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_48x48.png"
+  },
+  {
+   "name": "talk",
+   "file": "03_talk_48x48.png"
+  },
+  {
+   "name": "wave",
+   "file": "04_wave_48x48.png"
+  },
+  {
+   "name": "jump",
+   "file": "05_jump_48x48.png"
+  },
+  {
+   "name": "surprised",
+   "file": "06_surprised_48x48.png"
+  },
+  {
+   "name": "thinking",
+   "file": "07_thinking_48x48.png"
+  },
+  {
+   "name": "sad",
+   "file": "08_sad_48x48.png"
+  },
+  {
+   "name": "peek",
+   "file": "09_peek_48x48.png"
+  }
+ ],
+ "layers": {
+  "smile": [
+   {
+    "file": "layers/shared_planter.png",
+    "offset": [
+     10,
+     29
+    ]
+   },
+   {
+    "file": "layers/pip_smile.png",
+    "offset": [
+     0,
+     0
+    ]
+   }
+  ],
+  "blink": [
+   {
+    "file": "layers/shared_planter.png",
+    "offset": [
+     10,
+     29
+    ]
+   },
+   {
+    "file": "layers/pip_blink.png",
+    "offset": [
+     0,
+     0
+    ]
+   }
+  ],
+  "talk": [
+   {
+    "file": "layers/shared_planter.png",
+    "offset": [
+     10,
+     29
+    ]
+   },
+   {
+    "file": "layers/pip_talk.png",
+    "offset": [
+     0,
+     0
+    ]
+   }
+  ],
+  "wave": [
+   {
+    "file": "layers/shared_planter.png",
+    "offset": [
+     10,
+     29
+    ]
+   },
+   {
+    "file": "layers/pip_wave.png",
+    "offset": [
+     0,
+     0
+    ]
+   }
+  ],
+  "jump": [
+   {
+    "file": "layers/shared_planter.png",
+    "offset": [
+     10,
+     24
+    ]
+   },
+   {
+    "file": "layers/pip_jump.png",
+    "offset": [
+     0,
+     0
+    ]
+   }
+  ],
+  "surprised": [
+   {
+    "file": "layers/shared_planter.png",
+    "offset": [
+     10,
+     29
+    ]
+   },
+   {
+    "file": "layers/pip_surprised.png",
+    "offset": [
+     0,
+     0
+    ]
+   }
+  ],
+  "thinking": [
+   {
+    "file": "layers/shared_planter.png",
+    "offset": [
+     10,
+     29
+    ]
+   },
+   {
+    "file": "layers/pip_thinking.png",
+    "offset": [
+     0,
+     0
+    ]
+   }
+  ],
+  "sad": [
+   {
+    "file": "layers/shared_planter.png",
+    "offset": [
+     10,
+     29
+    ]
+   },
+   {
+    "file": "layers/pip_sad.png",
+    "offset": [
+     0,
+     0
+    ]
+   }
+  ],
+  "peek": [
+   {
+    "file": "layers/shared_planter.png",
+    "offset": [
+     10,
+     29
+    ]
+   },
+   {
+    "file": "layers/pip_peek.png",
+    "offset": [
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ "note": "The planter is one shared layer. Pip is the tutorial guide (story character)."
+}

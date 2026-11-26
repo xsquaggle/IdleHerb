@@ -2,17 +2,21 @@
 
 True-size sprites on the 640×360 art-pixel grid, in the 76-colour master palette. Rules are in [docs/art/STYLE_BIBLE.md](../docs/art/STYLE_BIBLE.md).
 
-Everything here comes from Asset Batch 1 (17 of its 18 images; the manager image is on hold). All of it is at the **automatic pass** stage.
+Everything here comes from Asset Batch 1 (17 of its 18 images; the manager image is on hold) and Asset Batch 2 (prompts 7 to 17 so far). All of it is at the **automatic pass** stage.
 
 | Folder | Contents |
 |---|---|
-| `walls/` | Eight World 1 back walls, 336×104, floors 1 to 8, in plain master colours. `walls/veiled/` holds each wall as the game shows it. `walls.json` lists floors, open-sky walls and the veil |
+| `walls/` | All ten World 1 back walls, 336×104, floors 1 to 10, in plain master colours. `walls/veiled/` holds each wall as the game shows it. `walls.json` lists floors, open-sky walls and the veil |
 | `props/floor03_hemp_patch/` | Seven props for the Backyard Hemp Patch. `floor.json` gives each prop's place on the 360×120 floor |
 | `props/floor08_ropewalk/` | Five props for the Ropewalk and Twine Shop, with `floor.json` |
+| `props/floor09_soap_workshop/` | Five props for the Soap and Scent Workshop (kettle and stove, mould table, drying rack, lotion shelf, the manager's stool and side table), with `floor.json` |
 | `props/harvest/` | Tied sheaf, stook, drying rack and combed fibre |
 | `plants/` | Fibre hemp in five growth stages (32×96), Seed Hemp, staked Longstalk Hemp, the Giant Show-Hemp cane in three stacking pieces, and basil, rosemary and lavender in five stages each (72×90). `plants/herb_layers/` holds the planter and each foliage layer on its own. `plants.json` gives anchors, layer offsets and the cane stacking |
 | `actors/w1_floor01_gardener/`, `…floor02…`, `…floor03…` | The lead workers of floors 1 to 3: nine 80×80 frames each (idle, blink, cheer, three walk frames, two work frames, carry). `layers/` holds the shared head, blink patch, body layers and props. `frames.json` gives the frame list, head offsets and the layer recipe |
 | `actors/floor08_ropewalk/` | The two ropewalk workers, one standing pose each |
+| `actors/w1_floor04_worker1/` to `…floor10_worker1/` | Batch 2 workers: two per floor for floors 4 to 9 and the HQ clerk of floor 10. Nine 80×80 frames each, in the same order as the gardeners. `frames.json` names the person, the source sheet and the feet line |
+| `actors/w1_floor01_worker2/`, `…floor02…`, `…floor03…` | The second worker of floors 1 to 3, same layout |
+| `story/pip/` | Pip, the sprout helper: nine 48×48 poses (smile, blink, talk, wave, jump, surprised, thinking, sad, peek). `layers/` and `pip.json` hold the parts |
 | `chests/` | Common and Legendary chest: one base, four lids and a crack shadow each, 96×80. `chests.json` gives the draw order. `frames/` holds the four composed frames of each chest |
 | `cards/plants/` | The six hemp card pictures, 108×100 |
 | `icons/seeds/` | Four hemp seed packets, two seed jars, scoop and sack, 48×48 |
@@ -29,6 +33,6 @@ Everything here comes from Asset Batch 1 (17 of its 18 images; the manager image
 
 ## Where it came from
 
-The raw sheets are in project files under `art/batch01/round1_raw/` to `round6_raw/`. The passes are `docs/art/tools/clean_batch01_round4.py` (round 4) and `docs/art/tools/clean_batch01_parts.py` (all other rounds), and the before/after sheets are in `docs/art/cleanup/`.
+The raw sheets are in project files under `art/batch01/round1_raw/` to `round6_raw/` and `art/batch02/raw_prompts07_17/`. The passes are `docs/art/tools/clean_batch01_round4.py` (round 4), `docs/art/tools/clean_batch01_parts.py` (all other Batch 1 rounds) and `docs/art/tools/clean_batch02.py`, and the before/after sheets are in `docs/art/cleanup/`.
 
 Still to make by hand: one fixed head per character from the Face Kit, the 24 and 16 pixel icons, and the polish items listed in `docs/art/HANDOFF.md`.

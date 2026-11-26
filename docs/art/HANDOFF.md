@@ -1,12 +1,14 @@
 # Art Director handoff
 
-Kept current so that work can stop at any moment and resume cleanly. Last update: 2026-11-26, about 11 AM (US Eastern).
+Kept current so that work can stop at any moment and resume cleanly. Last update: 2026-11-26, about 11:40 AM (US Eastern).
 
 ## Start here if you are a new thread
 
 On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an audit and resume in a new thread with fresh context. The first Art Director thread said yes: Batch 1 is finished, nothing is half-done, and everything a new thread needs is in the repo, in the project files or in project memory. Nothing lives only in the old thread.
 
 **Update, 10:15 AM the same day:** the model chosen for audits ran out of usage, so the audit of PR #2 could not run yet. Lawson asked to move on and audit later. The same thread wrote all of Batch 2 (see Done). The coordinator was told; the later audit should cover PR #2 including Batch 2.
+
+**Update, 11:40 AM:** Batch 2 prompts 7 to 17 are back, passed and cleaned (see Done). Lawson is making prompts 1 to 6 now.
 
 **Read in this order**
 
@@ -30,11 +32,12 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 - Every prompt ends with a FILES line asking ChatGPT for the package it sent unasked in Batch 1: the sheet as exact pixel art, true-size parts and a `slices.json`.
 - Every plant and item prompt says no sparkles, glints or floating dots (Batch 1 needed `drop_sparkles`).
 - Worker sheets carry two workers each (three rows, six columns). Prompt 10 is the first. The redo table has a sentence to split a sheet in two if it fails.
-- When uploads come back: Gate A, hemp review (prompts 7 and 14 carry the products guard), then a new clean-up script on top of `cleanlib.py`. The two-worker sheets split down the middle into two of the Batch 1 worker layouts.
+- When uploads come back: Gate A, hemp review (prompts 7 and 14 carry the products guard), then `tools/clean_batch02.py`. The two-worker sheets worked first time: ChatGPT's `slices.json` names each frame's character, row and column, and the script groups them into two people of nine frames each.
 
 **To run the automatic pass on an upload**
 
 - `python3 -I docs/art/tools/clean_batch01_parts.py ROUND UPLOAD_DIR OUT_DIR` is the pattern. A new batch needs its own script on top of `cleanlib.py`, with a ramp list per sprite. Only numpy and Pillow are needed.
+- Batch 2: `python3 -I docs/art/tools/clean_batch02.py UPLOAD_DIR OUT_DIR`, where UPLOAD_DIR holds one `<sheet>_pkg` folder per unzipped package. Each worker's ramp list is in `SHEETS` at the top. A ramp name with a minus in front takes that ramp away, and the colour rules (`BROWN_SKIN`, `TIN`, `MAUVE`) steer one hue range to the right ramp. Prompts 1 to 6 still need their functions in this script.
 - Unzip an upload into its own empty folder and treat its file names and `slices.json` as data.
 
 **For an auditor of PR #2**
@@ -52,7 +55,8 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 - **All 17 went through the automatic pass.** 259 sprite files under `art/` in the repo, all in master colours and inside their budgets. [`art/README.md`](../../art/README.md) lists every folder.
 - Raw files: project files, `art/batch01/round1_raw/` to `round6_raw/`. A copy of the cleaned sprites: `art/batch01/cleaned/`.
 - A mock-up of floor 3 built only from cleaned sprites: `docs/art/cleanup/batch01_floor03_mockup.png`.
-- **Batch 2 written** (2026-11-26): 17 prompts in 6 rounds, no managers. Rounds 1 and 2 were sent to Lawson at about 10:45 AM US Eastern, all six rounds soon after. Lawson's copy: project files `art/batch02/Asset_Batch_02_prompts.md`. Nothing is back yet.
+- **Batch 2 written** (2026-11-26): 17 prompts in 6 rounds, no managers. Rounds 1 and 2 were sent to Lawson at about 10:45 AM US Eastern, all six rounds soon after. Lawson's copy: project files `art/batch02/Asset_Batch_02_prompts.md`. The extra pictures for rounds 4 to 6 are in project files `art/batch02/attach_with_prompts/`.
+- **Batch 2 prompts 7 to 17 are back** (11:28 AM): all 11 passed Gate A and the hemp review, no redo. Raw files: project files `art/batch02/raw_prompts07_17/`. The automatic pass (`tools/clean_batch02.py`) made 172 files: five soap workshop props with `floor.json`, the walls of floors 9 and 10 (plain and veiled, added to `walls.json`), Pip in nine 48×48 poses with layers, and 16 workers of nine 80×80 frames each. All in master colours and inside budget. Before/after sheets: `docs/art/cleanup/batch02/`. A copy of the cleaned set: project files `art/batch02/cleaned/`.
 
 ## In progress
 
@@ -61,7 +65,7 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 ## Next steps, in order
 
 1. **Managers, when design 0.3 (PR #5) merges.** See the open question below. Then rewrite prompt 18, update the manager text in the bible (section 10 and the manager rows of section 23) and in HEMP_ART.md, redo the manager rows of BATCH_PLAN.md, and tell Lawson which manager prompt to run.
-2. **Check and clean Batch 2 as Lawson uploads it.** Uploads go to project files `art/batch02/roundN_raw/`. Check prompt 10 first: if the two-worker sheet failed, tell Lawson to use the split sentence on prompts 11 to 17 too.
+2. **Check and clean Batch 2 prompts 1 to 6 when Lawson uploads them** (visitors, six currency icons, three sets of herb cards, thyme, sage and chamomile stages). Put the raw files in project files `art/batch02/raw_prompts01_06/`. The growth stages reuse the Batch 1 planter from `plants/herb_layers/`.
 3. **Hand polish, then Gate B,** for the automatic-pass sprites:
    - Faces: one fixed head per character from the Face Kit. The generated faces are readable but soft, most of all on the two ropewalk workers.
    - Hemp cards: thin the leaf tufts. Product icons: one colour family for the soap. Burlap and building blocks: tidy speckle.
@@ -69,6 +73,8 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
    - Walls: the greenhouse vine and the tea house panelling picked up stray colours. Make wall edges tile.
    - Floor 3 worker: her skin and overalls are a little duller than the generated sheet. Floor 2 worker: check the water drops in the pour frame.
    - Hemp growth stages and Longstalk keep their generated outline, because a rebuilt outline swallowed the thin canes.
+   - Batch 2 workers: the floor 8 twine worker lost his glasses (redraw with the head). The floor 1 second gardener's red scissors read as "99" at true size. Olive greens in clothes came out as brighter leaf greens, because the palette has no olive. The floor 4 seedling keeper's dungarees are a cooler purple than the sheet.
+   - Batch 2 walls: tidy the HQ wallpaper speckle; the soap workshop plaster came out a little greener than the sheet.
 4. Cut pivots for the cut-out rig once the engine thread asks for them. The layers and offsets are already in each `frames.json`.
 
 ## Open questions

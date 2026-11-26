@@ -45,15 +45,6 @@
    ],
    "open_sky": false
   },
-  "w1_floor08_ropewalk_336x104.png": {
-   "world": 1,
-   "floor": 8,
-   "size": [
-    336,
-    104
-   ],
-   "open_sky": false
-  },
   "w1_floor06_market_336x104.png": {
    "world": 1,
    "floor": 6,
@@ -66,6 +57,33 @@
   "w1_floor07_tea_house_336x104.png": {
    "world": 1,
    "floor": 7,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w1_floor08_ropewalk_336x104.png": {
+   "world": 1,
+   "floor": 8,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w1_floor09_soap_workshop_336x104.png": {
+   "world": 1,
+   "floor": 9,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w1_floor10_hq_336x104.png": {
+   "world": 1,
+   "floor": 10,
    "size": [
     336,
     104

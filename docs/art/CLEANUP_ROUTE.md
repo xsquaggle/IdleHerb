@@ -107,6 +107,19 @@ Result: 213 sprite files from these five rounds, 259 with round 4, every one in 
 
 Left for the hand polish: the list in [HANDOFF.md](HANDOFF.md).
 
+## Batch 2, prompts 7 to 17
+
+Eleven images came back in the same package and all passed Gate A and the hemp review with no redo. The pass is [`tools/clean_batch02.py`](tools/clean_batch02.py). It made 172 files: soap workshop props, the walls of floors 9 and 10, Pip, and 16 workers from eight two-worker sheets. Before/after sheets are in `cleanup/batch02/`.
+
+What this batch taught the route:
+
+- **Two workers on one sheet work.** The slices file names each frame's character, row and column, so the pass sorts the 18 frames into two people of nine. Sheets came back at three or four times true size; the characters stand 66 to 74 pixels tall, the same as Batch 1.
+- **Muted purples need a rule.** Mauve and plum cloth (dungarees, a market dress, a twine cap) sits between `rose`, `lavender`, `stone` and the dark `clay` and `red` steps. Nearest-colour sent it to brown or wine red. A hue rule sends low-chroma red-purple to `rose-1`, `lavender-1`, `lavender-2` and the dark `stone` steps, and the brown ramps are taken off that worker.
+- **Tin and steel grey get the same treatment.** Watering cans and buckets went teal or sage. A rule sends low-chroma blue-grey to `steel`.
+- **Take ramps away, not only add them.** A worker's ramp list starts from the shared people set and can drop a ramp (written with a minus in front) when it pulls the wrong colour, for example `ash` on purple cloth or the light `clay` steps on a cap.
+- **Feet on one line.** All nine frames of a worker move together so the idle feet rest on row 76, like Batch 1. If any pose would lose pixels at the frame edge, nothing moves and `frames.json` records the real feet line. 15 of the 16 workers are on 76; one is on 77.
+- **Olive has no home.** The palette has no olive green, so olive clothes come out as brighter `leaf` green. Accepted for now; the colour is still clearly a green work jacket.
+
 ## What this means for each asset class
 
 | Class | Route | Hand work |
