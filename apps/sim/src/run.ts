@@ -76,7 +76,10 @@ export interface Sample {
   tap: { power: number; comboCap: number; critChance: number; critMult: number };
   /** Multipliers on the frontier world's best floor. */
   mult: {
+    /** The median hired manager, the mean of the three highest hired floors, and the income-weighted mean. */
     manager: number;
+    managerTop: number;
+    managerWeighted: number;
     permanent: number;
     research: number;
     skills: number;
@@ -130,6 +133,21 @@ export interface RunResult {
 }
 
 const l10 = (n: Num): number | null => (n.gt(0) ? n.log10() : null);
+
+/** Income-weighted mean of manager multipliers, from log10 incomes of any size. */
+function weightedByLog(rows: ({ l: number; m: number } | null)[]): number {
+  const live = rows.filter((r): r is { l: number; m: number } => r !== null && Number.isFinite(r.l));
+  if (live.length === 0) return 1;
+  const max = Math.max(...live.map((r) => r.l));
+  let a = 0;
+  let b = 0;
+  for (const r of live) {
+    const w = 10 ** (r.l - max);
+    a += w;
+    b += w / r.m;
+  }
+  return b > 0 ? a / b : 1;
+}
 const SOURCES: IncomeSource[] = ['floors', 'taps', 'visitors', 'twist', 'abilities', 'offline', 'autopilot'];
 
 class Recorder {
@@ -346,10 +364,23 @@ class Recorder {
     const wd = d.worlds[frontier]!;
     let top = 0;
     let mgrs: number[] = [];
+    const hiredInOrder: number[] = [];
     ws.floors.forEach((f, i) => {
       if (f.level > 0) top = i;
-      if (f.level > 0 && f.hired && f.managerId) mgrs.push(wd.floors[i]!.manager);
+      if (f.level > 0 && f.hired) {
+        mgrs.push(wd.floors[i]!.manager);
+        hiredInOrder.push(wd.floors[i]!.manager);
+      }
     });
+    // What the hired managers multiply this world's income by, all told.
+    const managerWeighted = weightedByLog(
+      ws.floors.map((f, i) => {
+        if (f.level <= 0 || !f.hired) return null;
+        const ips = g.floorInfo(frontier, i).ipsSteady;
+        return ips.gt(0) ? { l: ips.log10(), m: wd.floors[i]!.manager } : null;
+      }),
+    );
+    const topThree = hiredInOrder.slice(-3);
     mgrs = mgrs.sort((a, b) => a - b);
     const fd = wd.floors[top]!;
     const richSoil = 1.25 ** (s.compostShop['shop.compost.rich_soil'] ?? 0);
@@ -369,6 +400,8 @@ class Recorder {
       tap: { power: wdTap.tapPower, comboCap: wdTap.comboCap, critChance: wdTap.critChance, critMult: wdTap.critMult },
       mult: {
         manager: mgrs.length > 0 ? mgrs[Math.floor(mgrs.length / 2)]! : 1,
+        managerTop: topThree.length > 0 ? topThree.reduce((a, b) => a + b, 0) / topThree.length : 1,
+        managerWeighted,
         permanent: (fd.profit / richSoil / goldenHour) * fd.speed * (1 + fd.doubleChance),
         research,
         skills: fd.parts.skill!,

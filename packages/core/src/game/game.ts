@@ -34,7 +34,11 @@ const EPS = 1e-9;
 const MIN_STEP = 1e-6;
 
 /** Fixed contents of the two scripted chests (GDD 8.3, "Special chests"). */
-export const WELCOME_MANAGERS = ['card.manager.nana_sprig', 'card.manager.basil_brumble', 'card.manager.olive_ledger'];
+/** The Welcome Chest: this many copies of each manager of world 1 floors 1 to 3 (GDD 8.3). */
+export const WELCOME_FLOORS = 3;
+export const WELCOME_COPIES = 2;
+/** A Hiring Crate (world 1 floors 4 to 9): this many copies of the floor's own manager, plus two Wooden Crate slots. */
+export const HIRING_CRATE_COPIES = 2;
 export const SEED_PACKET = ['plant.mint.garden', 'plant.hemp.fibre'];
 const TIER_GATE = [0, 5, 15, 30];
 const SOURCES: IncomeSource[] = ['floors', 'taps', 'visitors', 'twist', 'abilities', 'offline', 'autopilot', 'start'];
@@ -355,7 +359,7 @@ export class Game {
         continue;
       }
       const fd = wd.floors[i]!;
-      const managed = f.hired && f.managerId !== null && s.cards[f.managerId] !== undefined;
+      const managed = f.hired;
       const common = fd.profit * (managed ? fd.manager : 1) * (1 + fd.doubleChance);
       const fdef = def.floors[i]!;
       // The twist counts at its current value in the steady rate (GDD 13.5 rule 9).
@@ -515,9 +519,12 @@ export class Game {
       if (owner.ownerKind === 'manager') {
         worlds = [];
         s.worlds.forEach((ws, w) => {
-          if (ws.unlocked && ws.floors.some((f) => f.hired && f.level > 0 && f.managerId === owner.ownerId)) worlds.push(w);
         });
-        if (worlds.length === 0) continue;
+        // A manager's ability belongs to its own world, and works while the manager is hired (GDD 7.1 rule 7).
+        const m = this.content.cards.get(owner.ownerId) as ManagerDef;
+        const f = s.worlds[m.world]!.floors[m.floorIndex]!;
+        if (!s.worlds[m.world]!.unlocked || !f.hired || f.level <= 0) continue;
+        worlds.push(m.world);
       } else {
         if (!s.equipped.includes(owner.ownerId)) continue;
         worlds = [-1];
@@ -840,6 +847,9 @@ export class Game {
   private settleSunrise(w: number, caught: boolean): void {
     const ws = this.state.worlds[w]!;
     const t = this.t;
+    // Wake-Up Call: a missed sunrise pays as if it was caught, once.
+    if (!caught && ws.sunriseArmed) caught = true;
+    if (caught) ws.sunriseArmed = false;
     if (ws.sunrisePending.gt(0)) {
       if (caught) {
         const mult = sunriseMult(ws.sunriseStreak, t);
@@ -880,7 +890,7 @@ export class Game {
       if (sp['unlock.auto_hire']) {
         for (let i = 0; i < ws.floors.length; i++) {
           const f = ws.floors[i]!;
-          if (f.level > 0 && !f.hired && f.managerId && ws.coins.gte(this.hireFee(w, i))) this.hire(w, i, f.managerId);
+          if (f.level > 0 && !f.hired && ws.coins.gte(this.hireFee(w, i))) this.hire(w, i);
         }
       }
       if (sp['unlock.auto_gardener'] && s.autoBuy) {
@@ -1026,8 +1036,7 @@ export class Game {
       case 'harvest': return this.harvest(cmd.world, cmd.floor);
       case 'buyLevels': return this.buyLevels(cmd.world, cmd.floor, cmd.count);
       case 'openFloor': return this.openFloor(cmd.world);
-      case 'hire': return this.hire(cmd.world, cmd.floor, cmd.managerId);
-      case 'seatManager': return this.seatManager(cmd.world, cmd.floor, cmd.managerId);
+      case 'hire': return this.hire(cmd.world, cmd.floor);
       case 'plant': return this.plant(cmd.world, cmd.floor, cmd.plants);
       case 'buyTicket': return this.buyTicket(cmd.world);
       case 'focus': return this.setFocus(cmd.world);
@@ -1153,9 +1162,10 @@ export class Game {
       ws.stars++;
       this.count('masteryStars');
       this.addXp(t.XP_MASTERY_STAR, 'mastery');
+      // Stars 5, 7, 9 and 10 give one copy of this world's Head (GDD 14.5).
       if (t.MASTERY_EXOTIC_STARS.includes(ws.stars)) {
-        const m = this.content.managers.find((x) => x.masteryWorld === w + 1);
-        if (m) this.addCard(m.id);
+        const floors = this.content.worlds[w]!.floors;
+        this.addCard(floors[floors.length - 1]!.manager.id);
       }
       this.emit({ type: 'star', world: w, stars: ws.stars });
       this.invalidate();
@@ -1188,28 +1198,35 @@ export class Game {
     if (w === 0 && i === ws.floors.length - 1) this.count('w1TopFloorOpens');
     const first = !s.codex[def.id];
     if (first) this.addCodex(def.id);
-    // Hiring Crates: the first time each of floors 4 to 10 opens in world 1 (GDD 7.1 rule 7).
-    if (w === 0 && i >= 3 && !s.hiringCrates[def.id]) {
+    // The floor's manager is met: the card is owned at level 1 from now on (GDD 7.1 rule 5).
+    this.meet(def.manager.id);
+    // Hiring Crates: the first time each of floors 4 to 9 opens in world 1 (GDD 7.1 rule 9). Floor 10's manager is the Head.
+    if (w === 0 && i >= WELCOME_FLOORS && !def.manager.head && !s.hiringCrates[def.id]) {
       s.hiringCrates[def.id] = true;
-      this.openHiringCrate();
+      this.openHiringCrate(def.manager.id);
     }
     this.emit({ type: 'floorOpened', world: w, floor: i, first });
     this.afterLevels(w, i, 0);
     this.invalidate();
   }
 
-  private hire(w: number, i: number, managerId: string): boolean {
+  /** Pays the floor's fee and puts its own manager to work (GDD 7.1 rule 2). */
+  private hire(w: number, i: number): boolean {
     const s = this.state;
     const ws = this.world(w);
     const f = ws?.floors[i];
     if (!ws || !f || f.level <= 0 || f.hired) return false;
-    const def = this.content.cards.get(managerId);
-    if (!def || def.kind !== 'manager' || !s.cards[managerId]) return false;
+    // Hire buttons appear once the Welcome Chest has been opened (GDD 16, row 5).
+    if (s.unlocked['feature.managers'] === undefined) return false;
     const fee = this.hireFee(w, i);
     if (ws.coins.lt(fee)) return false;
     ws.coins = ws.coins.sub(fee);
     f.hired = true;
-    this.seat(ws, i, managerId);
+    const card = s.cards[this.content.worlds[w]!.floors[i]!.manager.id];
+    if (card && !card.everHired) {
+      card.everHired = true;
+      this.count('managersHired');
+    }
     this.count('hires');
     if (f.ready) {
       // The new manager collects the waiting harvest at the manual rate.
@@ -1222,23 +1239,14 @@ export class Game {
     return true;
   }
 
-  /** A manager sits at one desk per world: seating it here empties its other desk in this world. */
-  private seat(ws: WorldState, i: number, managerId: string | null): void {
-    if (managerId) for (const other of ws.floors) if (other.managerId === managerId) other.managerId = null;
-    ws.floors[i]!.managerId = managerId;
-  }
-
-  private seatManager(w: number, i: number, managerId: string | null): boolean {
-    const ws = this.state.worlds[w];
-    const f = ws?.floors[i];
-    if (!ws || !f) return false;
-    if (managerId !== null) {
-      const def = this.content.cards.get(managerId);
-      if (!def || def.kind !== 'manager' || !this.state.cards[managerId]) return false;
-    }
-    this.seat(ws, i, managerId);
-    this.invalidate();
-    return true;
+  /** The first time a floor opens, in any run, its manager's card is owned at level 1. */
+  private meet(managerId: string): void {
+    const s = this.state;
+    if (s.cards[managerId]) return;
+    s.cards[managerId] = { level: 1, copies: 0 };
+    this.addCodex(managerId);
+    this.count('managersMet');
+    this.emit({ type: 'cardNew', id: managerId });
   }
 
   private plant(w: number, i: number, plants: string[]): boolean {
@@ -1331,6 +1339,9 @@ export class Game {
     s.focus = w;
     s.combo = 0;
     s.comboIdle = 0;
+    // A manager's ability stays in its own world: what it gave the taps ends when the player leaves.
+    s.comboLock = 0;
+    s.tapBoostTaps = 0;
     s.visitors = [];
     return true;
   }
@@ -1500,13 +1511,12 @@ export class Game {
     let w = s.focus;
     let floor = -1;
     if (owner.ownerKind === 'manager') {
-      const candidates: number[] = [];
-      s.worlds.forEach((ws, k) => {
-        if (ws.unlocked && ws.floors.some((f) => f.hired && f.level > 0 && f.managerId === owner.ownerId)) candidates.push(k);
-      });
-      if (candidates.length === 0) return false;
-      w = world !== undefined && candidates.includes(world) ? world : candidates.includes(s.focus) ? s.focus : candidates[0]!;
-      floor = s.worlds[w]!.floors.findIndex((f) => f.managerId === owner.ownerId);
+      // The button is on the manager's own floor, so its world must be on screen (GDD 7.1 rule 7, 7.2).
+      const m = this.content.cards.get(owner.ownerId) as ManagerDef;
+      const f = s.worlds[m.world]!.floors[m.floorIndex]!;
+      if (!s.worlds[m.world]!.unlocked || !f.hired || f.level <= 0 || m.world !== s.focus) return false;
+      w = m.world;
+      floor = m.floorIndex;
     } else if (!s.equipped.includes(owner.ownerId)) return false;
 
     switch (a.kind) {
@@ -1543,9 +1553,19 @@ export class Game {
       case 'chestLuckNext':
         s.luckDoubleNext = true;
         break;
-      case 'heatOrSpeed':
-        if (this.content.worlds[w]!.twist === 'heat') s.worlds[w]!.heat = t.HEAT_MAX;
-        else this.addBuff({ id: a.id, kind: 'boost', world: w, floor: -1, mult: a.mult!, remaining: a.durationSec! });
+      case 'fillHeat':
+        if (this.content.worlds[w]!.twist !== 'heat') return false;
+        s.worlds[w]!.heat = t.HEAT_MAX;
+        break;
+      case 'fillBubbles':
+        // Tea Party: every bubble fills with `seconds` of its floor's steady income (a lump sum, GDD 13.5 rule 4).
+        if (this.content.worlds[w]!.twist !== 'bubbles') return false;
+        s.worlds[w]!.bank = s.worlds[w]!.bank.add(this.lumpRate(w).mul(a.seconds!));
+        break;
+      case 'catchSunrise':
+        // Wake-Up Call: the next sunrise pays as if it was caught.
+        if (this.content.worlds[w]!.twist !== 'sunrise' || s.worlds[w]!.sunriseArmed) return false;
+        s.worlds[w]!.sunriseArmed = true;
         break;
       case 'tapBoost':
         s.tapBoostTaps = a.taps!;
@@ -1561,11 +1581,10 @@ export class Game {
         }
         break;
       case 'resetCooldowns':
-        for (const f of s.worlds[s.focus]!.floors) {
-          if (!f.hired || !f.managerId) continue;
-          const ab = (this.content.cards.get(f.managerId) as ManagerDef).ability;
-          if (ab) delete s.cooldowns[ab.id];
-        }
+        s.worlds[s.focus]!.floors.forEach((f, i) => {
+          const ab = this.content.worlds[s.focus]!.floors[i]!.manager.ability;
+          if (f.hired && ab) delete s.cooldowns[ab.id];
+        });
         break;
     }
     s.cooldowns[id] = a.cooldownSec;
@@ -1642,7 +1661,7 @@ export class Game {
       if (!own) {
         s.cards[id] = { level: 1, copies: 0 };
         this.addCodex(id);
-        this.count(def.kind === 'manager' ? 'managersOwned' : 'plantsOwned');
+        this.count(def.kind === 'manager' ? 'managersMet' : 'plantsOwned');
         this.emit({ type: 'cardNew', id });
       } else if (own.level >= def.maxLevel) {
         this.addPollen(t.POLLEN_FROM_MAXED[def.rarity] * (1 + this.derived.global.pollenMaxedBonus));
@@ -1677,6 +1696,7 @@ export class Game {
       heirloomsUnlocked: s.unlocked['feature.heirlooms'] !== undefined,
       worldReached: s.worldReached,
       owned: new Set(Object.keys(s.cards)),
+      heads: this.content.worlds.filter((_, w) => s.worlds[w]!.stars >= 5).map((wd) => wd.floors[wd.floors.length - 1]!.manager.id),
       ownedHeirlooms: new Set(Object.keys(s.heirlooms)),
       newCardHelp: s.chestsOpened < this.t.NEW_CARD_CHESTS,
       pity: s.pity,
@@ -1706,17 +1726,11 @@ export class Game {
     return true;
   }
 
-  /** One new manager (lowest rarity not owned, lowest number first) plus two Wooden Crate slots. */
-  private openHiringCrate(): void {
-    const s = this.state;
-    const next = [...this.content.managers]
-      .filter((m) => m.rarity !== 'exotic' && !s.cards[m.id])
-      .sort((a, b) => RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity] || a.n - b.n)[0];
+  /** Two copies of the manager of the floor that just opened, plus two Wooden Crate slots (GDD 8.3). */
+  private openHiringCrate(managerId: string): void {
     const cards: string[] = [];
-    if (next) {
-      this.addCard(next.id);
-      cards.push(next.id);
-    }
+    for (let k = 0; k < HIRING_CRATE_COPIES; k++) cards.push(managerId);
+    this.addCard(managerId, HIRING_CRATE_COPIES);
     const wooden = this.content.chests.get('chest.wooden')!;
     const res = this.rollInto({ ...wooden, cards: 2, guarantee: [], pollen: 0, heirloomChance: 0 });
     this.chestOpened('chest.hiring', 1, [...cards, ...res.cards], null);
@@ -2189,14 +2203,18 @@ export class Game {
     if (r.chest) this.grantChest(r.chest);
     if (r.heirloom) this.addHeirloom(r.heirloom);
     if (r.special === 'chest.welcome') {
-      for (const id of WELCOME_MANAGERS) this.addCard(id);
-      this.chestOpened('chest.welcome', 1, WELCOME_MANAGERS, null);
+      const cards: string[] = [];
+      for (const f of this.content.worlds[0]!.floors.slice(0, WELCOME_FLOORS)) {
+        this.addCard(f.manager.id, WELCOME_COPIES);
+        for (let k = 0; k < WELCOME_COPIES; k++) cards.push(f.manager.id);
+      }
+      this.chestOpened('chest.welcome', 1, cards, null);
     } else if (r.special === 'chest.seed_packet') {
       for (const id of SEED_PACKET) this.addCard(id);
       this.chestOpened('chest.seed_packet', 1, SEED_PACKET, null);
     }
     if (r.epicCopies) {
-      const epics = this.content.managers.filter((m) => m.rarity === 'epic' && (m.poolWorld ?? 99) <= s.worldReached);
+      const epics = this.content.managers.filter((m) => m.rarity === 'epic' && s.cards[m.id] !== undefined);
       if (epics.length > 0) this.addCard(epics[((s.fair.weekKey % epics.length) + epics.length) % epics.length]!.id, r.epicCopies);
     }
   }
@@ -2234,6 +2252,7 @@ export class Game {
       case 'research': return s.researchDone[c.id!] === true;
       case 'shopLevel': return (s.compostShop[c.id!] ?? s.ribbonShop[c.id!] ?? 0) >= Number(c.gte ?? 1);
       case 'masteryStars': return s.worlds.some((w) => w.stars >= Number(c.gte));
+      case 'managerHired': return s.worlds[c.world! - 1]?.floors[c.floor! - 1]?.hired === true;
       case 'allFloorsLevel': return this.minLevel(c.world! - 1) >= c.level!;
       case 'holdCoins': {
         const ws = s.worlds[c.world! - 1]!;

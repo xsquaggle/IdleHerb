@@ -18,11 +18,10 @@ export interface RunSpec {
   group: 'baseline' | 'check' | 'seeds' | 'ablation' | 'burst' | 'proposal' | 'launch';
 }
 
-export const SYSTEMS = ['skills', 'bestSeats', 'cardLevels', 'plants', 'heirlooms', 'abilities', 'visitors', 'research', 'shopExtras', 'spurt'] as const;
+export const SYSTEMS = ['skills', 'cardLevels', 'plants', 'heirlooms', 'abilities', 'visitors', 'research', 'shopExtras', 'spurt'] as const;
 
 export const SYSTEM_LABEL: Record<string, string> = {
   skills: 'Skill tree',
-  bestSeats: 'Best managers on the best floors (worst first instead)',
   cardLevels: 'Card levels',
   plants: 'Plants',
   heirlooms: 'Heirlooms',
@@ -35,7 +34,7 @@ export const SYSTEM_LABEL: Record<string, string> = {
 };
 
 /** Every system the designer's rough script leaves out. */
-export const BARE = ['skills', 'plants', 'abilities', 'cardLevels', 'heirlooms', 'research', 'visitors', 'bestSeats', 'shopExtras', 'chests'];
+export const BARE = ['skills', 'plants', 'abilities', 'cardLevels', 'heirlooms', 'research', 'visitors', 'shopExtras', 'chests'];
 
 export function suite(proposal: string | null): RunSpec[] {
   const runs: RunSpec[] = [

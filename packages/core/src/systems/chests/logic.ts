@@ -29,10 +29,16 @@ export interface ChestRollInput {
   doubleLuck: boolean;
   plantsUnlocked: boolean;
   heirloomsUnlocked: boolean;
-  /** Highest world ever reached, 1-based. A card is in the pool when its poolWorld is at or below this. */
+  /** Highest world ever reached, 1-based. A plant is in the pool when its poolWorld is at or below this. */
   worldReached: number;
-  /** Ids of cards the player owns. The roller adds to it as slots resolve. */
+  /**
+   * Ids of cards the player owns. The roller adds to it as slots resolve.
+   * A manager is owned from the moment it is met (its floor was opened once), and
+   * only met managers are in the pool (GDD 8.3 rule 3).
+   */
   owned: Set<string>;
+  /** Heads whose world has at least 5 Mastery stars: the Starlight Chest's Exotic copy (rule 9). */
+  heads: string[];
   /** Ids of heirlooms the player owns. */
   ownedHeirlooms: ReadonlySet<string>;
   /** True during the player's first NEW_CARD_CHESTS chests. */
@@ -71,7 +77,9 @@ function poolFor(input: ChestRollInput, rarity: Rarity, kind: 'manager' | 'plant
   const list: CardDef[] = kind === 'manager' ? input.content.managers : input.content.plants;
   return list.filter((c) => {
     if (c.rarity !== rarity) return false;
-    if (c.kind === 'plant' && c.source !== 'chest') return false;
+    // Managers: met, and never a Head. Head copies come from Mastery stars and the Starlight Chest.
+    if (c.kind === 'manager') return !c.head && input.owned.has(c.id);
+    if (c.source !== 'chest') return false;
     if (c.poolWorld === undefined) return false;
     return c.poolWorld <= input.worldReached;
   });
@@ -86,7 +94,8 @@ function rollCard(input: ChestRollInput, rarity: Rarity): string | null {
     pool = kind === 'plant' && !input.plantsUnlocked ? [] : poolFor(input, rarity, kind);
   }
   if (pool.length === 0) return null;
-  if (input.newCardHelp) {
+  // New-card help is for plants: a met manager is already owned (rule 4).
+  if (input.newCardHelp && kind === 'plant') {
     const fresh = pool.filter((c) => !input.owned.has(c.id));
     if (fresh.length > 0) pool = fresh;
   }
@@ -151,10 +160,9 @@ export function rollChest(input: ChestRollInput): ChestRollResult {
 
   let exoticManager: string | null = null;
   if (chest.exoticManagerCopy) {
-    const earned = content.managers.filter((m) => m.rarity === 'exotic' && input.owned.has(m.id));
-    if (earned.length > 0) exoticManager = pickOne(rng, earned).id;
+    if (input.heads.length > 0) exoticManager = pickOne(rng, input.heads);
     else {
-      // Rule 9: with no Exotic manager earned, the copy is a third guaranteed Legendary.
+      // Rule 9: while no world has 5 Mastery stars, the copy is a third guaranteed Legendary.
       const c = rollSlot(input, 'legendary');
       if (c) cards.push(c);
     }

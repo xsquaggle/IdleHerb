@@ -11,8 +11,7 @@ export type Command =
   | { type: 'harvest'; world: number; floor: number }
   | { type: 'buyLevels'; world: number; floor: number; count: number }
   | { type: 'openFloor'; world: number }
-  | { type: 'hire'; world: number; floor: number; managerId: string }
-  | { type: 'seatManager'; world: number; floor: number; managerId: string | null }
+  | { type: 'hire'; world: number; floor: number }
   | { type: 'plant'; world: number; floor: number; plants: string[] }
   | { type: 'buyTicket'; world: number }
   | { type: 'focus'; world: number }

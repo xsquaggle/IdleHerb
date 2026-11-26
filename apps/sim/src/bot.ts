@@ -11,6 +11,7 @@
 import {
   Num, RARITY_ORDER, managerProfit, milestoneCount, nextMilestone, weatherGroupOf,
   type Command, type Game, type ManagerDef, type PlantDef,
+  type AbilityInfo,
 } from '@sprout/core';
 import type { PlayStyle, Profile } from './profiles';
 
@@ -232,7 +233,7 @@ export class Bot {
     const s = g.state;
     const ws = s.worlds[s.focus]!;
     let clicks = 0;
-    for (const f of ws.floors) if (f.level > 0 && f.ready && !(f.hired && f.managerId)) clicks++;
+    for (const f of ws.floors) if (f.level > 0 && f.ready && !f.hired) clicks++;
     if (clicks > 0) g.dispatch({ type: 'tap', count: Math.min(clicks, Math.max(1, Math.floor(dt))) });
   }
 
@@ -282,7 +283,7 @@ export class Bot {
   /** In burst play the Growth Spurt waits when the next wave of boosts is under a minute away. */
   private holdSpurt(): boolean {
     if (!this.style.burst) return false;
-    const boosts = this.g.abilities().filter((a) => BOOST_KINDS.has(a.ability.kind));
+    const boosts = this.usable().filter((a) => BOOST_KINDS.has(a.ability.kind));
     if (boosts.length < 2) return false;
     const soon = boosts.filter((a) => a.readyIn <= 60).length;
     const ready = boosts.filter((a) => a.ready).length;
@@ -292,7 +293,7 @@ export class Bot {
   private abilities(tapping: boolean): void {
     const g = this.g;
     const s = g.state;
-    const all = g.abilities();
+    const all = this.usable();
     if (all.length === 0) return;
     const focus = s.focus;
     const use = (id: string, worlds: number[]): void => {
@@ -325,6 +326,12 @@ export class Bot {
       if (k === 'startSpurt' && g.spurtActive(focus)) continue;
       use(a.ability.id, a.worlds);
     }
+  }
+
+  /** The abilities whose buttons are on screen: the four of the world in view, and the carried heirlooms'. */
+  private usable(): AbilityInfo[] {
+    const focus = this.g.state.focus;
+    return this.g.abilities().filter((a) => a.ownerKind !== 'manager' || a.worlds.includes(focus));
   }
 
   // ----------------------------------------------------------------- buying
@@ -392,6 +399,7 @@ export class Bot {
         } else if (f.level === min) atMin++;
         else if (f.level < second) second = f.level;
       }
+      const canHire = s.unlocked['feature.managers'] !== undefined;
       const towerTarget = allOpen ? nextMilestone(min, t) : 0;
       let towerCost = Num.ZERO;
       let towerGain = Num.ZERO;
@@ -424,10 +432,10 @@ export class Bot {
           towerGain = towerGain.add(base.mul((((L + k) / L) * t.MILESTONE_MULT ** (milestoneCount(L + k, t) - ms) - 1) * value));
           towerCommands.push({ type: 'buyLevels', world: w, floor: i, count: k });
         }
-        if (!f.hired && f.managerId && s.cards[f.managerId]) {
-          const card = g.content.cards.get(f.managerId) as ManagerDef;
-          const mult = managerProfit(card.rarity, s.cards[f.managerId]!.level, g.derived.global.managerPower, t);
-          consider(g.hireFee(w, i), base.mul(Math.max(0.05, mult - value)), [{ type: 'hire', world: w, floor: i, managerId: f.managerId }]);
+        const mgr = def.floors[i]!.manager;
+        if (!f.hired && canHire && s.cards[mgr.id]) {
+          const mult = managerProfit(mgr.rarity, s.cards[mgr.id]!.level, g.derived.global.managerPower, t);
+          consider(g.hireFee(w, i), base.mul(Math.max(0.05, mult - value)), [{ type: 'hire', world: w, floor: i }]);
         }
       }
       if (towerCommands.length > 1) {
@@ -439,10 +447,10 @@ export class Bot {
         const fd = wd.floors[nextFloor]!;
         const ips = fdef.basePayout.div(fdef.baseCycleSec).mul(g.derived.global.passive).mul(fd.profit * fd.speed * (1 + fd.doubleChance));
         consider(fdef.openCost, ips.mul(lowValue), [{ type: 'openFloor', world: w }]);
-        const seat = ws.floors[nextFloor]!.managerId;
-        if (seat && s.cards[seat]) {
-          const card = g.content.cards.get(seat) as ManagerDef;
-          const mult = managerProfit(card.rarity, s.cards[seat]!.level, g.derived.global.managerPower, t);
+        // Opening the floor and hiring its manager, as one purchase. A manager not met yet starts at level 1.
+        const card = fdef.manager;
+        if (canHire) {
+          const mult = managerProfit(card.rarity, s.cards[card.id]?.level ?? 1, g.derived.global.managerPower, t);
           consider(fdef.openCost.add(g.hireFee(w, nextFloor)), ips.mul(mult), [{ type: 'openFloor', world: w }]);
         }
       }
@@ -553,7 +561,6 @@ export class Bot {
       this.seatsDirty = false;
       for (let w = 0; w < s.worlds.length; w++) {
         if (!s.worlds[w]!.unlocked) continue;
-        this.seats(w);
         if (!this.off.has('plants')) this.planters(w);
       }
     }
@@ -695,24 +702,6 @@ export class Bot {
       return lg(fdef.basePayout) + Math.log10((L * 2 ** milestoneCount(L, g.t)) / fdef.baseCycleSec) - (f.level > 0 ? 0 : 3);
     };
     return ws.floors.map((_, i) => i).sort((a, b) => value(b) - value(a));
-  }
-
-  /** The best manager on the best floor, the second best on the second, and so on. */
-  private seats(w: number): void {
-    const g = this.g;
-    const s = g.state;
-    const ws = s.worlds[w]!;
-    const t = g.t;
-    const managers = g.content.managers
-      .filter((m) => s.cards[m.id])
-      .map((m) => ({ id: m.id, v: managerProfit(m.rarity, s.cards[m.id]!.level, 1, t) + (m.ability ? 0.01 : 0) }))
-      .sort((a, b) => (this.off.has('bestSeats') ? a.v - b.v : b.v - a.v));
-    const order = this.floorOrder(w);
-    for (let k = 0; k < order.length; k++) {
-      const i = order[k]!;
-      const want = managers[k]?.id ?? null;
-      if (ws.floors[i]!.managerId !== want) g.dispatch({ type: 'seatManager', world: w, floor: i, managerId: want });
-    }
   }
 
   private planters(w: number): void {

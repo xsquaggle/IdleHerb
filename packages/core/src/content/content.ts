@@ -21,6 +21,8 @@ export interface FloorDef {
   levelBaseCost: Num;
   growth: number;
   hireFee: Num;
+  /** The manager who runs this floor (GDD 7.1). */
+  manager: ManagerDef;
 }
 
 export interface WorldDef {
@@ -43,6 +45,11 @@ export interface ManagerDef extends ManagerRow {
   kind: 'manager';
   maxLevel: number;
   dupes: number[];
+  /** 0-based world and floor of the manager's own floor. */
+  world: number;
+  floorIndex: number;
+  /** The Exotic manager of a world's top floor (GDD 7.1 rule 8). */
+  head: boolean;
 }
 export interface PlantDef extends PlantRow {
   kind: 'plant';
@@ -115,7 +122,7 @@ export function hydrateContent(raw: RawContent): Content {
       const floors = raw.floors
         .filter((f) => f.world === w.id)
         .sort((a, b) => a.order - b.order)
-        .map((f, i): FloorDef => {
+        .map((f, i): Omit<FloorDef, 'manager'> => {
           if (f.order !== i + 1) throw new Error(`content: floor order must be 1..n without gaps (${f.id})`);
           return {
             id: f.id,
@@ -131,6 +138,8 @@ export function hydrateContent(raw: RawContent): Content {
           };
         });
       if (floors.length !== w.floors) throw new Error(`content: ${w.id} declares ${w.floors} floors but has ${floors.length}`);
+      // The managers are attached below, once they are built.
+      const floorDefs = floors as FloorDef[];
       return {
         id: w.id,
         index,
@@ -143,14 +152,23 @@ export function hydrateContent(raw: RawContent): Content {
         deedRibbons: w.deedRibbons,
         twist: w.twist,
         launch: w.launch,
-        floors,
+        floors: floorDefs,
       };
     });
 
   const managers: ManagerDef[] = raw.managers.map((m) => {
     const dupes = curve(`curve.dupes.${m.rarity}`);
-    return { ...m, kind: 'manager', dupes, maxLevel: dupes.length + 1 };
+    let floor: FloorDef | undefined;
+    for (const w of worlds) floor ??= w.floors.find((f) => f.id === m.floor);
+    if (!floor) throw new Error(`content: ${m.id} names unknown floor ${m.floor}`);
+    if (floor.manager) throw new Error(`content: ${m.floor} has two managers (${floor.manager.id} and ${m.id})`);
+    const head = floor.index === worlds[floor.worldIndex]!.floors.length - 1;
+    if (head !== (m.rarity === 'exotic')) throw new Error(`content: ${m.id}: the Exotic managers are the Heads of the top floors, and only they`);
+    const def: ManagerDef = { ...m, kind: 'manager', dupes, maxLevel: dupes.length + 1, world: floor.worldIndex, floorIndex: floor.index, head };
+    floor.manager = def;
+    return def;
   });
+  for (const w of worlds) for (const f of w.floors) if (!f.manager) throw new Error(`content: ${f.id} has no manager`);
   const plants: PlantDef[] = raw.plants.map((p) => {
     const dupes = curve(`curve.dupes.${p.rarity}`);
     const traitDefs = p.traits.map((id) => {

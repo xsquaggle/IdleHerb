@@ -11,8 +11,6 @@ export interface FloorState {
   level: number;
   /** The hire fee has been paid in the current run. */
   hired: boolean;
-  /** Manager card seated at this floor's desk (kept through Replants). */
-  managerId: string | null;
   /** Plant cards in this floor's planters (kept through Replants). */
   plants: string[];
   /** Fraction of the current cycle that has run, 0 to 1. */
@@ -65,6 +63,8 @@ export interface WorldState {
   /** Seconds left in the sunrise window; 0 when no window is open. */
   sunriseWindow: number;
   sunriseStreak: number;
+  /** Wake-Up Call is waiting for the next sunrise. */
+  sunriseArmed?: boolean;
   /** Ticket waypoint marks passed, ever (GDD 14.3). */
   waypoints: number;
 }
@@ -73,6 +73,8 @@ export interface CardState {
   level: number;
   /** Copies held toward the next level. */
   copies: number;
+  /** A manager who has been hired at least once, in any run (achievement `managers`). */
+  everHired?: boolean;
 }
 
 /**
@@ -256,7 +258,7 @@ export interface GameState {
 }
 
 export function newFloorState(): FloorState {
-  return { level: 0, hired: false, managerId: null, plants: [], progress: 0, ready: false, constructing: 0, eraMilestones: 0, bestMilestones: 0 };
+  return { level: 0, hired: false, plants: [], progress: 0, ready: false, constructing: 0, eraMilestones: 0, bestMilestones: 0 };
 }
 
 export function newWorldState(floorCount: number): WorldState {

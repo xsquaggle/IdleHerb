@@ -20,7 +20,7 @@
 - { id: skill.bo.curator,          branch: botanist, tier: 3, ranks: 5, effect: { stat: heirloom.power, op: inc, value: 0.05 } }
 - { id: skill.bo.bench_hand,       branch: botanist, tier: 3, ranks: 3, major: true, effect: { stat: bench.speed, op: inc, value: 0.10 } }
 - { id: skill.bo.companion_planting, branch: botanist, tier: 4, ranks: 1, keystone: true, special: keystone.companion_planting, params: { mult: 1.5 } }
-- { id: skill.bo.star_pupil,       branch: botanist, tier: 4, ranks: 1, keystone: true, special: keystone.star_pupil, params: { extraLevels: 2, cooldownReduction: 0.25 } }
+- { id: skill.bo.star_pupil,       branch: botanist, tier: 4, ranks: 1, keystone: true, special: keystone.star_pupil, params: { extraLevels: 1, cooldownReduction: 0.25 } }
 - { id: skill.ty.good_bookkeeping, branch: tycoon, tier: 1, ranks: 5, effect: { stat: floor.profit, op: inc, value: 0.10 } }
 - { id: skill.ty.night_owl,        branch: tycoon, tier: 1, ranks: 5, effect: { stat: offline.efficiency, op: add, value: 0.03 } }
 - { id: skill.ty.early_shift,      branch: tycoon, tier: 2, ranks: 5, effect: { stat: floor.speed, op: inc, value: 0.04 } }

@@ -235,19 +235,20 @@ export function computeDerived(state: GameState, content: Content, eventBonus: E
   const globalPerkSeen = new Set<string>();
   state.worlds.forEach((ws, w) => {
     if (!ws.unlocked) return;
-    let top = -1;
+    const floorDefs = content.worlds[w]!.floors;
     ws.floors.forEach((f, i) => {
-      if (!f.hired || !f.managerId || f.level <= 0) return;
-      const card = state.cards[f.managerId];
+      if (!f.hired || f.level <= 0) return;
+      const card = state.cards[floorDefs[i]!.manager.id];
       if (!card) return;
       managerLevel[w]![i] = card.level;
-      if (top < 0 || card.level > managerLevel[w]![top]!) top = i;
     });
-    if (starPupil && top >= 0) managerLevel[w]![top]! += starPupil.extraLevels ?? 2;
-    ws.floors.forEach((f, i) => {
+    // Star Pupil: the Head counts as one level higher while hired (CONTENT 5.2).
+    const top = ws.floors.length - 1;
+    if (starPupil && managerLevel[w]![top]! > 0) managerLevel[w]![top]! += starPupil.extraLevels ?? 1;
+    ws.floors.forEach((_f, i) => {
       const lv = managerLevel[w]![i]!;
       if (lv <= 0) return;
-      const def = content.cards.get(f.managerId!) as ManagerDef;
+      const def: ManagerDef = floorDefs[i]!.manager;
       const scope = def.perk.scope ?? 'global';
       if (scope === 'global') {
         if (globalPerkSeen.has(def.id)) return;
@@ -362,7 +363,7 @@ export function computeDerived(state: GameState, content: Content, eventBonus: E
       parts.mastery = mastery;
       const profit = bucketProduct(...P) * achievements * codex * mastery;
       const lv = managerLevel[w]![i]!;
-      const manager = lv > 0 ? managerProfit((content.cards.get(f.managerId!) as ManagerDef).rarity, lv, managerPower, t) : 1;
+      const manager = lv > 0 ? managerProfit(content.worlds[w]!.floors[i]!.manager.rarity, lv, managerPower, t) : 1;
       const S: (Acc | undefined)[] = [global['floor.speed'], wa['floor.speed'], fa['floor.speed']];
       const C: (Acc | undefined)[] = [global['floor.levelCost'], wa['floor.levelCost'], fa['floor.levelCost']];
       const floorDiscount = Math.max(-t.FLOOR_DISCOUNT_CAP, incOf('floor', ...C));

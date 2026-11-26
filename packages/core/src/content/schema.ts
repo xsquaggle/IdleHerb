@@ -60,7 +60,7 @@ export const AbilitySchema = z
     cooldownSec: z.number().positive(),
     kind: z.enum([
       'buff', 'lumpSum', 'comboLock', 'callVisitor', 'guaranteedCrits', 'fillSpurt', 'startSpurt',
-      'chestLuckNext', 'heatOrSpeed', 'tapBoost', 'jackpot', 'timeSkip', 'resetCooldowns',
+      'chestLuckNext', 'fillHeat', 'fillBubbles', 'catchSunrise', 'tapBoost', 'jackpot', 'timeSkip', 'resetCooldowns',
     ]),
     stat: z.enum(['floor.profit', 'floor.speed', 'floor.levelCost']).optional(),
     scope: z.enum(['floor', 'world']).optional(),
@@ -80,7 +80,7 @@ export const ConditionSchema = z
     kind: z.enum([
       'start', 'counter', 'floorLevel', 'anyFloorLevel', 'floorOpened', 'lifetime', 'playerLevel', 'playSeconds',
       'firstReturn', 'replantAvailable', 'festivalAvailable', 'worldReached', 'research', 'shopLevel',
-      'masteryStars', 'allFloorsLevel', 'holdCoins', 'ribbonsPending',
+      'masteryStars', 'allFloorsLevel', 'holdCoins', 'ribbonsPending', 'managerHired',
     ]),
     counter: z.string().optional(),
     world: z.number().int().optional(),
@@ -158,7 +158,7 @@ export const TuningSchema = z
     BOOST_CAP: z.number().nonnegative(),
     LUMP_SUM_USES_BOOSTS: z.boolean(),
     MGR_BASE: rarityNumbers,
-    MGR_LEVEL_MULT: z.number(),
+    MGR_STEP: rarityNumbers,
     PERK_PER_LEVEL: z.number(),
     CHEST_MANAGER_SHARE: z.number().min(0).max(1),
     NEW_CARD_CHESTS: z.number().int(),
@@ -318,9 +318,9 @@ export const ManagerRowSchema = z
   .object({
     id: z.string().regex(/^card\.manager\.[a-z_]+$/),
     n: z.number().int(),
+    /** The floor this manager runs. Every floor has exactly one manager (GDD 7.1). */
+    floor: z.string().regex(/^floor\.w\d\.[a-z_]+$/),
     rarity,
-    poolWorld: z.number().int().optional(),
-    masteryWorld: z.number().int().optional(),
     launch: z.boolean(),
     perk: EffectSchema,
     ability: AbilitySchema.optional(),

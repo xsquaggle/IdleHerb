@@ -7,7 +7,7 @@
 - { id: ach.levels,      counter: levelsBought,    tiers: [500, 5000, 25000, 100000, 500000] }
 - { id: ach.milestones,  counter: milestones,      tiers: [25, 250, 1000, 5000, 20000] }
 - { id: ach.floors,      counter: floorsOpened,    tiers: [10, 100, 500, 2500, 10000] }
-- { id: ach.managers,    counter: managersOwned,   tiers: [5, 10, 15, 20, 28] }
+- { id: ach.managers,    counter: managersHired,   tiers: [5, 10, 18, 26, 34] }
 - { id: ach.plants,      counter: plantsOwned,     tiers: [5, 10, 20, 28, 36] }
 - { id: ach.heirlooms,   counter: heirloomsOwned,  tiers: [2, 6, 10, 14, 18] }
 - { id: ach.card_levels, counter: cardLevelUps,    tiers: [5, 25, 100, 250, 500] }

@@ -106,7 +106,7 @@ export interface PlayStyle {
   /**
    * Systems the player ignores, for "what is this system worth" runs:
    * skills, plants, abilities, cardLevels, heirlooms, research, visitors,
-   * bestSeats, shopExtras, spurt, chests, twists.
+   * shopExtras, spurt, chests, twists, or the id of one shop row.
    */
   off: string[];
 }
