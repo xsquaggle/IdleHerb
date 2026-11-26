@@ -36,7 +36,9 @@ A simulation timer passes the monotonic time since its last step to `tick`. The 
 
 **A game that is open is playing, even in the background.** While the window is unfocused, hidden or minimised, the timer keeps running and the game earns at the full online rate (GDD 15.1). Drawing slows or stops. Earning does not. Garden Visitors are the one thing that waits for the window to have focus (GDD 6.6).
 
-**A stopped process is time away.** If the PC sleeps or hibernates, or the phone preview's browser tab is frozen, no steps arrive. When they resume, a gap of more than 2 minutes between two steps, or a suspend and resume signal from the shell, goes through the return path below and not through `tick`. The gap is measured on the monotonic clock and on the wall clock, because some systems stop the monotonic clock during sleep. That keeps the rules identical however the time passed.
+**A stopped process is time away.** If the PC sleeps or hibernates, or the phone preview's browser tab is frozen, no steps arrive. The test is that steps stopped arriving: more than 2 minutes on the monotonic clock since the last step, or a suspend and resume signal from the shell. Either one sends the gap through the return path below and not through `tick`, which keeps the rules identical however the time passed.
+
+**A jump on the wall clock alone is never time away.** If the wall clock leaps while steps keep arriving on time, that is someone changing the clock during play, and guarantee 2 says it does nothing. The wall clock is read only inside the return path, to size a gap that the monotonic clock or the shell has already shown. On a system that stops the monotonic clock during sleep and gives no signal, the sleep simply is not counted. That fails safe, and the Electron shell always gives the signal.
 
 ## Returning after time away
 

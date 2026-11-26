@@ -110,7 +110,7 @@ Prices are approximate and should be rechecked at Phase 5.
 **Decided: Lawson said yes on 2026-11-26.** The web build runs in a phone browser, so every merge to `main` publishes a playable preview at `https://xsquaggle.github.io/IdleHerb/`, alongside the content report, the screenshot gallery and the balance charts.
 
 - It is a public address, like the repository itself. The page asks search engines not to list it.
-- It is the same game code, saving to the browser instead of to disk. It is a review tool, not a second product: layouts target desktop, and it works best with the phone held sideways.
+- It is the same game code, saving to the browser instead of to disk. It is a review tool, not a second product: layouts target desktop. A phone held upright only has room for a 1x scale, so the playable preview asks for the phone to be turned sideways.
 - It is free, because the repository is public.
 
 **What exists now.** `.github/workflows/preview.yml` and a holding page in `tools/preview/`. There is no game to play in Phase 0, so the address shows the holding page with the build it was published from. Phase 1 Step 0 swaps the workflow's "Assemble the site" step for the real web build, and nothing else changes.
