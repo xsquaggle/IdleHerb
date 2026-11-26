@@ -18,7 +18,7 @@ Kept current so the work can be picked up after any stop. Last update: 2026-11-2
 
 ## Next steps
 
-1. Pull request (depends on PR #1 tech plan and PR #5 design 0.3), copy the report to `/mnt/project-files/balance/`, tell the Game Designer thread.
+1. Done: PR #6 opened (depends on PR #5, design 0.3), report copied to `/mnt/project-files/balance/`, numbers sent to the Game Designer thread. Watch PR #6 for review comments.
 2. After the designer decides on the idle week 1 and the late game: change the overlays, rerun `pnpm sim calibrate`, then `pnpm sim`.
 3. Mastery levels from cost (not done).
 
