@@ -1,0 +1,69 @@
+{
+ "frame": [
+  32,
+  32
+ ],
+ "note": "Two-frame loops. The three Golden Sprouts share one body; only the badge differs. The storm badge was redrawn by hand in the clean-up (cloud over a bolt).",
+ "visitors": {
+  "golden_sprout": {
+   "frames": [
+    "golden_sprout_01_32x32.png",
+    "golden_sprout_02_32x32.png"
+   ],
+   "pivot": [
+    16,
+    24
+   ]
+  },
+  "sunbeam_sprout": {
+   "frames": [
+    "sunbeam_sprout_01_32x32.png",
+    "sunbeam_sprout_02_32x32.png"
+   ],
+   "pivot": [
+    16,
+    24
+   ]
+  },
+  "tap_storm_sprout": {
+   "frames": [
+    "tap_storm_sprout_01_32x32.png",
+    "tap_storm_sprout_02_32x32.png"
+   ],
+   "pivot": [
+    16,
+    24
+   ]
+  },
+  "dewdrop": {
+   "frames": [
+    "dewdrop_01_32x32.png",
+    "dewdrop_02_32x32.png"
+   ],
+   "pivot": [
+    16,
+    24
+   ]
+  },
+  "mystery_crate": {
+   "frames": [
+    "mystery_crate_01_32x32.png",
+    "mystery_crate_02_32x32.png"
+   ],
+   "pivot": [
+    16,
+    24
+   ]
+  },
+  "busy_bee": {
+   "frames": [
+    "busy_bee_01_32x32.png",
+    "busy_bee_02_32x32.png"
+   ],
+   "pivot": [
+    16,
+    24
+   ]
+  }
+ }
+}

@@ -24,7 +24,7 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image  # noqa: E402
 from cleanlib import (load, snap_many, reduce_many, merge_plan, apply_plan, outline, save, used,  # noqa: E402
-                      sheet, to_rgba, veil, VEIL, INK, P_RGB)
+                      sheet, to_rgba, veil, VEIL, INK, P_RGB, P_NAMES)
 
 SRC, OUT = sys.argv[1], sys.argv[2]
 ART = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'art')   # the repo's art/ folder
@@ -72,6 +72,69 @@ def clean(cls, name, raws, rels, ramps, budget, edge=True, thin=False, over=None
         save(idx, os.path.join(OUT, rel))
     note(cls, name, idxs, st, fixed, budget)
     return list(zip(raws, idxs))
+
+
+# ---------------------------------------------------------------- prompt 1: visitors, two frames each, 32x32
+# The storm badge came back as a lilac cap on a yellow stalk, which at game size reads as a mushroom.
+# It is redrawn here as a flat cloud over a zigzag bolt (letters in STORM_COL).
+STORM = ["...LL...",
+         ".LLhhLL.",
+         "LLhLLLLL",
+         ".dddddd.",
+         "....YG..",
+         "...YG...",
+         "..YYYG..",
+         "...YG..."]
+STORM_COL = {'d': 'lavender-3', 'L': 'lavender-4', 'h': 'lavender-5', 'Y': 'gold-3', 'G': 'gold-1', '.': 'cream-4'}
+
+
+def visitors():
+    key = 'b02_01_visitors'
+    root = pkg(key)
+    sl = json.load(open(os.path.join(root, 'slices.json')))
+    spr = {s['name']: s for s in sl['sprites'] if s.get('kind') == 'sprite'}
+    groups = {
+        'sprouts': (['golden_sprout', 'sunbeam_sprout', 'tap_storm_sprout'],
+                    {'gold', 'cream', 'wood-1', 'wood-2', 'wood-3', 'clay-1', 'clay-2', 'clay-4', 'lavender'}),
+        'dewdrop': (['dewdrop'], {'sky', 'leaf', 'white', 'cream', 'gold', 'steel'}),
+        'mystery_crate': (['mystery_crate'], {'wood', 'gold', 'cream', 'white', 'lavender', 'rose'}),
+        'busy_bee': (['busy_bee'], {'gold', 'wood', 'sky-5', 'white', 'steel', 'cream'}),
+    }
+    def fpath(s):
+        f = s['file']
+        return os.path.join(root, f.split('/', 1)[1] if f.startswith(key + '/') else f)
+    mf = manifest('visitors/visitors.json')
+    mf.update(frame=[32, 32], note='Two-frame loops. The three Golden Sprouts share one body; only the badge differs. '
+                                   'The storm badge was redrawn by hand in the clean-up (cloud over a bolt).',
+              visitors={})
+    pairs = []
+    for g, (names, ramps) in groups.items():
+        keys = ['%s_%02d' % (n, i) for n in names for i in (1, 2)]
+        raws = [load(fpath(spr[k])) for k in keys]
+        rels = ['visitors/%s_32x32.png' % k for k in keys]
+        idxs, st = snap_many(raws, ramps | INKSET)
+        fixed = 0
+        for i in range(len(idxs)):
+            idxs[i], n = outline(idxs[i], keep_thin=True)
+            fixed += n
+        idxs = apply_plan(idxs, merge_plan(idxs, 16, {'lavender'} if g == 'sprouts' else ()))
+        if g == 'sprouts':
+            for i in (1, 2):
+                gold = idxs[keys.index('golden_sprout_%02d' % i)]
+                storm = idxs[keys.index('tap_storm_sprout_%02d' % i)]
+                ys, xs = np.nonzero(gold != storm)
+                x0, y0 = xs.min() + 2, ys.min() + 3
+                for dy, row in enumerate(STORM):
+                    for dx, ch in enumerate(row):
+                        storm[y0 + dy, x0 + dx] = P_NAMES.index(STORM_COL[ch])
+        for idx, rel in zip(idxs, rels):
+            save(idx, os.path.join(OUT, rel))
+        note('visitor', '%s (%d frames)' % (g, len(keys)), idxs, st, fixed, 16)
+        for n in names:
+            mf['visitors'][n] = dict(frames=['%s_%02d_32x32.png' % (n, i) for i in (1, 2)],
+                                     pivot=spr['%s_01' % n].get('pivot', [16, 24]))
+        pairs += list(zip(raws, idxs))
+    sheet(pairs, 4, 6, os.path.join(REVIEW, 'p01_visitors_before_after.png'))
 
 
 # ---------------------------------------------------------------- prompt 2: currency icons
@@ -473,7 +536,7 @@ def workers():
         sheet(pairs, 9, 3, os.path.join(REVIEW, '%s_before_after.png' % key[:6]))
 
 
-STEPS = [('b02_02_currency_icons', currency_icons), ('b02_03_herb_cards_common', herb_cards),
+STEPS = [('b02_01_visitors', visitors), ('b02_02_currency_icons', currency_icons), ('b02_03_herb_cards_common', herb_cards),
          ('b02_06_herb_growth_stages', growth_stages), ('b02_07_floor09_soap_workshop_props', soap_props),
          ('b02_08_backwalls_soap_hq', walls), ('b02_09_pip_guide', pip), ('b02_10_workers_floor04_garden_shed', workers)]
 for k, step in STEPS:

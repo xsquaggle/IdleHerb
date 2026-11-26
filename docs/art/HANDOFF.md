@@ -1,6 +1,6 @@
 # Art Director handoff
 
-Kept current so that work can stop at any moment and resume cleanly. Last update: 2026-11-26, about 12:20 PM (US Eastern).
+Kept current so that work can stop at any moment and resume cleanly. Last update: 2026-11-26, about 6:15 PM (US Eastern).
 
 ## Start here if you are a new thread
 
@@ -58,6 +58,7 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 - Raw files: project files, `art/batch01/round1_raw/` to `round6_raw/`. A copy of the cleaned sprites: `art/batch01/cleaned/`.
 - A mock-up of floor 3 built only from cleaned sprites: `docs/art/cleanup/batch01_floor03_mockup.png`.
 - **Batch 2 written** (2026-11-26): 17 prompts in 6 rounds, no managers. Rounds 1 and 2 were sent to Lawson at about 10:45 AM US Eastern, all six rounds soon after. Lawson's copy: project files `art/batch02/Asset_Batch_02_prompts.md`. The extra pictures for rounds 4 to 6 are in project files `art/batch02/attach_with_prompts/`.
+- **Batch 2 prompt 1 is back** (6:02 PM, in a pack that also held new versions of prompts 2 to 6; the earlier versions of 2 to 6 were kept, as they fill their cells better and Double Chamomile has the asked-for pompom flowers). Passed Gate A. The Tap Storm badge came back as a lilac cap on a yellow stalk that reads as a mushroom at game size, so the clean-up redraws it as a cloud over a bolt (`STORM` in `tools/clean_batch02.py`). 12 visitor frames in `art/visitors/`. Raw: project files `art/batch02/raw_prompt01/`.
 - **Batch 2 prompts 2 to 6 are back** (11:51 AM): all five passed Gate A, no hemp in them, no redo. Raw files: project files `art/batch02/raw_prompts02_06/`. The pass made six currency icons (`icons/currency/`), 13 herb card pictures (`cards/plants/`, with a new `cards.json` that also lists the hemp cards), and thyme, sage and chamomile in five stages, standing in the Batch 1 planter (`plants/`, added to `plants.json`). All in master colours and inside budget.
 - **Batch 2 prompts 7 to 17 are back** (11:28 AM): all 11 passed Gate A and the hemp review, no redo. Raw files: project files `art/batch02/raw_prompts07_17/`. The automatic pass (`tools/clean_batch02.py`) made 172 files: five soap workshop props with `floor.json`, the walls of floors 9 and 10 (plain and veiled, added to `walls.json`), Pip in nine 48×48 poses with layers, and 16 workers of nine 80×80 frames each. All in master colours and inside budget. Before/after sheets: `docs/art/cleanup/batch02/`. A copy of the cleaned set: project files `art/batch02/cleaned/`.
 
@@ -69,7 +70,7 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 ## Next steps, in order
 
 1. **Managers, when design 0.3 (PR #5) merges.** See the open question below. Then rewrite prompt 18, update the manager text in the bible (section 10 and the manager rows of section 23) and in HEMP_ART.md, redo the manager rows of BATCH_PLAN.md, and tell Lawson which manager prompt to run.
-2. **Check and clean Batch 2 prompt 1 (visitors) and round 7 (prompts 18 to 23, the rarity reveal kit) when Lawson uploads them.** Put raw files in project files `art/batch02/raw_prompt01/` and `art/batch02/raw_round7/`. Round 7 needs new functions in `tools/clean_batch02.py`: emblems (16 colours), chests like Batch 1 (`clean_batch01_round4.py` has the chest code: base, lids, crack shadow, `chests.json`), card frames (32 colours, the window stays transparent), bursts (16 colours, no outline step). If the design adds Mythic and Godly, write one more prompt for their emblems, frames and bursts.
+2. **Check and clean Batch 2 round 7 (prompts 18 to 23, the rarity reveal kit) when Lawson uploads it.** Put raw files in project files `art/batch02/raw_round7/`. Round 7 needs new functions in `tools/clean_batch02.py`: emblems (16 colours), chests like Batch 1 (`clean_batch01_round4.py` has the chest code: base, lids, crack shadow, `chests.json`), card frames (32 colours, the window stays transparent), bursts (16 colours, no outline step). If the design adds Mythic and Godly, write one more prompt for their emblems, frames and bursts.
 3. **Hand polish, then Gate B,** for the automatic-pass sprites:
    - Faces: one fixed head per character from the Face Kit. The generated faces are readable but soft, most of all on the two ropewalk workers.
    - Hemp cards: thin the leaf tufts. Product icons: one colour family for the soap. Burlap and building blocks: tidy speckle.
