@@ -108,7 +108,7 @@ Things that would cost money, none of which are in the plan: code signing (see b
 ## Lawson's answers (2026-11-26)
 
 - **A playable preview at a public web link: yes.** The publishing workflow and a holding page are in the repository. The address is `https://xsquaggle.github.io/IdleHerb/`. It shows the holding page until the first playable build in Phase 1, then the game, a readable page of the current game data and a screenshot gallery after every merge. It needs one setting switched on once: open `https://github.com/xsquaggle/IdleHerb/settings/pages` in a browser, and under "Build and deployment" set "Source" to "GitHub Actions". Detail in [08](08-build-test-release.md).
-- **One fixed manager per floor**, not cards seated at any desk. The Game Designer is revising the GDD. The manager table in [04](04-content-pipeline.md) keeps a `floor` field and takes its other fields from that revision.
+- **One fixed manager per floor**, not cards seated at any desk. The manager table in [04](04-content-pipeline.md) follows design 0.3, which the Game Designer has in progress and which still goes to an audit.
 - **Six worlds in the end.** Worlds are rows in the content tables, so this changes no part of the plan.
 
 ## Documents

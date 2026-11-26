@@ -21,10 +21,10 @@ Last updated: 2026-11-26.
 
 ## Next
 
-1. When the Game Designer sends the revised manager rules (one fixed manager per floor): update the manager and ability records in 04, the `managers` and `cards` systems in 02, and anything in 06 about saved placements.
-2. After PR #1 is merged and Pages is on: check the first Preview run and the public address, and fix the workflow if it fails. It can be started by hand from the Actions tab (workflow "Preview").
+1. When design 0.3 is merged: check the manager and ability records in 04 against it. They were written on 2026-11-26 from the Game Designer's in-progress notes (one manager per floor, the "met" flag, no `poolWorld` on managers, `MGR_STEP` per rarity, four abilities per world).
+2. After PR #1 is merged: check the first Preview run and the public address, and fix the workflow if it fails. GitHub Pages is switched on (Lawson, 2026-11-26). The workflow can also be started by hand from the Actions tab (workflow "Preview").
 3. Keep the copy in the shared project files (`/mnt/project-files/tech-plan/`) current after each change.
 
 ## Open
 
-- Managers are one fixed manager per floor (Lawson, 2026-11-26). The Game Designer is revising the GDD. The manager record in 04 is a placeholder until the exact fields arrive.
+- Design 0.3 (fixed managers) is not merged or audited yet. The Game Designer confirmed two engine readings of GDD 15.1 on 2026-11-26: boosts run out while away and pay nothing offline, and weather uses loop averages plus the exact part-loop.

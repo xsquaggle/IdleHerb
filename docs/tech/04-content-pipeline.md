@@ -91,16 +91,22 @@ Every world's floors come from one template and two numbers per world, the cost 
 
 ### Managers
 
-**One fixed manager per floor.** Lawson decided this on 2026-11-26. Design 0.2 describes managers as cards seated at any desk, and the Game Designer is revising it. The record below shows the shape only: the pairing is a placeholder, and the fields follow that revision.
+**One fixed manager per floor.** Lawson decided this on 2026-11-26. The shape below follows design 0.3, which the Game Designer has in progress and which still goes to an audit, so check it against the merged GDD before building on it.
 
 ```yaml
 # packages/content/tables/managers/managers.yaml
 - id: card.manager.basil_brumble
   rarity: common
-  floor: floor.w1.balcony          # the one floor this manager runs
+  floor: floor.w1.balcony          # the one floor this manager runs. A manager never moves
   perk: { stat: floor.profit, op: inc, value: 0.20, scope: floor }
   art: { portrait: managers/basil_brumble, actor: actor.basil_brumble }
 ```
+
+- A manager is still a card with a rarity, copies and levels. There are 50, one per floor.
+- The card is owned at level 1 from the first time its floor is ever opened. That "met" flag is save state and survives a Replant and a Harvest Festival.
+- Hiring is paying the floor's `hireFee`, once per run. It switches on the floor's automation, the manager's perk and its ability. The fee stays on the floor row.
+- Copies come from chests. A manager slot picks among the managers the player has met at the rolled rarity, so managers have no `poolWorld`. Exotic managers never come from chests.
+- A perk's scope is read from the manager's own floor and counts only while that manager is hired.
 
 An ability is its own record. It is a timed boost, a payout or a named special, with a cooldown:
 
@@ -116,10 +122,10 @@ An ability is its own record. It is a timed boost, a payout or a named special, 
   cooldown: 1200
   payout: { of: world, seconds: 120 }               # always paid from the steady rate
 
-- id: ability.keep_the_beat
-  owner: card.manager.marigold_mayhew
+- id: ability.tea_break
+  owner: card.manager.old_moss
   cooldown: 480
-  special: ability.keep_the_beat                    # a rule change, implemented by the tapping system
+  special: ability.tea_break                        # a rule change, implemented by the tapping system
 ```
 
 ## Shared building blocks
@@ -145,7 +151,7 @@ These few shapes are reused by every table. Learning them once is learning the w
   when: { ... }             # optional condition
 ```
 
-- **Scope is relative to where the owner is.** For a manager it is their floor. For a plant it is the floor it is planted on. `adjacent` is the floors directly above and below, `world` is every floor in that world, and `global` is everything, counted once. Things that are not placed anywhere (skills, research, shop items, heirlooms) use `global` or name their target, as in `scope: { world: world.w4 }`.
+- **Scope is relative to where the owner is.** For a manager it is their own floor. For a plant it is the floor it is planted on. `adjacent` is the floors directly above and below, `world` is every floor in that world, and `global` is everything, counted once. Things that are not placed anywhere (skills, research, shop items, heirlooms) use `global` or name their target, as in `scope: { world: world.w4 }`.
 - **The bucket is not written on the row.** It comes from the kind of owner, as CONTENT.md 0.1 lists them: a manager's own multiplier is `manager`, manager perks and plant traits share `floor`, heirlooms and their sets are `heirloom`, then `skill`, `research`, `compost`, `ribbon`, `achievement`, `codex`, `mastery` and `twist`. A row cannot land in the wrong bucket through a typo.
 - **Scaling with level is not written on the row either.** It is one rule per kind of owner (CONTENT.md 0.1): a manager perk grows by `PERK_PER_LEVEL`, an heirloom passive by `HEIRLOOM_PER_LEVEL` unless the row says `fixed: true`, a plant trait by the formula in GDD 8.5. Abilities and set bonuses never scale.
 - **Anything that lasts a set time is a `boost`**, not an effect: a target (`world`, `floor` or `tap`), a size, and seconds or taps. Boosts add into one capped Boost per world and never multiply each other (GDD 13.5). The schema has no way to write a timed multiplier, on purpose.
@@ -179,7 +185,7 @@ not: { ... }
   heirloomChance: 0.20
 ```
 
-The order of the rolling rules (guarantee slots, which card, new-card help, pity, luck, the heirloom roll) is code in the chests system, written once from GDD 8.3. Their numbers (`PITY_EPIC`, `PITY_LEGENDARY`, `PITY_HEIRLOOM`, `NEW_CARD_CHESTS`) are named constants. Which cards a chest can give is worked out from the card rows (`rarity`, `poolWorld`), never listed by hand, so a new card joins the right pool by existing. The odds shown to the player come from the same function with the player's luck applied, so shown odds cannot drift from real odds.
+The order of the rolling rules (guarantee slots, which card, new-card help, pity, luck, the heirloom roll) is code in the chests system, written once from GDD 8.3. Their numbers (`PITY_EPIC`, `PITY_LEGENDARY`, `PITY_HEIRLOOM`, `NEW_CARD_CHESTS`) are named constants. Which cards a chest can give is worked out, never listed by hand: a plant by its `rarity` and `poolWorld`, a manager by its `rarity` and whether the player has met it. A new card joins the right pool by existing. The odds shown to the player come from the same function with the player's luck applied, so shown odds cannot drift from real odds.
 
 **Special.** Behaviour that is not a number change is a named hook implemented by the owning system: `special: keystone.thunder_thumb`.
 
