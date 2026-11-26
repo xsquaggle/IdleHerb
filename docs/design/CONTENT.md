@@ -499,7 +499,7 @@ Rules are in GDD 10. Forty projects in four lanes. A project needs the project n
 | `research.tools.heirloom_shelf_1` | Heirloom Shelf I | heirlooms unlocked | 2,500 | 6 h | Heirloom slot 3 |
 | `research.tools.heirloom_shelf_2` | Heirloom Shelf II | Heirloom Shelf I | 25,000 | 24 h | Heirloom slot 4 |
 | `research.tools.basket_stacker` | Basket Stacker | | 800 | 2 h | The Morning Basket stores 3 crates |
-| `research.tools.auto_hire` | Auto-Hire | Whole-Tower Button | 5,000 | 8 h | After a Replant, each remembered manager is hired the moment its fee can be paid |
+| `research.tools.auto_hire` | Auto-Hire | Whole-Tower Button | 5,000 | 8 h | After a Replant, each floor's manager is hired again the moment its fee can be paid |
 
 ### 6.2 Soil Science
 

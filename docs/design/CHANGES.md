@@ -99,6 +99,7 @@ Six abilities are new and first-pass, all for worlds 5 and 6: Tea Party, Lather 
 | Codex entries | 148 in total, 126 at launch. Full codex +37% | 168 in total, 132 at launch. Full codex +42%, and +33% at launch |
 | Story 42, reward text | The star gives the Exotic manager | The star gives a copy of that world's Head |
 | Skill `skill.ty.autopilot` | No Combo, Bumpers, Boost or Spurt | The same, and its taps are not counted taps (A.5) |
+| Research `research.tools.auto_hire`, wording | Each remembered manager is hired when its fee can be paid | Each floor's manager is hired again when its fee can be paid. Same effect |
 | Launch counts, managers | 30 designed, 28 at launch, 16 new sprites | 50 designed, 34 at launch, 22 new sprites |
 | Launch counts, story characters | 2 (Pip, Baron Fauxliage) | 3 (and Mayor Thyme, the Festival host) |
 

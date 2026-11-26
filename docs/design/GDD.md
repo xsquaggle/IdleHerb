@@ -376,7 +376,7 @@ Idle builds get the mirror image: up to 100% offline efficiency, up to 33 hours 
 8. **The Head.** The manager of a world's top floor is its Head, and the Head is Exotic. A Head is hired like anyone else. Copies of a Head never come from a chest roll. They come from World Mastery (section 14.5) and the Starlight Chest (section 8.3).
 9. **The first session never depends on luck.** A manager arrives with their floor. The Welcome Chest gives two copies each of the managers of floors 1 to 3, and Hire buttons appear from that moment. The first time each of floors 4 to 9 opens in world 1, a Hiring Crate gives two copies of that floor's manager plus two random cards (CONTENT.md section 2.3).
 
-**What the player decides.** Which floor to hire first, when to press each ability, and which plants and heirlooms go where (sections 9 and 8.7). Build choices live in planters, heirloom slots and the skill tree. Managers are the cast: a player learns who runs the Tea House and watches them grow.
+**What the player decides.** Which floor to hire first, when to press each ability, and which plants and heirlooms go where (sections 8.5 and 8.7). Build choices live in planters, heirloom slots and the skill tree (section 9.2). Managers are the cast: a player learns who runs the Tea House and watches them grow.
 
 ### 7.2 Numbers
 
