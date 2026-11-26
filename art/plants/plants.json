@@ -169,6 +169,126 @@
      11,
      9
     ]
+   },
+   "thyme_seed": {
+    "frame": "thyme_1_seed_72x90.png",
+    "layer": "herb_layers/seeds_21x10.png",
+    "offset_in_frame": [
+     26,
+     52
+    ]
+   },
+   "thyme_sprout": {
+    "frame": "thyme_2_sprout_72x90.png",
+    "layer": "herb_layers/thyme_2_sprout_foliage_14x11.png",
+    "offset_in_frame": [
+     29,
+     48
+    ]
+   },
+   "thyme_young": {
+    "frame": "thyme_3_young_72x90.png",
+    "layer": "herb_layers/thyme_3_young_foliage_21x14.png",
+    "offset_in_frame": [
+     27,
+     45
+    ]
+   },
+   "thyme_full": {
+    "frame": "thyme_4_full_72x90.png",
+    "layer": "herb_layers/thyme_4_full_foliage_57x31.png",
+    "offset_in_frame": [
+     7,
+     28
+    ]
+   },
+   "thyme_harvest_ready": {
+    "frame": "thyme_5_harvest_ready_72x90.png",
+    "layer": "herb_layers/thyme_5_harvest_ready_foliage_63x35.png",
+    "offset_in_frame": [
+     7,
+     24
+    ]
+   },
+   "sage_seed": {
+    "frame": "sage_1_seed_72x90.png",
+    "layer": "herb_layers/seeds_21x10.png",
+    "offset_in_frame": [
+     26,
+     52
+    ]
+   },
+   "sage_sprout": {
+    "frame": "sage_2_sprout_72x90.png",
+    "layer": "herb_layers/sage_2_sprout_foliage_14x11.png",
+    "offset_in_frame": [
+     30,
+     48
+    ]
+   },
+   "sage_young": {
+    "frame": "sage_3_young_72x90.png",
+    "layer": "herb_layers/sage_3_young_foliage_21x16.png",
+    "offset_in_frame": [
+     26,
+     43
+    ]
+   },
+   "sage_full": {
+    "frame": "sage_4_full_72x90.png",
+    "layer": "herb_layers/sage_4_full_foliage_54x40.png",
+    "offset_in_frame": [
+     9,
+     19
+    ]
+   },
+   "sage_harvest_ready": {
+    "frame": "sage_5_harvest_ready_72x90.png",
+    "layer": "herb_layers/sage_5_harvest_ready_foliage_62x48.png",
+    "offset_in_frame": [
+     6,
+     11
+    ]
+   },
+   "chamomile_seed": {
+    "frame": "chamomile_1_seed_72x90.png",
+    "layer": "herb_layers/seeds_21x10.png",
+    "offset_in_frame": [
+     26,
+     52
+    ]
+   },
+   "chamomile_sprout": {
+    "frame": "chamomile_2_sprout_72x90.png",
+    "layer": "herb_layers/chamomile_2_sprout_foliage_13x11.png",
+    "offset_in_frame": [
+     30,
+     48
+    ]
+   },
+   "chamomile_young": {
+    "frame": "chamomile_3_young_72x90.png",
+    "layer": "herb_layers/chamomile_3_young_foliage_19x14.png",
+    "offset_in_frame": [
+     27,
+     45
+    ]
+   },
+   "chamomile_full": {
+    "frame": "chamomile_4_full_72x90.png",
+    "layer": "herb_layers/chamomile_4_full_foliage_52x41.png",
+    "offset_in_frame": [
+     9,
+     18
+    ]
+   },
+   "chamomile_harvest_ready": {
+    "frame": "chamomile_5_harvest_ready_72x90.png",
+    "layer": "herb_layers/chamomile_5_harvest_ready_foliage_64x47.png",
+    "offset_in_frame": [
+     6,
+     12
+    ]
    }
   }
  }

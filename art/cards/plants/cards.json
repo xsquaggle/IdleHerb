@@ -1,0 +1,104 @@
+{
+ "size": [
+  108,
+  100
+ ],
+ "note": "Card pictures. The game draws the rarity backdrop, frame, name and level around them.",
+ "cards": {
+  "basil_lemon": {
+   "file": "basil_lemon_108x100.png",
+   "plant": "plant.basil.lemon",
+   "rarity": "uncommon"
+  },
+  "basil_purple": {
+   "file": "basil_purple_108x100.png",
+   "plant": "plant.basil.purple",
+   "rarity": "rare"
+  },
+  "chamomile_double": {
+   "file": "chamomile_double_108x100.png",
+   "plant": "plant.chamomile.double",
+   "rarity": "uncommon"
+  },
+  "chamomile_meadow": {
+   "file": "chamomile_meadow_108x100.png",
+   "plant": "plant.chamomile.meadow",
+   "rarity": "common"
+  },
+  "hemp_fibre": {
+   "file": "hemp_fibre_108x100.png",
+   "plant": "plant.hemp.fibre",
+   "rarity": "common"
+  },
+  "hemp_giant_show": {
+   "file": "hemp_giant_show_108x100.png",
+   "plant": "plant.hemp.show",
+   "rarity": "epic"
+  },
+  "hemp_longstalk": {
+   "file": "hemp_longstalk_108x100.png",
+   "plant": "plant.hemp.longstalk",
+   "rarity": "rare"
+  },
+  "hemp_seed": {
+   "file": "hemp_seed_108x100.png",
+   "plant": "plant.hemp.seed",
+   "rarity": "uncommon"
+  },
+  "hemp_silkspun": {
+   "file": "hemp_silkspun_108x100.png",
+   "plant": "plant.hemp.silkspun",
+   "rarity": "legendary"
+  },
+  "hemp_sunspun": {
+   "file": "hemp_sunspun_108x100.png",
+   "plant": "plant.hemp.sunspun",
+   "rarity": "exotic"
+  },
+  "lavender_butterfly": {
+   "file": "lavender_butterfly_108x100.png",
+   "plant": "plant.lavender.butterfly",
+   "rarity": "uncommon"
+  },
+  "mint_chocolate": {
+   "file": "mint_chocolate_108x100.png",
+   "plant": "plant.mint.chocolate",
+   "rarity": "rare"
+  },
+  "mint_pepper": {
+   "file": "mint_pepper_108x100.png",
+   "plant": "plant.mint.pepper",
+   "rarity": "uncommon"
+  },
+  "rosemary_kitchen": {
+   "file": "rosemary_kitchen_108x100.png",
+   "plant": "plant.rosemary.kitchen",
+   "rarity": "common"
+  },
+  "rosemary_trailing": {
+   "file": "rosemary_trailing_108x100.png",
+   "plant": "plant.rosemary.trailing",
+   "rarity": "uncommon"
+  },
+  "sage_garden": {
+   "file": "sage_garden_108x100.png",
+   "plant": "plant.sage.garden",
+   "rarity": "common"
+  },
+  "sage_pineapple": {
+   "file": "sage_pineapple_108x100.png",
+   "plant": "plant.sage.pineapple",
+   "rarity": "uncommon"
+  },
+  "thyme_garden": {
+   "file": "thyme_garden_108x100.png",
+   "plant": "plant.thyme.garden",
+   "rarity": "common"
+  },
+  "thyme_lemon": {
+   "file": "thyme_lemon_108x100.png",
+   "plant": "plant.thyme.lemon",
+   "rarity": "uncommon"
+  }
+ }
+}

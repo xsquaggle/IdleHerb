@@ -2,7 +2,7 @@
 
 True-size sprites on the 640×360 art-pixel grid, in the 76-colour master palette. Rules are in [docs/art/STYLE_BIBLE.md](../docs/art/STYLE_BIBLE.md).
 
-Everything here comes from Asset Batch 1 (17 of its 18 images; the manager image is on hold) and Asset Batch 2 (prompts 7 to 17 so far). All of it is at the **automatic pass** stage.
+Everything here comes from Asset Batch 1 (17 of its 18 images; the manager image is on hold) and Asset Batch 2 (prompts 2 to 17; the visitors of prompt 1 are still to come). All of it is at the **automatic pass** stage.
 
 | Folder | Contents |
 |---|---|
@@ -11,16 +11,17 @@ Everything here comes from Asset Batch 1 (17 of its 18 images; the manager image
 | `props/floor08_ropewalk/` | Five props for the Ropewalk and Twine Shop, with `floor.json` |
 | `props/floor09_soap_workshop/` | Five props for the Soap and Scent Workshop (kettle and stove, mould table, drying rack, lotion shelf, the manager's stool and side table), with `floor.json` |
 | `props/harvest/` | Tied sheaf, stook, drying rack and combed fibre |
-| `plants/` | Fibre hemp in five growth stages (32×96), Seed Hemp, staked Longstalk Hemp, the Giant Show-Hemp cane in three stacking pieces, and basil, rosemary and lavender in five stages each (72×90). `plants/herb_layers/` holds the planter and each foliage layer on its own. `plants.json` gives anchors, layer offsets and the cane stacking |
+| `plants/` | Fibre hemp in five growth stages (32×96), Seed Hemp, staked Longstalk Hemp, the Giant Show-Hemp cane in three stacking pieces, and basil, rosemary, lavender, thyme, sage and chamomile in five stages each (72×90), all in the one shared planter. `plants/herb_layers/` holds the planter and each foliage layer on its own. `plants.json` gives anchors, layer offsets and the cane stacking |
 | `actors/w1_floor01_gardener/`, `…floor02…`, `…floor03…` | The lead workers of floors 1 to 3: nine 80×80 frames each (idle, blink, cheer, three walk frames, two work frames, carry). `layers/` holds the shared head, blink patch, body layers and props. `frames.json` gives the frame list, head offsets and the layer recipe |
 | `actors/floor08_ropewalk/` | The two ropewalk workers, one standing pose each |
 | `actors/w1_floor04_worker1/` to `…floor10_worker1/` | Batch 2 workers: two per floor for floors 4 to 9 and the HQ clerk of floor 10. Nine 80×80 frames each, in the same order as the gardeners. `frames.json` names the person, the source sheet and the feet line |
 | `actors/w1_floor01_worker2/`, `…floor02…`, `…floor03…` | The second worker of floors 1 to 3, same layout |
 | `story/pip/` | Pip, the sprout helper: nine 48×48 poses (smile, blink, talk, wave, jump, surprised, thinking, sad, peek). `layers/` and `pip.json` hold the parts |
 | `chests/` | Common and Legendary chest: one base, four lids and a crack shadow each, 96×80. `chests.json` gives the draw order. `frames/` holds the four composed frames of each chest |
-| `cards/plants/` | The six hemp card pictures, 108×100 |
+| `cards/plants/` | 19 card pictures, 108×100: the six hemp cards and 13 World 1 herbs. `cards.json` gives each picture's plant id and rarity |
 | `icons/seeds/` | Four hemp seed packets, two seed jars, scoop and sack, 48×48 |
 | `icons/products/` | Twelve hemp product icons, 48×48 |
+| `icons/currency/` | Six currency icons, 48×48: Insight, Pollen, Skill Points, Shells, Snowmarks, Fair Tickets. Coins, Notes, Gems, Compost and Ribbons come from B12 later |
 | `icons/ui/` | 24 menu and stat icons at 32 pixels. The 24 and 16 pixel files are stand-ins until those sizes are redrawn by hand |
 
 **Automatic pass** means the sprite has the right size, only master palette colours, a colour count within budget, on-or-off transparency and an ink outline. It still needs the hand polish and the Gate B review from the style bible before it counts as final. It is good enough to build and test the game with.

@@ -1,4 +1,5 @@
-"""Automatic clean-up pass for Asset Batch 2, prompts 7 to 17 (soap workshop, walls 9 and 10, Pip, two-worker sheets).
+"""Automatic clean-up pass for Asset Batch 2: prompts 2 to 6 (currency icons, herb cards, herb growth stages)
+and 7 to 17 (soap workshop, walls 9 and 10, Pip, two-worker sheets). A prompt runs when its package is in UPLOAD_DIR.
 
 Every package arrived with its parts already cut at true size: props at their place on the 360x120 floor,
 walls at 336x104, Pip at 48x48 and every worker pose at 80x80. The pass is the one from Batch 1:
@@ -23,9 +24,10 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image  # noqa: E402
 from cleanlib import (load, snap_many, reduce_many, merge_plan, apply_plan, outline, save, used,  # noqa: E402
-                      sheet, to_rgba, veil, VEIL)
+                      sheet, to_rgba, veil, VEIL, INK, P_RGB)
 
 SRC, OUT = sys.argv[1], sys.argv[2]
+ART = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'art')   # the repo's art/ folder
 REVIEW = os.path.join(OUT, 'review', 'batch02')
 REPORT = []
 MANIFESTS = {}
@@ -70,6 +72,178 @@ def clean(cls, name, raws, rels, ramps, budget, edge=True, thin=False, over=None
         save(idx, os.path.join(OUT, rel))
     note(cls, name, idxs, st, fixed, budget)
     return list(zip(raws, idxs))
+
+
+# ---------------------------------------------------------------- prompt 2: currency icons
+def currency_icons():
+    key = 'b02_02_currency_icons'
+    table = {
+        'insight': {'gold', 'leaf', 'wood', 'cream'},
+        'pollen': {'gold', 'cream', 'wood'},
+        'skill_points': {'lavender', 'leaf', 'gold'},
+        'shells': {'rose', 'blush', 'cream', 'gold', 'clay-5'},
+        'snowmarks': {'sky', 'white', 'clay', 'gold', 'red-1'},
+        'fair_tickets': {'cream', 'red', 'clay', 'leaf', 'gold'},
+    }
+    pairs = []
+    for s in slices_of(key):
+        name = os.path.splitext(s['file'])[0]
+        raw = load(os.path.join(pkg(key), s['file']))
+        assert raw.shape[:2] == (48, 48), name
+        pairs += clean('icon', 'currency_' + name, [raw], ['icons/currency/%s_48x48.png' % name], table[name], 16,
+                       thin=True)
+    manifest('icons/currency/currency.json').update(
+        size=[48, 48], icons=sorted('%s_48x48.png' % os.path.splitext(s['file'])[0] for s in slices_of(key)),
+        note='Coins, Notes, Gems, Compost and Ribbons come from B12 and are still to be cleaned. '
+             'The 32, 24 and 16 pixel sizes are drawn by hand.')
+    sheet(pairs, 6, 6, os.path.join(REVIEW, 'p02_currency_icons_before_after.png'))
+
+
+# ---------------------------------------------------------------- prompts 3 to 5: herb card pictures, 108x100
+# purple leaves and glaze must stay purple: without this they slid to the blue-grey stone ramp
+# (the palette has no dusty mauve: a plum and stone mix striped the leaves, so they go to clean violet)
+PURPLE = (lambda L, C, h: 270 <= h < 350 and C > 0.03, {'lavender', 'rose-1'})
+# a deep cool leaf green must stay on leaf: next to a teal planter it slid to teal
+COOL_LEAF = (lambda L, C, h: 100 <= h < 170 and C > 0.03, {'leaf'})
+CARDS = {
+    'b02_03_herb_cards_common': {
+        'kitchen_rosemary': ('rosemary_kitchen', 'common', {'sage', 'leaf', 'wood', 'cream', 'sky'}),
+        'garden_sage': ('sage_garden', 'common', {'sage', 'leaf', 'clay', 'wood'}),
+        'meadow_chamomile': ('chamomile_meadow', 'common', {'leaf', 'gold', 'wood', 'cream', 'white'}),
+        'garden_thyme': ('thyme_garden', 'common', {'leaf', 'wood', 'clay', 'rose', 'lavender-4', 'lavender-5'}),
+    },
+    'b02_04_herb_cards_uncommon': {
+        'peppermint': ('mint_pepper', 'uncommon', {'leaf', 'teal', 'lavender', 'rose-1', 'cream', 'white'}, [COOL_LEAF]),
+        'lemon_basil': ('basil_lemon', 'uncommon', {'leaf', 'gold', 'cream'}),
+        'trailing_rosemary': ('rosemary_trailing', 'uncommon', {'sage', 'leaf', 'clay', 'wood', 'sky'}),
+        'butterfly_lavender': ('lavender_butterfly', 'uncommon', {'sage', 'leaf', 'lavender', 'rose', 'white', 'cream'}),
+    },
+    'b02_05_herb_cards_rare': {
+        'pineapple_sage': ('sage_pineapple', 'uncommon', {'leaf', 'red', 'gold', 'wood', 'clay'}),
+        'double_chamomile': ('chamomile_double', 'uncommon', {'leaf', 'cream', 'white', 'sky', 'gold'}),
+        'lemon_thyme': ('thyme_lemon', 'uncommon', {'leaf', 'gold', 'cream'}),
+        'chocolate_mint': ('mint_chocolate', 'rare', {'leaf', 'wood', 'cream', 'rose-1', 'clay-1'}),
+        'purple_basil': ('basil_purple', 'rare', {'lavender', 'rose', 'gold', 'leaf-2'}, [PURPLE]),
+    },
+}
+
+
+def herb_cards():
+    mf = manifest('cards/plants/cards.json')
+    mf.setdefault('size', [108, 100])
+    mf.setdefault('note', 'Card pictures. The game draws the rarity backdrop, frame, name and level around them.')
+    cards = mf.setdefault('cards', {})
+    for key, table in CARDS.items():
+        if not os.path.isdir(pkg(key)):
+            continue
+        pairs = []
+        for part in sorted(glob.glob(os.path.join(pkg(key), 'parts', '*', '*.png'))):
+            name = os.path.splitext(os.path.basename(part))[0]
+            fname, rarity, ramps = table[name][:3]
+            rules = table[name][3] if len(table[name]) > 3 else None
+            raw = load(part)
+            assert raw.shape[:2] == (100, 108), name
+            rel = 'cards/plants/%s_108x100.png' % fname
+            pairs += clean('card', fname, [raw], [rel], ramps, 32, thin=True, rules=rules)
+            cards[fname] = dict(file=os.path.basename(rel), plant='plant.' + fname.replace('_', '.', 1), rarity=rarity)
+        sheet(pairs, 5, 4, os.path.join(REVIEW, '%s_before_after.png' % key[:6]))
+
+
+# ---------------------------------------------------------------- prompt 6: growth stages of thyme, sage and chamomile
+def paste(canvas, idx, x, y):
+    h, w = idx.shape
+    m = idx >= 0
+    canvas[y:y + h, x:x + w][m] = idx[m]
+
+
+def rgba_to_idx(path):
+    """A cleaned sprite back to palette indices (-1 for transparent)."""
+    a = np.array(Image.open(path).convert('RGBA'))
+    idx = np.full(a.shape[:2], -1, np.int32)
+    m = a[..., 3] == 255
+    lut = {tuple(c): i for i, c in enumerate(P_RGB.tolist())}
+    idx[m] = [lut[tuple(c)] for c in a[m][:, :3].tolist()]
+    return idx
+
+
+def growth_stages():
+    """The planter and the seeds are the cleaned Batch 1 layers, so every herb stands in the same planter.
+    Only the foliage is new. The outline is fixed on the composed frame and written back to the foliage."""
+    key = 'b02_06_herb_growth_stages'
+    sl = json.load(open(os.path.join(pkg(key), 'slices.json')))['sheets'][key + '.png']
+    px, py = sl['planter']['offset_in_frame']
+    plants = json.load(open(os.path.join(ART, 'plants', 'plants.json')))
+    b1 = plants['herbs']
+    assert b1['planter']['offset_in_frame'] == [px, py] and b1['frame'] == sl['native_cell_size']
+    planter = rgba_to_idx(os.path.join(ART, 'plants', b1['planter']['file']))
+    seeds_rel = b1['stages']['basil_seed']['layer']
+    seeds = rgba_to_idx(os.path.join(ART, 'plants', seeds_rel))
+    sx, sy = b1['stages']['basil_seed']['offset_in_frame']
+    sheet_rgba = load(os.path.join(pkg(key), sl['foliage_sheet']))
+    fw, fh = sl['native_cell_size']
+    HERB = {'thyme': {'leaf', 'wood', 'rose-2', 'rose-3', 'lavender-4', 'lavender-5'},
+            'sage': {'sage', 'lavender'},
+            'chamomile': {'leaf', 'white', 'cream', 'gold'}}
+    order = sl['growth_order']
+    mh = manifest('plants/plants.json')
+    pairs = []
+    for row, (herb, ramps) in enumerate(HERB.items()):
+        keys = ['%s_%s' % (herb, g) for g in order]
+        raws, offs = [], []
+        for col, k in enumerate(keys[1:], 1):
+            cell = sheet_rgba[row * fh:(row + 1) * fh, col * fw:(col + 1) * fw]
+            ys, xs = np.nonzero(cell[..., 3] == 255)
+            x0, y0 = xs.min(), ys.min()
+            crop = cell[y0:ys.max() + 1, x0:xs.max() + 1]
+            part = load(os.path.join(pkg(key), 'parts', '06_growth', k + '.png'))
+            assert crop.shape == part.shape and (crop == part).all(), k
+            raws.append(part)
+            offs.append((int(x0), int(y0)))
+        idxs, st = snap_many(raws, ramps | INKSET)
+        idxs, _ = reduce_many(idxs, 9)
+        fixed = 0
+        for top, (ox, oy) in zip(idxs, offs):
+            for _ in range(2):
+                comp = np.full((fh, fw), -1, np.int32)
+                own = np.zeros((fh, fw), np.int8)
+                paste(comp, planter, px, py)
+                h, w = top.shape
+                m = top >= 0
+                comp[oy:oy + h, ox:ox + w][m] = top[m]
+                own[oy:oy + h, ox:ox + w][m] = 1
+                fx, n = outline(comp, keep_thin=True)
+                ch = (fx != comp) & (own == 1)      # only foliage pixels change; the Batch 1 planter stays as it is
+                if not ch.any():
+                    break
+                fixed += int(ch.sum())
+                ys, xs = np.nonzero(ch)
+                top[ys - oy, xs - ox] = INK
+        frames = []
+        for i, k in enumerate(keys):
+            stage = order[i]
+            comp = np.full((fh, fw), -1, np.int32)
+            paste(comp, planter, px, py)
+            if i == 0:
+                paste(comp, seeds, sx, sy)
+                lname, off = seeds_rel, [sx, sy]
+            else:
+                top = idxs[i - 1]
+                ox, oy = offs[i - 1]
+                paste(comp, top, ox, oy)
+                lname = 'herb_layers/%s_%d_%s_foliage_%dx%d.png' % (herb, i + 1, stage, top.shape[1], top.shape[0])
+                save(top, os.path.join(OUT, 'plants', lname))
+                off = [ox, oy]
+            fname = '%s_%d_%s_72x90.png' % (herb, i + 1, stage)
+            save(comp, os.path.join(OUT, 'plants', fname))
+            mh.setdefault('herbs', {}).setdefault('stages', {})[k] = dict(frame=fname, layer=lname, offset_in_frame=off)
+            frames.append(comp)
+            src = np.zeros((fh, fw, 4), np.uint8)
+            if i:
+                src[offs[i - 1][1]:offs[i - 1][1] + raws[i - 1].shape[0],
+                    offs[i - 1][0]:offs[i - 1][0] + raws[i - 1].shape[1]] = raws[i - 1]
+            pairs.append((src, comp))
+        note('plant', '%s (5 growth stages, Batch 1 planter + new foliage)' % herb, frames, st, fixed, 16)
+    sheet(pairs, 5, 3, os.path.join(REVIEW, 'p06_herb_growth_before_after.png'))
 
 
 # ---------------------------------------------------------------- prompt 7: Soap and Scent Workshop props
@@ -299,10 +473,12 @@ def workers():
         sheet(pairs, 9, 3, os.path.join(REVIEW, '%s_before_after.png' % key[:6]))
 
 
-soap_props()
-walls()
-pip()
-workers()
+STEPS = [('b02_02_currency_icons', currency_icons), ('b02_03_herb_cards_common', herb_cards),
+         ('b02_06_herb_growth_stages', growth_stages), ('b02_07_floor09_soap_workshop_props', soap_props),
+         ('b02_08_backwalls_soap_hq', walls), ('b02_09_pip_guide', pip), ('b02_10_workers_floor04_garden_shed', workers)]
+for k, step in STEPS:
+    if os.path.isdir(pkg(k)) or (step is herb_cards and any(os.path.isdir(pkg(c)) for c in CARDS)):
+        step()
 os.makedirs(REVIEW, exist_ok=True)
 json.dump(REPORT, open(os.path.join(REVIEW, 'report.json'), 'w'), indent=1)
 for rel, data in MANIFESTS.items():
