@@ -13,7 +13,7 @@ Lawson, 2026-11-26: "One manager per Floor." and "Lets go for 6 at the end." (si
 3. **The top floor's manager is the world's Head** (the Exotic). Hired like anyone. Copies never come from chests: Mastery star 5 gives one, stars 7, 9 and 10 one more each, and the Starlight Chest gives one for a Head whose world has 5 stars.
 4. **Hiring is unchanged.** Pay the floor's `hireFee` once per run, again after a Replant. `hire.fee` stat stays.
 5. **Cards still level managers.** A manager's card is owned at level 1 from the first time its floor is ever opened. Chest manager slots pick among managers the player has met (floor opened at least once). No card of that rarity met: the slot gives a plant, and if there is none of those either it drops one rarity.
-6. **Welcome Chest** (same trigger): 2 copies each of the managers of floors 1 to 3. **Hiring Crate** (World 1 floors 4 to 10, first open): 2 copies of that floor's manager plus 2 Wooden Crate slots.
+6. **Welcome Chest** (same trigger): 2 copies each of the managers of floors 1 to 3. **Hiring Crate** (World 1 floors 4 to 9, first open): 2 copies of that floor's manager plus 2 Wooden Crate slots. Floor 10 has no crate, because Head copies never come from a crate.
 7. **Profit formula.** `managerProfit = MGR_BASE[rarity] x MGR_STEP[rarity] ^ (level - 1) x managerPowerMult`. `MGR_BASE = 2, 2.5, 3, 3.5, 4, 5`. `MGR_STEP = 1.2, 1.2, 1.2, 1.22, 1.28, 1.43`. Max levels and copy curves unchanged (15, 13, 11, 9, 7, 5). Profit at max: 25.7, 22.3, 18.6, 17.2, 17.6, 20.9. Reason: rarer managers now sit on the floors that earn most, so the old bases (4, 6, 10) would front-load day 0 and 1.
 8. **Abilities.** Rare and better, so four per world (24 in all, 16 at launch, the same 16 effects as 0.2). An ability works in its manager's own world. Hotkeys 1 to 4 on the world on screen.
 9. **Mayor Thyme** leaves the manager roster and hosts the Harvest Festival.
@@ -36,11 +36,11 @@ Seven new launch characters, all Common or Uncommon with no ability. Launch art:
 ## Steps
 
 - [x] Decisions and this note
-- [ ] CONTENT section 2 (rows, abilities, who a new player meets, art status)
-- [ ] GDD 5.1, 7, 8.1 to 8.4, 13.5 table, 14.5, 16, 17, 18, Appendix A
-- [ ] Other CONTENT rows: effects scopes, Star Pupil, story 6 and 42, achievements, codex and launch counts
-- [ ] AUDIT 4.2, questions (both answered), section 9 note
-- [ ] CHANGES.md: new section for 0.2 to 0.3
+- [x] CONTENT section 2 (rows, abilities, who a new player meets, art status)
+- [x] GDD 5.1, 6.1, 6.3, 6.7, 7, 8.1 to 8.3, 11.5, 12, 13.4, 13.5, 14.5, 16 (new row 11), 17, 19, Appendix A
+- [x] Other CONTENT rows: scopes, Star Pupil (each world's Head counts as 1 level higher), Autopilot, story 42, achievements, codex and launch counts
+- [x] AUDIT 4.2, 4.4, 7.4, section 8 (both answered), new section 10
+- [x] CHANGES.md: new part "Version 0.3" (A.1 to A.7), the 0.2 part kept below it
 - [ ] Checks (tables, references, word list), delete this note, open the pull request
 - [ ] Tell the simulator, tech and art threads. Ask the coordinator for a fresh-eyes audit before merging
 
