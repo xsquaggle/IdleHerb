@@ -1,0 +1,53 @@
+{
+ "frame_size": [
+  96,
+  80
+ ],
+ "draw_order": "base, then interior_shadow if present, then lid, all at (0,0)",
+ "chests": {
+  "common": {
+   "base": "common_base.png",
+   "steps": [
+    {
+     "frame": "common_closed",
+     "lid": "common_01_closed_lid.png"
+    },
+    {
+     "frame": "common_cracked",
+     "lid": "common_02_cracked_lid.png",
+     "interior_shadow": "common_crack_shadow.png"
+    },
+    {
+     "frame": "common_half_open",
+     "lid": "common_03_half_open_lid.png"
+    },
+    {
+     "frame": "common_fully_open",
+     "lid": "common_04_fully_open_lid.png"
+    }
+   ]
+  },
+  "legendary": {
+   "base": "legendary_base.png",
+   "steps": [
+    {
+     "frame": "legendary_closed",
+     "lid": "legendary_01_closed_lid.png"
+    },
+    {
+     "frame": "legendary_cracked",
+     "lid": "legendary_02_cracked_lid.png",
+     "interior_shadow": "legendary_crack_shadow.png"
+    },
+    {
+     "frame": "legendary_half_open",
+     "lid": "legendary_03_half_open_lid.png"
+    },
+    {
+     "frame": "legendary_fully_open",
+     "lid": "legendary_04_fully_open_lid.png"
+    }
+   ]
+  }
+ }
+}
