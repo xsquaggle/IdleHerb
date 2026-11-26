@@ -1,6 +1,6 @@
 # Sprout Tower Style Bible v1
 
-Status: v1.3, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
+Status: v1.4, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
 
 This is the single source of truth for how Sprout Tower looks. If an asset and this document disagree, the asset is wrong, or this document gets a new version. Nobody "interprets around" it.
 
@@ -234,6 +234,8 @@ Rarity is always shown **twice**: by colour and by a second cue that works for c
 | Legendary | gold | Sun and laurel medallion | 5 |
 | Exotic | prismatic (teal, rose, lavender) | Winged prism, moving shimmer | 6 |
 
+The six second cues are also the six **rarity emblems**: one small badge per rarity that appears on the card frame, the small card, the inventory slot, the chest light and the reveal. Two more rows stay free above Exotic in case the design adds tiers (Lawson asked for Mythic and Godly on 2026-11-26; the Game Designer decides). How rarity moves on screen is in section 19.
+
 ---
 
 ## 9. Materials
@@ -397,7 +399,7 @@ From B26, cleaned to the grid. Layers, back to front, with suggested scroll spee
 - **Large card (180×240):** layout from B25 at one sixth size. Name banner on top, art window (about 108×100), level badge, progress bar, two stat rows. Frame shape and ornament from B8, one per rarity.
 - **Small card (64×88):** 48×48 picture, rarity frame colour, pips 1 to 6, level number drawn by the game.
 - **Card art:** the plant or person sits on a simple two-band backdrop in the rarity colour. No scenery.
-- **Chests (B10):** six rarities, closed and open. Material tells the rarity: wood and iron, green enamel, blue with sapphires, purple with amethyst, gold with laurel, prismatic crystal. Opening is done by the game: shake, squash, lid swap, burst, cards fly out.
+- **Chests (B10):** the six chest tiers of the design (GDD 8.3), closed and open. Material tells the tier: Wooden Crate (planks and iron, **B1** common chest), Copper Chest (warm copper bands with a green verdigris trim), Silver Chest (silver plates with a blue sapphire lock), Golden Chest (gold with laurel, **B1** legendary chest), Crystal Chest (amethyst crystal panels in a silver frame), Starlight Chest (night-blue with gold stars and a prismatic crystal lock). A chest's tier is not the rarity of what is inside: the light that leaks out of it tells that (section 19).
 - **Heirlooms (B11, called artifacts in the file names):** 48×48 icons, one clear object each, with the B11 compass emblem fixed and the mortar redrawn as the Moonstone Birdbath.
 - **Currencies (B12, B29):** coin with the sprout mark is the main one. Which currencies exist is the Game Designer's list. Launch needs eleven icons: Coins, Notes, Shells, Snowmarks, Gems, Compost, Ribbons, Insight, Pollen, Skill Points and Fair Tickets. Moonpennies and Stardust come with their worlds. The research currency is called Insight and its icon is a lightbulb with a sprout inside. The purple plus token and the blue flask get redesigned.
 
@@ -465,6 +467,33 @@ All text is a bitmap pixel font drawn by the game. Fonts must be under the SIL O
 - **Flame** appears only on stoves and ember herbs. **Never near hemp.**
 - **Steam** is white puffs from a visible kettle or vat only.
 - A **reduce motion** setting turns off screen shake and flashes.
+
+### The rarity reveal ladder
+
+Getting something rare is the best moment in the game, so it is staged. One rule drives it: **the rarer the thing, the longer the build-up and the bigger the payoff.** The same ladder is used for every reveal: chest cards, heirloom pieces, a finished cross-pollination or mutation, and a new manager card. The look is fixed here; the timing is a first pass for the playtest to tune.
+
+**Five beats in every reveal.** *Arrive* (the chest or card lands with a squash), *Build* (it shakes and lifts), *Tell* (light leaks out and climbs the rarity colours), *Burst* (it opens), *Show* (the card is held up with its name).
+
+**The climb is the tell.** Light leaks from the lid seam in the Common colour first, then steps up one rarity at a time: wood, green, blue, purple, gold, prismatic. Each step is a jolt, a brighter seam and a chime one note higher. The light stops at the best rarity inside. A step never goes back down, so the player knows the moment it turns gold that a Legendary is coming. No fake-outs: the climb is always honest.
+
+| Best rarity inside | Build | Climb stops on | Burst | Show |
+|---|---|---|---|---|
+| Common | none, the lid pops | wood | dust puff | quick flip, 0.4 s |
+| Uncommon | one hop | green | leaf burst | flip, the leaf pair on the frame wiggles |
+| Rare | two hops | blue | lid flies off, a short blue beam, gem glints | flip, the diamond gem flashes once |
+| Epic | three hops, each higher; the room dims a third | purple | crystal shards and a pixel shockwave ring | the card shakes, then flips; the tall crystal grows onto the frame |
+| Legendary | the chest lifts off the floor and the rest of the screen freezes and dims by half | gold | sun rays turn behind the chest, a coin shower, the screen shakes 2 pixels | a slow flip that shows the gold edge first; the laurel medallion stamps onto the frame; fanfare; held 1.5 s |
+| Exotic | everything Legendary does, then all light goes out except one prismatic crack, and a beat of silence | prismatic | the chest bursts into prism shards and the screen floods teal, rose and lavender | the card floats down shimmering; the winged prism opens its wings on the frame; Pip and the floor's workers cheer at the screen edges; held 2.5 s |
+| *(free slot)* | *one more stage of build* | *a new colour beyond prismatic* | *bigger than Exotic* | *for Mythic, if the design adds it* |
+| *(free slot)* | *one more stage again* | *one more colour* | *the biggest moment in the game* | *for Godly, if the design adds it* |
+
+**A chest with many cards** opens with the climb for its best card. The cards then fly out face down into a fan, lowest rarity first. Common to Rare cards flip on their own in a quick ripple. Each Epic or better card waits face down with its edge glowing in its colour and plays its own short build and show when tapped, best card last.
+
+**Rarity keeps moving after the reveal.** In the collection, Epic frames shimmer once every 6 seconds, Legendary frames glint every 4 seconds, and the Exotic shimmer never stops. The same emblem, colour and chime family appear on the chest light, the card frame, the small card, the inventory slot, the bench when a job finishes and the name text, so every rare thing in the game looks related.
+
+**Respect the player's time.** A tap skips to the Show after the first second. After the player's 20th chest a "quick open" setting keeps only the climb and the Show. The first Legendary and the first Exotic a player ever gets always play in full. Reduce motion swaps shake, flash and the colour flood for a steady glow and the rarity emblem; flashes are never faster than three a second.
+
+**Who makes what.** The engine plays it with its planned shaders (pixel dissolve, rarity colour flood, shockwave ring, glow; tech plan, rendering section). Art supplies the chests, the rarity emblems, the card frames, the burst particles (dust, leaves, gem glints, crystal shards, coins, laurel leaves, prism shards) and the ray and beam shapes. Audio supplies one rising chime per step and one closing sting per rarity.
 
 ---
 
@@ -602,7 +631,8 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | UI kit | Hand-built |
 | Icon set at 16, 24, 32 | Designs in **B1**, small sizes redrawn by hand |
 | Fonts | Custom Display font, plus tested open fonts |
-| Card back, frames in B25 layout for five rarities, small card | B25 shows Epic only |
+| Card back, frames in B25 layout for six rarities, small card | B25 shows Epic only. Generated as a base, finished by hand |
+| Rarity reveal kit | Six rarity emblems, four more chests (Copper, Silver, Crystal, Starlight), burst particles per rarity, rays and beams (section 19) |
 | Shared planter kit, lamp sprite, tower side walls and floor plates | |
 | Upper sky, stars, separate clouds | Sky bands are specified here |
 | Worlds 2 (Loomington) and 3 (Papaya Cay) | One background painting each (B17, B18), to be drawn again as parallax layers. No rooms or cast yet. The weaving mill, paper workshop, tailor and hempcrete rooms belong to World 2. Papaya Cay also needs four weather signs (sunshine, rain, breeze, rainbow) |
@@ -633,3 +663,4 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 - **v1.1:** aligned with the game design document. World 1 floor table, six worlds, six named hemp cards, managers as floor-neutral cards with a manager spot on every floor, fixes owed on v2 floors 03 and 09, on the B12 flask, the B5 botanist, the B21 cook and tea master and the B11 pruners, and the design document's word list. The look, grid, palette and prompt suffix are unchanged.
 - **v1.2:** follows design version 0.2, which plans four worlds at launch. Mount Mitten's look is fixed (section 7), the missing list has launch counts (section 23), the B11 mortar becomes the Moonstone Birdbath, the ticket plate and "Coming soon" card join the UI kit, and the later batches are laid out in BATCH_PLAN.md. The look, grid, palette and prompt suffix are unchanged.
 - **v1.3:** after the first full batch of our own images. Adds the wall veil (section 13) and the 32-colour budget for a worker frame that holds a prop (section 6). Managers still read as in v1.1 and wait for design version 0.3.
+- **v1.4:** the rarity reveal ladder (section 19), the six rarity emblems with two free slots above Exotic (section 8), and chests named by the design's six chest tiers instead of by rarity (section 15). Lawson asked for reveals that build up more the rarer the item is.

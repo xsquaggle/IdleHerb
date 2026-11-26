@@ -17,7 +17,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 | Batch | Theme | Images | State |
 |---|---|---|---|
 | 1 | World 1 vertical slice | 18 | 17 of 18 are back, passed with no redos and cleaned into sprites. Prompt 18 (managers) is on hold |
-| 2 | Finish World 1 | 17 | Written 2026-11-26, with Lawson. No manager prompts: they follow as a short round of their own |
+| 2 | Finish World 1, and the rarity reveal kit | 23 | Written 2026-11-26, with Lawson. Prompts 2 to 17 back and cleaned the same day. Round 7 (prompts 18 to 23, rarity reveal kit) added after Lawson asked for bigger rare reveals. No manager prompts: they follow as a short round of their own |
 | 3 | Loomington rooms and collection | 17 | Planned |
 | 4 | Loomington cast and weekend events | 13 | Planned |
 | 5 | Papaya Cay rooms | 17 | Planned |
@@ -46,7 +46,7 @@ That is about **103 images after Batch 1**. Mount Mitten, the fourth launch worl
 
 ## Batch 2: Finish World 1
 
-Written as [ASSET_BATCH_02.md](ASSET_BATCH_02.md), 17 prompts in 6 rounds. The order inside the batch is agreed with the Game Designer: what the first hour of World 1 shows comes first. The managers are left out until the manager list of design 0.3 is approved; they follow as a short round of their own.
+Written as [ASSET_BATCH_02.md](ASSET_BATCH_02.md), 23 prompts in 7 rounds. The order inside the batch is agreed with the Game Designer: what the first hour of World 1 shows comes first. The managers are left out until the manager list of design 0.3 is approved; they follow as a short round of their own.
 
 | Prompts | Images | Contents |
 |---|---|---|
@@ -58,6 +58,10 @@ Written as [ASSET_BATCH_02.md](ASSET_BATCH_02.md), 17 prompts in 6 rounds. The o
 | 8 | 1 | Back walls for the Soap and Scent Workshop and Sprout Tower HQ |
 | 9 | 1 | Pip the seedling guide: poses and expressions |
 | 10 to 17 | 8 | Two workers per sheet, nine poses each: both workers of floors 4, 5, 6, 7, 8 and 9, the worker of floor 10, and the second workers of floors 1, 2 and 3 |
+| 18 | 1 | The six rarity emblems (style bible sections 8 and 19) |
+| 19, 20 | 2 | The four missing chest tiers (Copper, Silver, Crystal, Starlight), opening in the same four steps as the Batch 1 chests |
+| 21, 22 | 2 | Six large card frames, one per rarity, empty, in the B25 layout |
+| 23 | 1 | Reveal bursts, one per rarity, four frames each |
 
 Seed Hemp and Longstalk Hemp, the other Uncommon and Rare cards a new player meets, are already in Batch 1.
 
@@ -144,10 +148,12 @@ Every "new for launch" count in the design document's section 13 has a batch.
 | World backgrounds | 1 new, 2 drawn again as layers | Batch 7, and Batches 3 and 5 |
 | Currency icons | 6 | Batch 2 (all six) |
 | Story characters | 2 | Batch 2 (Pip), Batch 4 (Baron Fauxliage) |
+| Chests | 4 more tiers | Batch 2 (round 7) |
+| Rarity kit | 6 emblems, 6 card frames, 6 bursts | Batch 2 (round 7). If the design adds Mythic and Godly, one more prompt gives their emblems, frames and bursts |
 
 ## Made by hand, with no prompt
 
-The UI kit, fonts, the Face Kit and character heads, icons at 16, 24 and 32 pixels, card frames, the ticket plate and the "Coming soon" card with its world silhouettes, effects and particles (snowfall, weather, sparkles), the finished Heat gauge, sky bands and aurora ribbons.
+The UI kit, fonts, the Face Kit and character heads, icons at 16, 24 and 32 pixels, the small card frames, rays and beams, the ticket plate and the "Coming soon" card with its world silhouettes, effects and particles (snowfall, weather, sparkles), the finished Heat gauge, sky bands and aurora ribbons.
 
 ## From the reference packs, through clean-up
 

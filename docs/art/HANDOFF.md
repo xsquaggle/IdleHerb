@@ -63,12 +63,12 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 
 ## In progress
 
-- Nothing half-done. Every step so far is committed and pushed.
+- Nothing half-done. Every step so far is committed and pushed. Round 7 of Batch 2 (rarity reveal kit) was written 2026-11-26 about 12:45 PM and sent to Lawson; the reveal ladder it serves is in style bible section 19 (v1.4).
 
 ## Next steps, in order
 
 1. **Managers, when design 0.3 (PR #5) merges.** See the open question below. Then rewrite prompt 18, update the manager text in the bible (section 10 and the manager rows of section 23) and in HEMP_ART.md, redo the manager rows of BATCH_PLAN.md, and tell Lawson which manager prompt to run.
-2. **Check and clean Batch 2 prompt 1 (visitors) when Lawson uploads it.** Put the raw file in project files `art/batch02/raw_prompt01/`.
+2. **Check and clean Batch 2 prompt 1 (visitors) and round 7 (prompts 18 to 23, the rarity reveal kit) when Lawson uploads them.** Put raw files in project files `art/batch02/raw_prompt01/` and `art/batch02/raw_round7/`. Round 7 needs new functions in `tools/clean_batch02.py`: emblems (16 colours), chests like Batch 1 (`clean_batch01_round4.py` has the chest code: base, lids, crack shadow, `chests.json`), card frames (32 colours, the window stays transparent), bursts (16 colours, no outline step). If the design adds Mythic and Godly, write one more prompt for their emblems, frames and bursts.
 3. **Hand polish, then Gate B,** for the automatic-pass sprites:
    - Faces: one fixed head per character from the Face Kit. The generated faces are readable but soft, most of all on the two ropewalk workers.
    - Hemp cards: thin the leaf tufts. Product icons: one colour family for the soap. Burlap and building blocks: tidy speckle.

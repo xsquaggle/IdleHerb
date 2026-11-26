@@ -2,7 +2,9 @@
 
 Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **1**. Style suffix version: **v1**. Hemp guards version: **v1**. Written by `tools/build_asset_batch_02.py`, which copies the suffix and guards word for word from section 21 of the bible. Never edit this file by hand.
 
-**17 images in 6 rounds.** They finish World 1: the six visitors, six currency icons, every World 1 herb card and the last three herb growth charts, the soap workshop and the walls of the top two floors, Pip, and moving workers for every floor. The worker sheets now carry two workers each, which is why the batch is shorter than planned.
+**23 images in 7 rounds.** They finish World 1: the six visitors, six currency icons, every World 1 herb card and the last three herb growth charts, the soap workshop and the walls of the top two floors, Pip, and moving workers for every floor. The worker sheets now carry two workers each, which is why the batch is shorter than planned.
+
+**Round 7 was added later** (2026-11-26): the rarity reveal kit, so that opening something rare builds up more the rarer it is. Rounds 1 to 6 are unchanged.
 
 The manager images are not in this batch. They wait until the new manager list (one manager per floor) is approved, then follow as a short round of their own.
 
@@ -12,7 +14,7 @@ Names follow the game design document, which is still in review. Each prompt des
 
 1. Each round is **one new ChatGPT chat**.
 2. At the start of a round, **attach that round's two reference images** from your expansion pack (listed below) and paste the round's first prompt in the same message.
-3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the reference images again. **Rounds 4 to 6 are different:** most of their prompts need one or two more of your pictures, attached in the same message as that prompt. They are listed in the table "Extra pictures" below and in bold at the top of each prompt.
+3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the reference images again. **Rounds 4 to 7 are different:** some of their prompts need one or two more of your pictures, attached in the same message as that prompt. They are listed in the table "Extra pictures" below and in bold at the top of each prompt.
 4. Each prompt is one grey box. Copy the whole box, change nothing.
 5. New in this batch: the end of every prompt asks ChatGPT for the zip it made on its own last time (true-size parts and a slices file). **Upload the zip as well as the picture.** If ChatGPT makes no zip, the picture alone is fine.
 6. Save each picture as it comes: **PNG, original size**. No screenshots, no JPG, no cropping or resizing.
@@ -26,12 +28,13 @@ Names follow the game design document, which is still in review. Each prompt des
 | **A** | Scenes | `B4_floor04_garden_shed_nursery_v2.png` and `B4_floor_frame_shell.png` |
 | **B** | People | `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png` |
 | **C** | Plants and items | `B24_plant_growth_stages.png` and `B23_exotic_plants.png` |
+| **D** | Chests and cards | `b01_11_chest_opening_frames.png` and `B25_card_layout_mockup.png` |
 
-Both are from your expansion pack, the same as in Batch 1.
+Sets A to C are from your expansion pack, the same as in Batch 1. Set D is one picture you made yourself in Batch 1 (`b01_11_chest_opening_frames.png`, your chest animation sheet) and one from the expansion pack. A copy of both is in the project files, in `art/batch02/attach_with_prompts/`.
 
-### Extra pictures for rounds 4 to 6
+### Extra pictures for rounds 4 to 7
 
-These prompts draw workers who are already in your room pictures, so each needs that picture attached in the same message as the prompt. The `B4_floor..._v2` files are in your expansion pack. The `b01_15` file is the ropewalk picture you made in Batch 1. A copy of every one of them is in the project files, in the folder `art/batch02/attach_with_prompts/`. Use the `_v2` files, not the older painted room pictures, which show other people.
+The worker prompts draw people who are already in your room pictures, so each needs that picture attached in the same message as the prompt. Prompt 23 needs your tap-effects picture. The `B4_floor..._v2` files are in your expansion pack. The `b01_15` file is the ropewalk picture you made in Batch 1. A copy of every one of them is in the project files, in the folder `art/batch02/attach_with_prompts/`. Use the `_v2` files, not the older painted room pictures, which show other people.
 
 | Prompt | Also attach |
 |---|---|
@@ -43,6 +46,7 @@ These prompts draw workers who are already in your room pictures, so each needs 
 | 15 | `B4_floor09_essence_lab_v2.png` |
 | 16 | `B4_floor10_herb_empire_hq_v2.png` and `B4_floor01_windowsill_planter_v2.png` |
 | 17 | `B4_floor02_balcony_pots_v2.png` and `B4_floor03_backyard_patch_v2.png` |
+| 23 | `B29_tap_feedback_vfx.png` |
 
 ### The rounds
 
@@ -51,9 +55,10 @@ These prompts draw workers who are already in your room pictures, so each needs 
 | 1 | Visitors and currency icons | Set C | 1, 2 | Needed first |
 | 2 | Herbs | Set C | 3, 4, 5, 6 | Needed first |
 | 3 | The top two floors | Set A | 7, 8 | Needed next |
-| 4 | Pip and the first two-worker sheet | Set B plus floor pictures | 9, 10 | Needed first |
-| 5 | Workers of floors 5 to 7 | Set B plus floor pictures | 11, 12, 13 | Needed next |
-| 6 | Workers of floors 8 to 10 and the second workers of floors 1 to 3 | Set B plus floor pictures | 14, 15, 16, 17 | Needed next |
+| 4 | Pip and the first two-worker sheet | Set B plus extra pictures | 9, 10 | Needed first |
+| 5 | Workers of floors 5 to 7 | Set B plus extra pictures | 11, 12, 13 | Needed next |
+| 6 | Workers of floors 8 to 10 and the second workers of floors 1 to 3 | Set B plus extra pictures | 14, 15, 16, 17 | Needed next |
+| 7 | The rarity reveal kit | Set D plus extra pictures | 18, 19, 20, 21, 22, 23 | Needed for the chest opening |
 
 ### All prompts at a glance
 
@@ -76,6 +81,12 @@ These prompts draw workers who are already in your room pictures, so each needs 
 | 15 | Workers: Soap and Scent Workshop | `b02_15_workers_floor09_soap_workshop.png` | landscape 3:2 | Yes |
 | 16 | Workers: Sprout Tower HQ and Windowsill Planter | `b02_16_workers_floor10_floor01.png` | landscape 3:2 | Yes |
 | 17 | Workers: Balcony Boxes and Backyard Hemp Patch | `b02_17_workers_floor02_floor03.png` | landscape 3:2 | Yes |
+| 18 | Rarity emblems: one badge per rarity | `b02_18_rarity_emblems.png` | landscape 3:2 | Yes |
+| 19 | Chests: Copper Chest and Silver Chest | `b02_19_chests_copper_silver.png` | landscape 16:9 | Yes |
+| 20 | Chests: Crystal Chest and Starlight Chest | `b02_20_chests_crystal_starlight.png` | landscape 16:9 | Yes |
+| 21 | Card frames: Common, Uncommon, Rare | `b02_21_card_frames_common_rare.png` | landscape 3:2 | Yes |
+| 22 | Card frames: Epic, Legendary, Exotic | `b02_22_card_frames_epic_exotic.png` | landscape 3:2 | Yes |
+| 23 | Reveal effects: one burst per rarity | `b02_23_reveal_effects.png` | portrait 2:3 | Yes |
 
 ---
 
@@ -366,7 +377,7 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ## Round 4: Pip and the first two-worker sheet
 
-**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Most prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Some prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
 
 ### Prompt 9: Pip, the seedling guide: poses and expressions
 
@@ -444,7 +455,7 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ## Round 5: Workers of floors 5 to 7
 
-**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Most prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Some prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
 
 ### Prompt 11: Workers: Glass Greenhouse
 
@@ -567,7 +578,7 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ## Round 6: Workers of floors 8 to 10 and the second workers of floors 1 to 3
 
-**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Most prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Some prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
 
 ### Prompt 14: Workers: Ropewalk and Twine Shop
 
@@ -729,6 +740,205 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ---
 
+## Round 7: The rarity reveal kit
+
+**New chat. Attach Set D:** `b01_11_chest_opening_frames.png` and `B25_card_layout_mockup.png`. **Some prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
+
+### Prompt 18: Rarity emblems: one badge per rarity
+
+- **File name:** `b02_18_rarity_emblems.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The six small badges that tell a card's rarity everywhere in the game: on the card frame, the small card, the collection slot and the chest light. They are what ties the rarity look together. Style bible sections 8 and 19.
+- **Parts we cut from it:** 6 emblems at 48×48 art pixels. Smaller sizes are drawn by hand.
+- **Name flag:** Rarity names are from the game design document. Two more rarities may be added later; they get their emblems then.
+
+```text
+Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
+
+Six small badge emblems for a cozy pixel-art idle game, one for each rarity of collectible card, in two rows of three, evenly spaced, each in its own cell, the same visual size, nothing touching or overlapping, nothing cut off by the edge. Each is one chunky, simple object that reads at a glance at a small size, seen from the front, with a golden-yellow highlight on its upper left. Each must look clearly richer than the one before it.
+Row 1:
+1. A round plate of dark iron with four rivets around a small warm wooden centre.
+2. Two fresh green leaves on a short stem, tied with a little twine bow.
+3. A faceted sapphire-blue diamond gem in a small silver setting.
+Row 2:
+4. A tall, pointed amethyst crystal with two smaller purple crystals at its sides.
+5. A round gold sun medallion with a small two-leaf sprout in its middle and a gold laurel wreath around it.
+6. A gem-cut prism crystal with teal, rose and lavender facets and two small white feathered wings spread from its sides.
+
+No sparkles, glints, light rays, motion lines or floating dots anywhere in the image. The game adds those.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 19: Chests: Copper Chest and Silver Chest
+
+- **File name:** `b02_19_chests_copper_silver.png`
+- **Shape and size:** landscape 16:9, about 1664×936 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** Two of the four missing chest tiers, opening in the same four steps as your Batch 1 chests, so all six chests open the same way. The light that shows the rarity inside is added by the game.
+- **Parts we cut from it:** 8 frames: 2 chests × 4 steps, 96×80 art pixels each. Lids are also cut out as separate parts.
+- **Name flag:** Chest names are from the game design document and may change.
+
+```text
+Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
+
+An animation sheet of two treasure chests opening, for a cozy pixel-art idle game, drawn exactly like the attached chest animation sheet: the same chest size, the same view from slightly above turned a little to the right, and the same four steps. Two rows of four frames, evenly spaced, each in its own cell, the same visual size, nothing touching or overlapping, nothing cut off by the edge. Within a row the chest is the same size and stands in the same place in every cell, so that the frames line up as an animation.
+
+The four frames in each row, left to right:
+1. Closed.
+2. Lid lifted just a crack.
+3. Lid half open.
+4. Lid fully open and thrown back. The chest is EMPTY inside, lined with plain cream cloth.
+
+Row 1, the copper chest: warm wooden planks with shiny copper bands, copper corners and a copper lock, with a thin trim of soft green patina along the bands.
+Row 2, the silver chest: pale grey-blue wood covered with polished silver plates and silver rivets, and a lock set with one sapphire-blue gem.
+
+No treasure, no items, no light coming out, no light rays and no sparkles in any frame. The game adds those.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 16:9.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 20: Chests: Crystal Chest and Starlight Chest
+
+- **File name:** `b02_20_chests_crystal_starlight.png`
+- **Shape and size:** landscape 16:9, about 1664×936 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The two top chest tiers. With prompt 19 and your Batch 1 chests, all six chest tiers exist.
+- **Parts we cut from it:** 8 frames: 2 chests × 4 steps, 96×80 art pixels each. Lids are also cut out as separate parts.
+- **Name flag:** Chest names are from the game design document and may change.
+
+```text
+Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
+
+An animation sheet of two treasure chests opening, for a cozy pixel-art idle game, drawn exactly like the attached chest animation sheet: the same chest size, the same view from slightly above turned a little to the right, and the same four steps. Two rows of four frames, evenly spaced, each in its own cell, the same visual size, nothing touching or overlapping, nothing cut off by the edge. Within a row the chest is the same size and stands in the same place in every cell, so that the frames line up as an animation.
+
+The four frames in each row, left to right:
+1. Closed.
+2. Lid lifted just a crack.
+3. Lid half open.
+4. Lid fully open and thrown back. The chest is EMPTY inside, lined with plain cream cloth.
+
+Row 1, the crystal chest: a silver frame holding panels of clear amethyst-purple crystal with flat facets, and a silver lock shaped like a tall crystal.
+Row 2, the starlight chest: deep night-blue wood with small gold star studs, gold corners shaped like crescent moons, and a lock set with a prism crystal in teal, rose and lavender.
+
+No treasure, no items, no light coming out, no light rays and no sparkles in any frame. The game adds those.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 16:9.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 21: Card frames: Common, Uncommon, Rare
+
+- **File name:** `b02_21_card_frames_common_rare.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The first three of the six card frames. The card picture, name, level and stats are drawn into them by the game. Frame shape and ornament tell the rarity without colour.
+- **Parts we cut from it:** 3 frames at 180×240 art pixels. The small card frames are made by hand from these.
+- **Name flag:** Rarity names are from the game design document.
+
+```text
+Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
+
+Three empty collectible card frames for a cozy pixel-art idle game, side by side in one row, evenly spaced, each in its own cell, the same visual size, nothing touching or overlapping, nothing cut off by the edge. All three have exactly the same size and the same layout as the attached card mockup: a tall card, three wide by four tall, with an ornate border, an arched picture window in the upper half, a blank name ribbon across the middle, and a blank parchment panel in the lower part with two plain empty rows. Only the border ornament and its colours change from card to card. The picture window is EMPTY and transparent. The ribbon and the panel are plain, with no writing, numbers, icons or bars on them. No plant and no picture anywhere.
+
+Left to right:
+1. Common: a plain warm wooden border with grey iron corner brackets and rivets, and a round iron rivet plate at the top centre.
+2. Uncommon: a wooden border wrapped in a fresh green leafy vine, with a pair of green leaves at the top centre and at the bottom centre.
+3. Rare: a polished silver border with a faceted sapphire-blue gem at the top centre, at the bottom centre and on each side.
+
+No sparkles, glints, light rays, motion lines or floating dots anywhere in the image. The game adds those.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 22: Card frames: Epic, Legendary, Exotic
+
+- **File name:** `b02_22_card_frames_epic_exotic.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The three top card frames. Each must look clearly grander than the one before it.
+- **Parts we cut from it:** 3 frames at 180×240 art pixels. The small card frames are made by hand from these.
+- **Name flag:** Rarity names are from the game design document. Two more rarities may be added later; they get frames then.
+
+```text
+Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
+
+Three empty collectible card frames for a cozy pixel-art idle game, side by side in one row, evenly spaced, each in its own cell, the same visual size, nothing touching or overlapping, nothing cut off by the edge. All three have exactly the same size and the same layout as the attached card mockup: a tall card, three wide by four tall, with an ornate border, an arched picture window in the upper half, a blank name ribbon across the middle, and a blank parchment panel in the lower part with two plain empty rows. Only the border ornament and its colours change from card to card. The picture window is EMPTY and transparent. The ribbon and the panel are plain, with no writing, numbers, icons or bars on them. No plant and no picture anywhere.
+
+Left to right:
+1. Epic: a carved lavender-purple stone border with swirls and small green leaves, a tall amethyst crystal at the top centre and at the bottom centre, and a small purple crystal on each side, like the attached mockup.
+2. Legendary: a rich gold border with gold laurel leaves all the way around, a round gold sun medallion with a two-leaf sprout at the top centre, and smaller gold medallions on each side.
+3. Exotic: a pearly white and silver border inlaid with small prism crystals in teal, rose and lavender, a prism crystal with two small white feathered wings at the top centre, and the wings' feathers spreading along the top corners.
+
+No sparkles, glints, light rays, motion lines or floating dots anywhere in the image. The game adds those.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 23: Reveal effects: one burst per rarity
+
+**Attach with this prompt:** `B29_tap_feedback_vfx.png`
+
+- **File name:** `b02_23_reveal_effects.png`
+- **Shape and size:** portrait 2:3, about 1024×1536 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The bursts that play when a card of each rarity is revealed, from a small puff for Common to a shower of prism shards for Exotic. The game adds the light, rays and screen colour around them.
+- **Parts we cut from it:** 24 frames: 6 rarities × 4 frames, each burst on a 48×48 art pixel cell.
+- **Name flag:** None.
+
+```text
+Use the reference images attached in this chat for style only (pixel size, outline, shading, colours). Do not copy their content.
+
+An effects sheet for a cozy pixel-art idle game, drawn like the attached tap-effects sheet: six rows of four frames, evenly spaced, each in its own cell, the same visual size, nothing touching or overlapping, nothing cut off by the edge. Each row is one short burst animation that grows from frame 1 to frame 3 and fades and scatters in frame 4. Each row must look clearly bigger and richer than the row above it.
+Row 1: a small puff of round cream and light brown dust clouds.
+Row 2: a burst of small green leaves and yellow-green bits.
+Row 3: blue diamond-shaped gem glints with small four-point sparkles in pale blue and white.
+Row 4: sharp amethyst-purple crystal shards flying outward in a ring.
+Row 5: gold coins with a small sprout mark tumbling outward with small gold laurel leaves and four-point gold sparkles.
+Row 6: small prism crystal shards in teal, rose and lavender with tiny white feathers and four-point sparkles in all three colours.
+Hard pixel edges only, no glow halo and no soft light around any effect. No dollar signs, plus signs, numbers or text.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: portrait 2:3.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+---
+
 ## If a result is off
 
 Send the matching sentence in the same chat.
@@ -746,6 +956,9 @@ Send the matching sentence in the same chat.
 | On a two-worker sheet the two characters mix or change | `Redo the sheet. The left three columns show only character A and the right three columns only character B, each exactly the same in all nine of its poses.` |
 | Two workers on one sheet still fails after two tries | `Draw only character A, in nine poses in three rows of three. Then, as a second image, draw character B the same way.` |
 | A person looks like someone real or a known cartoon | `Redo with a clearly different, original face and hairstyle.` |
+| A chest changes size or place between frames | `Redo so each chest is exactly the same size and in exactly the same place in all four frames of its row. Only the lid moves.` |
+| A card frame has a picture, writing or bars inside | `Same frames, but completely empty inside: no plant, no picture, no writing, no numbers, no bars. Plain window, plain ribbon, plain panel.` |
+| The rarities do not look richer from one to the next | `Redo so each one is clearly grander than the one before it: more ornament, richer material, a bigger silhouette.` |
 | Wrong number of items | `Redo with exactly the number of items, rows and columns listed in the prompt.` |
 | Light comes from the right | `Same image with the light coming from the upper left.` |
 | Too busy or too detailed | `Same image, simpler: fewer details, bigger shapes, only 3 to 4 flat tones per material.` |
