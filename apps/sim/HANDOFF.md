@@ -1,6 +1,6 @@
 # Balance simulator: handoff note
 
-Kept current so the work can be picked up after any stop. Last update: 2026-11-26, about 08:15 UTC.
+Kept current so the work can be picked up after any stop. Last update: 2026-11-26, after the Auto-Gardener ruling (in progress).
 
 ## Where things are
 
@@ -25,6 +25,12 @@ Kept current so the work can be picked up after any stop. Last update: 2026-11-2
 - No Festival gap above 10 days after day 14 for any play style; after day 30 gaps are 4.4 to 7.2 days. Late research finishes for the active player on days 26.5, 32.7, 37.7, 42.7, 48.1, 53.1, 56.2, 68.1.
 - Mastery: lists per world in `p5-late-research`, fitted on 90-day active runs (refit three times). Active stars in window: Thymeford 4 (of 6 possible), World 2 8, World 3 8, World 4 7, World 5 5, World 6 5. Best levels rise in steps once per Festival cycle, so star days move a day or two between runs. Thymeford's lowest floor stops in week 2 (World 2 ticket paid within a minute of each Festival, no hired manager afterwards), so its stars 7 to 10 (625 to 850) are unmeasured. Raised with the designer.
 - Active player buys nothing by hand for 47 minutes of play on day 51 (the Auto-Gardener still buys about a level a session): late-game slowness near the end of the run, reported.
+
+## In progress: Auto-Gardener ruling (designer, 2026-11-26, last change before 0.4)
+
+- Ruling: section 4 of /mnt/project-files/design/proposals/p5-late-research-and-mastery.md. Done in the core: tuning flag `AUTO_GARDENER_RESTARTS` (false in the 0.3 tables, true in `p5-late-research`); while the Auto-Gardener is owned and switched on, floor 1's manager stays hired through Replants and Festivals with no fee, and worlds open their next floor at `AUTO_BUY_SHARE`. Two tests in `apps/sim/src/sim.test.ts` (59 tests).
+- First run with it: Thymeford climbs to about 914 by day 90 (was stuck at 565). Off target now: Festivals by day 30 (active 12, mixed 13), mixed World 6 day 17.4, idle World 5 day 27.2, and gaps under 4 days after day 30 (active, idle). Hand tests of `RIBBON_C0`, the World 6 ticket and Living Soil x1.5 run as `apps/sim/proposals/zt-*.yaml` (scratch, delete before committing).
+- Then: re-pick all six Mastery lists on the new 90-day runs, rebuild the report, message the Game Designer.
 
 ## Next steps
 

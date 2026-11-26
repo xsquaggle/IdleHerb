@@ -888,7 +888,7 @@ export async function writeReport(): Promise<void> {
   }
   const suiteFile = join(OUT_DIR, 'suite.json');
   const proposal = existsSync(suiteFile) ? (JSON.parse(readFileSync(suiteFile, 'utf8')) as { proposal: string | null }).proposal : null;
-  const proposals = fix ? (proposal ? proposal.split(',') : (get('fix-active')?.meta.rules.split(',') ?? [])) : [];
+  const proposals = fix ? (proposal ? proposal.split(',') : (get('fix-active')?.meta.rules.split(/[+,]/) ?? [])) : [];
   const R: Runs = { base, fix, get, proposals };
 
   mkdirSync(DATA, { recursive: true });
