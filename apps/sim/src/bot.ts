@@ -52,6 +52,7 @@ export class Bot {
   private sunriseSeen = false;
   private readonly decided = new WeakSet<object>();
   private readonly human: boolean;
+  private readonly off: Set<string>;
 
   constructor(
     readonly g: Game,
@@ -60,6 +61,7 @@ export class Bot {
     private readonly maxWorld: number,
   ) {
     this.human = style.skill === 'human';
+    this.off = new Set(style.off);
     this.rate = g.state.worlds.map(() => Num.ZERO);
     this.lastLife = g.state.worlds.map((w) => w.lifetime);
     g.on((e) => {
@@ -123,7 +125,7 @@ export class Bot {
     this.n++;
     this.sessionT += dt;
     if (this.human) {
-      const perSec = s.playTime < 600 ? 0.5 : s.playTime < 3600 ? 1 : 2;
+      const perSec = s.playTime < 120 ? 0.4 : s.playTime < 600 ? 0.7 : s.playTime < 3600 ? 1 : 2;
       this.budget = Math.min(6, this.budget + perSec * dt);
     }
     this.trackIncome(dt);
@@ -135,10 +137,10 @@ export class Bot {
     if (tapping) this.tap(dt);
     else this.harvestByHand(dt);
 
-    this.catchVisitors();
-    this.twist(tapping);
-    if (this.n % 2 === 0) this.abilities(tapping);
-    if (tapping && !this.holdSpurt() && g.spurtReady()) g.dispatch({ type: 'startSpurt' });
+    if (!this.off.has('visitors')) this.catchVisitors();
+    if (!this.off.has('twists')) this.twist(tapping);
+    if (this.n % 2 === 0 && !this.off.has('abilities')) this.abilities(tapping);
+    if (tapping && !this.off.has('spurt') && !this.holdSpurt() && g.spurtReady()) g.dispatch({ type: 'startSpurt' });
 
     this.spend(focus, this.human ? 4 : 12);
     if (this.n % 3 === 0) {
@@ -189,7 +191,7 @@ export class Bot {
   private tapEfficiency(): number {
     if (!this.human) return 1;
     const t = this.g.state.playTime;
-    return t < 600 ? 0.5 : t < 3600 ? 0.75 : 1;
+    return t < 120 ? 0.4 : t < 600 ? 0.6 : t < 3600 ? 0.8 : 1;
   }
 
   private tap(dt: number): void {
@@ -503,6 +505,7 @@ export class Bot {
       .filter((id) => (s.chests[id] ?? 0) > 0)
       .sort((a, b) => (c.chests.get(b)?.tier ?? 0) - (c.chests.get(a)?.tier ?? 0));
     for (const id of chests) {
+      if (this.off.has('chests')) break;
       while ((s.chests[id] ?? 0) > 0 && this.canAct()) {
         if ((c.chests.get(id)?.tier ?? 0) >= 4 && !s.luckDoubleNext) g.dispatch({ type: 'useAbility', id: 'ability.abracadabra' });
         if (!this.act({ type: 'openChest', chest: id })) break;
@@ -512,6 +515,7 @@ export class Bot {
 
     // Card and heirloom levels cost copies only, so every one that can be bought is bought.
     for (const id of Object.keys(s.cards)) {
+      if (this.off.has('cardLevels')) break;
       const def = c.cards.get(id)!;
       let own = s.cards[id]!;
       while (own.level < def.maxLevel && own.copies >= def.dupes[own.level - 1]! && this.act({ type: 'levelCard', id })) own = s.cards[id]!;
@@ -527,18 +531,18 @@ export class Bot {
       const pick = HEIRLOOM_PICKS.find((id) => !s.heirlooms[id]) ?? HEIRLOOM_PICKS[0]!;
       if (!this.act({ type: 'pickHeirloom', id: pick })) break;
     }
-    this.equip();
+    if (!this.off.has('heirlooms')) this.equip();
 
     if (this.seatsDirty) {
       this.seatsDirty = false;
       for (let w = 0; w < s.worlds.length; w++) {
         if (!s.worlds[w]!.unlocked) continue;
         this.seats(w);
-        this.planters(w);
+        if (!this.off.has('plants')) this.planters(w);
       }
     }
 
-    while (s.skillPoints > 0) {
+    while (s.skillPoints > 0 && !this.off.has('skills')) {
       const id = this.profile.skillOrder.find((k) => g.canBuySkill(k));
       if (!id || !this.act({ type: 'skill', id })) break;
     }
@@ -548,6 +552,7 @@ export class Bot {
       let pick: string | null = null;
       let cost = Infinity;
       for (const r of c.research) {
+        if (this.off.has('research')) break;
         if (r.cost < cost && g.canResearch(r.id)) {
           pick = r.id;
           cost = r.cost;
@@ -561,6 +566,7 @@ export class Bot {
       let pick: string | null = null;
       let cost: Num | null = null;
       for (const row of c.compostShop) {
+        if (this.off.has('shopExtras') && row.id !== 'shop.compost.rich_soil') continue;
         const price = g.compostShopCost(row.id);
         if (price && s.compost.gte(price) && (!cost || price.lt(cost))) {
           pick = row.id;
@@ -682,7 +688,7 @@ export class Bot {
     const managers = g.content.managers
       .filter((m) => s.cards[m.id])
       .map((m) => ({ id: m.id, v: managerProfit(m.rarity, s.cards[m.id]!.level, 1, t) + (m.ability ? 0.01 : 0) }))
-      .sort((a, b) => b.v - a.v);
+      .sort((a, b) => (this.off.has('bestSeats') ? a.v - b.v : b.v - a.v));
     const order = this.floorOrder(w);
     for (let k = 0; k < order.length; k++) {
       const i = order[k]!;

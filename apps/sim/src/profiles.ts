@@ -103,6 +103,12 @@ export interface PlayStyle {
   replantFrac: number;
   /** Hold a Festival when pending Ribbons are at least this multiple of the Ribbons earned so far. */
   festivalFrac: number;
+  /**
+   * Systems the player ignores, for "what is this system worth" runs:
+   * skills, plants, abilities, cardLevels, heirlooms, research, visitors,
+   * bestSeats, shopExtras, spurt, chests, twists.
+   */
+  off: string[];
 }
 
-export const DEFAULT_STYLE: PlayStyle = { tapRate: 6, skill: 'human', burst: false, replantFrac: 1, festivalFrac: 1 };
+export const DEFAULT_STYLE: PlayStyle = { tapRate: 6, skill: 'human', burst: false, replantFrac: 1, festivalFrac: 1, off: [] };
