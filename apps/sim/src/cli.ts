@@ -5,6 +5,7 @@
  *   pnpm sim run [options]        one player, printed as a timeline
  *   pnpm sim suite [options]      every simulation of the report, in parallel, to apps/sim/out/
  *   pnpm sim report               rebuild the report and charts from apps/sim/out/
+ *   pnpm sim calibrate [options]  fit the gate prices to the pacing table (see calibrate.ts)
  *
  * Options for `run`:
  *   --profile active|mixed|idle   (default active)
@@ -19,7 +20,7 @@
  *   --out file.json               write the full record
  *
  * Options for `suite` and the default command:
- *   --proposal id                 also run the proposal's before-and-after set
+ *   --proposal id[,id]            also run the before-and-after set with these overlays
  *   --only group[,group]          baseline, check, seeds, ablation, burst, proposal, launch
  *   --jobs N                      parallel runs (default: the machine's processors)
  */
@@ -156,6 +157,10 @@ async function main(): Promise<void> {
     return;
   }
   if (command === 'suite') return runSuite(f);
+  if (command === 'calibrate') {
+    const { calibrate } = await import('./calibrate');
+    return calibrate(argv);
+  }
   const { writeReport } = await import('./report');
   if (command === 'report') return writeReport();
   if (command === 'all') {

@@ -1,0 +1,14 @@
+id: p1-levels
+title: Slower early levels
+why: >
+  At GDD 0.2 the player has 38,000 XP after one hour against the 8,750 that
+  level 8 needs, so the skill tree opens at minute 11 instead of minute 26 and
+  the Green Thumb branch is full on day 1. Three one-off sources pay most of
+  it: the first three daily quests (6,000 XP by minute 15), the achievements
+  that are already earned when the achievement book opens (6,700 XP at
+  minute 14) and all-time Compost records.
+tuning:
+  XP_BASE: 1000
+  XP_DAILY: 500
+  XP_DAILY_ALL: 500
+  XP_ACHIEVEMENT: [100, 200, 400, 750, 1500]

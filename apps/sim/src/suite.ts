@@ -58,13 +58,15 @@ export function suite(proposal: string | null): RunSpec[] {
   ];
   for (const sys of SYSTEMS) runs.push({ name: `off-${sys}`, profile: 'active', days: 3, maxWorld: 6, off: [sys], group: 'ablation' });
   if (proposal) {
+    const proposals = proposal.split(',');
+    const tag = 'fix';
     runs.push(
-      { name: `${proposal}-active`, profile: 'active', days: 60, maxWorld: 6, proposals: [proposal], group: 'proposal' },
-      { name: `${proposal}-mixed`, profile: 'mixed', days: 60, maxWorld: 6, proposals: [proposal], group: 'proposal' },
-      { name: `${proposal}-idle`, profile: 'idle', days: 60, maxWorld: 6, proposals: [proposal], group: 'proposal' },
-      { name: `${proposal}-active-tap12`, profile: 'active', days: 30, maxWorld: 6, tapRate: 12, proposals: [proposal], group: 'proposal' },
-      { name: `${proposal}-perfect`, profile: 'active', days: 3, skill: 'perfect', maxWorld: 6, proposals: [proposal], group: 'proposal' },
-      { name: `${proposal}-launch-active`, profile: 'active', days: 60, maxWorld: 4, proposals: [proposal], group: 'proposal' },
+      { name: `${tag}-active`, profile: 'active', days: 60, maxWorld: 6, proposals, group: 'proposal' },
+      { name: `${tag}-mixed`, profile: 'mixed', days: 60, maxWorld: 6, proposals, group: 'proposal' },
+      { name: `${tag}-idle`, profile: 'idle', days: 60, maxWorld: 6, proposals, group: 'proposal' },
+      { name: `${tag}-active-tap12`, profile: 'active', days: 30, maxWorld: 6, tapRate: 12, proposals, group: 'proposal' },
+      { name: `${tag}-perfect`, profile: 'active', days: 3, skill: 'perfect', maxWorld: 6, proposals, group: 'proposal' },
+      { name: `${tag}-launch-active`, profile: 'active', days: 60, maxWorld: 4, proposals, group: 'proposal' },
     );
   }
   return runs;

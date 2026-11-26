@@ -7,10 +7,10 @@
  * without touching the tables: a "proposal" is a small YAML overlay that is
  * merged over the raw tables before validation (see apps/sim/proposals/).
  */
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parse } from 'yaml';
+import { parse, stringify } from 'yaml';
 import { Num, RawContentSchema, hydrateContent, numToSave, type Content, type RawContent } from '@sprout/core';
 import { generateFloors, type FloorTemplate, type GeneratedFloor } from './floor-template';
 
@@ -144,6 +144,11 @@ export function applyOverlay(tables: Record<string, unknown>, overlay: Overlay):
     );
   }
   return out;
+}
+
+/** Writes an overlay file (used by the simulator's fitting command). */
+export function writeOverlay(path: string, overlay: Overlay): void {
+  writeFileSync(path, stringify(overlay, { lineWidth: 0 }));
 }
 
 export function readOverlay(path: string): Overlay {

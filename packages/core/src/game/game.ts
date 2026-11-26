@@ -178,6 +178,8 @@ export class Game {
   state: GameState;
   /** Income by source, per world, since the tally was last cleared. Not part of the save. */
   tally: Record<IncomeSource, Num>[];
+  /** XP awarded so far by source. Not part of the save. */
+  xpTally: Record<string, number> = {};
 
   private readonly maxWorld: number;
   private readonly debug: boolean;
@@ -1121,7 +1123,7 @@ export class Game {
       }
       if (tier > f.bestMilestones) {
         f.bestMilestones = tier;
-        this.addXp(t.XP_MILESTONE_PER_TIER * tier);
+        this.addXp(t.XP_MILESTONE_PER_TIER * tier, 'milestones');
       }
       this.emit({ type: 'milestone', world: w, floor: i, tier, record });
     }
@@ -1150,7 +1152,7 @@ export class Game {
     while (ws.stars < stars) {
       ws.stars++;
       this.count('masteryStars');
-      this.addXp(t.XP_MASTERY_STAR);
+      this.addXp(t.XP_MASTERY_STAR, 'mastery');
       if (t.MASTERY_EXOTIC_STARS.includes(ws.stars)) {
         const m = this.content.managers.find((x) => x.masteryWorld === w + 1);
         if (m) this.addCard(m.id);
@@ -1459,7 +1461,7 @@ export class Game {
     const w = s.focus;
     const d = this.derived;
     this.count('visitorsCaught');
-    this.addXp(t.XP_VISITOR);
+    this.addXp(t.XP_VISITOR, 'visitors');
     this.addCodex(`visitor.${v.kind}`);
     if (v.kind === 'bee') {
       this.addPollen(t.BEE_POLLEN);
@@ -1690,7 +1692,7 @@ export class Game {
   private chestOpened(id: string, tier: number, cards: string[], heirloom: string | null): void {
     this.state.chestsOpened++;
     this.count('chestsOpened');
-    this.addXp(this.t.XP_CHEST_PER_TIER * tier);
+    this.addXp(this.t.XP_CHEST_PER_TIER * tier, 'chests');
     this.emit({ type: 'chestOpened', chest: id, cards, heirloom });
   }
 
@@ -1816,7 +1818,8 @@ export class Game {
 
   // Player level, skills, research, bench (GDD 9, 10, 8.6) --------------------
 
-  private addXp(n: number): void {
+  private addXp(n: number, source: string): void {
+    this.xpTally[source] = (this.xpTally[source] ?? 0) + n;
     const s = this.state;
     const t = this.t;
     s.xp += n;
@@ -1943,7 +1946,7 @@ export class Game {
     // XP only for a new all-time Compost record, never for the Replant itself (GDD 9.1).
     const record = compostRecordXp(s.compostRecordPow, s.compostAllTime, t.REPLANT_XP_STEP);
     s.compostRecordPow = record.passed;
-    if (record.xp > 0) this.addXp(record.xp);
+    if (record.xp > 0) this.addXp(record.xp, 'replants');
     if (gained.gte(before.mul(t.REPLANT_CHEST_FRACTION)) && s.time - ws.lastReplantChestAt >= t.REPLANT_CHEST_COOLDOWN_HOURS * 3600) {
       ws.lastReplantChestAt = s.time;
       this.grantChest('chest.copper');
@@ -2263,7 +2266,7 @@ export class Game {
       s.storyIndex++;
       this.count('questsDone');
       for (const r of step.rewards ?? []) this.giveReward(r);
-      this.addXp(step.xp);
+      this.addXp(step.xp, 'story');
       this.emit({ type: 'story', id: step.id, n: step.n });
     }
 
@@ -2273,7 +2276,7 @@ export class Game {
         while (ws.everReached && ws.chapterClaimed < Math.floor(ws.bestMinLevel / 100)) {
           ws.chapterClaimed++;
           this.grantChest('chest.silver');
-          this.addXp(t.XP_CHAPTER);
+          this.addXp(t.XP_CHAPTER, 'story');
           this.count('questsDone');
           this.emit({ type: 'quest', kind: 'chapter', id: `${this.content.worlds[w]!.id}.${ws.chapterClaimed}` });
         }
@@ -2299,7 +2302,7 @@ export class Game {
         const value = s.counters[a.counter] ?? 0;
         while (tier < a.tiers.length && value >= a.tiers[tier]!) {
           s.gems += t.ACHIEVEMENT_GEMS[tier]!;
-          this.addXp(t.XP_ACHIEVEMENT[tier]!);
+          this.addXp(t.XP_ACHIEVEMENT[tier]!, 'achievements');
           tier++;
           s.achievements[a.id] = tier;
           s.achievementCount++;
@@ -2329,7 +2332,7 @@ export class Game {
       s.gems += daily ? t.DAILY_GEMS : t.WEEKLY_GEMS;
       this.grantChest(daily ? 'chest.wooden' : 'chest.silver');
       if (daily && this.derived.global.specials['unlock.bench']) this.addPollen(t.DAILY_POLLEN);
-      this.addXp(daily ? t.XP_DAILY : t.XP_WEEKLY);
+      this.addXp(daily ? t.XP_DAILY : t.XP_WEEKLY, 'quests');
       this.emit({ type: 'quest', kind, id: q.id });
     }
     const allDone = daily ? s.dailyAllDone : s.weeklyAllDone;
@@ -2339,7 +2342,7 @@ export class Game {
       s.gems += daily ? t.DAILY_GEMS_ALL : t.WEEKLY_GEMS_ALL;
       this.grantChest(daily ? 'chest.copper' : 'chest.golden');
       if (daily && this.derived.global.specials['unlock.bench']) this.addPollen(t.DAILY_POLLEN_ALL);
-      this.addXp(daily ? t.XP_DAILY_ALL : t.XP_WEEKLY_ALL);
+      this.addXp(daily ? t.XP_DAILY_ALL : t.XP_WEEKLY_ALL, 'quests');
     }
   }
 }

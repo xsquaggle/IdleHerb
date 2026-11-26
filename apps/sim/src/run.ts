@@ -70,6 +70,10 @@ export interface Sample {
   offlineCapH: number;
   tapFactor6: number;
   tapFactor12: number;
+  /** XP awarded so far, by source. */
+  xp: Record<string, number>;
+  /** The parts of tap income on the frontier world. */
+  tap: { power: number; comboCap: number; critChance: number; critMult: number };
   /** Multipliers on the frontier world's best floor. */
   mult: {
     manager: number;
@@ -361,6 +365,8 @@ class Recorder {
       offlineEff: wd.offlineEfficiency, offlineCapH: d.global.offlineCapSec / 3600,
       tapFactor6: tapIncomeFactor(t.HOLD_RATE, wdTap.tapPower, wdTap.comboCap, wdTap.critChance, wdTap.critMult, t),
       tapFactor12: tapIncomeFactor(t.TAP_RATE_CAP, wdTap.tapPower, wdTap.comboCap, wdTap.critChance, wdTap.critMult, t),
+      xp: { ...g.xpTally },
+      tap: { power: wdTap.tapPower, comboCap: wdTap.comboCap, critChance: wdTap.critChance, critMult: wdTap.critMult },
       mult: {
         manager: mgrs.length > 0 ? mgrs[Math.floor(mgrs.length / 2)]! : 1,
         permanent: (fd.profit / richSoil / goldenHour) * fd.speed * (1 + fd.doubleChance),
@@ -400,7 +406,7 @@ export function runSim(o: RunOptions): RunResult {
   const end = o.days * 86400;
   const gap = (16 * 3600) / p.sessionsPerDay - p.sessionSec;
 
-  const session = (length: number): void => {
+  const session = (length: number, first = false): void => {
     rec.sessionStart();
     bot.sessionStart(length);
     let left = length;
@@ -410,6 +416,8 @@ export function runSim(o: RunOptions): RunResult {
       bot.tick(step);
       rec.tick(step);
       left -= step;
+      // Two extra samples inside the first session, for the first-ten-minutes and first-hour targets.
+      if (first && (length - left === 600 || length - left === 1800)) rec.sample();
     }
     bot.sessionEnd();
     rec.sessionEnd();
@@ -419,7 +427,7 @@ export function runSim(o: RunOptions): RunResult {
   };
 
   rec.sample();
-  session(p.firstSessionSec);
+  session(p.firstSessionSec, true);
   while (g.state.time < end) {
     for (let k = 0; k < p.sessionsPerDay && g.state.time < end; k++) {
       away(gap);
@@ -434,7 +442,7 @@ export function runSim(o: RunOptions): RunResult {
       seconds: (Date.now() - started) / 1000,
     },
     unlocks: o.content.unlocks.map((u) => ({
-      n: u.n, id: u.id, t: rec.unlockAt.get(u.id)?.t ?? null, play: rec.unlockAt.get(u.id)?.play ?? null,
+      n: u.n, id: u.id, t: rec.unlockAt.get(u.id)?.t ?? (u.when.kind === 'start' ? 0 : null), play: rec.unlockAt.get(u.id)?.play ?? (u.when.kind === 'start' ? 0 : null),
       targetSec: u.targetSec ?? null, targetDay: u.targetDay ?? null,
     })),
     timeline: rec.timeline,

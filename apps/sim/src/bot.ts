@@ -26,6 +26,22 @@ const BOOST_KINDS = new Set(['buff', 'heatOrSpeed']);
 const TAP_KINDS = new Set(['comboLock', 'guaranteedCrits', 'tapBoost', 'fillSpurt', 'startSpurt']);
 const HEIRLOOM_PICKS = ['artifact.golden_watering_can', 'artifact.sandglass_of_seasons', 'artifact.whetstone_of_plenty', 'artifact.clover_locket', 'artifact.rainbow_sprinkler', 'artifact.golden_rope_coil'];
 
+/**
+ * How much slower a new player is than perfect play (GDD 17.6: about half speed
+ * at first). Stages by play time: the first 2 minutes, to 10 minutes, to the
+ * end of the first hour, afterwards. The numbers are fitted so that the game
+ * with every content system off lands on the GDD's first-hour table.
+ */
+const FRICTION_UNTIL = [120, 600, 3600];
+/** Purchases and claims per second. */
+const FRICTION_ACTIONS = [0.3, 0.35, 0.4, 2];
+/** Share of the tap rate actually landed. */
+const FRICTION_TAPS = [0.3, 0.35, 0.35, 1];
+function frictionStage(playTime: number): number {
+  for (let i = 0; i < FRICTION_UNTIL.length; i++) if (playTime < FRICTION_UNTIL[i]!) return i;
+  return FRICTION_UNTIL.length;
+}
+
 export class Bot {
   /** Purchases and claims made so far. */
   actions = 0;
@@ -125,7 +141,7 @@ export class Bot {
     this.n++;
     this.sessionT += dt;
     if (this.human) {
-      const perSec = s.playTime < 120 ? 0.4 : s.playTime < 600 ? 0.7 : s.playTime < 3600 ? 1 : 2;
+      const perSec = FRICTION_ACTIONS[frictionStage(s.playTime)]!;
       this.budget = Math.min(6, this.budget + perSec * dt);
     }
     this.trackIncome(dt);
@@ -191,7 +207,7 @@ export class Bot {
   private tapEfficiency(): number {
     if (!this.human) return 1;
     const t = this.g.state.playTime;
-    return t < 120 ? 0.4 : t < 600 ? 0.6 : t < 3600 ? 0.8 : 1;
+    return FRICTION_TAPS[frictionStage(t)]!;
   }
 
   private tap(dt: number): void {
@@ -567,6 +583,7 @@ export class Bot {
       let cost: Num | null = null;
       for (const row of c.compostShop) {
         if (this.off.has('shopExtras') && row.id !== 'shop.compost.rich_soil') continue;
+        if (this.off.has(row.id)) continue;
         const price = g.compostShopCost(row.id);
         if (price && s.compost.gte(price) && (!cost || price.lt(cost))) {
           pick = row.id;
@@ -583,6 +600,7 @@ export class Bot {
         let pick: string | null = null;
         let cost: Num | null = null;
         for (const row of c.ribbonShop) {
+          if (this.off.has(row.id)) continue;
           const price = g.ribbonShopCost(row.id);
           if (!price || s.ribbons.lt(price)) continue;
           const deed = row.special?.startsWith('deed.w') ? Number(row.special.slice(6)) : 0;
