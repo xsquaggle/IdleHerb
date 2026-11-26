@@ -1,0 +1,74 @@
+# Publishes the phone preview to GitHub Pages at https://xsquaggle.github.io/IdleHerb/
+#
+# Until the first playable web build exists (Phase 1), it publishes the holding page in tools/preview/.
+# Phase 1 Step 0 replaces the "Assemble the site" step with the real web build (docs/tech/08).
+#
+# It needs one repository setting, switched on by an owner:
+#   Settings > Pages > Build and deployment > Source: GitHub Actions
+# While that setting is off, a run ends green with a notice and publishes nothing.
+#
+# Nothing here is scheduled. It runs on a push to main or from the "Run workflow" button.
+name: Preview
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build the preview site
+    runs-on: ubuntu-latest
+    outputs:
+      pages_on: ${{ steps.pages.outcome == 'success' }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check that GitHub Pages is switched on
+        id: pages
+        uses: actions/configure-pages@v5
+        continue-on-error: true
+
+      - name: Say what to do when Pages is off
+        if: steps.pages.outcome != 'success'
+        run: >-
+          echo "::notice title=Preview not published::GitHub Pages is not switched on for this
+          repository yet. An owner can switch it on under Settings, Pages, Build and deployment,
+          Source: GitHub Actions. Then run this workflow again."
+
+      - name: Assemble the site
+        if: steps.pages.outcome == 'success'
+        run: |
+          mkdir -p _site
+          cp -r tools/preview/. _site/
+          short="${GITHUB_SHA::7}"
+          when="$(date -u +'%Y-%m-%d %H:%M UTC')"
+          sed -i "s/__BUILD__/${short}/; s/__DATE__/${when}/" _site/index.html
+
+      - name: Upload the site
+        if: steps.pages.outcome == 'success'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: build
+    if: needs.build.outputs.pages_on == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
