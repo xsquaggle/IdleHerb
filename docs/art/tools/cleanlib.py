@@ -52,7 +52,7 @@ def allowed(ramps):
     return np.array([(n.rsplit('-', 1)[0] in ramps) or (n in ramps) for n in P_NAMES])
 
 
-def snap_map(colors, ramps, overrides=None, green_lift=0.0, all_lift=0.0):
+def snap_map(colors, ramps, overrides=None, green_lift=0.0, all_lift=0.0, rules=None):
     """Nearest master colour for each source colour, inside the allowed ramps.
     Greens stay green, blues stay blue and purples stay purple when the sprite has such a ramp.
     green_lift raises the lightness of green source colours before matching. The sage ramp is
@@ -67,6 +67,13 @@ def snap_map(colors, ramps, overrides=None, green_lift=0.0, all_lift=0.0):
         lab[..., 0] += all_lift
     d = np.sqrt(((lab[:, None, :] - P_LAB[None, :, :]) ** 2).sum(-1))
     d[:, ~allow] = 9
+    if rules:
+        # rules = [(test(L, chroma, hue), ramps)]: source colours that pass the test may only use those ramps
+        chroma = np.sqrt(lab[:, 1] ** 2 + lab[:, 2] ** 2)
+        hue = np.degrees(np.arctan2(lab[:, 2], lab[:, 1])) % 360
+        for test, only in rules:
+            hit = np.array([bool(test(lab[i, 0], chroma[i], hue[i])) for i in range(len(colors))])
+            d[np.ix_(hit, ~allowed(set(only) | {'ink'}))] = 9
     cls = hue_class(lab)
     for i in range(len(colors)):
         if cls[i] in (2, 3, 4) and lab[i, 0] > 0.30:
@@ -82,11 +89,11 @@ def snap_map(colors, ramps, overrides=None, green_lift=0.0, all_lift=0.0):
     return near, d.min(1)
 
 
-def snap_many(imgs, ramps, overrides=None, green_lift=0.0, all_lift=0.0):
+def snap_many(imgs, ramps, overrides=None, green_lift=0.0, all_lift=0.0, rules=None):
     """One shared colour map for several images, so frames of one thing cannot flicker.
     Returns the index images and the stats of the move."""
     cols = np.unique(np.concatenate([im[im[..., 3] == 255][:, :3] for im in imgs]), axis=0)
-    near, dist = snap_map(cols, ramps, overrides, green_lift, all_lift)
+    near, dist = snap_map(cols, ramps, overrides, green_lift, all_lift, rules)
     key = (cols[:, 0].astype(np.int64) << 16) | (cols[:, 1].astype(np.int64) << 8) | cols[:, 2]
     out, total, moved = [], 0, 0.0
     for im in imgs:
@@ -106,24 +113,46 @@ def snap(img, ramps, overrides=None):
     return idxs[0], st
 
 
-def reduce_many(idxs, budget):
-    """Merge the least used colours into their nearest used neighbour until the budget holds,
-    counted over all the images together."""
-    idxs = [i.copy() for i in idxs]
-    merged = 0
-    while True:
-        allv = np.concatenate([i[i >= 0] for i in idxs])
-        vals, cnt = np.unique(allv, return_counts=True)
-        if len(vals) <= budget:
-            return idxs, merged
-        order = np.argsort(cnt)
-        v = next(int(vals[o]) for o in order if int(vals[o]) != INK)
-        others = [int(x) for x in vals if int(x) != v]
+def merge_plan(idxs, budget, keep=()):
+    """Which colours to fold into which so that the images together hold a budget.
+    The least used colour goes into its nearest used neighbour, again and again.
+    keep = ramps or single colours that are never folded away (small accents such as
+    spectacles or water drops would otherwise always be the first to go)."""
+    kept = allowed(set(keep)) if keep else np.zeros(len(P_NAMES), bool)
+    allv = np.concatenate([i[i >= 0] for i in idxs])
+    vals, cnt = np.unique(allv, return_counts=True)
+    count = {int(v): int(c) for v, c in zip(vals, cnt)}
+    plan = {}
+    while len(count) > budget:
+        cands = [v for v in sorted(count, key=lambda v: (count[v], v)) if v != INK and not kept[v]]
+        if not cands:
+            break
+        v = cands[0]
+        others = [x for x in count if x != v]
         dd = np.sqrt(((P_LAB[others] - P_LAB[v]) ** 2).sum(-1))
         t = others[int(dd.argmin())]
-        for i in idxs:
-            i[i == v] = t
-        merged += 1
+        count[t] += count.pop(v)
+        for k in list(plan):
+            if plan[k] == v:
+                plan[k] = t
+        plan[v] = t
+    return plan
+
+
+def apply_plan(idxs, plan):
+    out = []
+    for i in idxs:
+        o = i.copy()
+        for v, t in plan.items():
+            o[i == v] = t
+        out.append(o)
+    return out
+
+
+def reduce_many(idxs, budget, keep=()):
+    """Hold a colour budget counted over all the images together."""
+    plan = merge_plan(idxs, budget, keep)
+    return apply_plan(idxs, plan), len(plan)
 
 
 def reduce_to(idx, budget):

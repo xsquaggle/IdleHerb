@@ -15,7 +15,7 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image  # noqa: E402
-from cleanlib import (load, snap_many, reduce_many, outline, drop_small, drop_sparkles, save, used,  # noqa: E402
+from cleanlib import (load, snap_many, reduce_many, merge_plan, apply_plan, outline, drop_small, drop_sparkles, save, used,  # noqa: E402
                       sheet, to_rgba, veil, VEIL, INK, NO_SKIN)
 
 ROUND, SRC, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
@@ -320,7 +320,82 @@ def round6():
     sheet(by_size[24] + by_size[16], 12, 4, os.path.join(REVIEW, 'p17_ui_icons_24_16_before_after.png'))
 
 
-ROUNDS = {'1': round1, '2': round2, '5': round5, '6': round6}
+# ---------------------------------------------------------------- round 3: worker animation sheets
+def round3():
+    """Three lead workers, nine 80x80 frames each. The frames, the shared head, the body layers and the
+    props of one worker share a colour map, so nothing flickers between poses.
+    Budget: 24 colours for the person (the six poses without a prop), 32 with the held props.
+    The outline is rebuilt on the composed frames; the layers are colour-snapped for the cut-out rig.
+    People keep their warm lights on the skin ramp: the bright ends of wood and clay are left out."""
+    PEOPLE = {'skin', 'blush', 'ash', 'white', 'cream', 'gold', 'wood-1', 'wood-2', 'wood-3', 'wood-4',
+              'clay-1', 'clay-2', 'clay-3'}
+    # her hair is a beige grey that would land on cream and skin; it belongs on ash
+    GREY_HAIR = {'#dacead': 'ash-4', '#f6ebca': 'white-1', '#c7ba90': 'ash-3', '#9e926e': 'ash-3'}
+    # the tin watering can and its water drops are grey-greens with almost no colour: they belong on steel
+    TIN = (lambda L, C, h: C < 0.04 and 100 <= h < 260 and L > 0.28, {'steel'})
+    # a deep brown skin sits between the skin ramp and the dark golds; it must not turn khaki
+    BROWN_SKIN = (lambda L, C, h: h < 56 and C > 0.08 and 0.28 < L < 0.72, {'skin'})
+    WORKERS = [
+        ('b01_08_worker_sheet_floor1_gardener.png', 'w1_floor01_gardener',
+         PEOPLE | {'rose', 'red', 'leaf', 'clay-4'}, {'rose'}, {'leaf'}, GREY_HAIR, None, []),
+        ('b01_10_worker_sheet_floor2_gardener.png', 'w1_floor02_gardener',
+         PEOPLE | {'red', 'steel', 'leaf'}, set(), {'steel', 'leaf'}, None, [TIN],
+         ['layers/props/watering_can_tipped.png', 'layers/props/watering_can_upright.png']),
+        ('b01_09_worker_sheet_floor3_gardener.png', 'w1_floor03_gardener',
+         (PEOPLE - {'wood-3', 'wood-4', 'clay-1', 'clay-2', 'clay-3'}) | {'steel', 'sage-3', 'sage-4', 'sage-5'},
+         set(), {'steel'}, None, [BROWN_SKIN],
+         ['layers/props/rake_extended.png', 'layers/props/rake_extended_ground_stalks.png',
+          'layers/props/rake_pulled.png', 'layers/props/rake_pulled_ground_stalks.png',
+          'layers/props/shouldered_sheaf.png']),
+    ]
+    for sheet_key, who, ramps, keep_person, keep_props, over, rules, props in WORKERS:
+        s = SLICES[sheet_key]
+        poses = s['poses']
+        frames = [p['frame'] for p in poses]
+        heads = [s['head_master']] + [v['file'] for v in s['head_patches'].values()]
+        bodies = [p['body'] for p in poses]
+        layer_files = heads + bodies + props
+        raws = [src(f) for f in frames + layer_files]
+        idxs, st = snap_many(raws, ramps | INKSET, over, rules=rules)
+        nf, nh = len(frames), len(heads)
+        # the person: the six poses that hold nothing, with the head and their body layers
+        person = list(range(6)) + list(range(nf, nf + nh)) + list(range(nf + nh, nf + nh + 6))
+        idxs = apply_plan(idxs, merge_plan([idxs[i] for i in person], 24, {'blush'} | keep_person))
+        person_cols = used([idxs[i] for i in person])
+        idxs = apply_plan(idxs, merge_plan(idxs, 32, set(person_cols) | keep_props))
+        fixed = 0
+        for i in range(nf):
+            idxs[i], n = outline(idxs[i], keep_thin=True)
+            fixed += n
+        lay = lambda f: 'layers/' + os.path.basename(f)   # noqa: E731
+        mf = manifest('actors/%s/frames.json' % who)
+        mf.update(frame=[80, 80], baseline_y=s['baseline_native_y_exclusive'], frames=[],
+                  head=dict(file=lay(s['head_master']),
+                            patches={k: dict(file=lay(v['file']), replace_at=v['replace_at_native'])
+                                     for k, v in s['head_patches'].items()}),
+                  recipe='Ground layer and prop at the origin, then the shared head at head_offset, then the body at the origin.')
+        pairs = []
+        for i, p in enumerate(poses):
+            fname = '%02d_%s_80x80.png' % (i + 1, p['name'])
+            out(idxs[i], 'actors/%s/%s' % (who, fname))
+            entry = dict(name=p['name'], file=fname, head_offset=p['head_offset_native'], body=lay(p['body']))
+            if 'head_patch' in p:
+                entry['head_patch'] = p['head_patch']
+            for k in ('prop', 'ground'):
+                if k in p:
+                    entry[k] = lay(p[k])
+            mf['frames'].append(entry)
+            pairs.append((raws[i], idxs[i]))
+        for f, idx in zip(layer_files, idxs[nf:]):
+            out(idx, 'actors/%s/%s' % (who, lay(f)))
+        note('actor', '%s (9 frames, head, bodies, props)' % who, idxs[:nf], st, fixed, 32)
+        REPORT[-1]['person_colours'] = len(person_cols)
+        REPORT[-1]['person_budget'] = 24
+        print('   person alone: %d colours (budget 24)' % len(person_cols))
+        sheet(pairs, 3, 3, os.path.join(REVIEW, '%s_before_after.png' % who))
+
+
+ROUNDS = {'1': round1, '2': round2, '3': round3, '5': round5, '6': round6}
 ROUNDS[ROUND]()
 os.makedirs(REVIEW, exist_ok=True)
 json.dump(REPORT, open(os.path.join(REVIEW, 'report.json'), 'w'), indent=1)
