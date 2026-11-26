@@ -68,6 +68,21 @@ All three results below are the **automatic pass only**, with no hand polish, so
 
 Also proven: the B24 growth stages ([`growth_stages_400x120.png`](cleanup/growth_stages_400x120.png), 14 colours) and the floor shell (13 colours).
 
+## First production images: Batch 1, round 4
+
+The first images made from our own prompts (prompts 11 to 14: chests, hemp cards, seed packets, product icons) came back better than the reference packs.
+
+![Round 4 after the automatic pass](cleanup/batch01_round4/cleaned_preview.png)
+
+- **They are already on a true grid.** Each sheet is an exact whole-number enlargement (4×, 6× or 8×) of true-size pixel art, with on-or-off transparency. The chest frames are 96×80, the card pictures sit in 108×100 windows and the icons in 48×48 windows, exactly as the prompts asked.
+- **They arrived cut up.** The zip held the chest base and lids as separate parts, 32 and 16 pixel icon sheets, and a `slices.json` that names every region. All eight chest frames rebuild exactly from the parts.
+- **So steps 1 to 3 of the route fall away for images like these.** What is left is step 4 (snap to the master palette, since none of their 32 to 47 colours per sheet is a master colour), step 5 (rebuild the ink outline) and the hand polish.
+- **The palette snap needs two guards,** both now in the tool: each sprite is limited to the ramps it may use (hemp gets `sage` plus `leaf-5`), and greens, blues and purples stay in their own colour family. Without them an olive notebook cover turned tan and the silver-lilac canes turned grey.
+- **Result:** 28 sprites, all inside their colour budgets (16 for icons, 24 for chests, 32 for cards). The tool is [`tools/clean_batch01_round4.py`](tools/clean_batch01_round4.py), the sprites are in the repo under `art/`, and before/after sheets are in [`cleanup/batch01_round4/`](cleanup/batch01_round4/).
+- **Left for the hand polish:** thin the leaf tufts on the hemp cards toward the proportions in HEMP_ART.md, tidy speckle on the burlap and the building blocks, make the soap one colour family, and redraw the 16 pixel icons (the delivered ones are plain reductions).
+
+If later rounds come back the same way, ask for the same package every time: the big sheet, the true-size parts and the slices file.
+
 ## What this means for each asset class
 
 | Class | Route | Hand work |

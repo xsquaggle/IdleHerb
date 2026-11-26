@@ -16,7 +16,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 
 | Batch | Theme | Images | State |
 |---|---|---|---|
-| 1 | World 1 vertical slice | 18 | Written, with Lawson |
+| 1 | World 1 vertical slice | 18 | With Lawson. Round 4 (prompts 11 to 14) is back, passed and cleaned. 14 prompts to go |
 | 2 | Finish World 1 | 20 | Next |
 | 3 | Loomington rooms and collection | 17 | Planned |
 | 4 | Loomington cast and weekend events | 13 | Planned |
@@ -26,6 +26,8 @@ This page says which batch makes which art, so that nothing the launch needs is 
 | 8 | Mount Mitten cast | 10 | Planned |
 
 That is about **103 images after Batch 1**. Mount Mitten, the fourth launch world, is Batches 7 and 8: about 26 images.
+
+**Open point: managers.** On 2026-11-25 Lawson chose one fixed manager per floor instead of manager cards for any floor. The Game Designer is revising the manager list. Until that list is in, the manager images wait: prompt 18 in Batch 1 and the manager rows in Batches 2, 3 and 5.
 
 ### How the counts are made
 

@@ -9,6 +9,7 @@ Everything about how the game looks lives here.
 | [CLEANUP_ROUTE.md](CLEANUP_ROUTE.md) | To turn a generated image into a game sprite. Includes the before/after proof |
 | [ASSET_BATCH_01.md](ASSET_BATCH_01.md) | The first 18 image prompts, ready to paste into ChatGPT |
 | [BATCH_PLAN.md](BATCH_PLAN.md) | To see which later batch makes which art, up to a four-world launch |
+| [HANDOFF.md](HANDOFF.md) | To pick the art work up where it stopped: done, next steps, open questions |
 
 ## Folders
 
@@ -29,4 +30,4 @@ Everything about how the game looks lives here.
 
 ## Where images live
 
-Raw generated images and the reference packs stay in project files, not in git. Cleaned game sprites will live in the repo under `art/`.
+Raw generated images and the reference packs stay in project files, not in git. Cleaned game sprites live in the repo under [`art/`](../../art/README.md).
