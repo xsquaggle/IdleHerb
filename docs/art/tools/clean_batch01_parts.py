@@ -289,7 +289,38 @@ def round5():
                                                   ('tea_house', 7, 'tea_house', WALL | {'sage'})], 'p16')
 
 
-ROUNDS = {'1': round1, '2': round2, '5': round5}
+# ---------------------------------------------------------------- round 6: menu and stat icons
+def round6():
+    """24 icons at 32, 24 and 16 pixels. The three sizes of one icon share a colour map.
+    The 24 and 16 pixel versions are stand-ins until they are redrawn by hand (style bible section 15)."""
+    U = {'cream', 'white'}
+    ICON = {
+        'card_stack': {'gold', 'lavender', 'sky', 'leaf'}, 'sprout_lightbulb': {'gold', 'leaf', 'wood', 'ash'},
+        'skill_nodes': {'gold', 'lavender'}, 'quest_scroll': {'gold', 'red', 'clay', 'wood'},
+        'market_stall': {'wood', 'red', 'clay', 'leaf', 'gold'}, 'prestige_wreath': {'leaf', 'gold', 'red', 'clay'},
+        'trophy': {'gold', 'lavender', 'wood'}, 'sprout_book': {'lavender', 'gold', 'leaf', 'red', 'clay'},
+        'event_calendar': {'gold', 'red', 'clay', 'wood', 'sky'}, 'settings_gear': {'lavender'},
+        'speaker': {'clay', 'red', 'gold', 'wood', 'lavender'}, 'music_note': {'lavender'},
+        'lock': {'gold', 'lavender', 'wood'}, 'check_mark': {'leaf'}, 'close': {'red', 'clay'},
+        'magnifying_glass': {'gold', 'sky', 'wood', 'clay'}, 'upgrade_arrow': {'leaf'},
+        'hourglass': {'wood', 'clay', 'gold', 'sky', 'rose'}, 'sprout': {'leaf', 'wood'}, 'lightning': {'gold', 'wood'},
+        'starburst': {'gold', 'wood'}, 'triple_chevrons': {'leaf'}, 'moon_and_stars': {'gold', 'wood'},
+        'golden_sprout': {'gold', 'wood'},
+    }
+    by_size = {32: [], 24: [], 16: []}
+    mi = manifest('icons/ui/icons.json')
+    mi['note'] = '32 pixel icons are the designs. 24 and 16 are stand-ins until redrawn by hand.'
+    mi['icons'] = list(ICON)
+    for name, ramps in ICON.items():
+        items = [('parts/%dpx/%s.png' % (z, name), 'icons/ui/%s_%d.png' % (name, z)) for z in (32, 24, 16)]
+        pairs = clean('icon', 'ui_' + name, items, ramps | U, 16)
+        for z, pr in zip((32, 24, 16), pairs):
+            by_size[z].append(pr)
+    sheet(by_size[32], 6, 5, os.path.join(REVIEW, 'p17_ui_icons_32_before_after.png'))
+    sheet(by_size[24] + by_size[16], 12, 4, os.path.join(REVIEW, 'p17_ui_icons_24_16_before_after.png'))
+
+
+ROUNDS = {'1': round1, '2': round2, '5': round5, '6': round6}
 ROUNDS[ROUND]()
 os.makedirs(REVIEW, exist_ok=True)
 json.dump(REPORT, open(os.path.join(REVIEW, 'report.json'), 'w'), indent=1)
