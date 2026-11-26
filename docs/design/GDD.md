@@ -1,6 +1,6 @@
 # Sprout Tower: Game Design Document
 
-Version 0.2, Phase 0, revised after the independent design audit. Owner: Game Designer thread. Companion files: [AUDIT.md](AUDIT.md) (why the premise changed), [CONTENT.md](CONTENT.md) (every content row: floors, managers, plants, heirlooms, skills, research, shops, quests, achievements) and [CHANGES.md](CHANGES.md) (every rule and number that changed since version 0.1, for the balance simulator).
+Version 0.3, Phase 0. Version 0.2 passed the independent design audit. Version 0.3 gives every floor one fixed manager, on Lawson's decision of 2026-11-26. Owner: Game Designer thread. Companion files: [AUDIT.md](AUDIT.md) (why the premise changed), [CONTENT.md](CONTENT.md) (every content row: floors, managers, plants, heirlooms, skills, research, shops, quests, achievements) and [CHANGES.md](CHANGES.md) (every rule and number that changed from version to version, for the balance simulator and the engine).
 
 ## 0. How to read this document
 
@@ -22,7 +22,7 @@ Version 0.2, Phase 0, revised after the independent design audit. Owner: Game De
 | # | Pillar | What it means in practice | Test |
 |---|---|---|---|
 | 1 | **Every tap is a treat** | Tapping pays for the whole game and has its own toys: Combo, Bumper taps, Growth Spurts, Golden Sprouts | A player with every floor automated still wants to tap |
-| 2 | **Collect, plant, combine** | Managers, plants and heirlooms are a collection you build a tower out of. Where things go matters | Two players at the same stage have different-looking towers |
+| 2 | **Collect, plant, combine** | Managers, plants and heirlooms are a collection you build a tower out of. Every floor has its own manager to hire and level up. Where the plants and heirlooms go is the player's choice, and it matters | Two players at the same stage have different-looking towers |
 | 3 | **Always something sprouting** | Leave for an hour or a night and something good is waiting: earnings, research, a basket, a bench job | Coming back always has a reward within five seconds |
 | 4 | **One new thing at a time** | The game starts with one button. Every system arrives alone, with a reason | A new player understands the loop in 60 seconds |
 | 5 | **Cozy and a bit absurd** | Warm, funny, kind. Nothing is taken from the player. Hemp is a farm crop and nothing else | A grandparent and a ten-year-old can both play it |
@@ -134,7 +134,7 @@ Full sources and sinks are in section 18.
 
 ### 5.1 What a floor is
 
-A floor is one business in the tower. It has a level, a manager desk and one to three planters. World 1 has 10 floors. Every later world has 8.
+A floor is one business in the tower. It has a level, its own manager and one to three planters. World 1 has 10 floors. Every later world has 8.
 
 Floor row fields (see CONTENT.md section 1): `worldId, index, id, name, product, favouredFamily, openCost, basePayout, baseCycle, levelBaseCost, growth, hireFee`.
 
@@ -244,11 +244,12 @@ Tapping has five parts. They unlock one at a time (section 16).
 
 ### 6.1 Counted taps
 
-- A tap is a left click or Space.
+- A tap is a left click on the tower, or Space. A click on a button or a panel is not a counted tap: it pays nothing and adds nothing to Combo or the Spurt meter.
 - **What a tap harvests.** A tap on a floor harvests that floor if it is ready. A tap anywhere else on the tower, or Space, harvests the unmanaged floor that has been ready longest. One tap harvests at most one floor, so a player can run the whole tower from the keyboard.
 - Every tap counts the same for the tap bonus, Combo and the Spurt meter, wherever it lands.
 - **Hold to tap:** holding the button or key taps at `HOLD_RATE = 6` per second.
 - At most `TAP_RATE_CAP = 12` taps per second are counted. Extra taps are ignored.
+- Taps the game makes for the player (the Autopilot skill) are not counted taps. They pay what their row says and nothing else: no Combo, no Spurt meter, no Hearth Heat, no quest or achievement progress.
 
 ### 6.2 Tap bonus
 
@@ -280,7 +281,9 @@ comboMult = 1 + COMBO_PER_STACK x stacks
 
 `COMBO_TAPS_PER_STACK = 5`, `COMBO_PER_STACK = 0.1`, `COMBO_CAP_BASE = 20` (so ×3 at full), `COMBO_GRACE = 1.5 s`, `COMBO_DECAY = 10` stacks per second. The HUD meter has 10 segments, each worth a tenth of the current cap.
 
-**Combo is slow to build and quick to lose.** A full meter takes 100 taps at the base cap (about 17 seconds of holding) and 250 taps at the cap of 50 (about 42 seconds). A pause of a few seconds empties it. Keeping the chain alive is the skill, and that is what a longer grace, Keep the Beat and Thunder Thumb are for. Clicking faster than the hold rate fills it sooner. A chest opening or any other reveal the game plays pauses the Combo timer, so a reward never costs a chain.
+**Combo is slow to build and quick to lose.** A full meter takes 100 taps at the base cap (about 17 seconds of holding) and 250 taps at the cap of 50 (about 42 seconds). A pause of a few seconds empties it. Keeping the chain alive is the skill, and that is what a longer grace, Tea Break and Thunder Thumb are for. Clicking faster than the hold rate fills it sooner.
+
+**Using the game never costs a chain.** A click on a button or a panel restarts the grace timer, although it is not a counted tap. The timer is paused while a full-screen panel is open, and while the game plays a chest opening or any other reveal. `COMBO_GRACE` and `COMBO_DECAY` are values for a playtest to settle.
 
 ### 6.4 Bumper taps (crits)
 
@@ -334,14 +337,17 @@ Golden Sprouts  = about 1.2 x more with every one caught
 
 **Timed boosts come on top, and they are bounded too.** Boosts add into one capped number (section 13.5), so their value is their average uptime. Rough arithmetic from the rows in CONTENT.md:
 
-| Player | Average Boost on the tower | Average Boost on taps |
+| Player, in the world on screen | Average Boost on the tower | Average Boost on taps |
 |---|---|---|
-| No upgrades (Golden Sprouts and Morning Dew only) | about ×1.3 | about ×1.4 |
-| Day 30, six abilities owned | about ×2.4 | about ×2.7 |
-| Every ability owned, full cooldown reduction | about ×2.9 | about ×3.4 |
-| The same, built around Golden Sprouts | about ×3.6 | about ×4.6 |
+| No abilities yet (Golden Sprouts and Morning Dew only) | about ×1.3 | about ×1.4 |
+| Thymeford on day 1, its four ability managers hired | about ×1.4 | about ×1.6 |
+| Day 30 in the best world for boosts (Papaya Cay), with the Golden Watering Can | about ×1.9 | about ×2.2 |
+| A finished account with full cooldown reduction, from Mount Mitten (lowest) to Papaya Cay (highest) | ×1.5 to ×2.0 | ×1.7 to ×2.4 |
+| The same, built around Golden Sprouts | ×2.2 to ×2.7 | ×2.9 to ×3.7 |
 
-So the highest active income the rules allow is about 180 times idle for a finished account that holds to tap, and about 250 times with a full Golden Sprout build. Those are ceilings for the end of the game, not targets. The simulator should run both tap rates and measure boost uptime (section 17.6).
+An ability works only in its manager's own world (section 7.1), so a world's Boost comes from its own four managers, the Golden Sprouts and the heirloom the player carries. That is why these averages are lower than in version 0.2, where one world could use every ability in the game.
+
+So the highest active income the rules allow, for a finished account in its best world, is about 130 times idle holding to tap and about 200 times with a full Golden Sprout build. At the limit of 12 taps a second the same arithmetic gives about 290 and 440. Guaranteed Bumpers (Showstopper, Sharp Season) sit outside the Boost and add more on top: fifty of them inside a capped Boost and a Growth Spurt are worth about 15 hours of steady income. Those are ceilings for the end of the game, not targets. The simulator should run both tap rates and measure boost uptime (section 17.6). If the top is too high, lower `TAP_RATE_CAP` first, then `CRIT_MULT_CAP`.
 
 Idle builds get the mirror image: up to 100% offline efficiency, up to 33 hours stored, and stronger managers.
 
@@ -349,35 +355,50 @@ Idle builds get the mirror image: up to 100% offline efficiency, up to 33 hours 
 
 ### 7.1 Rules
 
-1. Managers are cards. There are 30 (28 at launch). Rows are in CONTENT.md section 2.
-2. Each floor has one manager desk. To fill it, pay the floor's `hireFee` in that world's currency, then pick a manager you own. The fee is paid once per run. It is paid again after a Replant.
-3. A manager can sit at one desk per world. The same manager can work in every world at once.
-4. Swapping managers between desks you have already paid for is free and instant.
-5. A floor with a manager harvests itself.
-6. The manager multiplies that floor's profit and adds a perk. Rare and better managers also have an **ability**: a button with a cooldown.
-7. **You can never be stuck without a manager.** The Welcome Chest gives three fixed Common managers. The first time each of floors 4 to 10 opens in world 1, a Hiring Crate gives one guaranteed new manager (lowest rarity not yet owned, lowest number first) plus two random cards. So a player always owns at least as many managers as world 1 has open floors, and the first ten are the same for everyone (CONTENT.md section 2.3).
+1. **Every floor has its own manager.** A manager is a named character who runs one floor and never moves. There are 50, one for each floor, and 34 at launch. Rows are in CONTENT.md section 2. There is nothing to seat, swap or assign.
+2. **Hiring.** To hire a floor's manager, pay the floor's `hireFee` in that world's currency. The fee is paid once per run. It is paid again after a Replant or a Festival.
+3. A floor whose manager is hired harvests itself.
+4. A hired manager multiplies that floor's profit and adds a perk. Perks and abilities work only while the manager is hired.
+5. **A manager is also a card.** The card is owned at level 1 from the first time its floor is opened, in any run. From then on the manager is **met**. Copies from chests level the card up (section 8). Card levels are never lost.
+6. **Rarity follows the floor.** The higher the floor, the rarer its manager:
+
+   | Rarity | Floors in world 1 | Floors in worlds 2 to 6 |
+   |---|---|---|
+   | Common | 1 to 3 | 1 and 2 |
+   | Uncommon | 4 to 6 | 3 and 4 |
+   | Rare | 7 | 5 |
+   | Epic | 8 | 6 |
+   | Legendary | 9 | 7 |
+   | Exotic | 10 | 8 |
+
+   That is 13 Common, 13 Uncommon and 6 each of Rare, Epic, Legendary and Exotic. At launch: 9, 9, 4, 4, 4, 4.
+7. **Abilities.** Rare and better managers have an ability: a button with a cooldown. So every world has four. An ability works in its manager's own world.
+8. **The Head.** The manager of a world's top floor is its Head, and the Head is Exotic. A Head is hired like anyone else. Copies of a Head never come from a chest roll. They come from World Mastery (section 14.5) and the Starlight Chest (section 8.3).
+9. **The first session never depends on luck.** A manager arrives with their floor. The Welcome Chest gives two copies each of the managers of floors 1 to 3, and Hire buttons appear from that moment. The first time each of floors 4 to 9 opens in world 1, a Hiring Crate gives two copies of that floor's manager plus two random cards (CONTENT.md section 2.3).
+
+**What the player decides.** Which floor to hire first, when to press each ability, and which plants and heirlooms go where (sections 9 and 8.7). Build choices live in planters, heirloom slots and the skill tree. Managers are the cast: a player learns who runs the Tea House and watches them grow.
 
 ### 7.2 Numbers
 
 ```
-managerProfit = MGR_BASE[rarity] x MGR_LEVEL_MULT ^ (level - 1) x managerPowerMult
+managerProfit = MGR_BASE[rarity] x MGR_STEP[rarity] ^ (level - 1) x managerPowerMult
 perkValue     = perkBase x (1 + PERK_PER_LEVEL x (level - 1))
 ```
 
-`MGR_LEVEL_MULT = 1.2`, `PERK_PER_LEVEL = 0.1`.
+`PERK_PER_LEVEL = 0.1`. `managerProfit` is 1 while the manager is not hired.
 
-| Rarity | `MGR_BASE` | Max level | Profit at max level | Ability |
-|---|---|---|---|---|
-| Common | 2 | 15 | ×25.7 | no |
-| Uncommon | 2.5 | 13 | ×22.3 | no |
-| Rare | 3 | 11 | ×18.6 | yes |
-| Epic | 4 | 9 | ×17.2 | yes |
-| Legendary | 6 | 7 | ×17.9 | yes |
-| Exotic | 10 | 5 | ×20.7 | yes |
+| Rarity | `MGR_BASE` | `MGR_STEP` | Max level | Profit at max level | Ability |
+|---|---|---|---|---|---|
+| Common | 2 | 1.2 | 15 | ×25.7 | no |
+| Uncommon | 2.5 | 1.2 | 13 | ×22.3 | no |
+| Rare | 3 | 1.2 | 11 | ×18.6 | yes |
+| Epic | 3.5 | 1.22 | 9 | ×17.2 | yes |
+| Legendary | 4 | 1.28 | 7 | ×17.6 | yes |
+| Exotic | 5 | 1.43 | 5 | ×20.9 | yes |
 
-All rarities end near the same ceiling on purpose. Rarer managers get there with far fewer copies and bring better perks and abilities, so a Common is never useless and a Legendary is always exciting.
+All rarities end near the same ceiling on purpose. Rarer managers get there with far fewer copies, each level is a bigger step, and they bring the abilities. The level 1 values are close together on purpose too: the rare managers sit on the floors that earn the most, so a big head start there would hand a new player the first day for free.
 
-Abilities have fixed strength. Cooldowns keep running while the game is closed. Ability hotkeys are the number keys in floor order. An ability that lasts a set time is a timed boost and follows section 13.5. An ability that pays income at once pays from the steady rate.
+Abilities have fixed strength. Cooldowns keep running while the game is closed. The number keys 1 to 4 press the four abilities of the world on screen, in floor order. An ability that lasts a set time is a timed boost and follows section 13.5. An ability that pays income at once pays from the steady rate.
 
 ## 8. Cards, chests and the collection
 
@@ -390,13 +411,13 @@ Abilities have fixed strength. Cooldowns keep running while the game is closed. 
 | Rare | blue | chests |
 | Epic | purple | chests |
 | Legendary | gold | chests; hybrid plants from cross-pollination |
-| Exotic | rainbow | never from chests. Plants by mutation, managers by World Mastery |
+| Exotic | rainbow | never from a chest roll. Plants by mutation. The Exotic managers are the six Heads: their copies come from World Mastery and the Starlight Chest |
 
 Rarity is also shown by frame shape and a pip count, so it never depends on colour alone.
 
 ### 8.2 Duplicate curves
 
-Copies needed to go from level `L` to `L + 1`. The first copy unlocks the card at level 1. The same curves serve managers and plants.
+Copies needed to go from level `L` to `L + 1`. The same curves serve managers and plants. A plant's first copy unlocks the card at level 1. A manager's card is at level 1 from the moment its floor is first opened (section 7.1), so every manager copy counts toward the next level.
 
 | From level | Common | Uncommon | Rare | Epic | Legendary | Exotic |
 |---|---|---|---|---|---|---|
@@ -434,26 +455,26 @@ There are six chest tiers. Each card slot is rolled separately.
 | 3 | Silver Chest | 8 | 1 Rare or better | 48% | 32% | 15% | 4.2% | 0.8% | 30 | 20% |
 | 4 | Golden Chest | 12 | 1 Epic or better | 34% | 34% | 22% | 8% | 2% | 80 | 50% |
 | 5 | Crystal Chest | 16 | 1 Legendary | 22% | 30% | 28% | 15% | 5% | 200 | 100% |
-| 6 | Starlight Chest | 20 | 2 Legendary, and 1 copy of an Exotic manager you have already earned | 15% | 25% | 30% | 20% | 10% | 500 | 100%, Epic or better |
+| 6 | Starlight Chest | 20 | 2 Legendary, and 1 copy of a Head (rule 9) | 15% | 25% | 30% | 20% | 10% | 500 | 100%, Epic or better |
 
 Rules, in order:
 
 1. **Guarantee slots** are rolled first, among the guaranteed rarity and better, in the same proportions as the table.
 2. **Card type.** Each slot is a manager with probability `CHEST_MANAGER_SHARE = 0.55`, otherwise a plant. Before planters unlock, every slot is a manager.
-3. **Which card.** Uniform among cards of that rarity and type that are in the pool. A card is in the pool when its `poolWorld` is unlocked. Exotics and hybrids are never in the pool. If the pool has no card of that rarity and type, the slot gives the other type. That is how a Legendary plant slot becomes a Legendary manager.
-4. **New-card help.** In a player's first `NEW_CARD_CHESTS = 10` chests, a slot whose rarity has an unowned card always gives an unowned card.
+3. **Which card.** Uniform among cards of that rarity and type that are in the pool. A manager is in the pool once it is met: its floor has been opened at least once, in any run. A plant is in the pool when its `poolWorld` is unlocked. Exotics and hybrids are never in the pool. If the pool has no card of that rarity and type, the slot gives the other type. That is how a Legendary plant slot becomes a Legendary manager. If neither type has a card of that rarity, the slot drops one rarity at a time until it finds one.
+4. **New-card help.** In a player's first `NEW_CARD_CHESTS = 10` chests, a plant slot whose rarity has an unowned plant always gives an unowned plant. Managers do not need it, because a met manager is already owned.
 5. **Pity.** Two counters count cards drawn since the last Epic-or-better and since the last Legendary. At `PITY_EPIC = 60` the next card is Epic. At `PITY_LEGENDARY = 300` the next card is Legendary. Both counters, and the heirloom counter in rule 7, are shown on the chest screen.
 6. **Luck.** `chestLuck` multiplies the Rare, Epic and Legendary weights by `1 + chestLuck`. Abracadabra doubles those three weights again. Then all five weights are scaled so that they add up to 100%. Common and Uncommon shrink together and no weight can go below zero, whatever the luck.
 7. **Heirloom.** If the heirloom roll succeeds, the chest also holds one heirloom piece: Rare 70%, Epic 25%, Legendary 5% (Starlight: Epic 70%, Legendary 30%). While the player is missing a piece of the rolled rarity, the piece is always one they do not own yet. A third pity counter counts heirloom pieces since the last Legendary piece. At `PITY_HEIRLOOM = 10` the next piece is Legendary. Before heirlooms unlock, this roll is skipped.
 8. **Shown odds.** The chest screen shows this table with the player's current luck applied.
-9. **Starlight Chest.** Its Exotic copy is for a random Exotic manager the player has already earned. If they have earned none, it is a third guaranteed Legendary.
+9. **Starlight Chest.** Its Exotic copy is for a random Head whose world has at least 5 Mastery stars. If no world has 5 stars yet, it is a third guaranteed Legendary.
 
 **Special chests**
 
 | Chest | Contents |
 |---|---|
-| Welcome Chest | Managers Nana Sprig, Basil Brumble and Olive Ledger. Fixed |
-| Hiring Crate | 1 new manager (lowest rarity not owned, lowest number first), plus 2 Wooden Crate slots |
+| Welcome Chest | 2 copies each of Nana Sprig, Basil Brumble and Rowan Rake, the managers of world 1 floors 1 to 3. Fixed |
+| Hiring Crate | 2 copies of the manager of the floor that just opened (world 1 floors 4 to 9), plus 2 Wooden Crate slots |
 | Morning Basket | 1 Wooden Crate. One becomes ready every `BASKET_HOURS = 4` hours. Up to `BASKET_STORE = 2` wait for the player |
 | First seed packet | Plants Garden Mint and Fibre Hemp. Fixed |
 | Heirloom Pick | The player chooses one Legendary heirloom out of all six. Given once, at the first Harvest Festival |
