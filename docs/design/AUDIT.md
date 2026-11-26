@@ -49,7 +49,7 @@ After a floor has a manager, every tap still pays a slice of the whole tower's i
 
 The reference game has one fixed manager per floor, and so does this one. There are 50 named characters, one for each floor, and 34 at launch. You pay a floor's hire fee in coins each run and its manager starts harvesting for you. Each manager multiplies the floor's profit and has a perk. The four highest floors of every world have rarer managers with a clickable ability, and the manager of the top floor is that world's Head. Managers are still cards: copies from chests level them up for good.
 
-**Why:** Lawson chose fixed managers on 2026-11-26 (section 8). It is what the reference game teaches, it needs no management at all, and it gives every room a face. Cards are kept so that chests still feed the tower and a manager grows over weeks. The hire fee is kept because it is the best pacing beat in the original loop. Build-crafting now lives in plants, heirlooms and the skill tree. The cost is art: 34 manager sprites at launch where version 0.2 needed 28. In versions 0.1 and 0.2 the player could place any manager on any floor.
+**Why:** Lawson chose fixed managers on 2026-11-25 (section 8). It is what the reference game teaches, it needs no management at all, and it gives every room a face. Cards are kept so that chests still feed the tower and a manager grows over weeks. The hire fee is kept because it is the best pacing beat in the original loop. Build-crafting now lives in plants, heirlooms and the skill tree. The cost is art: 34 manager sprites at launch where version 0.2 needed 28. In versions 0.1 and 0.2 the player could place any manager on any floor.
 
 ### 4.3 "Seed cards" and "plant cards" are one thing
 
@@ -165,7 +165,7 @@ There are 14 systems. The unlock order in section 16 of the GDD shows at most on
 
 ## 8. Questions where the answer would change the design
 
-Only two mattered enough to ask. Lawson answered both on 2026-11-26.
+Only two mattered enough to ask. Lawson answered both on 2026-11-25.
 
 1. **How far past launch.** The design has six worlds and launches with four, because the pacing reaches the fourth world in the first week. The question was whether art for the Moon and the Nebula Nursery is fine after launch (about 8 floor paintings each), or whether the game should feel complete at four. **Answer: six worlds in the end.** The game launches with four, and worlds 5 and 6 follow. One detail: the winter world is world 4 and the Moon is world 5, so the Moon picture (its file is named "world4") is used for world 5.
 2. **Managers as cards for any floor, or one fixed manager per floor.** **Answer: one manager per floor.** Version 0.3 makes that change (sections 4.2 and 10).

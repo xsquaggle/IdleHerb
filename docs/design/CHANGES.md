@@ -4,7 +4,7 @@ For the Economy and Balance thread, the Engine thread, the Art Director and anyo
 
 ## Version 0.3: one fixed manager per floor
 
-Lawson decided on 2026-11-26: "One manager per Floor." Version 0.3 makes that change. It also writes in three rulings from the audit's re-check of version 0.2 (A.5). Nothing else in the design changed: every floor row, every world row in GDD 14.2, every plant, heirloom, research, shop and quest row is as it was, except where listed here.
+Lawson decided on 2026-11-25: "One manager per Floor." Version 0.3 makes that change. It also writes in three rulings from the audit's re-check of version 0.2 (A.5). Nothing else in the design changed: every floor row, every world row in GDD 14.2, every plant, heirloom, research, shop and quest row is as it was, except where listed here.
 
 ### A.1 Rules that changed
 

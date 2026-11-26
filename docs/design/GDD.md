@@ -1,6 +1,6 @@
 # Sprout Tower: Game Design Document
 
-Version 0.3, Phase 0. Version 0.2 passed the independent design audit. Version 0.3 gives every floor one fixed manager, on Lawson's decision of 2026-11-26. Owner: Game Designer thread. Companion files: [AUDIT.md](AUDIT.md) (why the premise changed), [CONTENT.md](CONTENT.md) (every content row: floors, managers, plants, heirlooms, skills, research, shops, quests, achievements) and [CHANGES.md](CHANGES.md) (every rule and number that changed from version to version, for the balance simulator and the engine).
+Version 0.3, Phase 0. Version 0.2 passed the independent design audit. Version 0.3 gives every floor one fixed manager, on Lawson's decision of 2026-11-25. Owner: Game Designer thread. Companion files: [AUDIT.md](AUDIT.md) (why the premise changed), [CONTENT.md](CONTENT.md) (every content row: floors, managers, plants, heirlooms, skills, research, shops, quests, achievements) and [CHANGES.md](CHANGES.md) (every rule and number that changed from version to version, for the balance simulator and the engine).
 
 ## 0. How to read this document
 
