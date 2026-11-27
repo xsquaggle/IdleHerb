@@ -1,6 +1,6 @@
 # Art Director handoff
 
-Kept current so that work can stop at any moment and resume cleanly. Last update: 2026-11-26, about 6:15 PM (US Eastern).
+Kept current so that work can stop at any moment and resume cleanly. Last update: 2026-11-26, about 8:45 PM (US Eastern).
 
 ## Start here if you are a new thread
 
@@ -11,6 +11,8 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 **Update, 11:40 AM:** Batch 2 prompts 7 to 17 are back, passed and cleaned (see Done).
 
 **Update, 12:20 PM:** prompts 2 to 6 are back, passed and cleaned too. Only prompt 1 (visitors) is still owed. Lawson also asked for rarity reveals that build up more the rarer the item is, and for two more tiers (Mythic, Godly) above Exotic; the tier count went to the Game Designer through the coordinator (see Open questions).
+
+**Update, 8:45 PM:** round 7 (the rarity reveal kit, prompts 18 to 23) is back, passed and cleaned. Batch 2 is complete. Design 0.3 (PR #5) has merged into `main`, so the manager round (next step 1) can start.
 
 **Read in this order**
 
@@ -61,16 +63,17 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 - **Batch 2 prompt 1 is back** (6:02 PM, in a pack that also held new versions of prompts 2 to 6; the earlier versions of 2 to 6 were kept, as they fill their cells better and Double Chamomile has the asked-for pompom flowers). Passed Gate A. The Tap Storm badge came back as a lilac cap on a yellow stalk that reads as a mushroom at game size, so the clean-up redraws it as a cloud over a bolt (`STORM` in `tools/clean_batch02.py`). 12 visitor frames in `art/visitors/`. Raw: project files `art/batch02/raw_prompt01/`.
 - **Batch 2 prompts 2 to 6 are back** (11:51 AM): all five passed Gate A, no hemp in them, no redo. Raw files: project files `art/batch02/raw_prompts02_06/`. The pass made six currency icons (`icons/currency/`), 13 herb card pictures (`cards/plants/`, with a new `cards.json` that also lists the hemp cards), and thyme, sage and chamomile in five stages, standing in the Batch 1 planter (`plants/`, added to `plants.json`). All in master colours and inside budget.
 - **Batch 2 prompts 7 to 17 are back** (11:28 AM): all 11 passed Gate A and the hemp review, no redo. Raw files: project files `art/batch02/raw_prompts07_17/`. The automatic pass (`tools/clean_batch02.py`) made 172 files: five soap workshop props with `floor.json`, the walls of floors 9 and 10 (plain and veiled, added to `walls.json`), Pip in nine 48×48 poses with layers, and 16 workers of nine 80×80 frames each. All in master colours and inside budget. Before/after sheets: `docs/art/cleanup/batch02/`. A copy of the cleaned set: project files `art/batch02/cleaned/`.
+- **Batch 2 round 7 is back** (8:22 PM): Lawson made it twice and sent five zips, saying "I like the chest and crds from this first zip file, the rest are secondary. pick the favorite of yours!" All six images came from that first zip (`chestandcards.zip`): its emblems repeat the card frame ornaments and its bursts grow in size from Common to Exotic. All passed Gate A and the hemp review, no redo. Raw zips: project files `art/batch02/raw_round7/`. The pass made 84 files: four chest tiers (`chests/`, copper, silver, crystal, starlight; `chests.json` now covers all six design chests), six card frames (`cards/frames/` with `frames.json`), six rarity emblems (`icons/rarity/`) and six four-frame bursts (`effects/reveal/`). Line-up: `docs/art/cleanup/batch02/batch02_p18_23_lineup.png`.
 
 ## In progress
 
 - **Master file for ChatGPT** (2026-11-26, 3:45 PM): Lawson's ChatGPT chat hit its maximum length, so the images still owed (prompts 1 and 18 to 23) went out as one master file plus a zip of the five reference pictures, made by `tools/build_batch02_master.py`. Lawson attaches both, then types "next" between images. Copies: project files `art/batch02/master/`. Use the same tool for later batches.
-- Nothing half-done. Every step so far is committed and pushed. Round 7 of Batch 2 (rarity reveal kit) was written 2026-11-26 about 12:45 PM and sent to Lawson; the reveal ladder it serves is in style bible section 19 (v1.4).
+- Nothing half-done. Every step so far is committed and pushed. Batch 2 is complete (all 23 prompts cleaned).
 
 ## Next steps, in order
 
-1. **Managers, when design 0.3 (PR #5) merges.** See the open question below. Then rewrite prompt 18, update the manager text in the bible (section 10 and the manager rows of section 23) and in HEMP_ART.md, redo the manager rows of BATCH_PLAN.md, and tell Lawson which manager prompt to run.
-2. **Check and clean Batch 2 round 7 (prompts 18 to 23, the rarity reveal kit) when Lawson uploads it.** Put raw files in project files `art/batch02/raw_round7/`. Round 7 needs new functions in `tools/clean_batch02.py`: emblems (16 colours), chests like Batch 1 (`clean_batch01_round4.py` has the chest code: base, lids, crack shadow, `chests.json`), card frames (32 colours, the window stays transparent), bursts (16 colours, no outline step). If the design adds Mythic and Godly, write one more prompt for their emblems, frames and bursts.
+1. **Managers: design 0.3 (PR #5) merged on `main` (merge fb3a380), so this is unblocked.** See the open question below. Then rewrite prompt 18, update the manager text in the bible (section 10 and the manager rows of section 23) and in HEMP_ART.md, redo the manager rows of BATCH_PLAN.md, and tell Lawson which manager prompt to run.
+2. **Mythic and Godly**, if the Game Designer adds them: one more prompt with two emblems, two card frames and two bursts, in the free slots that `rarity.json`, `frames.json` and `bursts.json` already name.
 3. **Hand polish, then Gate B,** for the automatic-pass sprites:
    - Faces: one fixed head per character from the Face Kit. The generated faces are readable but soft, most of all on the two ropewalk workers.
    - Hemp cards: thin the leaf tufts. Product icons: one colour family for the soap. Burlap and building blocks: tidy speckle.
@@ -81,6 +84,7 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
    - Batch 2 workers: the floor 8 twine worker lost his glasses (redraw with the head). The floor 1 second gardener's red scissors read as "99" at true size. Olive greens in clothes came out as brighter leaf greens, because the palette has no olive. The floor 4 seedling keeper's dungarees are a cooler purple than the sheet.
    - Batch 2 walls: tidy the HQ wallpaper speckle; the soap workshop plaster came out a little greener than the sheet.
    - Batch 2 herbs: sage, rosemary and the lavender leaves sit on the `sage` ramp as the palette asks, so they read cooler (more mint) than the grey-green sheets. Purple Basil came out clean violet, because the palette has no dusty mauve. Peppermint is a brighter green than the sheet.
+   - Batch 2 round 7: the Legendary emblem's sun face and sprout are busy at 48 pixels (simplify the centre). The four new chests are 70 pixels wide against 78 for the Batch 1 chests (accepted, one chest shows at a time). Crystal and Epic purples sit on `lavender`, so they read a little bluer than the sheet, and the Epic frame a little pinker. Small card frames and the 24 and 16 pixel emblems are drawn by hand from these.
 4. Cut pivots for the cut-out rig once the engine thread asks for them. The layers and offsets are already in each `frames.json`.
 
 ## Open questions

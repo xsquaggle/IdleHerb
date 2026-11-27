@@ -18,7 +18,10 @@ Everything here comes from Asset Batch 1 (17 of its 18 images; the manager image
 | `actors/w1_floor01_worker2/`, `…floor02…`, `…floor03…` | The second worker of floors 1 to 3, same layout |
 | `visitors/` | The six visitors in two-frame loops, 32×32: Golden Sprout, Sunbeam Sprout, Tap Storm Sprout, Dewdrop, Mystery Crate, Busy Bee. `visitors.json` gives the frames and pivots |
 | `story/pip/` | Pip, the sprout helper: nine 48×48 poses (smile, blink, talk, wave, jump, surprised, thinking, sad, peek). `layers/` and `pip.json` hold the parts |
-| `chests/` | Common and Legendary chest: one base, four lids and a crack shadow each, 96×80. `chests.json` gives the draw order. `frames/` holds the four composed frames of each chest |
+| `chests/` | All six chest tiers, 96×80. Wooden Crate (`common`) and Golden Chest (`legendary`) from Batch 1: one base, four lids and a crack shadow each. Copper, Silver, Crystal and Starlight from Batch 2: a base and a lid for each of the four steps. `chests.json` gives the draw order and maps the design ids (`chest.copper` and so on) to these names. `frames/` holds the four composed frames of each chest |
+| `cards/frames/` | The six large card frames, 180×240, Common to Exotic. The picture window is transparent. `frames.json` gives each window and where the 108×100 card picture goes. Two free slots for Mythic and Godly |
+| `icons/rarity/` | The six rarity emblems, 48×48. `rarity.json` gives the order and the two free slots |
+| `effects/reveal/` | One burst per rarity, four frames each (start, expand, peak, scatter), 48×48 with the origin at the centre. `bursts.json` lists them. Played at the Burst beat of the reveal ladder (style bible section 19) |
 | `cards/plants/` | 19 card pictures, 108×100: the six hemp cards and 13 World 1 herbs. `cards.json` gives each picture's plant id and rarity |
 | `icons/seeds/` | Four hemp seed packets, two seed jars, scoop and sack, 48×48 |
 | `icons/products/` | Twelve hemp product icons, 48×48 |

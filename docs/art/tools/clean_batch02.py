@@ -24,7 +24,7 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image  # noqa: E402
 from cleanlib import (load, snap_many, reduce_many, merge_plan, apply_plan, outline, save, used,  # noqa: E402
-                      sheet, to_rgba, veil, VEIL, INK, P_RGB, P_NAMES)
+                      sheet, to_rgba, veil, VEIL, INK, P_RGB, P_NAMES, P_LAB)
 
 SRC, OUT = sys.argv[1], sys.argv[2]
 ART = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'art')   # the repo's art/ folder
@@ -536,9 +536,272 @@ def workers():
         sheet(pairs, 9, 3, os.path.join(REVIEW, '%s_before_after.png' % key[:6]))
 
 
+# ---------------------------------------------------------------- round 7: the rarity reveal kit (prompts 18 to 23)
+# Lawson made round 7 twice. The chests and card frames come from the set Lawson liked best; the emblems and
+# bursts come from the same set, because their shapes repeat the card frame ornaments (iron plate, leaf pair,
+# sapphire, amethyst, sun medallion, winged prism) and the bursts grow honestly from Common to Exotic.
+# That set came with exact native sprites (one image pixel per art pixel), so nothing is resampled here.
+RARITIES = ['common', 'uncommon', 'rare', 'epic', 'legendary', 'exotic']
+
+
+def emblems():
+    key = 'b02_18_rarity_emblems'
+    table = {
+        'common': {'ash', 'stone', 'wood', 'gold-1', 'gold-2'},
+        'uncommon': {'leaf', 'gold', 'cream', 'wood-4', 'wood-5', 'wood-6'},
+        'rare': {'sky', 'steel', 'ash', 'stone-4', 'stone-5', 'white'},
+        'epic': {'lavender', 'rose-3', 'rose-4', 'white'},
+        'legendary': {'gold', 'wood-3', 'wood-4', 'wood-5', 'leaf-4', 'leaf-5', 'cream'},
+        'exotic': {'teal', 'rose', 'lavender', 'sky-4', 'sky-5', 'white', 'stone-4', 'stone-5', 'cream-4'},
+    }
+    mf = manifest('icons/rarity/rarity.json')
+    mf.clear()
+    mf.update(size=[48, 48], order=RARITIES, emblems={},
+              free_slots=['mythic', 'godly'],
+              note='One badge per rarity (style bible sections 8 and 19). Two free slots above Exotic wait for '
+                   'the design. Smaller sizes are drawn by hand from these.')
+    pairs = []
+    for r in RARITIES:
+        raw = load(os.path.join(pkg(key), 'sprites', '%s_emblem.png' % r))
+        assert raw.shape[:2] == (48, 48), r
+        fname = 'rarity_%s_48.png' % r
+        pairs += clean('icon', 'emblem_' + r, [raw], ['icons/rarity/' + fname], table[r], 16)
+        mf['emblems'][r] = fname
+    sheet(pairs, 6, 4, os.path.join(REVIEW, 'p18_emblems_before_after.png'))
+
+
+CHESTS = {
+    'copper': ('b02_19_chests_copper_silver', {'wood', 'clay', 'gold', 'cream', 'sage'}, 'chest.copper'),
+    'silver': ('b02_19_chests_copper_silver', {'steel', 'ash', 'stone', 'sky', 'cream', 'white'}, 'chest.silver'),
+    'crystal': ('b02_20_chests_crystal_starlight', {'lavender', 'ash', 'steel', 'stone', 'cream', 'white'},
+                'chest.crystal'),
+    # teal only in its light steps: the dark steps pulled the night-blue side panel green
+    'starlight': ('b02_20_chests_crystal_starlight', {'sky', 'lavender', 'gold', 'wood', 'cream', 'teal-3', 'teal-4',
+                                                      'rose', 'white'}, 'chest.starlight'),
+}
+CHEST_STEPS = ['closed', 'cracked', 'half_open', 'fully_open']
+# The round 7 chests are drawn a little smaller than the Batch 1 chests (70 art pixels wide against 78) and
+# stand 2 pixels higher. They are moved so that every chest stands on row 75 and shares the same centre.
+CHEST_MOVE = (-1, 2)
+
+
+def move(img, dx, dy):
+    out = np.zeros_like(img)
+    h, w = img.shape[:2]
+    out[max(0, dy):h + min(0, dy), max(0, dx):w + min(0, dx)] = \
+        img[max(0, -dy):h - max(0, dy), max(0, -dx):w - max(0, dx)]
+    assert (img[..., 3] > 0).sum() == (out[..., 3] > 0).sum(), 'a chest part was cut by the move'
+    return out
+
+
+def chests():
+    mf = manifest('chests/chests.json')
+    if not mf:
+        mf.update(json.load(open(os.path.join(ART, 'chests', 'chests.json'))))
+    mf['draw_order'] = ("base (the step's own base when the step has one, else the chest's base), "
+                        "then interior_shadow if present, then lid, all at (0,0)")
+    mf['design_ids'] = {'chest.wooden': 'common', 'chest.copper': 'copper', 'chest.silver': 'silver',
+                        'chest.golden': 'legendary', 'chest.crystal': 'crystal', 'chest.starlight': 'starlight'}
+    pairs = []
+    for k, (key, ramps, _) in CHESTS.items():
+        raws = []
+        for i in range(1, 5):
+            for part in ('base', 'lid'):
+                raws.append(move(load(os.path.join(pkg(key), 'layers', '%s_chest_frame_%d_%s.png' % (k, i, part))),
+                                 *CHEST_MOVE))
+        # one shared colour map for every part of this chest, so the frames cannot flicker
+        idxs, st = snap_many(raws, ramps | INKSET)
+        # the outline is checked on each composed frame and written back to the part that owns the pixel
+        fixed = 0
+        for i in range(4):
+            b, lid = idxs[2 * i], idxs[2 * i + 1]
+            assert not ((b >= 0) & (lid >= 0)).any(), 'base and lid overlap'
+            comp = np.where(lid >= 0, lid, b)
+            new, n = outline(comp)
+            ch = new != comp
+            lid[ch & (lid >= 0)] = INK
+            b[ch & (lid < 0)] = INK
+            fixed += n
+        idxs = apply_plan(idxs, merge_plan(idxs, 24))
+        steps = []
+        for i, step in enumerate(CHEST_STEPS):
+            b, lid = idxs[2 * i], idxs[2 * i + 1]
+            bn, ln = '%s_%02d_%s_base.png' % (k, i + 1, step), '%s_%02d_%s_lid.png' % (k, i + 1, step)
+            save(b, os.path.join(OUT, 'chests', bn))
+            save(lid, os.path.join(OUT, 'chests', ln))
+            comp = np.where(lid >= 0, lid, b)
+            save(comp, os.path.join(OUT, 'chests', 'frames', '%s_%s_96x80.png' % (k, step)))
+            raw = np.where((raws[2 * i + 1][..., 3] == 255)[..., None], raws[2 * i + 1], raws[2 * i])
+            pairs.append((raw, comp))
+            steps.append(dict(frame='%s_%s' % (k, step), base=bn, lid=ln))
+        mf['chests'][k] = dict(steps=steps)
+        note('chest', 'chest_%s (4 frames, base + lid each)' % k, idxs, st, fixed, 24)
+    sheet(pairs, 4, 3, os.path.join(REVIEW, 'p19_20_chests_before_after.png'))
+
+
+FRAMES = {
+    'common': ('b02_21_card_frames_common_rare', {'wood', 'gold', 'cream', 'stone', 'ash', 'clay-5'}),
+    'uncommon': ('b02_21_card_frames_common_rare', {'wood', 'gold', 'cream', 'leaf', 'clay-5'}),
+    'rare': ('b02_21_card_frames_common_rare', {'steel', 'ash', 'stone', 'sky', 'cream', 'white', 'gold-4', 'clay-5'}),
+    'epic': ('b02_22_card_frames_epic_exotic', {'lavender', 'rose-3', 'rose-4', 'leaf', 'cream', 'gold', 'clay-5'}),
+    'legendary': ('b02_22_card_frames_epic_exotic', {'gold', 'wood', 'cream', 'clay-5', 'rose-4'}),
+    'exotic': ('b02_22_card_frames_epic_exotic', {'white', 'ash', 'stone', 'lavender', 'rose', 'teal', 'sky-5',
+                                                  'cream', 'gold', 'clay-5'}),
+}
+# Where the game draws the 108x100 card picture: centred across the frame and 33 rows down. The windows
+# are 89 to 95 rows tall, so the plants' pots tuck a few pixels under the name ribbon, which is what we want.
+CARD_ART_AT = (36, 33)
+
+
+def window_of(alpha):
+    """The transparent pixels that the frame encloses (not reachable from the edge of the image)."""
+    outside = np.zeros_like(alpha)
+    outside[0, :] = ~alpha[0, :]
+    outside[-1, :] = ~alpha[-1, :]
+    outside[:, 0] |= ~alpha[:, 0]
+    outside[:, -1] |= ~alpha[:, -1]
+    while True:
+        p = np.pad(outside, 1)
+        h, w = alpha.shape
+        grow = (p[0:h, 1:w + 1] | p[2:h + 2, 1:w + 1] | p[1:h + 1, 0:w] | p[1:h + 1, 2:w + 2]) & ~alpha
+        grow |= outside
+        if (grow == outside).all():
+            return ~alpha & ~outside
+        outside = grow
+
+
+def card_frames():
+    mf = manifest('cards/frames/frames.json')
+    mf.clear()
+    mf.update(size=[180, 240], order=RARITIES, frames={}, card_art_at=list(CARD_ART_AT), card_art_size=[108, 100],
+              free_slots=['mythic', 'godly'],
+              note='Large card frames. Draw order: the rarity backdrop filling the window, then the card picture '
+                   'at card_art_at, then the frame. The name ribbon and the two panel rows are blank; the game '
+                   'writes on them. Small card frames are drawn by hand from these.')
+    pairs, shown = [], []
+    for r in RARITIES:
+        key, ramps = FRAMES[r]
+        raw = load(os.path.join(pkg(key), 'sprites', '%s_card_frame.png' % r))
+        assert raw.shape[:2] == (240, 180), r
+        fname = 'card_frame_%s_180x240.png' % r
+        p = clean('card', 'card_frame_' + r, [raw], ['cards/frames/' + fname], ramps, 32)
+        pairs += p
+        win = window_of(p[0][1] >= 0)
+        ys, xs = np.nonzero(win)
+        mf['frames'][r] = dict(file=fname, window=[int(xs.min()), int(ys.min()),
+                                                   int(xs.max() - xs.min() + 1), int(ys.max() - ys.min() + 1)])
+        shown.append((r, p[0][1], win))
+    sheet(pairs, 6, 2, os.path.join(REVIEW, 'p21_22_card_frames_before_after.png'))
+    # a mock-up with herb pictures inside, to check that the window fits the 108x100 card pictures
+    backdrop = {'common': 'cream-3', 'uncommon': 'sage-5', 'rare': 'sky-5', 'epic': 'lavender-6',
+                'legendary': 'gold-5', 'exotic': 'teal-4'}
+    art = {'common': 'thyme_garden', 'uncommon': 'basil_lemon', 'rare': 'basil_purple',
+           'epic': 'hemp_silkspun', 'legendary': 'hemp_sunspun', 'exotic': 'hemp_giant_show'}
+    tiles = []
+    for r, idx, win in shown:
+        im = np.zeros((240, 180, 4), np.uint8)
+        im[win, :3] = P_RGB[P_NAMES.index(backdrop[r])]
+        im[win, 3] = 255
+        pic_path = os.path.join(ART, 'cards', 'plants', '%s_108x100.png' % art[r])
+        if os.path.exists(pic_path):
+            pic = load(pic_path)
+            x0, y0 = CARD_ART_AT
+            reg = im[y0:y0 + 100, x0:x0 + 108]
+            m = pic[..., 3] == 255
+            reg[m] = pic[m]
+        fr = to_rgba(idx)
+        m = fr[..., 3] == 255
+        im[m] = fr[m]
+        tiles.append(im)
+    gap = np.zeros((240, 8, 4), np.uint8)
+    row = np.concatenate(sum([[t, gap] for t in tiles], [])[:-1], 1)
+    bg = np.zeros(row.shape[:2] + (3,), np.uint8)
+    bg[:] = (60, 52, 78)
+    m = row[..., 3] == 255
+    bg[m] = row[m][:, :3]
+    os.makedirs(REVIEW, exist_ok=True)
+    Image.fromarray(np.repeat(np.repeat(bg, 2, 0), 2, 1)).save(os.path.join(REVIEW, 'p21_22_card_frames_mockup.png'))
+
+
+BURSTS = {
+    'common': ({'cream', 'wood-4', 'wood-5', 'wood-6', 'clay-5'}, 'dust'),
+    'uncommon': ({'leaf', 'gold-3', 'gold-4'}, 'leaves'),
+    'rare': ({'sky', 'white', 'steel-3', 'steel-4'}, 'gem_glints'),
+    'epic': ({'lavender', 'rose-3', 'rose-4', 'white'}, 'crystal_shards'),
+    'legendary': ({'gold', 'wood-3', 'wood-4', 'leaf-3', 'leaf-4', 'cream-4'}, 'coins'),
+    'exotic': ({'teal', 'rose', 'lavender', 'sky-5', 'white', 'cream'}, 'prism_shards'),
+}
+BURST_STEPS = ['start', 'expand', 'peak', 'scatter']
+
+
+def drop_lone_ink(idx, max_px=4):
+    """Small specks drawn only in dark outline colour (a 2x2 dark dot, a lone dark pixel) read as dirt on
+    the screen, so they go. Motes with any colour in them stay. Specks are joined on 8 neighbours."""
+    a = idx >= 0
+    h, w = a.shape
+    lab = np.zeros((h, w), np.int32)
+    n = 0
+    dark = a & (P_LAB[:, 0][np.where(a, idx, 0)] < 0.36)
+    out = idx.copy()
+    removed = 0
+    for y0, x0 in zip(*np.nonzero(a)):
+        if lab[y0, x0]:
+            continue
+        n += 1
+        stack, comp = [(y0, x0)], []
+        lab[y0, x0] = n
+        while stack:
+            y, x = stack.pop()
+            comp.append((y, x))
+            for dy in (-1, 0, 1):
+                for dx in (-1, 0, 1):
+                    yy, xx = y + dy, x + dx
+                    if 0 <= yy < h and 0 <= xx < w and a[yy, xx] and not lab[yy, xx]:
+                        lab[yy, xx] = n
+                        stack.append((yy, xx))
+        if len(comp) <= max_px and all(dark[c] for c in comp):
+            for c in comp:
+                out[c] = -1
+            removed += len(comp)
+    return out, removed
+
+
+def bursts():
+    key = 'b02_23_reveal_effects'
+    mf = manifest('effects/reveal/bursts.json')
+    mf.clear()
+    mf.update(frame=[48, 48], origin=[24, 24], order=RARITIES, bursts={}, free_slots=['mythic', 'godly'],
+              note='One burst per rarity, four frames: start, expand, peak, scatter. Played at the Burst beat of '
+                   'the reveal ladder (style bible section 19). The game adds the light, rays, beams and colour '
+                   'flood around them.')
+    pairs = []
+    for r in RARITIES:
+        ramps, what = BURSTS[r]
+        raws = [load(os.path.join(pkg(key), 'frames', '%s_frame_%d.png' % (r, i))) for i in range(1, 5)]
+        assert all(x.shape[:2] == (48, 48) for x in raws), r
+        idxs, st = snap_many(raws, ramps | INKSET)
+        dropped = 0
+        for i in range(4):
+            idxs[i], n = drop_lone_ink(idxs[i])
+            dropped += n
+        idxs = apply_plan(idxs, merge_plan(idxs, 16))
+        files = []
+        for i, (idx, step) in enumerate(zip(idxs, BURST_STEPS)):
+            fname = '%s_%s_%02d_%s_48.png' % (r, what, i + 1, step)
+            save(idx, os.path.join(OUT, 'effects', 'reveal', fname))
+            files.append(fname)
+        mf['bursts'][r] = dict(what=what, frames=files)
+        note('fx', 'burst_%s (4 frames)' % r, idxs, st, 0, 16)
+        REPORT[-1]['lone_dark_pixels_removed'] = dropped
+        pairs += list(zip(raws, idxs))
+    sheet(pairs, 4, 4, os.path.join(REVIEW, 'p23_bursts_before_after.png'))
+
+
 STEPS = [('b02_01_visitors', visitors), ('b02_02_currency_icons', currency_icons), ('b02_03_herb_cards_common', herb_cards),
          ('b02_06_herb_growth_stages', growth_stages), ('b02_07_floor09_soap_workshop_props', soap_props),
-         ('b02_08_backwalls_soap_hq', walls), ('b02_09_pip_guide', pip), ('b02_10_workers_floor04_garden_shed', workers)]
+         ('b02_08_backwalls_soap_hq', walls), ('b02_09_pip_guide', pip), ('b02_10_workers_floor04_garden_shed', workers),
+         ('b02_18_rarity_emblems', emblems), ('b02_19_chests_copper_silver', chests),
+         ('b02_21_card_frames_common_rare', card_frames), ('b02_23_reveal_effects', bursts)]
 for k, step in STEPS:
     if os.path.isdir(pkg(k)) or (step is herb_cards and any(os.path.isdir(pkg(c)) for c in CARDS)):
         step()

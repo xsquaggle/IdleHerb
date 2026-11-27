@@ -17,7 +17,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 | Batch | Theme | Images | State |
 |---|---|---|---|
 | 1 | World 1 vertical slice | 18 | 17 of 18 are back, passed with no redos and cleaned into sprites. Prompt 18 (managers) is on hold |
-| 2 | Finish World 1, and the rarity reveal kit | 23 | Written 2026-11-26, with Lawson. Prompts 2 to 17 back and cleaned the same day. Round 7 (prompts 18 to 23, rarity reveal kit) added after Lawson asked for bigger rare reveals. No manager prompts: they follow as a short round of their own |
+| 2 | Finish World 1, and the rarity reveal kit | 23 | Written 2026-11-26, with Lawson. Prompts 2 to 17 back and cleaned the same day. Round 7 (prompts 18 to 23, rarity reveal kit) added after Lawson asked for bigger rare reveals; back and cleaned that evening, so all 23 are done. No manager prompts: they follow as a short round of their own |
 | 3 | Loomington rooms and collection | 17 | Planned |
 | 4 | Loomington cast and weekend events | 13 | Planned |
 | 5 | Papaya Cay rooms | 17 | Planned |
@@ -148,8 +148,8 @@ Every "new for launch" count in the design document's section 13 has a batch.
 | World backgrounds | 1 new, 2 drawn again as layers | Batch 7, and Batches 3 and 5 |
 | Currency icons | 6 | Batch 2 (all six) |
 | Story characters | 2 | Batch 2 (Pip), Batch 4 (Baron Fauxliage) |
-| Chests | 4 more tiers | Batch 2 (round 7) |
-| Rarity kit | 6 emblems, 6 card frames, 6 bursts | Batch 2 (round 7). If the design adds Mythic and Godly, one more prompt gives their emblems, frames and bursts |
+| Chests | 4 more tiers | Batch 2 (round 7), done |
+| Rarity kit | 6 emblems, 6 card frames, 6 bursts | Batch 2 (round 7), done. If the design adds Mythic and Godly, one more prompt gives their emblems, frames and bursts |
 
 ## Made by hand, with no prompt
 

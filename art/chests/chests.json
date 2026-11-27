@@ -3,7 +3,7 @@
   96,
   80
  ],
- "draw_order": "base, then interior_shadow if present, then lid, all at (0,0)",
+ "draw_order": "base (the step's own base when the step has one, else the chest's base), then interior_shadow if present, then lid, all at (0,0)",
  "chests": {
   "common": {
    "base": "common_base.png",
@@ -48,6 +48,110 @@
      "lid": "legendary_04_fully_open_lid.png"
     }
    ]
+  },
+  "copper": {
+   "steps": [
+    {
+     "frame": "copper_closed",
+     "base": "copper_01_closed_base.png",
+     "lid": "copper_01_closed_lid.png"
+    },
+    {
+     "frame": "copper_cracked",
+     "base": "copper_02_cracked_base.png",
+     "lid": "copper_02_cracked_lid.png"
+    },
+    {
+     "frame": "copper_half_open",
+     "base": "copper_03_half_open_base.png",
+     "lid": "copper_03_half_open_lid.png"
+    },
+    {
+     "frame": "copper_fully_open",
+     "base": "copper_04_fully_open_base.png",
+     "lid": "copper_04_fully_open_lid.png"
+    }
+   ]
+  },
+  "silver": {
+   "steps": [
+    {
+     "frame": "silver_closed",
+     "base": "silver_01_closed_base.png",
+     "lid": "silver_01_closed_lid.png"
+    },
+    {
+     "frame": "silver_cracked",
+     "base": "silver_02_cracked_base.png",
+     "lid": "silver_02_cracked_lid.png"
+    },
+    {
+     "frame": "silver_half_open",
+     "base": "silver_03_half_open_base.png",
+     "lid": "silver_03_half_open_lid.png"
+    },
+    {
+     "frame": "silver_fully_open",
+     "base": "silver_04_fully_open_base.png",
+     "lid": "silver_04_fully_open_lid.png"
+    }
+   ]
+  },
+  "crystal": {
+   "steps": [
+    {
+     "frame": "crystal_closed",
+     "base": "crystal_01_closed_base.png",
+     "lid": "crystal_01_closed_lid.png"
+    },
+    {
+     "frame": "crystal_cracked",
+     "base": "crystal_02_cracked_base.png",
+     "lid": "crystal_02_cracked_lid.png"
+    },
+    {
+     "frame": "crystal_half_open",
+     "base": "crystal_03_half_open_base.png",
+     "lid": "crystal_03_half_open_lid.png"
+    },
+    {
+     "frame": "crystal_fully_open",
+     "base": "crystal_04_fully_open_base.png",
+     "lid": "crystal_04_fully_open_lid.png"
+    }
+   ]
+  },
+  "starlight": {
+   "steps": [
+    {
+     "frame": "starlight_closed",
+     "base": "starlight_01_closed_base.png",
+     "lid": "starlight_01_closed_lid.png"
+    },
+    {
+     "frame": "starlight_cracked",
+     "base": "starlight_02_cracked_base.png",
+     "lid": "starlight_02_cracked_lid.png"
+    },
+    {
+     "frame": "starlight_half_open",
+     "base": "starlight_03_half_open_base.png",
+     "lid": "starlight_03_half_open_lid.png"
+    },
+    {
+     "frame": "starlight_fully_open",
+     "base": "starlight_04_fully_open_base.png",
+     "lid": "starlight_04_fully_open_lid.png"
+    }
+   ]
   }
+ },
+ "design_ids": {
+  "chest.wooden": "common",
+  "chest.copper": "copper",
+  "chest.silver": "silver",
+  "chest.golden": "legendary",
+  "chest.crystal": "crystal",
+  "chest.starlight": "starlight"
  }
 }

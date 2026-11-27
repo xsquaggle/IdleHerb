@@ -120,6 +120,17 @@ What this batch taught the route:
 - **Feet on one line.** All nine frames of a worker move together so the idle feet rest on row 76, like Batch 1. If any pose would lose pixels at the frame edge, nothing moves and `frames.json` records the real feet line. 15 of the 16 workers are on 76; one is on 77.
 - **Olive has no home.** The palette has no olive green, so olive clothes come out as brighter `leaf` green. Accepted for now; the colour is still clearly a green work jacket.
 
+## Batch 2, round 7: the rarity reveal kit (prompts 18 to 23)
+
+Lawson made the round twice and sent five zips. One zip held all six images; Lawson liked its chests and card frames best and left the rest to the Art Director. The emblems and bursts were taken from the same zip, because the emblems repeat the card frames' top ornaments and its bursts grow honestly in size from Common to Exotic (the other set drew every burst at about the same size). The same pass, `clean_batch02.py`, made 84 files. Before/after sheets, a mock-up of the frames with card pictures in them, and a line-up are in `cleanup/batch02/`.
+
+- **Native sprites are exact now.** Every sheet in the chosen zip had a native copy that matches the big sheet pixel for pixel at a whole-number scale, with hard alpha. Nothing had to be resampled.
+- **Per-step chest bases.** The new chests came with a base and a lid for each step, because the inside of the chest shades differently as the lid opens. `chests.json` now lets a step carry its own base; the Batch 1 chests keep one base each.
+- **The new chests are a little smaller** than the Batch 1 chests (70 art pixels wide against 78). They were moved to stand on the same row and centre. One chest is shown at a time in the game, so this is accepted.
+- **Dark teal pulls night blue.** The starlight chest's shaded side went green until only the two light `teal` steps were allowed.
+- **Bursts lose their dark specks.** Specks of up to four pixels drawn only in outline colour read as dirt, so they are removed. Coloured motes stay.
+- **The card picture fits the windows.** The windows are 118 to 130 pixels wide and 89 to 95 tall. Drawn at (36, 33), the 108×100 pictures sit centred and their pots tuck under the name ribbon. `frames.json` records each window.
+
 ## What this means for each asset class
 
 | Class | Route | Hand work |
