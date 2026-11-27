@@ -7,7 +7,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 ## How the plan works
 
 - A batch is 10 to 20 images that Lawson generates in ChatGPT from a prompt file like [ASSET_BATCH_01.md](ASSET_BATCH_01.md).
-- **Batches 1 and 2 are written** ([ASSET_BATCH_02.md](ASSET_BATCH_02.md) since 2026-11-26). Each later batch becomes a prompt file once the batch before it has been checked, because the results show what to ask for next. The image counts below are estimates.
+- **Batches 1 to 3 are written** ([ASSET_BATCH_02.md](ASSET_BATCH_02.md) and [ASSET_BATCH_03.md](ASSET_BATCH_03.md) since 2026-11-26). Each later batch becomes a prompt file once the batch before it has been checked, because the results show what to ask for next. The image counts below are estimates.
 - The order follows what a player sees first.
 - Every prompt carries the fixed style suffix v1 and, where hemp appears, a hemp guard. Nothing on this page changes the look.
 - Each batch keeps a few places free for redos of the batch before it.
@@ -18,7 +18,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 |---|---|---|---|
 | 1 | World 1 vertical slice | 18 | 17 of 18 are back, passed with no redos and cleaned into sprites. Prompt 18 (managers) is replaced by Batch 2, round 8 |
 | 2 | Finish World 1, the rarity reveal kit and the World 1 managers | 27 | Written 2026-11-26, with Lawson. Prompts 1 to 23 back and cleaned the same day (round 7, the rarity reveal kit, was added after Lawson asked for bigger rare reveals). Round 8 (prompts 24 to 27, the ten World 1 managers) added that evening, once design 0.3 merged, and back and cleaned the same night (sheets 26 and 27 redone at the right size). **Done** |
-| 3 | Loomington rooms and collection | 17 | Planned |
+| 3 | Loomington rooms and collection | 17 | Written 2026-11-26 as [ASSET_BATCH_03.md](ASSET_BATCH_03.md) and sent to Lawson as one master file |
 | 4 | Loomington cast, managers and weekend events | 16 | Planned |
 | 5 | Papaya Cay rooms | 16 | Planned |
 | 6 | Papaya Cay cast and managers | 13 | Planned |
@@ -71,6 +71,8 @@ The grandmother at the desk in v2 floor 10 gets no worker sheet. She is Granny E
 **Nothing is owed for World 1 after round 8** except hand work (heads, small icons, small card frames).
 
 ## Batch 3: Loomington rooms and collection
+
+Written as [ASSET_BATCH_03.md](ASSET_BATCH_03.md) (`tools/build_asset_batch_03.py`), 17 prompts in 6 rounds, in the order of the table below except that the city background is its own round. Each room image follows the Batch 1 ropewalk recipe: props and two workers in one row, the tap target in the middle, the manager's spot at the right end. Lawson gets it as one master file and one reference zip (`tools/build_master.py`).
 
 | # | Images | Contents |
 |---|---|---|
