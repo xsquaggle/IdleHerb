@@ -644,8 +644,9 @@ insightPerHour   = INSIGHT_PER_MILESTONE x recordMilestones x insightGainMult
 2. The record does not drop on a Replant, so resetting never costs Insight. It restarts at a Harvest Festival and is rebuilt within the first session.
 3. A project costs Insight when it is queued and then takes real time. Time passes while the game is closed.
 4. There is one research desk. The Ribbon Shop adds a second. Each desk can hold a queue of `RESEARCH_QUEUE = 3` projects.
-5. There are 40 projects in four lanes: **Tools** (offline cap, planters, heirloom slots, auto-hire), **Soil Science** (profit, speed, costs), **Botany** (bees, the pollination bench, mutation, trait strength) and **People and Luck** (manager power, cooldowns, chest luck, Insight).
-6. All 40 projects cost about 626,000 Insight and about 18 days of research time in total. The cheap ones come in the first week. The whole tree takes about two to three months.
+5. There are 48 projects in four lanes: **Tools** (offline cap, planters, heirloom slots, auto-hire), **Soil Science** (profit, speed, costs, and the long Living Soil chain), **Botany** (bees, the pollination bench, mutation, trait strength) and **People and Luck** (manager power, cooldowns, chest luck, Insight).
+6. All 48 projects cost about 809,000 Insight and about 56 days of research time in total. The cheap ones come in the first week.
+7. **Long projects.** Eight late projects (Crop Rotation IV, Training Day IV and Living Soil I to VI, added in version 0.4) are cheap in Insight but take four or five days each. They run as a slow chain beside the costly, quick Soil Science IV and V, and they keep new power arriving in the second month, when Festivals would otherwise drift far apart. The balance simulator's active player finishes the first of them around day 26 and the last around day 60. The whole tree takes about two months for an active player, a little more with less play.
 
 ## 11. Quests, achievements and codex
 
@@ -706,7 +707,7 @@ pending(w)      = max(0, compostTotal(w) - claimed(w))
 - `COMPOST_E0 = 2e10`, `COMPOST_EXP = 0.4`, `COMPOST_K = 5, 15, 40, 100, 250, 600` for worlds 1 to 6.
 - **Replant is available** in a world when its top floor is open in the current run and `pending >= 1`. The very first Replant of a save needs `pending >= FIRST_REPLANT_MIN = 440`.
 - `compostGainMult` comes only from skills and the Compost Shop, never from a card or an heirloom, so there is nothing to swap in for the click. If a respec lowers it, `pending` stays at 0 until lifetime earnings catch up.
-- **On Replant:** `claimed(w) += pending(w)`, `compostEra += pending(w)`, `compostAllTime += pending(w)`. That world's currency, floor levels and hires reset. Floor 1 is open at level 1. Plant placements are remembered and come back as floors reopen. Managers stay met and keep their card levels, and each one is hired again with its floor's fee.
+- **On Replant:** `claimed(w) += pending(w)`, `compostEra += pending(w)`, `compostAllTime += pending(w)`. That world's currency, floor levels and hires reset. Floor 1 is open at level 1. Plant placements are remembered and come back as floors reopen. Managers stay met and keep their card levels, and each one is hired again with its floor's fee. With the Auto-Gardener switched on, floor 1's manager stays hired, with no fee (CONTENT.md section 8).
 - **Passive:** every Compost earned this era gives `COMPOST_PCT = +2%` profit in every world. Spending Compost in the Compost Shop does not reduce this.
 - **Compost Shop:** rows in CONTENT.md section 7. Every item has a level cap. Rich Soil (×1.25 profit, 10 levels) is the only one that multiplies profit. After the first Harvest Festival the shop has a Buy All button, because it is rebuilt every era.
 
@@ -729,9 +730,9 @@ ribbonsPending = ribbonsTotal - ribbonsClaimed
 
 - `compostAllTime` is all Compost ever claimed, in every era. `RIBBON_C0 = 900,000`, `RIBBON_EXP = 0.5`.
 - **Unlocks** when the player has reached world 3 at least once and `ribbonsPending >= FIRST_FESTIVAL_MIN = 8`. Later Festivals need `ribbonsPending >= 1`.
-- **On Festival:** `ribbonsClaimed += ribbonsPending`. Then every world's currency, floors, hires and `lifetime` reset. `compostEra`, every `claimed(w)` and all Compost Shop purchases reset. World tickets must be bought again. Everything in the "Keeps" column of section 3.4 stays.
+- **On Festival:** `ribbonsClaimed += ribbonsPending`. Then every world's currency, floors, hires and `lifetime` reset. `compostEra`, every `claimed(w)` and all Compost Shop purchases reset. World tickets must be bought again. With the Auto-Gardener switched on, floor 1's manager in each world stays hired, with no fee (CONTENT.md section 8). Everything in the "Keeps" column of section 3.4 stays.
 - **Passive:** every Ribbon ever earned gives `RIBBON_PCT = +10%` profit in every world. Spending Ribbons does not reduce this.
-- **Ribbon Shop:** rows in CONTENT.md section 8. It never resets. It holds Golden Hour (×2 profit, 5 levels), the deeds to worlds 4, 5 and 6, the third planter, heirloom slots, a second research desk, auto-buy (the Auto-Gardener) and one endless item, Blue Ribbon Polish.
+- **Ribbon Shop:** rows in CONTENT.md section 8. It never resets. It holds Golden Hour (×2 profit, 5 levels), the deeds to worlds 4, 5 and 6, the third planter, heirloom slots, a second research desk, auto-buy (the Auto-Gardener, which also keeps every world running through a reset) and one endless item, Blue Ribbon Polish.
 - Each Festival gives a Golden Chest (a Crystal Chest the first time, a Starlight Chest every fifth time) and one free respec. The first Festival also gives the Heirloom Pick (section 8.3).
 - The Festival screen says "Hold the Festival now for +N Ribbons (+X% profit)", and the button glows once `ribbonsPending` is at least equal to `ribbonsClaimed`.
 
@@ -753,7 +754,7 @@ profitMult(floor) =
   x (1 + sum of floor profit bonuses)                Sturdy, Neighbourly, manager perks
   x (1 + sum of heirloom profit bonuses)             including set bonuses
   x (1 + sum of skill profit bonuses)
-  x researchProfit                                   1.5 ^ (Soil Science projects done)
+  x researchProfit                                   1.5 ^ (Soil Science done) x 1.3 ^ (Living Soil done)
   x (1 + (COMPOST_PCT + MASTER_COMPOSTER_PCT x masterComposterLevel) x compostEra)
   x RICH_SOIL ^ richSoilLevel
   x (1 + (RIBBON_PCT + BLUE_POLISH_PCT x bluePolishLevel) x ribbonsClaimed)
@@ -776,7 +777,7 @@ speedMult(floor) = 2 ^ milestoneCount x towerMilestoneMult ^ towerMilestoneCount
   x (1 + sum of floor speed bonuses)                 Quick, manager perks
   x (1 + sum of heirloom speed bonuses)
   x (1 + sum of skill speed bonuses)
-  x researchSpeed                                    1.2 ^ (Crop Rotation projects done)
+  x researchSpeed                                    1.2 ^ (Crop Rotation I to III done), x 1.4 more for IV
   x spurt                                            Growth Spurt speed while one is active, else 1
 ```
 
@@ -969,10 +970,22 @@ No twist ever takes anything away. A player who ignores a twist earns exactly wh
 
 A permanent record for each world. It never resets.
 
-- A world has 10 stars. Star `n` is earned the first time every floor in that world is at or above level `MASTERY_LEVELS[n]` = 25, 50, 100, 250, 350, 400, 450, 500, 550, 600.
+- A world has 10 stars. Star `n` is earned the first time every floor in that world is at or above level `MASTERY_LEVELS[w][n]`. Each world has its own ten levels:
+
+| World | Levels for stars 1 to 10 |
+|---|---|
+| Thymeford | 25, 325, 350, 400, 475, 525, 625, 675, 725, 800 |
+| Loomington | 150, 225, 250, 275, 350, 400, 500, 550, 600, 675 |
+| Papaya Cay | 25, 150, 225, 275, 350, 400, 450, 525, 575, 625 |
+| Mount Mitten | 175, 200, 250, 300, 350, 375, 425, 475, 525, 575 |
+| The Moon | 125, 150, 200, 250, 300, 325, 350, 375, 425, 475 |
+| Nebula Nursery | 100, 150, 175, 200, 225, 250, 300, 325, 375, 400 |
+
 - Each star gives `MASTERY_PCT = +10%` profit in that world.
 - **Star 5** gives one copy of that world's **Head**, the Exotic manager of its top floor (section 7.1). Stars 7, 9 and 10 give one more copy each. Those four copies take a Head from level 1 to level 3. The last two levels come from Starlight Chests.
-- The ten levels are first-pass values from the rough script. In Thymeford an active player earns star 4 on day 5, star 5 on about day 11, star 8 on about day 19 and star 10 on about day 50. Each later world trails by one to three weeks. The low floors grow at 1.15 a level, so a threshold much above 600 cannot be reached in any sensible time. The simulator should set the ten levels from cost.
+- The six lists were picked by the balance simulator for version 0.4, from the days on which an active player's lowest floor first reaches each level. The aim is for stars to land near these days after first arriving in a world: under 1, 1 to 2, 3 to 4, 5 to 6, 8 to 10, 12 to 14, 18 to 22, 28 to 34, 40 to 46 and 55 to 65. Only one star lands on the day of arrival, and star 5 (the first Head copy) not before day 8.
+- Thymeford's track starts when Loomington is reached (section 16, row 20). An active player then earns Thymeford's star 5 about 10 days later, star 8 about 30 days later and star 10 about 58 days later. A world's best level climbs in steps, about once per Festival cycle, so some stars land a day or two outside their window.
+- Older worlds keep climbing between Festivals because the Auto-Gardener restarts them after every reset (CONTENT.md section 8). Without that, an older world's floor 1 had no manager after a Replant, earned nothing, and its late stars were out of reach.
 
 ## 15. Events, offline time and the clock
 
@@ -1273,7 +1286,7 @@ In the order to reach for them. Change one at a time.
 | 11 | Chest rates and duplicate curves | section 8 | Collection speed |
 | 12 | Research times | CONTENT.md section 6 | The idle cadence |
 | 13 | Ability strengths, then the Boost cap | CONTENT.md section 2.2, `BOOST_CAP` | What timed boosts add on average, and how big a lined-up burst can get |
-| 14 | Mastery levels and event steps | `MASTERY_LEVELS`, section 15.3 | When Head copies arrive, and how long a weekend event takes |
+| 14 | Mastery levels and event steps | `MASTERY_LEVELS` (one list per world), section 15.3 | When Head copies arrive, and how long a weekend event takes |
 | 15 | Manager level 1 values and steps | `MGR_BASE`, `MGR_STEP` | How strong the first day is, and what a manager copy is worth |
 
 ## Appendix A. Constants
@@ -1352,7 +1365,7 @@ In the order to reach for them. Change one at a time.
 | `BOOST_CAP` | 15 | 13.5 |
 | `SPURT_DURATION_CAP`, `SPURT_TAPS_MIN`, `SPURT_SPEED_CAP` | 45 s, 150, 4 | 13.4 |
 | `AUTO_BUY_SHARE` | 0.10 | CONTENT.md 8 |
-| `MASTERY_LEVELS` | 25, 50, 100, 250, 350, 400, 450, 500, 550, 600 | 14.5 |
+| `MASTERY_LEVELS` | one list of ten levels per world, in the table in 14.5 | 14.5 |
 | `MASTERY_PCT` | 0.10 | 14.5 |
 | `CUSTOMER_INTERVAL` | 20 s | 14.4 |
 | `CUSTOMER_QUEUE_CAP` | 15 | 14.4 |

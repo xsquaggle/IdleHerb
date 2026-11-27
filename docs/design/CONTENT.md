@@ -484,7 +484,7 @@ Rules are in GDD 9.2. Three branches of 37 points. A branch has six minor skills
 
 ## 6. Research
 
-Rules are in GDD 10. Forty projects in four lanes. A project needs the project named in `requires` to be finished first. Cost is in Insight. Totals: about 626,000 Insight and about 442 hours.
+Rules are in GDD 10. Forty-eight projects in four lanes. A project needs the project named in `requires` to be finished first. Cost is in Insight. Totals: about 809,000 Insight and about 1,354 hours. The eight rows marked 0.4 are long projects (GDD 10, rule 7): cheap in Insight, four or five days each.
 
 ### 6.1 Tools
 
@@ -513,10 +513,17 @@ Rules are in GDD 10. Forty projects in four lanes. A project needs the project n
 | `research.soil.crop_rotation_1` | Crop Rotation I | Soil Science I | 300 | 30 min | Research speed ×1.2 |
 | `research.soil.crop_rotation_2` | Crop Rotation II | Crop Rotation I | 4,000 | 6 h | Research speed ×1.2 |
 | `research.soil.crop_rotation_3` | Crop Rotation III | Crop Rotation II | 60,000 | 36 h | Research speed ×1.2 |
+| `research.soil.crop_rotation_4` | Crop Rotation IV (0.4) | Crop Rotation III | 12,000 | 96 h | Research speed ×1.4 |
 | `research.soil.frugal_farming_1` | Frugal Farming I | Soil Science I | 600 | 1 h | Research level cost ×0.9 |
 | `research.soil.frugal_farming_2` | Frugal Farming II | Frugal Farming I | 12,000 | 12 h | Research level cost ×0.9 |
+| `research.soil.living_soil_1` | Living Soil I (0.4) | Soil Science III | 18,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_2` | Living Soil II (0.4) | Living Soil I | 21,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_3` | Living Soil III (0.4) | Living Soil II | 24,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_4` | Living Soil IV (0.4) | Living Soil III | 27,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_5` | Living Soil V (0.4) | Living Soil IV | 30,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_6` | Living Soil VI (0.4) | Living Soil V | 36,000 | 120 h | Research profit ×1.3 |
 
-All five Soil Science projects together are ×7.59 profit. All three Crop Rotations are ×1.73 speed.
+All five Soil Science projects together are ×7.59 profit and all six Living Soil projects ×4.83, so research profit is ×36.6 in all. All four Crop Rotations are ×2.42 speed. Living Soil I needs only Soil Science III, so the long chain can start in week 3 while Soil Science IV and V are still being saved for.
 
 ### 6.3 Botany
 
@@ -542,6 +549,7 @@ All five Soil Science projects together are ×7.59 profit. All three Crop Rotati
 | `research.people.training_day_1` | Training Day I | | 1,500 | 3 h | `manager.power` +10% |
 | `research.people.training_day_2` | Training Day II | Training Day I | 15,000 | 16 h | `manager.power` +10% |
 | `research.people.training_day_3` | Training Day III | Training Day II | 90,000 | 40 h | `manager.power` +10% |
+| `research.people.training_day_4` | Training Day IV (0.4) | Training Day III | 15,000 | 96 h | `manager.power` +25% |
 | `research.people.lucky_clover_1` | Lucky Clover Patch I | | 2,000 | 4 h | `chest.luck` +10% |
 | `research.people.lucky_clover_2` | Lucky Clover Patch II | Lucky Clover Patch I | 25,000 | 24 h | `chest.luck` +10% |
 | `research.people.sprout_lure` | Sprout Lure | | 700 | 90 min | `visitor.interval` -10% |
@@ -574,7 +582,7 @@ Rules are in GDD 12.2. Paid in Ribbons. Nothing here ever resets.
 | `id` | `name` | Effect | Levels | Cost |
 |---|---|---|---|---|
 | `shop.ribbon.golden_hour` | Golden Hour | Profit ×2 per level, in every world | 5 | 3, 10, 40, 150, 600 |
-| `shop.ribbon.auto_gardener` | Auto-Gardener | Auto-buy. Every floor gets a switch. While it is on and the game is open, the floor buys its next level whenever that costs at most 10% of the currency in hand | 1 | 4 |
+| `shop.ribbon.auto_gardener` | Auto-Gardener | Auto-buy. Every floor gets a switch, and switches start on. While the game is open, a floor whose switch is on buys its next level whenever that costs at most 10% (`AUTO_BUY_SHARE`) of the currency in hand. A floor that is not open yet opens itself on the same rule. Floor 1's manager in each world stays hired through every Replant and Festival, with no fee, while floor 1's switch is on (a world locked again by a Festival gets it back, free, when its ticket is bought again). So no world goes dead after a reset | 1 | 4 |
 | `shop.ribbon.deed_mitten` | Deed: Mount Mitten | World 4 can be reached | 1 | 8 |
 | `shop.ribbon.festival_fireworks` | Festival Fireworks | `spurt.duration` +2 s per level | 3 | 10, 50, 250 |
 | `shop.ribbon.second_desk` | Second Research Desk | Two research projects run at once | 1 | 15 |
@@ -630,7 +638,7 @@ Rules are in GDD 11.1. One step is active at a time. A step whose goal is alread
 | 32 | `quest.story.busy_bees` | Busy Bees | Finish Bee Hotel and catch a Busy Bee | 50 Pollen | | 600 |
 | 33 | `quest.story.matchmaker` | Matchmaker | Make a hybrid | 30 Gems | | 1,000 |
 | 34 | `quest.story.city_slicker` | City Slicker | Open floor 8 in Loomington | Golden Chest | | 1,000 |
-| 35 | `quest.story.rising_star` | Rising Star | Earn 3 Mastery stars in one world | 30 Gems | | 1,000 |
+| 35 | `quest.story.rising_star` | Rising Star | Earn a Mastery star in two worlds | 30 Gems | | 1,000 |
 | 36 | `quest.story.island_time` | Island Time | Buy the ticket to Papaya Cay | Golden Chest | World 3, Weather | 1,500 |
 | 37 | `quest.story.rain_or_shine` | Rain or Shine | In Papaya Cay, have plants from all three weather groups planted at once | 40 Gems | | 1,000 |
 | 38 | `quest.story.festival_season` | Festival Season | Have 8 Ribbons pending | Silver Chest | Harvest Festival | 1,500 |
@@ -641,7 +649,7 @@ Rules are in GDD 11.1. One step is active at a time. A step whose goal is alread
 | 43 | `quest.story.small_step` | Small Step | Arrive on the Moon | Crystal Chest | World 5, Floating Harvests | 4,000 |
 | 44 | `quest.story.among_the_stars` | Among the Stars | Arrive in the Nebula Nursery | Starlight Chest | World 6, Orbital Sunrise | 5,000 |
 
-Steps 43 and 44 are `later`. With a four-world launch the fixed chain ends at step 42. Steps 40 to 42 are in the order an active player meets them: Mount Mitten around day 7, the first Exotic plant about the same time, and the fifth Mastery star around day 11. The skill tree has no story step. It opens at player level 6.
+Steps 43 and 44 are `later`. With a four-world launch the fixed chain ends at step 42. Steps 40 to 42 are in the order an active player meets them: Mount Mitten around day 7 or 8, and the first Exotic plant and the fifth Mastery star both around day 11. Step 35 asks for stars in two worlds because version 0.4's Mastery levels give a second star in one world only around day 5, after Papaya Cay. The skill tree has no story step. It opens at player level 6.
 
 **Chapter goals.** After the last fixed step, every unlocked world shows a repeating goal: every floor in that world at level `100 x n`, for `n = 1, 2, 3` and so on. Each is counted once, on the best level ever reached. Each gives a Silver Chest and 2,000 XP.
 
@@ -715,7 +723,7 @@ Rules are in GDD 11.4. Twenty families with five tiers each. Ids are `ach.<famil
 | `quests` | Daily and weekly quests finished | 10 | 50 | 200 | 500 | 1,500 |
 | `offline` | Hours of offline earnings collected | 1 | 24 | 100 | 500 | 2,000 |
 
-All 100 can be earned with the four launch worlds. The top `stars` tier asks for 30 of the 40 stars in those worlds, which the rough script puts near day 60 for an active player (GDD 14.5). When worlds 5 and 6 ship, a sixth tier can be added to `managers`, `plants` and `stars`.
+All 100 can be earned with the four launch worlds. The top `stars` tier asks for 30 of the 40 stars in those worlds, which the balance simulator's active player reaches around day 32 (GDD 14.5). When worlds 5 and 6 ship, a sixth tier can be added to `managers`, `plants` and `stars`.
 
 ## 12. Visitors and Codex
 
