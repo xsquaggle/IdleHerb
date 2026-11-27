@@ -582,7 +582,7 @@ Rules are in GDD 12.2. Paid in Ribbons. Nothing here ever resets.
 | `id` | `name` | Effect | Levels | Cost |
 |---|---|---|---|---|
 | `shop.ribbon.golden_hour` | Golden Hour | Profit ×2 per level, in every world | 5 | 3, 10, 40, 150, 600 |
-| `shop.ribbon.auto_gardener` | Auto-Gardener | Auto-buy. Every floor gets a switch, and switches start on. While the game is open, a floor whose switch is on buys its next level whenever that costs at most 10% (`AUTO_BUY_SHARE`) of the currency in hand. A floor that is not open yet opens itself on the same rule. Floor 1's manager in each world stays hired through every Replant and Festival, with no fee, while floor 1's switch is on (a world locked again by a Festival gets it back, free, when its ticket is bought again). So no world goes dead after a reset | 1 | 4 |
+| `shop.ribbon.auto_gardener` | Auto-Gardener | Auto-buy. Every floor gets a switch, and switches start on. While the game is open, a floor whose switch is on buys its next level whenever that costs at most 10% (`AUTO_BUY_SHARE`) of the currency in hand. A floor that is not open yet opens itself on the same rule. Floor 1's manager in every unlocked world works with no fee while floor 1's switch is on: it is hired free the moment the world is reached, the first time or again after a Festival, and stays hired through every Replant and Festival. So no world goes dead after a reset | 1 | 4 |
 | `shop.ribbon.deed_mitten` | Deed: Mount Mitten | World 4 can be reached | 1 | 8 |
 | `shop.ribbon.festival_fireworks` | Festival Fireworks | `spurt.duration` +2 s per level | 3 | 10, 50, 250 |
 | `shop.ribbon.second_desk` | Second Research Desk | Two research projects run at once | 1 | 15 |

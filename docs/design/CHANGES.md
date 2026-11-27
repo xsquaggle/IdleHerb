@@ -10,7 +10,7 @@ The balance simulator (`apps/sim`, report in `docs/balance/REPORT.md`) ran versi
 
 | # | Rule in 0.3 | Rule in 0.4 | Where |
 |---|---|---|---|
-| 1 | The Auto-Gardener buys a floor's next level when it costs at most `AUTO_BUY_SHARE` of the currency in hand | It also opens a floor that is not open yet on the same rule, and keeps floor 1's manager in each world hired through every Replant and Festival, with no fee. A world locked again by a Festival gets that manager back, free, when its ticket is bought again. Floor switches start on. Why: an older world went dead after a Replant (floor 1 had no manager, so nothing earned), and its late Mastery stars were out of reach | CONTENT 8, GDD 12.1, 12.2, 14.5 |
+| 1 | The Auto-Gardener buys a floor's next level when it costs at most `AUTO_BUY_SHARE` of the currency in hand | It also opens a floor that is not open yet on the same rule, and floor 1's manager in every unlocked world works with no fee: hired free the moment the world is reached (the first time or again after a Festival), and kept through every Replant and Festival. Floor switches start on. Why: an older world went dead after a Replant (floor 1 had no manager, so nothing earned), and its late Mastery stars were out of reach | CONTENT 8, GDD 12.1, 12.2, 14.5 |
 | 2 | One list of ten Mastery levels for every world | One list of ten per world, picked by the simulator from measured days | GDD 14.5 |
 | 3 | First Replant at 60 pending Compost | At 440, from a rule: every play style's first Replant inside its first 24 hours | GDD 12.1 |
 | 4 | 40 research projects | 48: eight long projects added (B.3). `researchProfit` gains `1.3 ^ (Living Soil done)` and `researchSpeed` a ×1.4 for Crop Rotation IV | GDD 10, 13.1, 13.2 |
@@ -84,7 +84,7 @@ The costs are the first proposal's times 0.06, scaled to the Insight rate the si
 
 **Balance simulator.**
 1. Rebuild the content tables from version 0.4 and retire the four overlays. `AUTO_GARDENER_RESTARTS` becomes the rule, not a flag.
-2. Check the Auto-Gardener's wording in CONTENT 8 against the core: switches start on, a floor that is not open yet opens itself at `AUTO_BUY_SHARE`, and a world locked again by a Festival gets floor 1's manager back, free, when its ticket is bought again.
+2. The Auto-Gardener in CONTENT 8: per-floor switches that start on, with floor 1's switch governing the free manager (the core had one switch for the whole Auto-Gardener; the run is the same, since the simulated player leaves everything on).
 3. Story step 35 changed, so its 1,000 XP comes earlier.
 4. Run `pnpm sim` and confirm the report still shows the accepted run. Report the day the Ribbon Shop's fixed items are all bought (GDD 18).
 5. The numbers are frozen. No refit unless a playtest asks for one.
