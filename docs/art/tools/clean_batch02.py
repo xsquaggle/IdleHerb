@@ -797,11 +797,117 @@ def bursts():
     sheet(pairs, 4, 4, os.path.join(REVIEW, 'p23_bursts_before_after.png'))
 
 
+# ---------------------------------------------------------------- round 8: the World 1 managers (prompts 24 to 27)
+# One character per row, four poses: stand, work, cheer, big moment. The zip gives each pose trimmed, with its box on
+# the native sheet, so the frames are rebuilt here on one canvas per character: the column's place across the cell,
+# and the row's ground line (the lowest foot in the row) on the frame's feet line. Jumps keep their height.
+# Managers stand a little taller than workers (76 to 80 pixels) and raise their items when they cheer, so their
+# frame is 96x96 with the feet standing on row 91 (feet line y 92).
+MGR_FRAME, MGR_FEET = 96, 92
+# plum knitwear (Nana Sprig's cardigan) is a red-purple: the MAUVE rule sends it to the blue lavender and stone ramps
+PLUM = (lambda L, C, h: (h >= 335 or h < 20) and C > 0.07 and L < 0.5, {'rose-1', 'red-1', 'clay-1', 'wood-1'})
+# olive cloth (field jackets, work trousers) has no ramp of its own: keep it on the dark leaf greens, not the teal sage
+# silver hair with a lilac tint: once the rose ramp is open for plum it turned pink without this rule
+SILVER = (lambda L, C, h: (h >= 300 or h < 30) and L >= 0.5 and C < 0.08,
+          {'stone-3', 'stone-4', 'stone-5', 'ash-2', 'ash-3', 'ash-4', 'lavender-5', 'lavender-6', 'white', 'cream'})
+# lavender flowers painted pink-purple (hue 315 to 335) stay on the lavender ramp
+LILAC = (lambda L, C, h: 315 <= h < 335 and C > 0.08, {'lavender-3', 'lavender-4', 'lavender-5'})
+OLIVE = (lambda L, C, h: 90 <= h < 135 and C > 0.035 and L < 0.6, {'leaf-1', 'leaf-2', 'leaf-3'})
+MGR_POSES = [('standing', 'stand'), ('working', 'work'), ('cheering', 'cheer'), ('big_moment', 'big_moment')]
+# character: (floor, design id, rarity, extra ramps, accents kept, rules)
+MANAGERS = {
+    'nana_sprig': (1, 'card.manager.nana_sprig', 'common',
+                   {'lavender', 'rose', 'stone', 'leaf', 'sage', 'clay-4', 'steel'}, {'rose', 'leaf'},
+                   [PLUM, SILVER, LILAC, OLIVE, TIN]),
+    'basil_brumble': (2, 'card.manager.basil_brumble', 'common',
+                      {'red', 'leaf', 'clay-4', 'clay-5', 'steel', 'sky-4', 'sky-5'}, {'red', 'leaf'}, []),
+    'rowan_rake': (3, 'card.manager.rowan_rake', 'common',
+                   {'leaf', 'sage', 'sky', 'steel', 'clay-4'}, {'leaf', 'sky'}, [BROWN_SKIN, OLIVE]),
+    'posy_seedwell': (4, 'card.manager.posy_seedwell', 'uncommon',
+                      {'leaf', 'sage', 'clay-4', 'clay-5', 'wood-5', 'wood-6', 'steel'}, {'leaf'}, [OLIVE]),
+    'fern_petrie': (5, 'card.manager.fern_petrie', 'uncommon',
+                    {'leaf', 'sage', 'steel', 'clay-4', 'clay-5', 'sky-5'}, {'leaf'}, [TIN]),
+    'juniper_jones': (6, 'card.manager.juniper_jones', 'uncommon',
+                      {'leaf', 'red', 'clay-4', 'clay-5', 'lavender', 'steel'}, {'leaf', 'red'}, []),
+    'old_moss': (7, 'card.manager.old_moss', 'rare', {'leaf', 'sage', 'clay-4', 'steel'}, {'leaf'}, []),
+    'captain_kelp': (8, 'card.manager.captain_kelp', 'epic', {'stone', 'sky-1', 'sky-2', 'steel', 'clay-4'},
+                     {'stone'}, []),
+    'clementine_zest': (9, 'card.manager.clementine_zest', 'legendary',
+                        {'rose', 'lavender', 'leaf', 'clay-4', 'clay-5', 'steel'}, {'rose', 'lavender'}, [MAUVE]),
+    'granny_evergreen': (10, 'card.manager.granny_evergreen', 'exotic',
+                         {'leaf', 'sage', 'clay-4', 'clay-5', 'steel'}, {'leaf'}, [BROWN_SKIN]),
+}
+MGR_SHEETS = ['b02_24_managers_floors01_03', 'b02_25_managers_floors04_06', 'b02_26_managers_floors07_08',
+              'b02_27_managers_floors09_10']
+
+
+def managers():
+    root = pkg('b02_24_managers_floors01_03')
+    sl = json.load(open(os.path.join(root, 'slices.json')))
+    for sh in sl['sheets']:
+        key = sh['file'][:-4]
+        if key not in MGR_SHEETS:
+            continue
+        nw, nh = sh['native_size']
+        colw = nw / 4
+        by_char = {}
+        for sp in sh['sprites']:
+            by_char.setdefault(sp['character'], {})[sp['pose']] = sp
+        pairs = []
+        for ch, poses in by_char.items():
+            if ch not in MANAGERS:
+                continue
+            floor, mid, rarity, extra, keep, rules = MANAGERS[ch]
+            sps = [poses[p] for p, _ in MGR_POSES]
+            ground = max(sp['native_box']['y'] + sp['native_box']['h'] for sp in sps)
+            tallest = max(ground - sp['native_box']['y'] for sp in sps)
+            if tallest > MGR_FEET:
+                REPORT.append(dict(cls='actor', name='%s: too tall (%d), not cleaned' % (ch, tallest), size=[0, 0],
+                                   files=0, source_colours=0, colours=0, budget=32, within_budget=False,
+                                   outline_pixels_fixed=0, mean_move=0, max_move=0, palette=[]))
+                continue
+            raws = []
+            for col, sp in enumerate(sps):
+                nb = sp['native_box']
+                im = load(os.path.join(root, sp['file']))
+                assert im.shape[:2] == (nb['h'], nb['w']), sp['name']
+                x0 = int(round(nb['x'] - col * colw - (colw - MGR_FRAME) / 2))
+                x0 = min(max(x0, 0), MGR_FRAME - nb['w'])
+                y0 = MGR_FEET - (ground - nb['y'])
+                fr = np.zeros((MGR_FRAME, MGR_FRAME, 4), np.uint8)
+                fr[y0:y0 + nb['h'], x0:x0 + nb['w']] = im
+                raws.append(fr)
+            ramps = PEOPLE | extra
+            idxs, st = snap_many(raws, ramps | INKSET, rules=rules)
+            idxs = apply_plan(idxs, merge_plan(idxs, 32, {'blush'} | keep))
+            fixed = 0
+            for i in range(4):
+                idxs[i], n = outline(idxs[i], keep_thin=True)
+                fixed += n
+            folder = 'w1_floor%02d_manager' % floor
+            mf = manifest('actors/%s/frames.json' % folder)
+            mf.clear()
+            mf.update(who=ch.replace('_', ' ').title(), id=mid, rarity=rarity, floor=floor,
+                      frame=[MGR_FRAME, MGR_FRAME], baseline_y=MGR_FEET, source=key + '.png', frames=[],
+                      note='Manager frames: stand, work, cheer, big moment. Stand at the manager spot at the right '
+                           'end of the floor. The face is replaced later by one hand-drawn head; the stand frame '
+                           'is also the card picture.')
+            for i, ((_, name), idx) in enumerate(zip(MGR_POSES, idxs)):
+                fname = '%02d_%s_%dx%d.png' % (i + 1, name, MGR_FRAME, MGR_FRAME)
+                save(idx, os.path.join(OUT, 'actors', folder, fname))
+                mf['frames'].append(dict(name=name, file=fname))
+            note('actor', '%s, %s (4 frames)' % (folder, ch), idxs, st, fixed, 32)
+            pairs += list(zip(raws, idxs))
+        if pairs:
+            sheet(pairs, 4, 3, os.path.join(REVIEW, '%s_before_after.png' % key[:6]))
+
+
 STEPS = [('b02_01_visitors', visitors), ('b02_02_currency_icons', currency_icons), ('b02_03_herb_cards_common', herb_cards),
          ('b02_06_herb_growth_stages', growth_stages), ('b02_07_floor09_soap_workshop_props', soap_props),
          ('b02_08_backwalls_soap_hq', walls), ('b02_09_pip_guide', pip), ('b02_10_workers_floor04_garden_shed', workers),
          ('b02_18_rarity_emblems', emblems), ('b02_19_chests_copper_silver', chests),
-         ('b02_21_card_frames_common_rare', card_frames), ('b02_23_reveal_effects', bursts)]
+         ('b02_21_card_frames_common_rare', card_frames), ('b02_23_reveal_effects', bursts),
+         ('b02_24_managers_floors01_03', managers)]
 for k, step in STEPS:
     if os.path.isdir(pkg(k)) or (step is herb_cards and any(os.path.isdir(pkg(c)) for c in CARDS)):
         step()

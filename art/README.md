@@ -2,7 +2,7 @@
 
 True-size sprites on the 640×360 art-pixel grid, in the 76-colour master palette. Rules are in [docs/art/STYLE_BIBLE.md](../docs/art/STYLE_BIBLE.md).
 
-Everything here comes from Asset Batch 1 (17 of its 18 images; the manager image is on hold) and Asset Batch 2 (prompts 1 to 17; the rarity kit of round 7 is still to come). All of it is at the **automatic pass** stage.
+Everything here comes from Asset Batch 1 (17 of its 18 images; its manager image was replaced by Batch 2 round 8) and Asset Batch 2 (prompts 1 to 23, plus the first two manager sheets of round 8). All of it is at the **automatic pass** stage.
 
 | Folder | Contents |
 |---|---|
@@ -16,6 +16,7 @@ Everything here comes from Asset Batch 1 (17 of its 18 images; the manager image
 | `actors/floor08_ropewalk/` | The two ropewalk workers, one standing pose each |
 | `actors/w1_floor04_worker1/` to `…floor10_worker1/` | Batch 2 workers: two per floor for floors 4 to 9 and the HQ clerk of floor 10. Nine 80×80 frames each, in the same order as the gardeners. `frames.json` names the person, the source sheet and the feet line |
 | `actors/w1_floor01_worker2/`, `…floor02…`, `…floor03…` | The second worker of floors 1 to 3, same layout |
+| `actors/w1_floor01_manager/` to `…floor06_manager/` | The fixed managers of floors 1 to 6 (Nana Sprig, Basil Brumble, Rowan Rake, Posy Seedwell, Fern Petrie, Juniper Jones): four 96×96 frames each (stand, work, cheer, big moment), feet on y 92. `frames.json` names the person, design id, rarity and floor. Floors 7 to 10 follow when their redrawn sheets come back |
 | `visitors/` | The six visitors in two-frame loops, 32×32: Golden Sprout, Sunbeam Sprout, Tap Storm Sprout, Dewdrop, Mystery Crate, Busy Bee. `visitors.json` gives the frames and pivots |
 | `story/pip/` | Pip, the sprout helper: nine 48×48 poses (smile, blink, talk, wave, jump, surprised, thinking, sad, peek). `layers/` and `pip.json` hold the parts |
 | `chests/` | All six chest tiers, 96×80. Wooden Crate (`common`) and Golden Chest (`legendary`) from Batch 1: one base, four lids and a crack shadow each. Copper, Silver, Crystal and Starlight from Batch 2: a base and a lid for each of the four steps. `chests.json` gives the draw order and maps the design ids (`chest.copper` and so on) to these names. `frames/` holds the four composed frames of each chest |

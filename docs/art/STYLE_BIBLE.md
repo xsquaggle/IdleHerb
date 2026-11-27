@@ -87,6 +87,7 @@ One rule: **every art pixel in the game is the same size on screen.** The game r
 | Floor content zone | x 20 to 340, floor line at y 112 | Feet and planter bases sit on y 112 |
 | Room back wall | 336×104 | Opaque, quiet, sits behind everything |
 | Adult actor | 64 tall on an 80×80 canvas | Feet baseline y 76. Children 44 to 52 tall |
+| Manager | 72 to 80 tall on a 96×96 canvas | Feet baseline y 92. Placed so the feet sit on the floor line like a worker's |
 | Manager portrait | 48×48 bust | Cut from the actor's head and shoulders, redrawn |
 | Herb in a planter | up to 48×60 | Planter about 32 wide |
 | Fibre hemp | 32×96 per clump | Taller than a person on purpose |
@@ -287,7 +288,7 @@ Each material has one recipe. Steps are ramp steps, dark to light.
 Every floor has its own manager, who never moves to another floor (Lawson's call on 2026-11-25; design version 0.3, GDD 7 and CONTENT 2). So:
 
 - **A manager belongs to one room.** The sprite may work at that room's job and hold its tools. Their own signature item, hat or hairstyle still makes them read alone, because the same sprite is their card picture.
-- **Four body poses**, same 64 pixel height, 80×80 canvas and feet line (y 76) as workers: *stand* (facing the viewer, holding their item), *work* (facing right, at their job), *cheer* (hired or levelled up) and *big moment* (the ability for Rare and better, a signature gesture for the rest). Head and face are built like a worker's (below), and the blink comes from the Face Kit. No walk cycle.
+- **Four body poses** on a **96×96 canvas with the feet line on y 92**, 72 to 80 pixels tall, so a manager stands a head-top taller than the workers (64) and has room to raise an item when cheering: *stand* (facing the viewer, holding their item), *work* (facing right, at their job), *cheer* (hired or levelled up) and *big moment* (the ability for Rare and better, a signature gesture for the rest). Head and face are built like a worker's (below), and the blink comes from the Face Kit. No walk cycle.
 - **Card and portrait** come from the stand pose: the full body on the large card over the rarity backdrop, and a 48×48 bust for lists.
 - **Every floor has a manager spot** at its right end (section 13). Before the manager is hired the spot shows its empty stool, crate or desk.
 - **Rarity follows the floor** (CONTENT 2.1). The top floor's manager is that world's Head, Exotic, and is drawn as the grandest person in the world: the biggest silhouette and the richest outfit.
@@ -620,7 +621,7 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | Room back walls for every floor | The shell interiors are transparent. World 1 floors 1 to 8 in **B1**. 26 more for launch |
 | Growth stages for every plant except mint | Basil, rosemary, lavender in **B1** |
 | Animation sheets for every worker except the B22 gardener | Lead workers of floors 1, 2 and 3 in **B1**. 31 more lead workers for launch, and a short sheet (stand, blink, two work frames) for each room's second worker |
-| Manager sprites, four poses each | 50 managers in the design document (version 0.3), one per floor, 34 at launch. Twelve are pictured in B5 and B21 and are redrawn in the crisp style with their poses. 22 are new for launch. World 1's ten (six redrawn, four new) are Batch 2, round 8; worlds 2 to 4 follow in later batches |
+| Manager sprites, four poses each | 50 managers in the design document (version 0.3), one per floor, 34 at launch. Twelve are pictured in B5 and B21 and are redrawn in the crisp style with their poses. 22 are new for launch. World 1's ten (six redrawn, four new) are Batch 2, round 8: floors 1 to 6 are back and cleaned into `art/actors/w1_floorNN_manager/`, floors 7 to 10 are being redrawn smaller. Worlds 2 to 4 follow in later batches |
 | Plants | 38 in the design document, 36 at launch. Nine herbs are pictured (B9, B23), seven of them launch cards. **B1** adds the six hemp cards. 23 more herb cards are needed for launch. Growth stages are drawn once per family: mint exists (B24), hemp, basil, rosemary and lavender are in **B1**, and thyme, sage and chamomile are still to make |
 | Heirlooms | Six new icons: clover locket, bramble gloves, whetstone, spindle, guild banner, golden rope coil. One redraw: the B11 mortar becomes the Moonstone Birdbath |
 | Visitors | Six new animated sprites: three Golden Sprouts with badges, Dewdrop, Mystery Crate, Busy Bee |
@@ -666,4 +667,4 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 - **v1.2:** follows design version 0.2, which plans four worlds at launch. Mount Mitten's look is fixed (section 7), the missing list has launch counts (section 23), the B11 mortar becomes the Moonstone Birdbath, the ticket plate and "Coming soon" card join the UI kit, and the later batches are laid out in BATCH_PLAN.md. The look, grid, palette and prompt suffix are unchanged.
 - **v1.3:** after the first full batch of our own images. Adds the wall veil (section 13) and the 32-colour budget for a worker frame that holds a prop (section 6). Managers still read as in v1.1 and wait for design version 0.3.
 - **v1.4:** the rarity reveal ladder (section 19), the six rarity emblems with two free slots above Exotic (section 8), and chests named by the design's six chest tiers instead of by rarity (section 15). Lawson asked for reveals that build up more the rarer the item is.
-- **v1.5:** managers follow design version 0.3 (merged 2026-11-26): one fixed manager per floor, drawn at work in their own room with four poses, rarity by floor, the Head as the grandest person in each world, and hemp floors cast with the hemp cast (section 10). The floor-neutral pose is gone.
+- **v1.5:** managers follow design version 0.3 (merged 2026-11-26): one fixed manager per floor, drawn at work in their own room with four poses, rarity by floor, the Head as the grandest person in each world, and hemp floors cast with the hemp cast (section 10). The floor-neutral pose is gone. Managers use a 96×96 frame with the feet on y 92 (the first manager sheets came back 72 to 80 pixels tall, too tall for the 80×80 worker frame).

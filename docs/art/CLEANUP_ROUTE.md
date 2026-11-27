@@ -131,6 +131,16 @@ Lawson made the round twice and sent five zips. One zip held all six images; Law
 - **Bursts lose their dark specks.** Specks of up to four pixels drawn only in outline colour read as dirt, so they are removed. Coloured motes stay.
 - **The card picture fits the windows.** The windows are 118 to 130 pixels wide and 89 to 95 tall. Drawn at (36, 33), the 108×100 pictures sit centred and their pots tuck under the name ribbon. `frames.json` records each window.
 
+## Batch 2, round 8: the World 1 managers (prompts 24 to 27)
+
+Lawson sent all four manager sheets in one zip, with a native copy of each pose trimmed to its box and a `slices.json` that names the character and pose. `clean_batch02.py` (step `managers`) rebuilds each character on one canvas: each pose keeps its place across its column, and the row's lowest foot lands on the feet line, so jumps keep their height. Sheets 24 and 25 (floors 1 to 6) passed and made 24 frames. Before/after sheets are in `cleanup/batch02/`.
+
+- **Managers need a bigger frame.** The characters came back 72 to 80 pixels tall and raise their items above their heads when they cheer, so they did not fit the workers' 80×80 frame. Managers use 96×96 with the feet on y 92.
+- **The sheet shape sets the size.** Sheets 26 and 27 were asked for in 16:9 with two rows, and ChatGPT filled the taller rows with bigger people (101 to 114 pixels). The step refuses any character taller than the feet line, and the redo asks for the size of sheet 24 in words. Future manager sheets keep three rows on a 3:2 sheet, or say the pixel height.
+- **Plum, olive and silver need rules.** The master palette has no plum and no olive. Plum knitwear went to the blue lavender ramp under the old `MAUVE` rule, so `PLUM` keeps strong dark red-purples on `rose-1`, `red-1`, `clay-1` and `wood-1`. Olive cloth went teal on `sage`, so `OLIVE` keeps it on the three dark `leaf` steps. Once the rose ramp was open, lilac-grey hair turned pink, so `SILVER` keeps pale, low-colour purples on `stone`, `ash` and the two lightest `lavender` steps, and `LILAC` keeps pink-purple flowers on `lavender`.
+- **Burlap is light wood.** Pale burlap went to bright `gold-4` until `wood-5` and `wood-6` were allowed.
+- **Budget.** Every manager fits the 32-colour budget (26 to 31 colours).
+
 ## What this means for each asset class
 
 | Class | Route | Hand work |
