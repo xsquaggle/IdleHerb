@@ -7,16 +7,34 @@ for word from the batch builder so the two can never drift. Lawson types "next" 
 form of build_batch02_master.py and also handles images whose background line differs from the shared one
 (back walls, which are painted edge to edge).
 
-Usage: python3 build_master.py BUILDER.py OUT.md [PROMPT_NUMBER ...]   (no numbers: every prompt in the batch)
+Lawson, 2026-11-27: "Send me a zip file as well as all of the extra required reference images and label them for which
+prompt so that I don't have to add them manually every time I send it to ChatGPT, and I can send it all in one go."
+So with --refs and --zip every reference picture goes into one zip, its name starting with the numbers of the images
+it is for (img05_..., img01-13_...), and the master file uses those names. Lawson attaches two files and nothing else.
+
+Usage: python3 build_master.py BUILDER.py OUT.md [PROMPT_NUMBER ...] [--refs DIR --zip OUT.zip]
+       (no numbers: every prompt in the batch; DIR holds every reference picture under its plain name)
 """
 import os
 import runpy
 import sys
 import tempfile
+import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-BUILDER, OUT = sys.argv[1], sys.argv[2]
-WANT = [int(a) for a in sys.argv[3:]]
+args = sys.argv[1:]
+REFS_DIR = ZIP = None
+if '--refs' in args:
+    i = args.index('--refs')
+    REFS_DIR = args.pop(i + 1)
+    args.pop(i)
+if '--zip' in args:
+    i = args.index('--zip')
+    ZIP = args.pop(i + 1)
+    args.pop(i)
+assert (REFS_DIR is None) == (ZIP is None), '--refs and --zip go together'
+BUILDER, OUT = args[0], args[1]
+WANT = [int(a) for a in args[2:]]
 
 argv = sys.argv
 sys.argv = [BUILDER, os.path.join(tempfile.mkdtemp(), 'batch.md')]
@@ -57,6 +75,24 @@ for p in items:
         if f not in all_refs:
             all_refs.append(f)
 
+
+def runs(ns):
+    """[1, 2, 3, 5] -> '01-03+05'"""
+    out, start = [], ns[0]
+    for a, b in zip(ns, ns[1:] + [None]):
+        if b != a + 1:
+            out.append('%02d' % start if start == a else '%02d-%02d' % (start, a))
+            start = b
+    return '+'.join(out)
+
+
+uses = {f: [i for i, p in enumerate(items, 1) if f in refs(p)] for f in all_refs}
+label = {f: ('img%s_%s' % (runs(uses[f]), f)) if ZIP else f for f in all_refs}
+
+
+def names(p):
+    return ', '.join('`%s`' % label[f] for f in refs(p))
+
 L = []
 w = L.append
 w('# Sprout Tower: art images to make (master file)')
@@ -68,6 +104,10 @@ w('## How to work')
 w('')
 w('1. Read this whole file first. Then look at every reference picture attached to this chat. If the pictures came '
   'inside a zip, unzip it and show me each picture once, so that you can see them.')
+if ZIP:
+    w('   Every picture in the zip is named for the images it belongs to: `img05_...` is for Image 5, `img01-13_...` is '
+      'for Images 1 to 13, and `img09+13_...` is for Images 9 and 13. When you make an image, look again at every '
+      'picture whose name includes its number. The table below lists them too.')
 w('2. Make **Image 1** now. After it, give me its FILES zip (see the shared rules), then stop.')
 w('3. When I type **next**, make the next image the same way. When I type **redo** and a sentence, redo the last '
   'image with that change.')
@@ -84,7 +124,7 @@ w('')
 w('| Image | File name | Shape | Reference pictures to look at |')
 w('|---|---|---|---|')
 for i, p in enumerate(items, 1):
-    w('| %d | `%s` | %s | %s |' % (i, p['fname'], p['shape'], ', '.join('`%s`' % f for f in refs(p))))
+    w('| %d | `%s` | %s | %s |' % (i, p['fname'], p['shape'], names(p)))
 w('')
 w('## Shared rules for every image')
 w('')
@@ -105,7 +145,7 @@ for i, p in enumerate(items, 1):
     w('')
     w('- **File name:** `%s`' % p['fname'])
     w('- **Image shape:** %s' % p['shape'])
-    w('- **Reference pictures:** %s' % ', '.join('`%s`' % f for f in refs(p)))
+    w('- **Reference pictures:** %s' % names(p))
     w('- **What it is for:** %s' % p['purpose'])
     w('')
     w('```text')
@@ -125,3 +165,14 @@ for a, b in B['FIX']:
 w('')
 open(OUT, 'w', encoding='utf-8').write('\n'.join(L))
 print('images', len(items), 'refs', all_refs)
+
+if ZIP:
+    readme = ['Reference pictures for the master file %s' % os.path.basename(OUT), '',
+              'Each picture is named for the images it belongs to (img05 = Image 5, img01-13 = Images 1 to 13).', '']
+    for i, p in enumerate(items, 1):
+        readme.append('Image %d (%s): %s' % (i, p['title'], ', '.join(label[f] for f in refs(p))))
+    with zipfile.ZipFile(ZIP, 'w', zipfile.ZIP_DEFLATED) as z:
+        z.writestr('00_README_which_picture_for_which_image.txt', '\n'.join(readme) + '\n')
+        for f in all_refs:
+            z.write(os.path.join(REFS_DIR, f), label[f])
+    print('zip', ZIP, len(all_refs) + 1, 'files')
