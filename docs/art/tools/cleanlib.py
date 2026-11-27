@@ -354,3 +354,46 @@ def fit_pixels(img, w, h):
     out = _resize_rows(img, h)
     out = _resize_rows(out.transpose(1, 0, 2), w).transpose(1, 0, 2)
     return np.ascontiguousarray(out)
+
+
+def shrink_pixels(img, w, h, opaque=0.4, dark_L=0.36, dark_share=0.3):
+    """Bring an RGBA pixel-art image down to w x h for large reductions (to two thirds or less), where dropping
+    rows would lose every other line. Each new pixel takes the colour that covers most of its patch of the
+    old image, except that a dark line colour (OKLab lightness under dark_L) wins once it covers dark_share of
+    the patch, so outlines and dark details survive. A pixel is opaque when at least `opaque` of its patch is.
+    No colour is blended: every pixel keeps one of the image's own colours."""
+    H, W = img.shape[:2]
+    rgb = img[..., :3].reshape(-1, 3)
+    cols, inv = np.unique(rgb, axis=0, return_inverse=True)
+    inv = inv.reshape(H, W)
+    L = rgb_to_oklab(cols.astype(np.float64))[:, 0]
+    op = img[..., 3] == 255
+    ys, xs = np.linspace(0, H, h + 1), np.linspace(0, W, w + 1)
+
+    def spans(edges, n):
+        out = []
+        for a, b in zip(edges[:-1], edges[1:]):
+            idx = list(range(int(np.floor(a)), min(n, int(np.ceil(b)))))
+            out.append([(i, min(b, i + 1) - max(a, i)) for i in idx])
+        return out
+    sy, sx = spans(ys, H), spans(xs, W)
+    out = np.zeros((h, w, 4), np.uint8)
+    for ty in range(h):
+        for tx in range(w):
+            cover, total, opq = {}, 0.0, 0.0
+            for y, wy in sy[ty]:
+                for x, wx in sx[tx]:
+                    a = wy * wx
+                    total += a
+                    if op[y, x]:
+                        opq += a
+                        c = int(inv[y, x])
+                        cover[c] = cover.get(c, 0.0) + a
+            if not cover or opq < opaque * total:
+                continue
+            dark = [c for c in cover if L[c] < dark_L]
+            dk = max(dark, key=lambda c: cover[c]) if dark else None
+            c = dk if dk is not None and sum(cover[d] for d in dark) >= dark_share * opq else max(cover, key=cover.get)
+            out[ty, tx, :3] = cols[c]
+            out[ty, tx, 3] = 255
+    return out

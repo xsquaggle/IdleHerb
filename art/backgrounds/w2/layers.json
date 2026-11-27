@@ -23,6 +23,43 @@
    "scroll": 0.3,
    "outline": "none",
    "tiles": true
+  },
+  "town_left": {
+   "file": "town_left_116x90.png",
+   "size": [
+    116,
+    90
+   ],
+   "depth": "town",
+   "scroll": 0.5,
+   "outline": "stone-1",
+   "tiles": false,
+   "x_in_strip": 4,
+   "note": "Stands beside the tower, at the left edge of the screen"
+  },
+  "town_right": {
+   "file": "town_right_116x90.png",
+   "size": [
+    116,
+    90
+   ],
+   "depth": "town",
+   "scroll": 0.5,
+   "outline": "stone-1",
+   "tiles": false,
+   "x_in_strip": 240,
+   "note": "Stands beside the tower, at the right edge of the screen"
+  },
+  "street": {
+   "file": "street_360x90.png",
+   "size": [
+    360,
+    90
+   ],
+   "depth": "street",
+   "scroll": 1.0,
+   "outline": "ink-1",
+   "tiles": true
   }
  }
 }

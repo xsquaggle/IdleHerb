@@ -1,5 +1,6 @@
-"""Automatic clean-up pass for Asset Batch 3 (Loomington, World 2): images 1 to 7 (rooms), 8 to 11 (back walls)
-and 12 (far skyline and river). An image runs when its folder is in UPLOAD_DIR.
+"""Automatic clean-up pass for Asset Batch 3 (Loomington, World 2): images 1 to 7 (rooms), 8 to 11 (back walls),
+12 and 13 (background layers), 14 (Mayor Thyme), 15 and 16 (card pictures) and 17 (heirloom icons).
+An image runs when its folder is in UPLOAD_DIR.
 
 Usage: python3 -I clean_batch03.py UPLOAD_DIR OUT_DIR
 
@@ -22,6 +23,15 @@ What came back and what this pass does about it:
 - The far skyline and the river came back 360x90, one pixel per art pixel, which is already the game grid. They
   stay that size and repeat left to right (bible section 14: strips tile). The far layer keeps no outline; the
   river's three empty columns at each end are filled with its own edge, so the water runs on when it repeats.
+- The town and street layers came back 360x90 too. The town's thin dark lines become stone-1 (the Town outline of
+  bible section 14) and its two clusters are saved apart, to stand at the two screen edges beside the tower.
+- Mayor Thyme came back in 96x128 frames, body 76 tall but 94 to 98 with his top hat. He gets a 96x104 frame with
+  the feet on y 100. His skin came back a light tan where the brief asked for warm brown, so it moves one step
+  darker on the skin ramp.
+- Card pictures and heirloom icons came back far larger than 108x100 and 48x48 (plants 89 to 187 tall). Reductions
+  below two thirds use cleanlib.shrink_pixels (each pixel takes the colour that covers most of its patch, dark
+  lines win once they cover a third), smaller ones fit_pixels. Plants stand 94 tall on row 96 like the World 1
+  cards; icons sit inside 2 to 45 like the Batch 2 icons.
 - Every export carried runs of nearly equal colours (#772b47, #782c48, #792d49). They are folded into one before
   the snap (unify), or they fall on both sides of a palette boundary and show as speckle.
 - New colour rules for this batch, each written where it is defined: YELLOW, PLUMCLOTH, DUSTYPLUM,
@@ -35,7 +45,7 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image  # noqa: E402
 from cleanlib import (load, snap_many, merge_plan, apply_plan, outline, save, used, sheet, to_rgba,  # noqa: E402
-                      veil, VEIL, fit_pixels)
+                      veil, VEIL, INK, P_NAMES, fit_pixels, shrink_pixels)
 from oklab import rgb_to_oklab  # noqa: E402
 
 SRC, OUT = sys.argv[1], sys.argv[2]
@@ -379,6 +389,197 @@ def background():
     sheet(pairs, 1, 2, os.path.join(REVIEW, 'b03_12_background_before_after.png'))
 
 
+def smaller(img, w, h):
+    """fit_pixels for small reductions (rooms, walls), shrink_pixels below two thirds (cards, icons)."""
+    if w >= img.shape[1] * 0.7 and h >= img.shape[0] * 0.7:
+        return fit_pixels(img, w, h)
+    return shrink_pixels(img, w, h)
+
+
+def into(idx, w, h, x0, y0):
+    """Place an index image on an empty w x h canvas at (x0, y0)."""
+    out = np.full((h, w), -1, np.int32)
+    out[y0:y0 + idx.shape[0], x0:x0 + idx.shape[1]] = idx
+    return out
+
+
+# ---------------------------------------------------------------- image 13: town and riverside street
+STREET = CITY | {'ash', 'steel', 'red', 'rose'}
+STONE1 = P_NAMES.index('stone-1')
+
+
+def town_street():
+    key = 'b03_13_w2_bg_town_street'
+    if not os.path.isdir(pkg(key)):
+        return
+    pairs = []
+    mf = manifest('backgrounds/w2/layers.json')
+    mf.setdefault('layers', {})
+    for s in slices_of(key):
+        raw = unify(load(os.path.join(pkg(key), s['file'])))
+        h, w = raw.shape[:2]
+        if s['name'] == 'riverside_street':
+            raw = fill_ends(raw)
+            idx = clean_one('bg', 'w2 street', raw, STREET, 32, rules=[PERI, YELLOW, OLIVE])
+            fname = 'street_%dx%d.png' % (w, h)
+            save(idx, os.path.join(OUT, 'backgrounds', 'w2', fname))
+            mf['layers']['street'] = dict(file=fname, size=[w, h], depth='street', scroll=1.0, outline='ink-1',
+                                          tiles=True)
+            pairs.append((raw, idx))
+            continue
+        # the town: its thin dark lines become stone-1, the Town outline of bible section 14
+        idxs, st = snap_many([raw], CITY | INKSET, rules=[PERI, YELLOW, OLIVE])
+        idx = idxs[0]
+        idx[idx == INK] = STONE1
+        idx = apply_plan([idx], merge_plan([idx], 32))[0]
+        note('bg', 'w2 town', [idx], st, 0, 32)
+        pairs.append((raw, idx))
+        # two clusters, left and right of the tower, saved apart so the game can set them at the screen edges
+        for side, (a, b) in (('left', (0, 120)), ('right', (240, w))):
+            part = idx[:, a:b]
+            cols = np.nonzero((part >= 0).any(0))[0]
+            x0, x1 = a + cols.min(), a + cols.max() + 1
+            piece = idx[:, x0:x1]
+            fname = 'town_%s_%dx%d.png' % (side, x1 - x0, h)
+            save(piece, os.path.join(OUT, 'backgrounds', 'w2', fname))
+            mf['layers']['town_' + side] = dict(file=fname, size=[int(x1 - x0), h], depth='town', scroll=0.5,
+                                                outline='stone-1', tiles=False, x_in_strip=int(x0),
+                                                note='Stands beside the tower, at the %s edge of the screen' % side)
+        assert not (idx[:, 120:240] >= 0).any(), 'town middle third must be empty'
+    sheet(pairs, 1, 2, os.path.join(REVIEW, 'b03_13_town_street_before_after.png'))
+
+
+# ---------------------------------------------------------------- image 14: Mayor Thyme
+MAYOR_FRAME, MAYOR_FEET = (96, 104), 100
+# his face and hands came back a light tan (hue 40 to 68) where the brief asked for warm brown; they snap to skin
+# and then move one step darker
+MAYOR_SKIN = (lambda L, C, h: 35 <= h < 68 and 0.06 < C < 0.17 and 0.45 < L < 0.9, {'skin'})
+# his sky-blue frock coat is a soft periwinkle that fell on grey steel, and the red ribbon fell on orange clay-3
+COAT = (lambda L, C, h: 255 <= h < 285 and C > 0.06 and L > 0.36, {'sky-2', 'sky-3', 'sky-4'})
+RIBBON = (lambda L, C, h: (h < 32 or h >= 350) and C > 0.15, {'red'})
+
+
+def mayor():
+    key = 'b03_14_mayor_thyme'
+    if not os.path.isdir(pkg(key)):
+        return
+    sl = slices_of(key)
+    raws, names = [], []
+    for s in sl:
+        a = load(os.path.join(pkg(key), s['file']))
+        top = s['anchor']['y'] - MAYOR_FEET
+        assert not (a[:top, :, 3] > 0).any() and not (a[top + MAYOR_FRAME[1]:, :, 3] > 0).any(), s['name']
+        raws.append(unify(a[top:top + MAYOR_FRAME[1]]))
+        names.append(s['name'].replace('mayor_thyme_', ''))
+    ramps = PEOPLE | {'sky', 'leaf', 'sage', 'red', 'rose'} | INKSET
+    idxs, st = snap_many(raws, ramps, rules=[MAYOR_SKIN, COAT, RIBBON, YELLOW, OLIVE])
+    darker = {P_NAMES.index('skin-%d' % k): P_NAMES.index('skin-%d' % (k - 1)) for k in range(2, 7)}
+    fixed = 0
+    for i in range(len(idxs)):
+        o = idxs[i].copy()
+        for a, b in darker.items():
+            o[idxs[i] == a] = b
+        idxs[i], n = outline(o)
+        fixed += n
+    idxs = apply_plan(idxs, merge_plan(idxs, 32, {'skin'}))
+    mf = manifest('story/mayor_thyme/mayor_thyme.json')
+    mf.clear()
+    mf.update(who='Mayor Thyme', role='story character: hosts the Grand Harvest Festival and pins on the Prize Ribbons',
+              frame=list(MAYOR_FRAME), baseline_y=MAYOR_FEET, source=key + '.png', frames=[],
+              note='Built like a manager, but his top hat needs a taller frame: 96x104 with the feet on y 100. '
+                   'Body about 76 tall, 94 to 98 with the hat. Skin moved one step darker in the clean-up, as the '
+                   'brief asked for warm brown skin. The face is replaced later by one hand-drawn head.')
+    for name, idx in zip(names, idxs):
+        fname = '%s_%dx%d.png' % (name, *MAYOR_FRAME)
+        save(idx, os.path.join(OUT, 'story', 'mayor_thyme', fname))
+        mf['frames'].append(dict(name=name[3:], file=fname))
+    note('story', 'mayor_thyme (4 frames)', idxs, st, fixed, 32)
+    sheet(list(zip(raws, idxs)), 4, 3, os.path.join(REVIEW, 'b03_14_mayor_thyme_before_after.png'))
+
+
+# ---------------------------------------------------------------- images 15 and 16: card pictures
+# sheet: [(sprite, file stem, design id, rarity, ramps)]
+CARD_SHEETS = {
+    'b03_15_w2_plant_cards': [
+        ('rosemary_topiary', 'rosemary_topiary', 'plant.rosemary.topiary', 'epic',
+         {'leaf', 'sage', 'white', 'cream', 'gold', 'wood', 'stone', 'ash'}),
+        ('royal_lavender', 'lavender_royal', 'plant.lavender.royal', 'rare',
+         {'lavender', 'leaf', 'sage', 'gold', 'wood'}),
+        ('silver_sage', 'sage_silver', 'plant.sage.silver', 'rare',
+         {'sage', 'leaf', 'white', 'stone', 'ash', 'steel', 'cream'}),
+        ('creeping_thyme', 'thyme_creeping', 'plant.thyme.creeping', 'rare',
+         {'leaf', 'sage', 'rose', 'clay', 'red', 'wood', 'cream'})],
+    'b03_16_w2_hybrid_cards': [
+        ('honeymint', 'mint_honey', 'plant.mint.honey', 'legendary', {'leaf', 'sage', 'gold', 'cream', 'wood', 'white'}),
+        ('pepperleaf_basil', 'basil_pepperleaf', 'plant.basil.pepperleaf', 'legendary',
+         {'leaf', 'sage', 'lavender', 'rose', 'stone', 'ash', 'clay', 'wood', 'steel'}),
+        ('sunset_sage', 'sage_sunset', 'plant.sage.sunset', 'legendary',
+         {'sage', 'leaf', 'clay', 'rose', 'red', 'gold', 'wood', 'cream'})],
+}
+CARD, CARD_BOX, CARD_FOOT = (108, 100), (96, 94), 97   # the World 1 cards stand 94 tall with their base on row 96
+
+
+def cards():
+    for key, items in CARD_SHEETS.items():
+        if not os.path.isdir(pkg(key)):
+            continue
+        sl = {s['name']: s for s in slices_of(key)}
+        mf = manifest('cards/plants/cards.json')
+        pairs = []
+        for name, stem, pid, rarity, ramps in items:
+            raw = load(os.path.join(pkg(key), sl[name]['file']))
+            h, w = raw.shape[:2]
+            s = min(CARD_BOX[0] / w, CARD_BOX[1] / h)
+            small = smaller(raw, round(w * s), round(h * s))
+            idx = clean_one('card', stem, small, ramps, 32, thin=True, rules=[YELLOW, OLIVE], source_size=[w, h])
+            idx = into(idx, CARD[0], CARD[1], (CARD[0] - idx.shape[1]) // 2, CARD_FOOT - idx.shape[0])
+            fname = '%s_%dx%d.png' % (stem, *CARD)
+            save(idx, os.path.join(OUT, 'cards', 'plants', fname))
+            mf.setdefault('cards', {})[stem] = dict(file=fname, plant=pid, rarity=rarity)
+            pairs.append((raw, idx))
+        sheet(pairs, len(pairs), 2, os.path.join(REVIEW, '%s_cards_before_after.png' % key[:6]))
+
+
+# ---------------------------------------------------------------- image 17: heirloom icons
+HEIRLOOMS = [  # (sprite, design id, rarity, ramps)
+    ('clover_locket', 'artifact.clover_locket', 'legendary', {'gold', 'leaf', 'sage', 'cream', 'wood'}),
+    ('moonstone_birdbath', 'artifact.moonstone_birdbath', 'epic',
+     {'stone', 'ash', 'white', 'sky', 'lavender', 'cream', 'steel'}),
+    ('bramble_gloves', 'artifact.bramble_gloves', 'rare', {'wood', 'clay', 'leaf', 'lavender', 'stone', 'gold', 'cream'}),
+    ('whetstone_of_plenty', 'artifact.whetstone_of_plenty', 'legendary',
+     {'stone', 'ash', 'steel', 'wood', 'gold', 'lavender', 'leaf'}),
+    ('heirloom_spindle', 'artifact.heirloom_spindle', 'rare', {'wood', 'cream', 'gold', 'white'}),
+    ('canvas_guild_banner', 'artifact.canvas_guild_banner', 'epic', {'cream', 'white', 'wood', 'gold', 'leaf', 'sage'}),
+    ('golden_rope_coil', 'artifact.golden_rope_coil', 'legendary', {'gold', 'wood', 'cream'}),
+]
+ICON, ICON_BOX = 48, 44   # the Batch 2 icons sit inside x and y 2 to 45
+
+
+def heirlooms():
+    key = 'b03_17_heirloom_icons'
+    if not os.path.isdir(pkg(key)):
+        return
+    sl = {s['name']: s for s in slices_of(key)}
+    mf = manifest('icons/heirlooms/heirlooms.json')
+    mf.update(size=[ICON, ICON], note='Heirloom icons (design: artifacts), 48x48. The other heirlooms still use '
+                                      'their B11 pictures until those are cleaned. Smaller sizes are drawn by hand.')
+    mf.setdefault('icons', {})
+    pairs = []
+    for name, hid, rarity, ramps in HEIRLOOMS:
+        raw = load(os.path.join(pkg(key), sl[name]['file']))
+        h, w = raw.shape[:2]
+        s = min(ICON_BOX / w, ICON_BOX / h)
+        small = smaller(raw, round(w * s), round(h * s))
+        idx = clean_one('icon', 'heirloom ' + name, small, ramps, 16, thin=True, rules=[YELLOW, OLIVE],
+                        keep=ramps - {'wood', 'gold', 'cream'}, source_size=[w, h])
+        idx = into(idx, ICON, ICON, (ICON - idx.shape[1]) // 2, (ICON - idx.shape[0]) // 2)
+        fname = '%s_48x48.png' % name
+        save(idx, os.path.join(OUT, 'icons', 'heirlooms', fname))
+        mf['icons'][name] = dict(file=fname, id=hid, rarity=rarity)
+        pairs.append((raw, idx))
+    sheet(pairs, len(pairs), 3, os.path.join(REVIEW, 'b03_17_heirlooms_before_after.png'))
+
+
 # ---------------------------------------------------------------- floor mock-ups for the review
 def mockups():
     """Each new room put together: veiled wall, props, workers. A review picture, not a game screen."""
@@ -412,12 +613,16 @@ def mockups():
 rooms()
 walls()
 background()
+town_street()
+mayor()
+cards()
+heirlooms()
 for rel, data in MANIFESTS.items():
     os.makedirs(os.path.dirname(os.path.join(OUT, rel)), exist_ok=True)
     json.dump(data, open(os.path.join(OUT, rel), 'w'), indent=1)
 mockups()
 os.makedirs(REVIEW, exist_ok=True)
-json.dump(REPORT, open(os.path.join(REVIEW, 'report_b03_01-12.json'), 'w'), indent=1)
+json.dump(REPORT, open(os.path.join(REVIEW, 'report_b03.json'), 'w'), indent=1)
 for r in REPORT:
     print('%-5s %-46s %3dx%-3d colours %2d -> %2d (budget %d %s) outline %3d  move mean %.3f max %.3f' % (
         r['cls'], r['name'][:46], r['size'][0], r['size'][1], r['source_colours'], r['colours'], r['budget'],

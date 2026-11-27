@@ -18,7 +18,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 |---|---|---|---|
 | 1 | World 1 vertical slice | 18 | 17 of 18 are back, passed with no redos and cleaned into sprites. Prompt 18 (managers) is replaced by Batch 2, round 8 |
 | 2 | Finish World 1, the rarity reveal kit and the World 1 managers | 27 | Written 2026-11-26, with Lawson. Prompts 1 to 23 back and cleaned the same day (round 7, the rarity reveal kit, was added after Lawson asked for bigger rare reveals). Round 8 (prompts 24 to 27, the ten World 1 managers) added that evening, once design 0.3 merged, and back and cleaned the same night (sheets 26 and 27 redone at the right size). **Done** |
-| 3 | Loomington rooms and collection | 17 | Written 2026-11-26 as [ASSET_BATCH_03.md](ASSET_BATCH_03.md) and sent to Lawson as one master file |
+| 3 | Loomington rooms and collection | 17 | Written 2026-11-26 as [ASSET_BATCH_03.md](ASSET_BATCH_03.md) and sent to Lawson as one master file. All 17 back on 2026-11-27, no redo, cleaned the same morning. **Done** |
 | 4 | Loomington cast, managers and weekend events | 16 | Planned |
 | 5 | Papaya Cay rooms | 16 | Planned |
 | 6 | Papaya Cay cast and managers | 13 | Planned |
@@ -72,7 +72,7 @@ The grandmother at the desk in v2 floor 10 gets no worker sheet. She is Granny E
 
 ## Batch 3: Loomington rooms and collection
 
-Written as [ASSET_BATCH_03.md](ASSET_BATCH_03.md) (`tools/build_asset_batch_03.py`), 17 prompts in 6 rounds. Images 1 to 12 (rooms, walls, far skyline and river) came back on 2026-11-27 and are cleaned; 13 to 17 are owed. The rounds follow the table below, except that the city background is its own round. Each room image follows the Batch 1 ropewalk recipe: props and two workers in one row, the tap target in the middle, the manager's spot at the right end. Lawson gets it as one master file and one reference zip (`tools/build_master.py`).
+Written as [ASSET_BATCH_03.md](ASSET_BATCH_03.md) (`tools/build_asset_batch_03.py`), 17 prompts in 6 rounds. All 17 images came back on 2026-11-27 and are cleaned (Done). The rounds follow the table below, except that the city background is its own round. Each room image follows the Batch 1 ropewalk recipe: props and two workers in one row, the tap target in the middle, the manager's spot at the right end. Lawson gets it as one master file and one reference zip (`tools/build_master.py`).
 
 | # | Images | Contents |
 |---|---|---|

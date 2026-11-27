@@ -99,6 +99,41 @@
    "file": "thyme_lemon_108x100.png",
    "plant": "plant.thyme.lemon",
    "rarity": "uncommon"
+  },
+  "rosemary_topiary": {
+   "file": "rosemary_topiary_108x100.png",
+   "plant": "plant.rosemary.topiary",
+   "rarity": "epic"
+  },
+  "lavender_royal": {
+   "file": "lavender_royal_108x100.png",
+   "plant": "plant.lavender.royal",
+   "rarity": "rare"
+  },
+  "sage_silver": {
+   "file": "sage_silver_108x100.png",
+   "plant": "plant.sage.silver",
+   "rarity": "rare"
+  },
+  "thyme_creeping": {
+   "file": "thyme_creeping_108x100.png",
+   "plant": "plant.thyme.creeping",
+   "rarity": "rare"
+  },
+  "mint_honey": {
+   "file": "mint_honey_108x100.png",
+   "plant": "plant.mint.honey",
+   "rarity": "legendary"
+  },
+  "basil_pepperleaf": {
+   "file": "basil_pepperleaf_108x100.png",
+   "plant": "plant.basil.pepperleaf",
+   "rarity": "legendary"
+  },
+  "sage_sunset": {
+   "file": "sage_sunset_108x100.png",
+   "plant": "plant.sage.sunset",
+   "rarity": "legendary"
   }
  }
 }
