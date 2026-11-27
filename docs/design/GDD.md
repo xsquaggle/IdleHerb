@@ -704,7 +704,7 @@ pending(w)      = max(0, compostTotal(w) - claimed(w))
 
 - `lifetime(w)` is every unit of world `w`'s currency earned in the current era. It does not reset on Replant. Starting money from Head Start is not counted.
 - `COMPOST_E0 = 2e10`, `COMPOST_EXP = 0.4`, `COMPOST_K = 5, 15, 40, 100, 250, 600` for worlds 1 to 6.
-- **Replant is available** in a world when its top floor is open in the current run and `pending >= 1`. The very first Replant of a save needs `pending >= FIRST_REPLANT_MIN = 60`.
+- **Replant is available** in a world when its top floor is open in the current run and `pending >= 1`. The very first Replant of a save needs `pending >= FIRST_REPLANT_MIN = 440`.
 - `compostGainMult` comes only from skills and the Compost Shop, never from a card or an heirloom, so there is nothing to swap in for the click. If a respec lowers it, `pending` stays at 0 until lifetime earnings catch up.
 - **On Replant:** `claimed(w) += pending(w)`, `compostEra += pending(w)`, `compostAllTime += pending(w)`. That world's currency, floor levels and hires reset. Floor 1 is open at level 1. Plant placements are remembered and come back as floors reopen. Managers stay met and keep their card levels, and each one is hired again with its floor's fee.
 - **Passive:** every Compost earned this era gives `COMPOST_PCT = +2%` profit in every world. Spending Compost in the Compost Shop does not reduce this.
@@ -714,7 +714,9 @@ Because `pending` comes from lifetime earnings, a second Replant five minutes af
 
 Why 0.4 and not a square root: section 17.6.
 
-First Replant: the button unlocks at 60 pending Compost, which is about 1e13 lifetime Coins. Until then it shows a progress bar toward 60. Sixty Compost gives ×2.2 profit and buys Rich Soil twice, so the second run is about three times faster. There is one number for the first Replant, and the Compost Shop and Research unlock with it.
+First Replant: the button unlocks at 440 pending Compost, which is about 1.5e15 lifetime Coins. Until then it shows a progress bar toward 440. That much Compost gives ×9.8 profit and buys Rich Soil four times, so the second run is far faster than the first. There is one number for the first Replant, and the Compost Shop and Research unlock with it.
+
+The rule behind 440: **every play style's first Replant lands inside its first 24 hours.** It is the largest minimum that keeps the idle player's inside day 1. The balance simulator puts the first Replant at about 38 minutes for an active player, 6.5 hours for a mixed player and 16 hours for an idle player.
 
 ### 12.2 Harvest Festival (the big reset)
 
@@ -725,7 +727,7 @@ ribbonsTotal   = floor( (compostAllTime / RIBBON_C0) ^ RIBBON_EXP )
 ribbonsPending = ribbonsTotal - ribbonsClaimed
 ```
 
-- `compostAllTime` is all Compost ever claimed, in every era. `RIBBON_C0 = 50,000`, `RIBBON_EXP = 0.5`.
+- `compostAllTime` is all Compost ever claimed, in every era. `RIBBON_C0 = 900,000`, `RIBBON_EXP = 0.5`.
 - **Unlocks** when the player has reached world 3 at least once and `ribbonsPending >= FIRST_FESTIVAL_MIN = 8`. Later Festivals need `ribbonsPending >= 1`.
 - **On Festival:** `ribbonsClaimed += ribbonsPending`. Then every world's currency, floors, hires and `lifetime` reset. `compostEra`, every `claimed(w)` and all Compost Shop purchases reset. World tickets must be bought again. Everything in the "Keeps" column of section 3.4 stays.
 - **Passive:** every Ribbon ever earned gives `RIBBON_PCT = +10%` profit in every world. Spending Ribbons does not reduce this.
@@ -733,7 +735,7 @@ ribbonsPending = ribbonsTotal - ribbonsClaimed
 - Each Festival gives a Golden Chest (a Crystal Chest the first time, a Starlight Chest every fifth time) and one free respec. The first Festival also gives the Heirloom Pick (section 8.3).
 - The Festival screen says "Hold the Festival now for +N Ribbons (+X% profit)", and the button glows once `ribbonsPending` is at least equal to `ribbonsClaimed`.
 
-The first 8 Ribbons need about 3.2 million Compost. The pacing check puts that on day 4 to 5 for an active player.
+The first 8 Ribbons need about 57.6 million Compost. The balance simulator puts the first Festival on about day 4.6 for an active player, day 7 for a mixed player and day 15 for an idle player.
 
 ### 12.3 No third layer in v1
 
@@ -897,7 +899,7 @@ Every bucket except three has a hard ceiling, because its content is finite: car
 | 5 | **The Moon**, Crater Gardens | Lunar | Moonpennies | 8 | **Floating Harvests.** Harvests float up as bubbles. Pop them yourself for more | planned |
 | 6 | **Nebula Nursery**, an orbital greenhouse | Stellar | Stardust | 8 | **Orbital Sunrise.** The tower pays out all at once every orbit. Catch the sunrise for a bonus | planned |
 
-**Launch is four worlds.** The brief asks for at least three, and more if the pacing needs them. The pacing check has an active player arriving in Mount Mitten around day 7, so a three-world game would run out of new places inside the first week. Four worlds also bring Frosted Mint, the brief's own example of a mutation. Worlds 5 and 6 are fully designed and can ship later. In a four-world build, Mount Mitten's ticket plate and the two later deeds show a "Coming soon" card with a silhouette. They cannot be bought, so nothing can be spent on them.
+**Launch is four worlds.** The brief asks for at least three, and more if the pacing needs them. The balance simulator has an active player arriving in Mount Mitten around day 7 or 8, so a three-world game would run out of new places inside the first week. Four worlds also bring Frosted Mint, the brief's own example of a mutation. Worlds 5 and 6 are fully designed and can ship later. In a four-world build, Mount Mitten's ticket plate and the two later deeds show a "Coming soon" card with a silhouette. They cannot be bought, so nothing can be spent on them.
 
 Worlds run in parallel. Managed floors in every unlocked world keep earning at full rate while the game is open. Taps, Combo, Spurts and visitors belong to the world on screen. Tab switches world.
 
@@ -907,16 +909,16 @@ These feed the floor template in section 5.3.
 
 | # | World | `D` cost scale | `T` payout taper | `COMPOST_K` | Ticket to the next world | Deed (Ribbons) |
 |---|---|---|---|---|---|---|
-| 1 | Thymeford | 1 | 1.00 | 5 | 5e19 Coins | none |
-| 2 | Loomington | 1e5 | 0.90 | 15 | 2e19 Notes | none |
-| 3 | Papaya Cay | 2e7 | 0.85 | 40 | 1e24 Shells | none |
-| 4 | Mount Mitten | 5e10 | 0.80 | 100 | 2e29 Snowmarks | 8 |
-| 5 | The Moon | 1e16 | 0.75 | 250 | 1e34 Moonpennies | 60 |
-| 6 | Nebula Nursery | 4e20 | 0.70 | 600 | none | 600 |
+| 1 | Thymeford | 1 | 1.00 | 5 | 3e23 Coins | none |
+| 2 | Loomington | 1e5 | 0.90 | 15 | 4.5e23 Notes | none |
+| 3 | Papaya Cay | 2e7 | 0.85 | 40 | 1e25 Shells | none |
+| 4 | Mount Mitten | 5e10 | 0.80 | 100 | 3e30 Snowmarks | 8 |
+| 5 | The Moon | 1e16 | 0.75 | 250 | 3e35 Moonpennies | 60 |
+| 6 | Nebula Nursery | 4e20 | 0.70 | 600 | none | 250 |
 
 - `D` is set to about ten times the profit multiplier an active player arrives with. Floors 1 to 3 of a new world then take a minute or two, and the top floor takes about an hour of play the first time. On later visits, after a Festival, the same world goes much faster. That is the power fantasy.
 - `COMPOST_K` rises so that the newest world is always a good source of Compost.
-- These six rows are the most sensitive numbers in the game. They come from the rough pacing check in section 17.6 and are the first thing the simulator should re-derive.
+- These six rows are the most sensitive numbers in the game. The tickets and the World 6 deed were fitted by the balance simulator for version 0.4 (section 17.6). `D`, `T` and `COMPOST_K` are still the rough script's first pass.
 
 ### 14.3 Tickets and deeds
 
@@ -1059,18 +1061,18 @@ One new thing at a time. Conditions are exact. Times are targets for a new playe
 | 17 | Replant | world 1 floor 10 opened (32:00). The button is live at 60 Compost pending | about 50:00 |
 | 18 | Compost Shop and Research | first Replant | about 55:00 |
 | 19 | Heirlooms | third Replant (the story gives the Sprouting Trowel) | about 1 h 30 |
-| 20 | World 2, Customers, World Mastery, weekly quests | ticket: 5e19 Coins | end of day 1 |
+| 20 | World 2, Customers, World Mastery, weekly quests | ticket: 3e23 Coins | day 1 (about 12 hours) |
 | 21 | Bees and Pollen | research "Bee Hotel" | day 1 to 2 |
 | 22 | Weekend events | player level 12 | day 1 to 2 |
 | 23 | Cross-pollination | research "Pollination Bench" (needs world 2) | day 2 |
-| 24 | World 3, Weather | ticket: 2e19 Notes | day 3 |
+| 24 | World 3, Weather | ticket: 4.5e23 Notes | day 3 |
 | 25 | Mutation and Exotic plants | research "Mutation Chamber" (needs world 3) | day 5 to 7 |
 | 26 | Harvest Festival, Ribbon Shop and the Heirloom Pick | world 3 reached and 8 Ribbons pending | day 4 to 5 |
 | 27 | Auto-buy (the Auto-Gardener) | Ribbon Shop, 4 Ribbons | after the first Festival |
 | 28 | World 4, Hearth Heat | deed (8 Ribbons) and ticket | week 1 to 2 |
 | 29 | Head copies | 5 Mastery stars in a world (the first copy of that world's Head) | week 2 (about day 11) |
 | 30 | World 5, Floating Harvests (after launch) | deed (60 Ribbons) and ticket | week 2 to 3 |
-| 31 | World 6, Orbital Sunrise (after launch) | deed (600 Ribbons) and ticket | week 3 to 4 |
+| 31 | World 6, Orbital Sunrise (after launch) | deed (250 Ribbons) and ticket | week 3 (about day 20) |
 
 Nothing that is locked shows more than a silhouette and a one-line hint. The bottom bar starts with no buttons and gains them as features unlock.
 
@@ -1241,7 +1243,7 @@ The script plays perfectly. A real new player is about twice as slow in the firs
 | World currency | Harvests, taps, Windfalls, customer tips, abilities, offline earnings, Time Warp, Head Start | Floor levels, floor opens, hire fees, the ticket to the next world |
 | Gems | Daily quests (50 a day), weekly quests (200 a week), level-ups (10), achievements (5 to 50), codex entries (5), story quests, Dewdrops, ticket waypoints (5), event track | Chests (40, 120, 350, 1,000), Time Warp (30, 100), respec (100) |
 | Compost | Replant | Compost Shop. Spending never lowers the passive bonus |
-| Ribbons | Harvest Festival | Ribbon Shop, including one endless item. Spending never lowers the passive bonus. The shop's fixed items are all bought by about week 3, and Blue Ribbon Polish carries on from there. Cosmetic tower decorations are the planned next sink after launch (AUDIT.md section 6) |
+| Ribbons | Harvest Festival | Ribbon Shop, including one endless item. Spending never lowers the passive bonus. The shop's fixed items take longer to buy than the first guess of week 3, because version 0.4 makes Ribbons slower (`RIBBON_C0`). The simulator should report the day. Blue Ribbon Polish carries on from there. Cosmetic tower decorations are the planned next sink after launch (AUDIT.md section 6) |
 | Insight | Passive, from record milestones | Research projects |
 | Pollen | Copies of max-level cards and heirlooms, Busy Bees, chests (Copper and better), daily quests, events | Hybrid jobs (400), Exotic jobs (1,500), copies of owned cards (5 to 1,000), copies of owned heirlooms (100 to 2,000) |
 | Skill Points | Player level | Skill tree. Refunded by respec |
@@ -1336,10 +1338,10 @@ In the order to reach for them. Change one at a time.
 | `COMPOST_EXP` | 0.4 | 12.1 |
 | `COMPOST_K` (worlds 1 to 6) | 5, 15, 40, 100, 250, 600 | 12.1 |
 | `COMPOST_PCT` | 0.02 | 12.1 |
-| `FIRST_REPLANT_MIN` | 60 | 12.1 |
+| `FIRST_REPLANT_MIN` | 440 | 12.1 |
 | `RICH_SOIL` | 1.25 per level, 10 levels | 12.1 |
 | `GREEN_DEAL` | 0.96 per level, 10 levels | 13.3 |
-| `RIBBON_C0` | 50,000 | 12.2 |
+| `RIBBON_C0` | 900,000 | 12.2 |
 | `RIBBON_EXP` | 0.5 | 12.2 |
 | `FIRST_FESTIVAL_MIN` | 8 | 12.2 |
 | `RIBBON_PCT` | 0.10 | 12.2 |

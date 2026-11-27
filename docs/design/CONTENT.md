@@ -90,12 +90,12 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 
 | `id` | `name` | `climate` | `currency` | Floors | `D` | `T` | `COMPOST_K` | Ticket to next | Deed | Art | Launch |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| `world.w1` | Thymeford | temperate | Coins | 10 | 1 | 1.00 | 5 | 5e19 Coins | none | B3, B26 | yes |
-| `world.w2` | Loomington | urban | Notes | 8 | 1e5 | 0.90 | 15 | 2e19 Notes | none | B17 | yes |
-| `world.w3` | Papaya Cay | tropical | Shells | 8 | 2e7 | 0.85 | 40 | 1e24 Shells | none | B18 | yes |
-| `world.w4` | Mount Mitten | frost | Snowmarks | 8 | 5e10 | 0.80 | 100 | 2e29 Snowmarks | 8 Ribbons | new | yes |
-| `world.w5` | The Moon | lunar | Moonpennies | 8 | 1e16 | 0.75 | 250 | 1e34 Moonpennies | 60 Ribbons | B27 (file is named "world4") | later |
-| `world.w6` | Nebula Nursery | stellar | Stardust | 8 | 4e20 | 0.70 | 600 | none | 600 Ribbons | new | later |
+| `world.w1` | Thymeford | temperate | Coins | 10 | 1 | 1.00 | 5 | 3e23 Coins | none | B3, B26 | yes |
+| `world.w2` | Loomington | urban | Notes | 8 | 1e5 | 0.90 | 15 | 4.5e23 Notes | none | B17 | yes |
+| `world.w3` | Papaya Cay | tropical | Shells | 8 | 2e7 | 0.85 | 40 | 1e25 Shells | none | B18 | yes |
+| `world.w4` | Mount Mitten | frost | Snowmarks | 8 | 5e10 | 0.80 | 100 | 3e30 Snowmarks | 8 Ribbons | new | yes |
+| `world.w5` | The Moon | lunar | Moonpennies | 8 | 1e16 | 0.75 | 250 | 3e35 Moonpennies | 60 Ribbons | B27 (file is named "world4") | later |
+| `world.w6` | Nebula Nursery | stellar | Stardust | 8 | 4e20 | 0.70 | 600 | none | 250 Ribbons | new | later |
 
 ### 1.1 Thymeford (`world.w1`), currency: Coins, `D = 1`, `T = 1.0`
 
@@ -565,7 +565,7 @@ Rules are in GDD 12.1. Paid in Compost. Every item has a level cap. The whole sh
 | `shop.compost.sprout_whistle` | Sprout Whistle | `visitor.interval` -4% | 5 | `100 x 4^(n-1)` | 34,100 |
 | `shop.compost.compost_tea` | Compost Tea | `compost.gain` +10% | 10 | `50 x 3^(n-1)` | 1,476,200 |
 
-Rich Soil is the only item that multiplies profit, and its ten levels are ×9.31 in total. The first Replant (60 Compost) buys Rich Soil twice. The whole shop costs about 1.8 million Compost, which is less than one era produces, so every era ends with a full shop. After the first Harvest Festival a Buy All button buys every level the player can afford, cheapest first.
+Rich Soil is the only item that multiplies profit, and its ten levels are ×9.31 in total. The first Replant (440 Compost) buys Rich Soil four times. The whole shop costs about 1.8 million Compost, which is less than one era produces, so every era ends with a full shop. After the first Harvest Festival a Buy All button buys every level the player can afford, cheapest first.
 
 ## 8. Ribbon Shop
 
@@ -585,10 +585,10 @@ Rules are in GDD 12.2. Paid in Ribbons. Nothing here ever resets.
 | `shop.ribbon.deed_moon` | Deed: The Moon | World 5 can be reached | 1 | 60 |
 | `shop.ribbon.auto_replant` | Auto-Replant | A rule for each world: Replant by itself when pending Compost reaches a multiple of this era's Compost that the player sets (default 1). Works while the game is open | 1 | 100 |
 | `shop.ribbon.heirloom_shelf_4` | Heirloom Shelf IV | Heirloom slot 6 | 1 | 250 |
-| `shop.ribbon.deed_nebula` | Deed: Nebula Nursery | World 6 can be reached | 1 | 600 |
+| `shop.ribbon.deed_nebula` | Deed: Nebula Nursery | World 6 can be reached | 1 | 250 |
 | `shop.ribbon.blue_polish` | Blue Ribbon Polish | Each Ribbon gives +0.2 points more profit per level (10% becomes 10.2%, 10.4% and so on) | endless | `50 x 1.15^(n-1)`, rounded up |
 
-Everything except Blue Ribbon Polish costs 3,950 Ribbons. The first Festival's 8 Ribbons buy either the deed to Mount Mitten, or Golden Hour and the Auto-Gardener.
+Everything except Blue Ribbon Polish costs 3,600 Ribbons. The first Festival's 8 Ribbons buy either the deed to Mount Mitten, or Golden Hour and the Auto-Gardener.
 
 ## 9. Story quests
 
@@ -615,9 +615,9 @@ Rules are in GDD 11.1. One step is active at a time. A step whose goal is alread
 | 17 | `quest.story.know_the_ropes` | Know the Ropes | Open floor 8, the Ropewalk | | Growth Spurt | 250 |
 | 18 | `quest.story.spurt` | Spurt! | Trigger a Growth Spurt | 15 Gems | | 250 |
 | 19 | `quest.story.squeaky_clean` | Squeaky Clean | Open floor 9 | Wooden Crate | Achievements, Codex | 300 |
-| 20 | `quest.story.head_office` | Head Office | Open floor 10 | Silver Chest | The Replant button, with a bar that fills toward 60 Compost pending | 400 |
+| 20 | `quest.story.head_office` | Head Office | Open floor 10 | Silver Chest | The Replant button, with a bar that fills toward 440 Compost pending | 400 |
 | 21 | `quest.story.even_growth` | Even Growth | Every World 1 floor at level 25 | 20 Gems | | 400 |
-| 22 | `quest.story.turn_the_heap` | Turn the Heap | Replant for the first time (the button is live at 60 Compost pending) | Silver Chest | Compost Shop, Research | 500 |
+| 22 | `quest.story.turn_the_heap` | Turn the Heap | Replant for the first time (the button is live at 440 Compost pending) | Silver Chest | Compost Shop, Research | 500 |
 | 23 | `quest.story.richer_soil` | Richer Soil | Buy Rich Soil | 10 Gems | | 300 |
 | 24 | `quest.story.bright_idea` | Bright Idea | Start a research project | 10 Gems | | 300 |
 | 25 | `quest.story.back_again` | Back Again | Open floor 10 again | Copper Chest | | 300 |
