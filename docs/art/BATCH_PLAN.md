@@ -17,7 +17,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 | Batch | Theme | Images | State |
 |---|---|---|---|
 | 1 | World 1 vertical slice | 18 | 17 of 18 are back, passed with no redos and cleaned into sprites. Prompt 18 (managers) is replaced by Batch 2, round 8 |
-| 2 | Finish World 1, the rarity reveal kit and the World 1 managers | 27 | Written 2026-11-26, with Lawson. Prompts 1 to 23 back and cleaned the same day (round 7, the rarity reveal kit, was added after Lawson asked for bigger rare reveals). Round 8 (prompts 24 to 27, the ten World 1 managers) added that evening, once design 0.3 merged |
+| 2 | Finish World 1, the rarity reveal kit and the World 1 managers | 27 | Written 2026-11-26, with Lawson. Prompts 1 to 23 back and cleaned the same day (round 7, the rarity reveal kit, was added after Lawson asked for bigger rare reveals). Round 8 (prompts 24 to 27, the ten World 1 managers) added that evening, once design 0.3 merged, and back and cleaned the same night (sheets 26 and 27 redone at the right size). **Done** |
 | 3 | Loomington rooms and collection | 17 | Planned |
 | 4 | Loomington cast, managers and weekend events | 16 | Planned |
 | 5 | Papaya Cay rooms | 16 | Planned |

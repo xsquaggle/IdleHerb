@@ -835,7 +835,8 @@ MANAGERS = {
     'captain_kelp': (8, 'card.manager.captain_kelp', 'epic', {'stone', 'sky-1', 'sky-2', 'steel', 'clay-4'},
                      {'stone'}, []),
     'clementine_zest': (9, 'card.manager.clementine_zest', 'legendary',
-                        {'rose', 'lavender', 'leaf', 'clay-4', 'clay-5', 'steel'}, {'rose', 'lavender'}, [MAUVE]),
+                        {'rose', 'lavender', 'leaf', 'clay-4', 'clay-5', 'steel'}, {'rose', 'lavender'},
+                        [PLUM, LILAC]),
     'granny_evergreen': (10, 'card.manager.granny_evergreen', 'exotic',
                          {'leaf', 'sage', 'clay-4', 'clay-5', 'steel'}, {'leaf'}, [BROWN_SKIN]),
 }

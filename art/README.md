@@ -2,7 +2,7 @@
 
 True-size sprites on the 640×360 art-pixel grid, in the 76-colour master palette. Rules are in [docs/art/STYLE_BIBLE.md](../docs/art/STYLE_BIBLE.md).
 
-Everything here comes from Asset Batch 1 (17 of its 18 images; its manager image was replaced by Batch 2 round 8) and Asset Batch 2 (prompts 1 to 23, plus three of the four manager sheets of round 8). All of it is at the **automatic pass** stage.
+Everything here comes from Asset Batch 1 (17 of its 18 images; its manager image was replaced by Batch 2 round 8) and Asset Batch 2 (prompts 1 to 23, plus the four manager sheets of round 8). All of it is at the **automatic pass** stage.
 
 | Folder | Contents |
 |---|---|
@@ -16,7 +16,7 @@ Everything here comes from Asset Batch 1 (17 of its 18 images; its manager image
 | `actors/floor08_ropewalk/` | The two ropewalk workers, one standing pose each |
 | `actors/w1_floor04_worker1/` to `…floor10_worker1/` | Batch 2 workers: two per floor for floors 4 to 9 and the HQ clerk of floor 10. Nine 80×80 frames each, in the same order as the gardeners. `frames.json` names the person, the source sheet and the feet line |
 | `actors/w1_floor01_worker2/`, `…floor02…`, `…floor03…` | The second worker of floors 1 to 3, same layout |
-| `actors/w1_floor01_manager/` to `…floor08_manager/` | The fixed managers of floors 1 to 8 (Nana Sprig, Basil Brumble, Rowan Rake, Posy Seedwell, Fern Petrie, Juniper Jones, Old Moss, Captain Kelp): four 96×96 frames each (stand, work, cheer, big moment), feet on y 92. `frames.json` names the person, design id, rarity and floor. Floors 9 and 10 follow when their redrawn sheet comes back |
+| `actors/w1_floor01_manager/` to `…floor10_manager/` | The ten fixed managers of World 1 (Nana Sprig, Basil Brumble, Rowan Rake, Posy Seedwell, Fern Petrie, Juniper Jones, Old Moss, Captain Kelp, Clementine Zest, Granny Evergreen): four 96×96 frames each (stand, work, cheer, big moment), feet on y 92. `frames.json` names the person, design id, rarity and floor. |
 | `visitors/` | The six visitors in two-frame loops, 32×32: Golden Sprout, Sunbeam Sprout, Tap Storm Sprout, Dewdrop, Mystery Crate, Busy Bee. `visitors.json` gives the frames and pivots |
 | `story/pip/` | Pip, the sprout helper: nine 48×48 poses (smile, blink, talk, wave, jump, surprised, thinking, sad, peek). `layers/` and `pip.json` hold the parts |
 | `chests/` | All six chest tiers, 96×80. Wooden Crate (`common`) and Golden Chest (`legendary`) from Batch 1: one base, four lids and a crack shadow each. Copper, Silver, Crystal and Starlight from Batch 2: a base and a lid for each of the four steps. `chests.json` gives the draw order and maps the design ids (`chest.copper` and so on) to these names. `frames/` holds the four composed frames of each chest |

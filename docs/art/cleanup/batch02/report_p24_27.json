@@ -278,40 +278,6 @@
  },
  {
   "cls": "actor",
-  "name": "clementine_zest: too tall (104), not cleaned",
-  "size": [
-   0,
-   0
-  ],
-  "files": 0,
-  "source_colours": 0,
-  "colours": 0,
-  "budget": 32,
-  "within_budget": false,
-  "outline_pixels_fixed": 0,
-  "mean_move": 0,
-  "max_move": 0,
-  "palette": []
- },
- {
-  "cls": "actor",
-  "name": "granny_evergreen: too tall (109), not cleaned",
-  "size": [
-   0,
-   0
-  ],
-  "files": 0,
-  "source_colours": 0,
-  "colours": 0,
-  "budget": 32,
-  "within_budget": false,
-  "outline_pixels_fixed": 0,
-  "mean_move": 0,
-  "max_move": 0,
-  "palette": []
- },
- {
-  "cls": "actor",
   "name": "w1_floor07_manager, old_moss (4 frames)",
   "size": [
    96,
@@ -392,6 +358,93 @@
    "wood-2",
    "wood-3",
    "wood-4"
+  ]
+ },
+ {
+  "cls": "actor",
+  "name": "w1_floor09_manager, clementine_zest (4 frames)",
+  "size": [
+   96,
+   96
+  ],
+  "files": 4,
+  "source_colours": 61,
+  "colours": 29,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 41,
+  "mean_move": 0.047,
+  "max_move": 0.108,
+  "palette": [
+   "ash-3",
+   "clay-1",
+   "clay-2",
+   "clay-3",
+   "clay-4",
+   "clay-5",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "cream-4",
+   "gold-2",
+   "gold-3",
+   "gold-4",
+   "ink-1",
+   "lavender-3",
+   "lavender-4",
+   "leaf-1",
+   "leaf-2",
+   "leaf-3",
+   "rose-1",
+   "skin-1",
+   "skin-2",
+   "skin-3",
+   "skin-4",
+   "skin-5",
+   "skin-6",
+   "wood-1",
+   "wood-2",
+   "wood-4"
+  ]
+ },
+ {
+  "cls": "actor",
+  "name": "w1_floor10_manager, granny_evergreen (4 frames)",
+  "size": [
+   96,
+   96
+  ],
+  "files": 4,
+  "source_colours": 60,
+  "colours": 22,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 17,
+  "mean_move": 0.052,
+  "max_move": 0.106,
+  "palette": [
+   "ash-3",
+   "clay-4",
+   "clay-5",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "cream-4",
+   "gold-2",
+   "gold-3",
+   "gold-4",
+   "ink-1",
+   "leaf-1",
+   "leaf-2",
+   "sage-1",
+   "sage-3",
+   "skin-1",
+   "skin-2",
+   "skin-3",
+   "skin-4",
+   "skin-5",
+   "skin-6",
+   "wood-1"
   ]
  }
 ]

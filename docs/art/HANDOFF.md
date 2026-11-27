@@ -18,6 +18,8 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 
 **Update, 10:40 PM:** the redo of sheet 26 came back at 10:26 PM at the right size, with Old Moss offering his cup forward. It passed and is cleaned: managers of floors 1 to 8 are done. Only sheet 27 (Clementine Zest, Granny Evergreen) is still owed.
 
+**Update, 10:50 PM:** the redo of sheet 27 came back at 10:39 PM, passed and is cleaned. **Batch 2 is finished: all 27 images are back and cleaned, and all ten World 1 managers are in `art/actors/`.**
+
 **Read in this order**
 
 1. This file.
@@ -75,11 +77,11 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 
 - **Master file for ChatGPT** (2026-11-26, 3:45 PM): Lawson's ChatGPT chat hit its maximum length, so the images still owed (prompts 1 and 18 to 23) went out as one master file plus a zip of the five reference pictures, made by `tools/build_batch02_master.py`. Lawson attaches both, then types "next" between images. Copies: project files `art/batch02/master/`. Use the same tool for later batches.
 - **Batch 2 round 8, redo of sheet 26 back** (10:26 PM, `b02_26_managers_floors07_08_REVISED_FILES.zip`, raw in project files `art/batch02/raw_round8/`). Old Moss and Captain Kelp 76 tall, Old Moss bows and offers his cup at arm's length, no steam, no pipe. Passed Gate A and the hemp review (Captain Kelp's rope is a finished hemp product, as the hemp cast allows). 8 frames in `art/actors/w1_floor07_manager/` and `w1_floor08_manager/`, 24 and 25 colours.
-- Waiting for Lawson's redo of round 8 image 4 (sheet 27, managers of floors 9 and 10). Nothing half-done; every step so far is committed and pushed.
+- **Batch 2 round 8, redo of sheet 27 back** (10:39 PM, `b02_27_managers_floors09_10_REVISED_FILES.zip`, raw in project files `art/batch02/raw_round8/`). Clementine Zest holds the perfume bottle at chest height and never sprays it, and bows with her beret to her chest; Granny Evergreen raises her trophy and opens her cape, the grandest silhouette of the ten. Passed Gate A and the hemp review. 8 frames in `art/actors/w1_floor09_manager/` and `w1_floor10_manager/`. Line-up of all ten: `docs/art/cleanup/batch02/batch02_p24_27_managers_lineup.png`. Nothing half-done; every step so far is committed and pushed.
 
 ## Next steps, in order
 
-1. **Check and clean the redo of round 8 image 4 (sheet 27, floors 9 and 10) when Lawson uploads it.** Raw files to project files `art/batch02/raw_round8/`. Check: characters about 76 tall (the `managers` step refuses anyone taller than 92), the perfume bottle never sprayed, Granny Evergreen kept apart from the other two grandmothers. Unzip it into its own folder and link it as `b02_27_managers_floors09_10_pkg` next to the `b02_24_..._pkg` (first zip) and `b02_26_..._pkg` (redo) links; `manager_sheets()` reads both `slices.json` layouts. Each manager's ramps and colour rules are in `MANAGERS`. Then send Lawson a line-up of all ten.
+1. **Write Batch 3 (Loomington rooms and collection, 17 images, see `BATCH_PLAN.md`).** Check the Loomington room, plant and heirloom names against the merged design docs first. Build it with a script like `tools/build_asset_batch_02.py` and send it to Lawson as one master file plus a reference zip (`tools/build_batch02_master.py`). To re-run the round 8 managers, link the three zips as `b02_24_..._pkg` (first zip), `b02_26_..._pkg` and `b02_27_..._pkg` (the redos); `manager_sheets()` reads both `slices.json` layouts and lets a redo replace its sheet.
 2. **Mythic and Godly**, if the Game Designer adds them: one more prompt with two emblems, two card frames and two bursts, in the free slots that `rarity.json`, `frames.json` and `bursts.json` already name.
 3. **Hand polish, then Gate B,** for the automatic-pass sprites:
    - Faces: one fixed head per character from the Face Kit. The generated faces are readable but soft, most of all on the two ropewalk workers.
