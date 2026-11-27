@@ -1,6 +1,6 @@
 # Sprout Tower: Content Tables
 
-Version 0.3, Phase 0: one fixed manager per floor (what changed is in [CHANGES.md](CHANGES.md)). Owner: Game Designer thread. This file holds every content row. Rules and formulas are in [GDD.md](GDD.md). The reasons behind the big calls are in [AUDIT.md](AUDIT.md).
+Version 0.4, Phase 0: the balance simulator's numbers, frozen until a playtest (what changed is in [CHANGES.md](CHANGES.md)). Version 0.3 gave every floor one fixed manager. Owner: Game Designer thread. This file holds every content row. Rules and formulas are in [GDD.md](GDD.md). The reasons behind the big calls are in [AUDIT.md](AUDIT.md).
 
 ## 0. How to read this file
 

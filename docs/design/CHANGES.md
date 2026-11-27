@@ -2,6 +2,107 @@
 
 For the Economy and Balance thread, the Engine thread, the Art Director and anyone who read an earlier version. The newest version is first. Rules are in [GDD.md](GDD.md) and rows are in [CONTENT.md](CONTENT.md).
 
+## Version 0.4: the balance simulator's numbers
+
+The balance simulator (`apps/sim`, report in `docs/balance/REPORT.md`) ran version 0.3 for three play styles over 60 to 90 days. On 2026-11-26 the Game Designer accepted four of its overlays (`p1-levels`, `p2-taps`, `p4-gates`, `p5-late-research`), turned one down (`p3-managers`), and made three rulings on the results: the idle player may start slower, the multiplier budget is retired as a target, and the Auto-Gardener restarts older worlds. Version 0.4 writes all of it in, together with the seven non-blocking notes from the fresh-eyes audit of 0.3. **The numbers are frozen until a playtest.** Everything not listed here is as it was in 0.3.
+
+### B.1 Rules that changed
+
+| # | Rule in 0.3 | Rule in 0.4 | Where |
+|---|---|---|---|
+| 1 | The Auto-Gardener buys a floor's next level when it costs at most `AUTO_BUY_SHARE` of the currency in hand | It also opens a floor that is not open yet on the same rule, and keeps floor 1's manager in each world hired through every Replant and Festival, with no fee. A world locked again by a Festival gets that manager back, free, when its ticket is bought again. Floor switches start on. Why: an older world went dead after a Replant (floor 1 had no manager, so nothing earned), and its late Mastery stars were out of reach | CONTENT 8, GDD 12.1, 12.2, 14.5 |
+| 2 | One list of ten Mastery levels for every world | One list of ten per world, picked by the simulator from measured days | GDD 14.5 |
+| 3 | First Replant at 60 pending Compost | At 440, from a rule: every play style's first Replant inside its first 24 hours | GDD 12.1 |
+| 4 | 40 research projects | 48: eight long projects added (B.3). `researchProfit` gains `1.3 ^ (Living Soil done)` and `researchSpeed` a ×1.4 for Crop Rotation IV | GDD 10, 13.1, 13.2 |
+| 5 | Pacing judged against the rough script's results and its multiplier budget | Judged against the Game Designer's targets and the simulator's gate table. The budget is retired as a target | GDD 16, 17 |
+| 6 | Morning Baskets listed under the guarded day counter | They are timers and follow clock rules 1 to 4 | GDD 15.2 |
+
+### B.2 Constants
+
+| Constant | 0.3 | 0.4 | Where |
+|---|---|---|---|
+| `FIRST_REPLANT_MIN` | 60 | 440 | GDD 12.1 |
+| `RIBBON_C0` | 50,000 | 900,000 | GDD 12.2 |
+| `MASTERY_LEVELS` | 25, 50, 100, 250, 350, 400, 450, 500, 550, 600 in every world | one list per world, in the table in GDD 14.5 | GDD 14.5 |
+| `XP_DAILY`, `XP_DAILY_ALL` (names new in Appendix A) | 1,500, 1,500 | 1,000, 1,000 | GDD 11.2 |
+| `XP_ACHIEVEMENT` (name new in Appendix A) | 200, 400, 800, 1,500, 3,000 by tier | 100, 200, 400, 750, 1,500 | GDD 11.4 |
+| `MAX_AWAY` (new in Appendix A, value already in GDD 15.2) | 30 days | 30 days | GDD 15.2 |
+
+Kept on purpose: `MGR_BASE` and `MGR_STEP` (the simulator's `p3-managers` was not taken: managers multiply every play style alike, so they do not cause the gap between active and idle players, and it halved manager power late in the game), the Golden Hour prices 3, 10, 40, 150, 600 (eight other lists were tried), `AUTO_BUY_SHARE` and every cap.
+
+### B.3 Rows
+
+| Row | 0.3 | 0.4 |
+|---|---|---|
+| Ticket out of Thymeford (`world.w1`) | 5e19 Coins | 3e23 Coins |
+| Ticket out of Loomington (`world.w2`) | 2e19 Notes | 4.5e23 Notes |
+| Ticket out of Papaya Cay (`world.w3`) | 1e24 Shells | 1e25 Shells |
+| Ticket out of Mount Mitten (`world.w4`) | 2e29 Snowmarks | 3e30 Snowmarks |
+| Ticket out of the Moon (`world.w5`) | 1e34 Moonpennies | 3e35 Moonpennies |
+| `shop.ribbon.deed_nebula` | 600 Ribbons | 250 Ribbons. The Ribbon Shop's fixed items now cost 3,600 in all |
+| `skill.gt.firm_grip` | `tap.power` +20% a rank | +10% |
+| `skill.gt.keep_the_rhythm` | `tap.comboCap` +4 a rank | +2 |
+| `skill.gt.bumper_crop` | `tap.critChance` +1 point a rank | +0.5 points |
+| `skill.gt.big_bumpers` | `tap.critMult` +1 a rank | +0.5 |
+| `quest.story.rising_star` (step 35) | Earn 3 Mastery stars in one world | Earn a Mastery star in two worlds. With the new levels a second star in one world comes only around day 5, after Papaya Cay |
+| `card.manager.posy_seedwell` | listed in the hemp cast | not in the hemp cast: her floor is the thyme and seedling Garden Shed Nursery |
+
+New research rows, all marked "(0.4)" in CONTENT 6. They are long projects: cheap in Insight, four or five days each.
+
+| `id` | Requires | Cost | Time | Effect |
+|---|---|---|---|---|
+| `research.soil.crop_rotation_4` | Crop Rotation III | 12,000 | 96 h | Research speed ×1.4 |
+| `research.people.training_day_4` | Training Day III | 15,000 | 96 h | `manager.power` +25% |
+| `research.soil.living_soil_1` | Soil Science III | 18,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_2` to `_6` | the one before | 21,000, 24,000, 27,000, 30,000, 36,000 | 120 h each | Research profit ×1.3 each |
+
+The costs are the first proposal's times 0.06, scaled to the Insight rate the simulator measured (about 11,000 to 13,000 a day from day 20). Living Soil was ×2 in that proposal and was lowered to ×1.3 so the Festival gaps after day 30 stay at four days or more. The `research` achievement stays at 3, 10, 20, 30, 40.
+
+### B.4 Text that moved with the numbers
+
+- GDD 6.7: the tap table's middle rows (some Green Thumb skills about 4× to 6×, a full tapping build about 13×). The caps and the ceilings are unchanged.
+- GDD 9.1: expected levels (10 to 11 at one hour, about 23 on day 1) and the simulator's measured levels.
+- GDD 12.1 and 12.2: the first Replant is about 1.5e15 lifetime Coins, gives ×9.8 profit and buys Rich Soil four times. The first 8 Ribbons need about 57.6 million Compost.
+- GDD 16: target times of rows 11 to 31 follow the simulator's new active player. The top floor at about 20 minutes and the mixed player's World 2 on day 2.3 are accepted misses.
+- GDD 17.1 to 17.5: the beats of the first hour, day 1, week 1 and weeks 2 to 8. 17.6 is rewritten: targets, the gate table with results (25 of 27 on target), Festival gaps, what the checks found, and what still waits for a playtest.
+- GDD 18 and 19: the Ribbon Shop's fixed items take longer than week 3, the Insight rate after day 20, the freeze, and knob 16 (Living Soil strength).
+- CONTENT 6, 7, 9 and 11: research totals (about 809,000 Insight and 1,354 hours), the first Replant's Rich Soil, the note on story steps 35 and 40 to 42, and when the top `stars` tier is reached (about day 32).
+
+### B.5 The 0.3 audit's notes
+
+| # | Note | Done in 0.4 |
+|---|---|---|
+| 1 | GDD 17.6 point 5 quoted version 0.2's Boost averages | Point 5 now quotes 6.7 and the simulator |
+| 2 | GDD 13.2 listed Fireside Story as a speed ability | Removed: it only sets Heat to 100 |
+| 3 | GDD 15.2 rule 5 put Morning Baskets under the day counter | They are timers (B.1, rule 6) |
+| 4 | `MAX_AWAY` was not in Appendix A | Added |
+| 5 | Posy Seedwell in the hemp cast | Removed (B.3) |
+| 6 | The `managers` achievement needs an "ever hired" flag | Engine item 5 below |
+| 7 | GDD section 0 left out the `adjacent` scope | Added |
+
+### B.6 What each thread should do
+
+**Balance simulator.**
+1. Rebuild the content tables from version 0.4 and retire the four overlays. `AUTO_GARDENER_RESTARTS` becomes the rule, not a flag.
+2. Check the Auto-Gardener's wording in CONTENT 8 against the core: switches start on, a floor that is not open yet opens itself at `AUTO_BUY_SHARE`, and a world locked again by a Festival gets floor 1's manager back, free, when its ticket is bought again.
+3. Story step 35 changed, so its 1,000 XP comes earlier.
+4. Run `pnpm sim` and confirm the report still shows the accepted run. Report the day the Ribbon Shop's fixed items are all bought (GDD 18).
+5. The numbers are frozen. No refit unless a playtest asks for one.
+
+**Engine.**
+1. The Auto-Gardener's three jobs and per-floor switches that start on (CONTENT 8).
+2. `MASTERY_LEVELS` is per world, read from the world rows.
+3. Eight research rows, and the `researchProfit` and `researchSpeed` lines in GDD 13.1 and 13.2.
+4. `XP_DAILY`, `XP_DAILY_ALL`, `XP_ACHIEVEMENT` and `MAX_AWAY` are named constants now (Appendix A).
+5. The `managers` achievement counts different managers ever hired, so player state keeps an "ever hired" flag per manager that never resets. It was missing from the engine list in A.7.
+6. Morning Basket timers do not use the day counter (GDD 15.2).
+
+**Art.**
+1. Posy Seedwell is no longer in the hemp cast. Her sprite is already drawn, and whether it needs any change is the Art Director's call.
+2. Version 0.4 adds no characters, floors or worlds.
+
+**Tech plan.** The audit of 0.3 also left notes for `docs/tech/04-content-pipeline.md` and the action map in `docs/tech/03`: the design version line, "Showstopper" for "Best in Show", the Starlight Chest's Head rule, abilities only in their own world with keys 1 to 4 in floor order, the chest fallback (the other type, then one rarity down), new-card help for plants only, the Welcome Chest and Hiring Crate contents, and Star Pupil letting a Head count one level past its maximum. They belong to the tech thread.
+
 ## Version 0.3: one fixed manager per floor
 
 Lawson decided on 2026-11-25: "One manager per Floor." Version 0.3 makes that change. It also writes in three rulings from the audit's re-check of version 0.2 (A.5). Nothing else in the design changed: every floor row, every world row in GDD 14.2, every plant, heirloom, research, shop and quest row is as it was, except where listed here.

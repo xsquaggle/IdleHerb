@@ -347,7 +347,7 @@ Golden Sprouts  = about 1.2 x more with every one caught
 
 An ability works only in its manager's own world (section 7.1), so a world's Boost comes from its own four managers, the Golden Sprouts and the heirloom the player carries. That is why these averages are lower than in version 0.2, where one world could use every ability in the game.
 
-So the highest active income the rules allow, for a finished account in its best world, is about 130 times idle holding to tap and about 200 times with a full Golden Sprout build. At the limit of 12 taps a second the same arithmetic gives about 290 and 440. Guaranteed Bumpers (Showstopper, Sharp Season) sit outside the Boost and add more on top: fifty of them inside a capped Boost and a Growth Spurt are worth about 15 hours of steady income. Those are ceilings for the end of the game, not targets. The simulator should run both tap rates and measure boost uptime (section 17.6). If the top is too high, lower `TAP_RATE_CAP` first, then `CRIT_MULT_CAP`.
+So the highest active income the rules allow, for a finished account in its best world, is about 130 times idle holding to tap and about 200 times with a full Golden Sprout build. At the limit of 12 taps a second the same arithmetic gives about 290 and 440. Guaranteed Bumpers (Showstopper, Sharp Season) sit outside the Boost and add more on top: fifty of them inside a capped Boost and a Growth Spurt are worth about 15 hours of steady income. Those are ceilings for the end of the game, not targets. The simulator runs both tap rates and measures boost uptime (section 17.6). If the top is too high, lower `TAP_RATE_CAP` first, then `CRIT_MULT_CAP`.
 
 Idle builds get the mirror image: up to 100% offline efficiency, up to 33 hours stored, and stronger managers.
 
@@ -1179,7 +1179,7 @@ Card levels over time for an active player (about 100 cards a day). The figures 
 Two tools have checked the numbers.
 
 - **The balance simulator** (`apps/sim`, report in `docs/balance/REPORT.md`) plays the whole economy as written here, every system included, for three play styles over 60 to 90 days, with six worlds and with the four-world launch build. **Version 0.4's numbers are its accepted run, and they are frozen until a playtest.** After a playtest, change them through the simulator, one knob at a time (section 19).
-- **A rough pacing script** came first (versions 0.1 and 0.2, `/mnt/project-files/design/pacing-check/`). It modelled floors, levels, milestones, hires, taps, Replant, Compost, Rich Soil, tickets, deeds, Festivals, Ribbons and Golden Hour, with everything else as a multiplier budget. Its findings below still give the reasons for the rules. Its numbers are replaced by the simulator's.
+- **A rough pacing script** came first (versions 0.1 and 0.2, the scripts in the pacing-check folder). It modelled floors, levels, milestones, hires, taps, Replant, Compost, Rich Soil, tickets, deeds, Festivals, Ribbons and Golden Hour, with everything else as a multiplier budget. Its findings below still give the reasons for the rules. Its numbers are replaced by the simulator's.
 
 **Player profiles** (both tools use the same three):
 
