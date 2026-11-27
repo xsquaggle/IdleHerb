@@ -38,9 +38,10 @@ Kept current so the work can be picked up after any stop. Last update: 2026-11-2
 
 ## Next steps
 
-1. Design 0.3 (PR #5) merged 2026-11-27. Design 0.4 is PR #7, waiting for its audit; checked 2026-11-27: every value matches the overlays (two wording points on the CONTENT 8 Auto-Gardener row sent to the designer: free floor 1 on first arrival too, per-floor switches). The designer messages this thread when #7 merges. Keep /mnt/project-files/balance/ unchanged until then.
+1. Design 0.3 (PR #5) merged 2026-11-27. Design 0.4 is PR #7, waiting for its audit; checked 2026-11-27: every value matches the overlays (two wording points on the CONTENT 8 Auto-Gardener row: free floor 1 on first arrival too, now fixed on PR #7 in 6d2add7; per-floor switches that start on, to add to the core in B.6). The designer messages this thread when #7 merges. Keep /mnt/project-files/balance/ unchanged until then.
 2. After PR #7 merges, do CHANGES.md B.6 (Balance simulator): rebuild the tables from 0.4 and retire p1, p2, p4, p5 (the Auto-Gardener restart becomes the rule, not a flag; add per-floor switches that start on, floor 1's switch governing the free manager); story step 35 `quest.story.rising_star` becomes "a Mastery star in two worlds"; run the suite and report; confirm the accepted run still holds; report the day the Ribbon Shop's fixed items (3,600 Ribbons, all but Blue Ribbon Polish) are all bought (GDD 18). No refit: numbers frozen until a playtest.
-3. Watch PR #6.
+3. After the B.6 rerun: the designer's proposal p6 (Mythic plants, Godly Heads) in /mnt/project-files/design/proposals/p6-mythic-and-godly.md, section 5 says what to check. Not before the 0.4 rebuild.
+4. Watch PR #6.
 
 ## Assumptions (also in the report)
 
