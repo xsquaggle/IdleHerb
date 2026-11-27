@@ -1,6 +1,6 @@
 # Sprout Tower Style Bible v1
 
-Status: v1.5, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
+Status: v1.6, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
 
 This is the single source of truth for how Sprout Tower looks. If an asset and this document disagree, the asset is wrong, or this document gets a new version. Nobody "interprets around" it.
 
@@ -234,8 +234,10 @@ Rarity is always shown **twice**: by colour and by a second cue that works for c
 | Epic | amethyst (`lavender`) | Tall crystal | 4 |
 | Legendary | gold | Sun and laurel medallion | 5 |
 | Exotic | prismatic (teal, rose, lavender) | Winged prism, moving shimmer | 6 |
+| Mythic | aurora on midnight (`teal` into `lavender` over a dark `sky` and `ink` ground) | Full-bloom flower | 7 |
+| Godly | white gold (`white`, `cream`, light `gold`) | Sprout crown with a sunburst | 8 |
 
-The six second cues are also the six **rarity emblems**: one small badge per rarity that appears on the card frame, the small card, the inventory slot, the chest light and the reveal. Two more rows stay free above Exotic in case the design adds tiers (Lawson asked for Mythic and Godly on 2026-11-26; the Game Designer decides). How rarity moves on screen is in section 19.
+The eight second cues are also the eight **rarity emblems**: one small badge per rarity that appears on the card frame, the small card, the inventory slot, the chest light and the reveal. Mythic and Godly (Lawson's ask of 2026-11-26, the Game Designer's call p6 of 2026-11-27) are never rolled from a chest: Mythic is earned at the bench, Godly at the Harvest Festival. Their look climbs past Exotic in a clear order: Exotic is light and pearly, Mythic goes dark and rich, Godly is the brightest thing in the game. A Godly Head keeps its own sprite and wears the Godly crown, placed by hand on every pose. How rarity moves on screen is in section 19.
 
 ---
 
@@ -487,14 +489,14 @@ Getting something rare is the best moment in the game, so it is staged. One rule
 | Epic | three hops, each higher; the room dims a third | purple | crystal shards and a pixel shockwave ring | the card shakes, then flips; the tall crystal grows onto the frame |
 | Legendary | the chest lifts off the floor and the rest of the screen freezes and dims by half | gold | sun rays turn behind the chest, a coin shower, the screen shakes 2 pixels | a slow flip that shows the gold edge first; the laurel medallion stamps onto the frame; fanfare; held 1.5 s |
 | Exotic | everything Legendary does, then all light goes out except one prismatic crack, and a beat of silence | prismatic | the chest bursts into prism shards and the screen floods teal, rose and lavender | the card floats down shimmering; the winged prism opens its wings on the frame; Pip and the floor's workers cheer at the screen edges; held 2.5 s |
-| *(free slot)* | *one more stage of build* | *a new colour beyond prismatic* | *bigger than Exotic* | *for Mythic, if the design adds it* |
-| *(free slot)* | *one more stage again* | *one more colour* | *the biggest moment in the game* | *for Godly, if the design adds it* |
+| Mythic (at the bench, when Full Bloom finishes) | everything Exotic does, then the screen goes night-dark and the great bud swells in four steps, each slower than the last | aurora | the bud opens into a full flower and petals spiral out | the card rises out of the open flower; the full-bloom flower opens on the frame; held 3 s |
+| Godly (at the Harvest Festival, never from a chest) | the Festival stops; Mayor Thyme brings the crown on its cushion and lifts it high | white gold | a sunburst of white-gold spikes, pearls and laurel | the Mayor sets the crown on the Head, the Head plays its big moment, the frame's crown and sunburst stamp on; the biggest moment in the game, held 4 s |
 
 **A chest with many cards** opens with the climb for its best card. The cards then fly out face down into a fan, lowest rarity first. Common to Rare cards flip on their own in a quick ripple. Each Epic or better card waits face down with its edge glowing in its colour and plays its own short build and show when tapped, best card last.
 
 **Rarity keeps moving after the reveal.** In the collection, Epic frames shimmer once every 6 seconds, Legendary frames glint every 4 seconds, and the Exotic shimmer never stops. The same emblem, colour and chime family appear on the chest light, the card frame, the small card, the inventory slot, the bench when a job finishes and the name text, so every rare thing in the game looks related.
 
-**Respect the player's time.** A tap skips to the Show after the first second. After the player's 20th chest a "quick open" setting keeps only the climb and the Show. The first Legendary and the first Exotic a player ever gets always play in full. Reduce motion swaps shake, flash and the colour flood for a steady glow and the rarity emblem; flashes are never faster than three a second.
+**Respect the player's time.** A tap skips to the Show after the first second. After the player's 20th chest a "quick open" setting keeps only the climb and the Show. The first Legendary and the first Exotic a player ever gets always play in full, and so does every Mythic and Godly reveal. Reduce motion swaps shake, flash and the colour flood for a steady glow and the rarity emblem; flashes are never faster than three a second.
 
 **Who makes what.** The engine plays it with its planned shaders (pixel dissolve, rarity colour flood, shockwave ring, glow; tech plan, rendering section). Art supplies the chests, the rarity emblems, the card frames, the burst particles (dust, leaves, gem glints, crystal shards, coins, laurel leaves, prism shards) and the ray and beam shapes. Audio supplies one rising chime per step and one closing sting per rarity.
 
@@ -668,3 +670,4 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 - **v1.3:** after the first full batch of our own images. Adds the wall veil (section 13) and the 32-colour budget for a worker frame that holds a prop (section 6). Managers still read as in v1.1 and wait for design version 0.3.
 - **v1.4:** the rarity reveal ladder (section 19), the six rarity emblems with two free slots above Exotic (section 8), and chests named by the design's six chest tiers instead of by rarity (section 15). Lawson asked for reveals that build up more the rarer the item is.
 - **v1.5:** managers follow design version 0.3 (merged 2026-11-26): one fixed manager per floor, drawn at work in their own room with four poses, rarity by floor, the Head as the grandest person in each world, and hemp floors cast with the hemp cast (section 10). The floor-neutral pose is gone. Managers use a 96×96 frame with the feet on y 92 (the first manager sheets came back 72 to 80 pixels tall, too tall for the 80×80 worker frame).
+- **v1.6:** Mythic and Godly join the rarity ladder (sections 8 and 19), after the Game Designer's call p6: aurora on midnight with a full-bloom flower, and white gold with a sprout crown and sunburst. Their art is Batch 4, rounds 5 and 6. The look, grid, palette and prompt suffix are unchanged.
