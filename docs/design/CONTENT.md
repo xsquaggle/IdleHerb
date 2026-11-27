@@ -441,10 +441,10 @@ Rules are in GDD 9.2. Three branches of 37 points. A branch has six minor skills
 
 | `id` | `name` | Tier | Ranks | Effect per rank |
 |---|---|---|---|---|
-| `skill.gt.firm_grip` | Firm Grip | 1 | 5 | `tap.power` +20% |
-| `skill.gt.keep_the_rhythm` | Keep the Rhythm | 1 | 5 | `tap.comboCap` +4 |
-| `skill.gt.bumper_crop` | Bumper Crop | 2 | 5 | `tap.critChance` +1 point |
-| `skill.gt.big_bumpers` | Big Bumpers | 2 | 5 | `tap.critMult` +1 |
+| `skill.gt.firm_grip` | Firm Grip | 1 | 5 | `tap.power` +10% |
+| `skill.gt.keep_the_rhythm` | Keep the Rhythm | 1 | 5 | `tap.comboCap` +2 |
+| `skill.gt.bumper_crop` | Bumper Crop | 2 | 5 | `tap.critChance` +0.5 points |
+| `skill.gt.big_bumpers` | Big Bumpers | 2 | 5 | `tap.critMult` +0.5 |
 | `skill.gt.long_spurt` | Long Spurt | 2, major | 3 | `spurt.duration` +2 s |
 | `skill.gt.second_wind` | Second Wind | 3 | 5 | `spurt.tapsNeeded` -6% |
 | `skill.gt.sprout_spotter` | Sprout Spotter | 3 | 5 | `visitor.interval` -5% |
@@ -690,7 +690,7 @@ Five are drawn each Monday.
 
 ## 11. Achievements
 
-Rules are in GDD 11.4. Twenty families with five tiers each. Ids are `ach.<family>.<tier>`, for example `ach.taps.3`. Every achievement gives +1% profit, Gems (5, 10, 15, 25, 50 by tier) and XP (200, 400, 800, 1,500, 3,000 by tier). All counts are lifetime totals that never reset. Progress is counted from the first second of play, so several pop at once when the panel unlocks.
+Rules are in GDD 11.4. Twenty families with five tiers each. Ids are `ach.<family>.<tier>`, for example `ach.taps.3`. Every achievement gives +1% profit, Gems (5, 10, 15, 25, 50 by tier) and XP (100, 200, 400, 750, 1,500 by tier). All counts are lifetime totals that never reset. Progress is counted from the first second of play, so several pop at once when the panel unlocks.
 
 | Family | Counts | Tier 1 | Tier 2 | Tier 3 | Tier 4 | Tier 5 |
 |---|---|---|---|---|---|---|

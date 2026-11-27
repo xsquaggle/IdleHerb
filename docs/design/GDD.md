@@ -331,8 +331,8 @@ Golden Sprouts  = about 1.2 x more with every one caught
 | Build | Active income compared with idle, before timed boosts |
 |---|---|
 | No upgrades | about 3.4×, and about 4.6× with every Golden Sprout caught |
-| Mid game, some Green Thumb skills | 6× to 10× |
-| Full tapping build with the tapping heirloom set | about 25× |
+| Mid game, some Green Thumb skills | 4× to 6× |
+| Full tapping build with the tapping heirloom set | about 13× |
 | Every tap stat at its cap (section 13.4) | about 55× holding at 6 taps a second. About 120× at the limit of 12 a second |
 
 **Timed boosts come on top, and they are bounded too.** Boosts add into one capped number (section 13.5), so their value is their average uptime. Rough arithmetic from the rows in CONTENT.md:
@@ -593,20 +593,20 @@ XP needed to go from level L to L + 1  =  XP_BASE + XP_PER_LEVEL x L  =  500 + 2
 | XP source | XP |
 |---|---|
 | Story quest | per row, 30 to 5,000 (CONTENT.md section 9) |
-| Daily quest | 1,500 each, plus 1,500 for finishing all three |
+| Daily quest | 1,000 each, plus 1,000 for finishing all three |
 | Weekly quest | 5,000 each, plus 10,000 for finishing all five |
 | Floor milestone, first time ever for that floor and tier | 50 × tier number (tier 1 is level 25, tier 2 is 50, tier 3 is 100, tier 4 is 200, ...) |
 | New Compost record | `REPLANT_XP_STEP x n` the first time all-time Compost passes `2^n`, with `REPLANT_XP_STEP = 150`. A Replant that crosses several powers of two pays each of them |
 | Chest opened | 20 × chest tier |
 | Visitor caught | 5 |
-| Achievement | 200, 400, 800, 1,500, 3,000 by tier |
+| Achievement | 100, 200, 400, 750, 1,500 by tier |
 | World Mastery star | 1,000 |
 
 Every level-up gives 1 Skill Point, 10 Gems and a chest (section 8.4). `LEVEL_CAP = 112`, which is exactly enough points for the whole tree.
 
 XP rewards are fixed amounts for records and quests, so resetting quickly does not farm levels. A Replant pays XP only for a new all-time Compost record, never for the Replant itself.
 
-Expected level: 7 to 9 after the first hour, about 18 after day 1, about 40 after week 1, about 70 after a month, and the cap around month 3.
+Expected level: 10 to 11 after the first hour, about 23 after day 1, about 40 after week 1, about 70 after a month, and the cap around month 3. The balance simulator's active player has level 11 at one hour, 22 on day 1, 39 on day 7 and 73 on day 30 (version 0.4 numbers). Most early XP comes in lumps (the first Compost records, the first daily quests and the achievements already earned when the panel opens), which is why version 0.4 lowered the daily quest and achievement XP.
 
 ### 9.2 Skill tree
 
@@ -661,7 +661,7 @@ Three quests a day, drawn without repeats from the pool in CONTENT.md section 10
 |---|---|---|
 | Chest | Wooden Crate | Copper Chest |
 | Gems | 10 | 20 |
-| XP | 1,500 | 1,500 |
+| XP | 1,000 (`XP_DAILY`) | 1,000 (`XP_DAILY_ALL`) |
 | Pollen (once the bench is unlocked) | 20 | 40 |
 
 ### 11.3 Weekly quests
@@ -679,7 +679,7 @@ Unlock with world 2. Five a week, drawn from a pool of ten. The week starts on M
 Twenty families with five tiers each: 100 achievements. Rows are in CONTENT.md section 11.
 
 - Each achievement gives **+1% profit**, permanently. All achievements add together (`ACHIEVEMENT_PCT = 0.01`), so the full set is ×2.
-- Each also gives Gems (5, 10, 15, 25, 50 by tier) and XP.
+- Each also gives Gems (5, 10, 15, 25, 50 by tier) and XP (`XP_ACHIEVEMENT` = 100, 200, 400, 750, 1,500 by tier).
 
 ### 11.5 Codex
 
@@ -1322,6 +1322,8 @@ In the order to reach for them. Change one at a time.
 | `HEIRLOOM_SLOTS_BASE` | 2 | 8.7 |
 | `HEIRLOOM_PER_LEVEL` | 0.15 | 8.7 |
 | `XP_BASE`, `XP_PER_LEVEL` | 500, 250 | 9.1 |
+| `XP_DAILY`, `XP_DAILY_ALL` | 1,000, 1,000 | 11.2 |
+| `XP_ACHIEVEMENT` | 100, 200, 400, 750, 1,500 by tier | 11.4 |
 | `REPLANT_XP_STEP` | 150 | 9.1 |
 | `LEVEL_CAP` | 112 | 9.1 |
 | `RESPEC_GEMS` | 100 | 9.2 |
