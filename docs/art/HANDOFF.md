@@ -22,6 +22,14 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 
 **Update, 11 PM:** Batch 3 (Loomington rooms and collection, 17 prompts) is written as [`ASSET_BATCH_03.md`](ASSET_BATCH_03.md) by `tools/build_asset_batch_03.py` and sent to Lawson as one master file plus a reference zip (project files `art/batch03/master/Sprout_Tower_Batch3_Master.md` and `Sprout_Tower_Batch3_References.zip`, made by the new general `tools/build_master.py`).
 
+**Update, 11:05 PM: this thread stops here.** Lawson asked for a fresh thread and a check of all work against the roadmap. The coordinator is doing that check, and Batch 3 continues in a new Art Director thread. State at the stop:
+
+- **PR #2 is open, not yet merged and not yet audited.** Branch `claude/project-thread-xt8mqt`, head commit `aa44977` or later. It holds the style bible v1.5, hemp art rules, clean-up route, batch plan, the Batch 1, 2 and 3 prompt files and builders, the clean-up tools, and every cleaned sprite of Batches 1 and 2 under `art/`. The fresh-eyes Fable audit of PR #2 has waited since Batch 1 and should cover all of this.
+- **Batch 1:** 17 of 18 back and cleaned; prompt 18 replaced by Batch 2 round 8.
+- **Batch 2:** all 27 back and cleaned, including the ten World 1 managers (96×96 frames, feet on y 92).
+- **Batch 3:** written and sent to Lawson at about 10:50 PM as a master file plus reference zip (project files `art/batch03/master/`). Nothing has come back yet. If Lawson uploads Batch 3 images before the new thread starts, they are saved raw in project files `art/batch03/` and not cleaned. The new thread's first job is `clean_batch03.py` (next step 1).
+- Nothing is half-done. Everything is committed and pushed.
+
 **Read in this order**
 
 1. This file.
