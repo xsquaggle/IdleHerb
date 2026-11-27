@@ -315,3 +315,42 @@ def sheet(pairs, cols, p, path):
     bar = np.full((left.shape[0], 6, 3), 255, np.uint8)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     Image.fromarray(np.concatenate([left, bar, right], 1)).save(path)
+
+
+def _resize_rows(img, n_out):
+    """Change the row count of an RGBA pixel-art image by dropping or doubling whole rows.
+    The rows are spread evenly over the image; inside each stretch the row chosen is the one that changes
+    least (a row equal to a neighbour can go without losing anything). Two neighbouring rows are never
+    both dropped, so a line two pixels thick keeps at least one pixel."""
+    n_in = img.shape[0]
+    k = abs(n_out - n_in)
+    if k == 0:
+        return img
+    prev = np.concatenate([img[:1], img[:-1]])
+    nxt = np.concatenate([img[1:], img[-1:]])
+    dp = (img != prev).any(-1)
+    dn = (img != nxt).any(-1)
+    # dropping a row loses the pixels that differ from both neighbours; doubling one shows where it differs
+    cost = (dp & dn).sum(1) * 4.0 + (dp | dn).sum(1) if n_out < n_in else (dp | dn).sum(1) * 1.0
+    edges = np.linspace(0, n_in, k + 1)
+    pick = []
+    for j in range(k):
+        lo, hi = int(round(edges[j])), int(round(edges[j + 1]))
+        cand = [i for i in range(lo, max(hi, lo + 1)) if i < n_in and (not pick or i > pick[-1] + 1)]
+        if not cand:
+            cand = [min(n_in - 1, pick[-1] + 2)]
+        mid = (lo + hi - 1) / 2
+        pick.append(min(cand, key=lambda i: (cost[i], abs(i - mid))))
+    if n_out < n_in:
+        keep = np.ones(n_in, bool)
+        keep[pick] = False
+        return img[keep]
+    return np.repeat(img, np.bincount(pick, minlength=n_in) + 1, axis=0)
+
+
+def fit_pixels(img, w, h):
+    """Bring an RGBA pixel-art image to w x h by dropping or doubling whole rows and columns (never blending).
+    Used where ChatGPT drew at a finer pixel than the game grid: shapes move by one pixel at most."""
+    out = _resize_rows(img, h)
+    out = _resize_rows(out.transpose(1, 0, 2), w).transpose(1, 0, 2)
+    return np.ascontiguousarray(out)

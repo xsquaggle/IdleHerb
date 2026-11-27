@@ -1,0 +1,87 @@
+{
+ "world": 2,
+ "floor": 6,
+ "size": [
+  360,
+  120
+ ],
+ "baseline_y": 112,
+ "tap_target": "linen_cutting_table",
+ "manager_spot": "manager_stool_pincushion_bell",
+ "source": "b03_05_w2_floor06_atelier.png",
+ "parts": {
+  "jacket_dress_form": {
+   "file": "jacket_dress_form_28x62.png",
+   "size": [
+    28,
+    62
+   ],
+   "origin_on_floor": [
+    20,
+    50
+   ],
+   "cls": "prop"
+  },
+  "sewing_worker_machine": {
+   "file": "../../actors/w2_floor06_atelier/sewing_worker_machine_47x67.png",
+   "size": [
+    47,
+    67
+   ],
+   "origin_on_floor": [
+    58,
+    45
+   ],
+   "cls": "actor"
+  },
+  "linen_cutting_table": {
+   "file": "linen_cutting_table_87x59.png",
+   "size": [
+    87,
+    59
+   ],
+   "origin_on_floor": [
+    114,
+    53
+   ],
+   "cls": "prop"
+  },
+  "shirt_worker": {
+   "file": "../../actors/w2_floor06_atelier/shirt_worker_38x65.png",
+   "size": [
+    38,
+    65
+   ],
+   "origin_on_floor": [
+    203,
+    47
+   ],
+   "cls": "actor"
+  },
+  "clothing_rail_sachets": {
+   "file": "clothing_rail_sachets_48x60.png",
+   "size": [
+    48,
+    60
+   ],
+   "origin_on_floor": [
+    243,
+    52
+   ],
+   "cls": "prop"
+  },
+  "manager_stool_pincushion_bell": {
+   "file": "manager_stool_pincushion_bell_43x38.png",
+   "size": [
+    43,
+    38
+   ],
+   "origin_on_floor": [
+    293,
+    74
+   ],
+   "cls": "prop"
+  }
+ },
+ "note": "Loomington. Drawn on a finer pixel than the game grid, so every item was brought to five sixths in the clean-up. The two workers are single standing frames until their Batch 4 sheets. Workers are drawn after the props."
+}

@@ -2,14 +2,16 @@
 
 True-size sprites on the 640×360 art-pixel grid, in the 76-colour master palette. Rules are in [docs/art/STYLE_BIBLE.md](../docs/art/STYLE_BIBLE.md).
 
-Everything here comes from Asset Batch 1 (17 of its 18 images; its manager image was replaced by Batch 2 round 8) and Asset Batch 2 (prompts 1 to 23, plus the four manager sheets of round 8). All of it is at the **automatic pass** stage.
+Everything here comes from Asset Batch 1 (17 of its 18 images; its manager image was replaced by Batch 2 round 8), Asset Batch 2 (prompts 1 to 23, plus the four manager sheets of round 8) and Asset Batch 3 (Loomington, images 1 to 12 of 17). All of it is at the **automatic pass** stage.
 
 | Folder | Contents |
 |---|---|
-| `walls/` | All ten World 1 back walls, 336×104, floors 1 to 10, in plain master colours. `walls/veiled/` holds each wall as the game shows it. `walls.json` lists floors, open-sky walls and the veil |
+| `walls/` | All ten World 1 back walls and the eight Loomington (World 2) back walls, 336×104, in plain master colours. World 2 files start `w2_`. `walls/veiled/` holds each wall as the game shows it. `walls.json` lists world, floor, open-sky walls and the veil |
 | `props/floor03_hemp_patch/` | Seven props for the Backyard Hemp Patch. `floor.json` gives each prop's place on the 360×120 floor |
 | `props/floor08_ropewalk/` | Five props for the Ropewalk and Twine Shop, with `floor.json` |
 | `props/floor09_soap_workshop/` | Five props for the Soap and Scent Workshop (kettle and stove, mould table, drying rack, lotion shelf, the manager's stool and side table), with `floor.json` |
+| `props/w2_floor01_rooftop_garden/` to `props/w2_floor08_emporium/` | Loomington rooms (World 2 floors 1, 2, 3, 4, 6, 7 and 8; the bistro, floor 5, has its wall only): four props each, with `floor.json` giving every piece's place on the 360×120 floor (feet on y 112), the tap target and the manager's spot. The two workers of each room are in `actors/w2_floorNN_*/` as one standing pose each, until their Batch 4 sheets |
+| `backgrounds/w2/` | Loomington back layers, one pixel per art pixel and repeating left to right: the far skyline and the river with its stone bridge, 360×90 each. `layers.json` gives depth, suggested scroll speed and outline |
 | `props/harvest/` | Tied sheaf, stook, drying rack and combed fibre |
 | `plants/` | Fibre hemp in five growth stages (32×96), Seed Hemp, staked Longstalk Hemp, the Giant Show-Hemp cane in three stacking pieces, and basil, rosemary, lavender, thyme, sage and chamomile in five stages each (72×90), all in the one shared planter. `plants/herb_layers/` holds the planter and each foliage layer on its own. `plants.json` gives anchors, layer offsets and the cane stacking |
 | `actors/w1_floor01_gardener/`, `…floor02…`, `…floor03…` | The lead workers of floors 1 to 3: nine 80×80 frames each (idle, blink, cheer, three walk frames, two work frames, carry). `layers/` holds the shared head, blink patch, body layers and props. `frames.json` gives the frame list, head offsets and the layer recipe |
@@ -34,11 +36,11 @@ Everything here comes from Asset Batch 1 (17 of its 18 images; its manager image
 ## Three things the engine needs to know
 
 - **The wall veil.** Back walls are drawn in plain master colours and shown a quarter of the way toward `stone-3` (`#6B5F87`). That is what keeps a wall quieter, darker and cooler than the props in front of it. Use the files in `walls/veiled/`, or apply the same blend to the plain files. The veil is the only place where a drawn pixel is not a master colour.
-- **Open-sky walls.** The backyard and market walls are transparent above the hedge and the stone wall. The world's sky shows through.
+- **Open-sky walls.** The backyard and market walls are transparent above the hedge and the stone wall, and in Loomington the rooftop garden and the brickyard above their walls. The world's sky shows through.
 - **Worker frames are flip-book frames and a rig at once.** The nine frames can be played as they are. The layers rebuild every frame from one shared head, a body per pose and a prop, by the recipe in `frames.json`.
 
 ## Where it came from
 
-The raw sheets are in project files under `art/batch01/round1_raw/` to `round6_raw/` and `art/batch02/raw_prompts07_17/`. The passes are `docs/art/tools/clean_batch01_round4.py` (round 4), `docs/art/tools/clean_batch01_parts.py` (all other Batch 1 rounds) and `docs/art/tools/clean_batch02.py`, and the before/after sheets are in `docs/art/cleanup/`.
+The raw sheets are in project files under `art/batch01/round1_raw/` to `round6_raw/` and `art/batch02/raw_prompts07_17/`, `art/batch02/raw_round8/` and `art/batch03/raw/`. The passes are `docs/art/tools/clean_batch01_round4.py` (round 4), `docs/art/tools/clean_batch01_parts.py` (all other Batch 1 rounds), `docs/art/tools/clean_batch02.py` and `docs/art/tools/clean_batch03.py`, and the before/after sheets are in `docs/art/cleanup/`.
 
 Still to make by hand: one fixed head per character from the Face Kit, the 24 and 16 pixel icons, and the polish items listed in `docs/art/HANDOFF.md`.

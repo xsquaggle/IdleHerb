@@ -89,6 +89,78 @@
     104
    ],
    "open_sky": false
+  },
+  "w2_floor01_rooftop_garden_336x104.png": {
+   "world": 2,
+   "floor": 1,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": true
+  },
+  "w2_floor02_herb_kiosk_336x104.png": {
+   "world": 2,
+   "floor": 2,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor03_weaving_mill_336x104.png": {
+   "world": 2,
+   "floor": 3,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor04_paper_workshop_336x104.png": {
+   "world": 2,
+   "floor": 4,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor05_bistro_336x104.png": {
+   "world": 2,
+   "floor": 5,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor06_atelier_336x104.png": {
+   "world": 2,
+   "floor": 6,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor07_brickyard_336x104.png": {
+   "world": 2,
+   "floor": 7,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": true
+  },
+  "w2_floor08_emporium_336x104.png": {
+   "world": 2,
+   "floor": 8,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
   }
  },
  "veil": {

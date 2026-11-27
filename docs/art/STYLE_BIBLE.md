@@ -638,7 +638,7 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | Rarity reveal kit | Six rarity emblems, four more chests (Copper, Silver, Crystal, Starlight), burst particles per rarity, rays and beams (section 19) |
 | Shared planter kit, lamp sprite, tower side walls and floor plates | |
 | Upper sky, stars, separate clouds | Sky bands are specified here |
-| Worlds 2 (Loomington) and 3 (Papaya Cay) | One background painting each (B17, B18), to be drawn again as parallax layers. No rooms or cast yet. The weaving mill, paper workshop, tailor and hempcrete rooms belong to World 2. Papaya Cay also needs four weather signs (sunshine, rain, breeze, rainbow) |
+| Worlds 2 (Loomington) and 3 (Papaya Cay) | Loomington: seven rooms with two workers each, all eight back walls and the far skyline and river layers are cleaned (Batch 3, 2026-11-27); its town and street layers, Mayor Thyme, cards and heirlooms are owed. Papaya Cay: one background painting (B18), no rooms or cast yet, and it needs four weather signs (sunshine, rain, breeze, rainbow) |
 | World 4 (Mount Mitten), a launch world | No art at all. Needs background layers, eight rooms with back walls and cast, the Snowmarks icon, the Heat gauge, snow caps for the tower shell, and Grandpa Mitten. Look in section 7 |
 | World 5 (The Moon), later | Background only (B27) |
 | World 6 (Nebula Nursery), later | No art at all |

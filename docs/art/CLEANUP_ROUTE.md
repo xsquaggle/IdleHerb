@@ -144,6 +144,19 @@ Lawson sent all four manager sheets in one zip, with a native copy of each pose 
 - **Budget.** Every manager fits the 32-colour budget (22 to 31 colours).
 - **Granny Evergreen's skin** was painted orange-tan; on the `skin` ramp (`skin-3`, `skin-4`) it reads as the warm brown the prompt asked for.
 
+## Batch 3, images 1 to 12: the Loomington rooms, walls and back layers
+
+Pass: `docs/art/tools/clean_batch03.py`. Review sheets, the floor mock-ups and the report are in `docs/art/cleanup/batch03/`.
+
+- **The rooms came back on a finer pixel than the game grid.** The workers were 74 to 85 pixels tall where the bible asks for 64, and six of the seven sheets were 390 to 411 pixels wide for a 360 floor. Every room piece is brought to five sixths by dropping whole rows and columns (`cleanlib.fit_pixels`): one row in each stretch of six goes, the one that changes least, and two neighbouring rows never both go. Nothing is blended, so the result is still clean pixel art; shapes move by one pixel at most. Workers land at 62 to 71 pixels (the gift-box porter is the tallest because of his cap and boxes).
+- **The pieces are laid out again on the floor:** feet on y 112, the first piece at x 20, the manager's seat ending at x 336, the tap target as near the middle as fits, the rest spread evenly. `floor.json` names the tap target and the manager's spot.
+- **The walls came back 324×108.** They are brought to 336×104 the same way (twelve columns doubled, four rows dropped). The flat pale-blue sky of the rooftop and brickyard walls is cut out first by a flood fill from the top row.
+- **The far skyline and the river came back 360×90 at one pixel per art pixel,** which is already the game grid, so they stay that size and repeat. The far layer keeps no outline (no ink in its ramps). The river's three empty columns at each end are filled from its own edge so that the water runs on.
+- **Near-duplicate colours.** These exports carry runs like `#772b47`, `#782c48`, `#792d49`. Snapped one by one they fell on both sides of a palette boundary and showed as speckle (the emporium wallpaper). They are now folded into the most used of them before the snap.
+- **New colour rules:** strong mustard yellow goes to `gold` (it sat nearer the pale `wood-6`); the dusty plum cloth of this batch goes to `lavender` (nearest colour put it on pink `rose-2` or grey); the brickyard mixer's orange vest is kept off the skin ramp (skin stops at chroma 0.14 for him); the tailor's khaki dress goes to `sage`, as the brief asked; the faded sprout on the kiosk wall goes to `sage` and `leaf`; the atelier's two stripe tones are kept apart (`stone-3` and `stone-4`); the periwinkle far city goes to `lavender` rather than the bright `sky-3`; the river keeps its lightest ripples on `sky-3`.
+- **Budgets.** Props are held to 16 with the room's accent ramps kept (the emporium stand had lost its green sprouts and lavender tiers to the budget), workers to 24, and workers who hold a prop (sewing machine, wrapping counter, mint table, gift boxes) to 32. Walls use 13 to 21 colours, the back layers 17 and 18.
+- **Gate B notes:** the tailor's hair picked up two sage pixels, faces were shrunk with the rest and get their fixed heads from the Face Kit, the kiosk wall's lit window reads pale gold, and the strips need a seam pass to loop perfectly.
+
 ## What this means for each asset class
 
 | Class | Route | Hand work |

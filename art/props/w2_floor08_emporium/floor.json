@@ -1,0 +1,87 @@
+{
+ "world": 2,
+ "floor": 8,
+ "size": [
+  360,
+  120
+ ],
+ "baseline_y": 112,
+ "tap_target": "grand_display_stand",
+ "manager_spot": "manager_velvet_stool_bell",
+ "source": "b03_07_w2_floor08_emporium.png",
+ "parts": {
+  "display_cabinet": {
+   "file": "display_cabinet_43x73.png",
+   "size": [
+    43,
+    73
+   ],
+   "origin_on_floor": [
+    20,
+    39
+   ],
+   "cls": "prop"
+  },
+  "parcel_wrapping_worker": {
+   "file": "../../actors/w2_floor08_emporium/parcel_wrapping_worker_42x66.png",
+   "size": [
+    42,
+    66
+   ],
+   "origin_on_floor": [
+    75,
+    46
+   ],
+   "cls": "actor"
+  },
+  "grand_display_stand": {
+   "file": "grand_display_stand_71x82.png",
+   "size": [
+    71,
+    82
+   ],
+   "origin_on_floor": [
+    129,
+    30
+   ],
+   "cls": "prop"
+  },
+  "gift_box_porter": {
+   "file": "../../actors/w2_floor08_emporium/gift_box_porter_39x71.png",
+   "size": [
+    39,
+    71
+   ],
+   "origin_on_floor": [
+    202,
+    41
+   ],
+   "cls": "actor"
+  },
+  "linen_gift_shelf": {
+   "file": "linen_gift_shelf_45x59.png",
+   "size": [
+    45,
+    59
+   ],
+   "origin_on_floor": [
+    243,
+    53
+   ],
+   "cls": "prop"
+  },
+  "manager_velvet_stool_bell": {
+   "file": "manager_velvet_stool_bell_46x37.png",
+   "size": [
+    46,
+    37
+   ],
+   "origin_on_floor": [
+    290,
+    75
+   ],
+   "cls": "prop"
+  }
+ },
+ "note": "Loomington. Drawn on a finer pixel than the game grid, so every item was brought to five sixths in the clean-up. The two workers are single standing frames until their Batch 4 sheets. Workers are drawn after the props."
+}

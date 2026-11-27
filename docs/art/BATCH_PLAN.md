@@ -72,7 +72,7 @@ The grandmother at the desk in v2 floor 10 gets no worker sheet. She is Granny E
 
 ## Batch 3: Loomington rooms and collection
 
-Written as [ASSET_BATCH_03.md](ASSET_BATCH_03.md) (`tools/build_asset_batch_03.py`), 17 prompts in 6 rounds, in the order of the table below except that the city background is its own round. Each room image follows the Batch 1 ropewalk recipe: props and two workers in one row, the tap target in the middle, the manager's spot at the right end. Lawson gets it as one master file and one reference zip (`tools/build_master.py`).
+Written as [ASSET_BATCH_03.md](ASSET_BATCH_03.md) (`tools/build_asset_batch_03.py`), 17 prompts in 6 rounds. Images 1 to 12 (rooms, walls, far skyline and river) came back on 2026-11-27 and are cleaned; 13 to 17 are owed. The rounds follow the table below, except that the city background is its own round. Each room image follows the Batch 1 ropewalk recipe: props and two workers in one row, the tap target in the middle, the manager's spot at the right end. Lawson gets it as one master file and one reference zip (`tools/build_master.py`).
 
 | # | Images | Contents |
 |---|---|---|
