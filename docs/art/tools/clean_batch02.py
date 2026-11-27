@@ -813,6 +813,8 @@ SILVER = (lambda L, C, h: (h >= 300 or h < 30) and L >= 0.5 and C < 0.08,
 # lavender flowers painted pink-purple (hue 315 to 335) stay on the lavender ramp
 LILAC = (lambda L, C, h: 315 <= h < 335 and C > 0.08, {'lavender-3', 'lavender-4', 'lavender-5'})
 OLIVE = (lambda L, C, h: 90 <= h < 135 and C > 0.035 and L < 0.6, {'leaf-1', 'leaf-2', 'leaf-3'})
+# a khaki 'sage-green' robe (Old Moss) split three ways, to gold, cream and mint; one green ramp of hue 137 to 155
+ROBE = (lambda L, C, h: 88 <= h < 135 and C > 0.06, {'leaf-1', 'leaf-2', 'leaf-3', 'sage-4', 'sage-5'})
 MGR_POSES = [('standing', 'stand'), ('working', 'work'), ('cheering', 'cheer'), ('big_moment', 'big_moment')]
 # character: (floor, design id, rarity, extra ramps, accents kept, rules)
 MANAGERS = {
@@ -829,7 +831,7 @@ MANAGERS = {
                     {'leaf', 'sage', 'steel', 'clay-4', 'clay-5', 'sky-5'}, {'leaf'}, [TIN]),
     'juniper_jones': (6, 'card.manager.juniper_jones', 'uncommon',
                       {'leaf', 'red', 'clay-4', 'clay-5', 'lavender', 'steel'}, {'leaf', 'red'}, []),
-    'old_moss': (7, 'card.manager.old_moss', 'rare', {'leaf', 'sage', 'clay-4', 'steel'}, {'leaf'}, []),
+    'old_moss': (7, 'card.manager.old_moss', 'rare', {'leaf', 'sage', 'clay-4', 'steel'}, {'leaf', 'sage'}, [ROBE]),
     'captain_kelp': (8, 'card.manager.captain_kelp', 'epic', {'stone', 'sky-1', 'sky-2', 'steel', 'clay-4'},
                      {'stone'}, []),
     'clementine_zest': (9, 'card.manager.clementine_zest', 'legendary',
@@ -841,13 +843,35 @@ MGR_SHEETS = ['b02_24_managers_floors01_03', 'b02_25_managers_floors04_06', 'b02
               'b02_27_managers_floors09_10']
 
 
-def managers():
-    root = pkg('b02_24_managers_floors01_03')
-    sl = json.load(open(os.path.join(root, 'slices.json')))
-    for sh in sl['sheets']:
-        key = sh['file'][:-4]
-        if key not in MGR_SHEETS:
+def manager_sheets():
+    """(package folder, sheet) for every manager sheet uploaded. The first zip held all four sheets in one
+    slices.json with a 'sheets' list; a redo comes as its own package with one sheet at the top level and the
+    character only in the sprite name. A sheet's own package wins over the same sheet inside an earlier one."""
+    own = {k for k in MGR_SHEETS if os.path.isdir(pkg(k))}
+    found = []
+    for k in MGR_SHEETS:
+        if k not in own:
             continue
+        root = pkg(k)
+        sl = json.load(open(os.path.join(root, 'slices.json')))
+        if 'sheets' in sl:
+            sheets = sl['sheets']
+        else:
+            sps = []
+            for sp in sl['sprites']:
+                ch = next(c for c in MANAGERS if sp['name'].startswith(c + '_'))
+                sps.append(dict(sp, character=ch, pose=sp['name'][len(ch) + 1:]))
+            sheets = [dict(file=sl['sheet'], native_size=sl['native_size'], sprites=sps)]
+        for sh in sheets:
+            key = sh['file'][:-4]
+            if key in MGR_SHEETS and (key == k or key not in own):
+                found.append((root, sh))
+    return found
+
+
+def managers():
+    for root, sh in manager_sheets():
+        key = sh['file'][:-4]
         nw, nh = sh['native_size']
         colw = nw / 4
         by_char = {}
@@ -909,7 +933,8 @@ STEPS = [('b02_01_visitors', visitors), ('b02_02_currency_icons', currency_icons
          ('b02_21_card_frames_common_rare', card_frames), ('b02_23_reveal_effects', bursts),
          ('b02_24_managers_floors01_03', managers)]
 for k, step in STEPS:
-    if os.path.isdir(pkg(k)) or (step is herb_cards and any(os.path.isdir(pkg(c)) for c in CARDS)):
+    if os.path.isdir(pkg(k)) or (step is herb_cards and any(os.path.isdir(pkg(c)) for c in CARDS)) or \
+            (step is managers and any(os.path.isdir(pkg(m)) for m in MGR_SHEETS)):
         step()
 os.makedirs(REVIEW, exist_ok=True)
 json.dump(REPORT, open(os.path.join(REVIEW, 'report.json'), 'w'), indent=1)

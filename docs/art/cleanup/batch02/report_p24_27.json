@@ -278,40 +278,6 @@
  },
  {
   "cls": "actor",
-  "name": "old_moss: too tall (107), not cleaned",
-  "size": [
-   0,
-   0
-  ],
-  "files": 0,
-  "source_colours": 0,
-  "colours": 0,
-  "budget": 32,
-  "within_budget": false,
-  "outline_pixels_fixed": 0,
-  "mean_move": 0,
-  "max_move": 0,
-  "palette": []
- },
- {
-  "cls": "actor",
-  "name": "captain_kelp: too tall (114), not cleaned",
-  "size": [
-   0,
-   0
-  ],
-  "files": 0,
-  "source_colours": 0,
-  "colours": 0,
-  "budget": 32,
-  "within_budget": false,
-  "outline_pixels_fixed": 0,
-  "mean_move": 0,
-  "max_move": 0,
-  "palette": []
- },
- {
-  "cls": "actor",
   "name": "clementine_zest: too tall (104), not cleaned",
   "size": [
    0,
@@ -343,5 +309,89 @@
   "mean_move": 0,
   "max_move": 0,
   "palette": []
+ },
+ {
+  "cls": "actor",
+  "name": "w1_floor07_manager, old_moss (4 frames)",
+  "size": [
+   96,
+   96
+  ],
+  "files": 4,
+  "source_colours": 64,
+  "colours": 24,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 49,
+  "mean_move": 0.056,
+  "max_move": 0.131,
+  "palette": [
+   "ash-1",
+   "ash-2",
+   "clay-4",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "cream-4",
+   "gold-3",
+   "gold-4",
+   "ink-1",
+   "ink-2",
+   "leaf-2",
+   "leaf-3",
+   "sage-4",
+   "skin-1",
+   "skin-2",
+   "skin-3",
+   "skin-4",
+   "skin-5",
+   "skin-6",
+   "wood-1",
+   "wood-2",
+   "wood-3",
+   "wood-4"
+  ]
+ },
+ {
+  "cls": "actor",
+  "name": "w1_floor08_manager, captain_kelp (4 frames)",
+  "size": [
+   96,
+   96
+  ],
+  "files": 4,
+  "source_colours": 61,
+  "colours": 24,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 20,
+  "mean_move": 0.043,
+  "max_move": 0.11,
+  "palette": [
+   "ash-1",
+   "ash-2",
+   "clay-4",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "cream-4",
+   "gold-2",
+   "gold-3",
+   "gold-4",
+   "ink-1",
+   "skin-1",
+   "skin-2",
+   "skin-3",
+   "skin-4",
+   "skin-5",
+   "skin-6",
+   "stone-1",
+   "stone-2",
+   "stone-3",
+   "wood-1",
+   "wood-2",
+   "wood-3",
+   "wood-4"
+  ]
  }
 ]

@@ -16,6 +16,8 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 
 **Update, 10:30 PM:** round 8 came back at 9:59 PM in one zip. Sheets 24 and 25 (floors 1 to 6) passed and are cleaned. Sheets 26 and 27 (floors 7 to 10) drew everyone about 40% too big, and Old Moss held his cup at his mouth in pose 4, so Lawson was asked to redo those two (the paste text is in the round 8 entry under Done).
 
+**Update, 10:40 PM:** the redo of sheet 26 came back at 10:26 PM at the right size, with Old Moss offering his cup forward. It passed and is cleaned: managers of floors 1 to 8 are done. Only sheet 27 (Clementine Zest, Granny Evergreen) is still owed.
+
 **Read in this order**
 
 1. This file.
@@ -72,11 +74,12 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 ## In progress
 
 - **Master file for ChatGPT** (2026-11-26, 3:45 PM): Lawson's ChatGPT chat hit its maximum length, so the images still owed (prompts 1 and 18 to 23) went out as one master file plus a zip of the five reference pictures, made by `tools/build_batch02_master.py`. Lawson attaches both, then types "next" between images. Copies: project files `art/batch02/master/`. Use the same tool for later batches.
-- Waiting for Lawson's redo of round 8 images 3 and 4 (managers of floors 7 to 10). Nothing half-done; every step so far is committed and pushed.
+- **Batch 2 round 8, redo of sheet 26 back** (10:26 PM, `b02_26_managers_floors07_08_REVISED_FILES.zip`, raw in project files `art/batch02/raw_round8/`). Old Moss and Captain Kelp 76 tall, Old Moss bows and offers his cup at arm's length, no steam, no pipe. Passed Gate A and the hemp review (Captain Kelp's rope is a finished hemp product, as the hemp cast allows). 8 frames in `art/actors/w1_floor07_manager/` and `w1_floor08_manager/`, 24 and 25 colours.
+- Waiting for Lawson's redo of round 8 image 4 (sheet 27, managers of floors 9 and 10). Nothing half-done; every step so far is committed and pushed.
 
 ## Next steps, in order
 
-1. **Check and clean the redo of round 8 images 3 and 4 (floors 7 to 10) when Lawson uploads it.** Raw files to project files `art/batch02/raw_round8/`. Check: characters about 76 tall (the `managers` step refuses anyone taller than 92), Old Moss's cup held out at chest height, no steam, the perfume bottle never sprayed, Captain Kelp with no pipe, Granny Evergreen kept apart from the other two grandmothers. The `managers` step reads every sheet listed in the `slices.json` of the `b02_24_managers_floors01_03_pkg` folder; for a zip holding only sheets 26 and 27, link that zip's folder under the same name. Each manager's ramps and colour rules are in `MANAGERS`. Then send Lawson a line-up of all ten.
+1. **Check and clean the redo of round 8 image 4 (sheet 27, floors 9 and 10) when Lawson uploads it.** Raw files to project files `art/batch02/raw_round8/`. Check: characters about 76 tall (the `managers` step refuses anyone taller than 92), the perfume bottle never sprayed, Granny Evergreen kept apart from the other two grandmothers. Unzip it into its own folder and link it as `b02_27_managers_floors09_10_pkg` next to the `b02_24_..._pkg` (first zip) and `b02_26_..._pkg` (redo) links; `manager_sheets()` reads both `slices.json` layouts. Each manager's ramps and colour rules are in `MANAGERS`. Then send Lawson a line-up of all ten.
 2. **Mythic and Godly**, if the Game Designer adds them: one more prompt with two emblems, two card frames and two bursts, in the free slots that `rarity.json`, `frames.json` and `bursts.json` already name.
 3. **Hand polish, then Gate B,** for the automatic-pass sprites:
    - Faces: one fixed head per character from the Face Kit. The generated faces are readable but soft, most of all on the two ropewalk workers.
@@ -88,7 +91,7 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
    - Batch 2 workers: the floor 8 twine worker lost his glasses (redraw with the head). The floor 1 second gardener's red scissors read as "99" at true size. Olive greens in clothes came out as brighter leaf greens, because the palette has no olive. The floor 4 seedling keeper's dungarees are a cooler purple than the sheet.
    - Batch 2 walls: tidy the HQ wallpaper speckle; the soap workshop plaster came out a little greener than the sheet.
    - Batch 2 herbs: sage, rosemary and the lavender leaves sit on the `sage` ramp as the palette asks, so they read cooler (more mint) than the grey-green sheets. Purple Basil came out clean violet, because the palette has no dusty mauve. Peppermint is a brighter green than the sheet.
-   - Batch 2 round 8: Posy Seedwell's hair came out curly with a grey band, which reads like Fern Petrie's goggles; her hand-drawn head gets the auburn braid wound like a crown, as prompted. Olive cloth again sits on the dark `leaf` steps.
+   - Batch 2 round 8: Posy Seedwell's hair came out curly with a grey band, which reads like Fern Petrie's goggles; her hand-drawn head gets the auburn braid wound like a crown, as prompted. Olive cloth again sits on the dark `leaf` steps. Old Moss's robe is a cooler jade than the khaki sheet.
    - Batch 2 round 7: the Legendary emblem's sun face and sprout are busy at 48 pixels (simplify the centre). The four new chests are 70 pixels wide against 78 for the Batch 1 chests (accepted, one chest shows at a time). Crystal and Epic purples sit on `lavender`, so they read a little bluer than the sheet, and the Epic frame a little pinker. Small card frames and the 24 and 16 pixel emblems are drawn by hand from these.
 4. Cut pivots for the cut-out rig once the engine thread asks for them. The layers and offsets are already in each `frames.json`.
 
