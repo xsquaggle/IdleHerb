@@ -28,6 +28,7 @@ On 2026-11-26 Lawson asked whether to hand everything to the coordinator for an 
 - **Batch 1:** 17 of 18 back and cleaned; prompt 18 replaced by Batch 2 round 8.
 - **Batch 2:** all 27 back and cleaned, including the ten World 1 managers (96×96 frames, feet on y 92).
 - **Batch 3:** written and sent to Lawson at about 10:50 PM as a master file plus reference zip (project files `art/batch03/master/`). Nothing has come back yet. If Lawson uploads Batch 3 images before the new thread starts, they are saved raw in project files `art/batch03/` and not cleaned. The new thread's first job is `clean_batch03.py` (next step 1).
+- **Batch 3 images 1 to 12 came back** on 2026-11-27 at 5:49 AM in three zips (`b03_01_..._FILES.zip`, `Sprout_Tower_B03_02-11_FILES.zip`, `b03_12_..._FILES.zip`), saved raw in project files `art/batch03/raw/`, not cleaned. Each has true-size parts and a `slices.json`; the 2 to 11 zip says its sheets are exact 6×6 enlargements. At a glance all 12 are on brief. Images 13 to 17 are still owed by Lawson.
 - Nothing is half-done. Everything is committed and pushed.
 
 **Read in this order**
