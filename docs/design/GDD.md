@@ -1,6 +1,6 @@
 # Sprout Tower: Game Design Document
 
-Version 0.3, Phase 0. Version 0.2 passed the independent design audit. Version 0.3 gives every floor one fixed manager, on Lawson's decision of 2026-11-25. Owner: Game Designer thread. Companion files: [AUDIT.md](AUDIT.md) (why the premise changed), [CONTENT.md](CONTENT.md) (every content row: floors, managers, plants, heirlooms, skills, research, shops, quests, achievements) and [CHANGES.md](CHANGES.md) (every rule and number that changed from version to version, for the balance simulator and the engine).
+Version 0.4, Phase 0. Version 0.2 passed the independent design audit, and version 0.3 (one fixed manager per floor, on Lawson's decision of 2026-11-25) passed its fresh-eyes audit. Version 0.4 writes in the balance simulator's accepted numbers, which are frozen until a playtest. Owner: Game Designer thread. Companion files: [AUDIT.md](AUDIT.md) (why the premise changed), [CONTENT.md](CONTENT.md) (every content row: floors, managers, plants, heirlooms, skills, research, shops, quests, achievements) and [CHANGES.md](CHANGES.md) (every rule and number that changed from version to version, for the balance simulator and the engine).
 
 ## 0. How to read this document
 
@@ -11,7 +11,7 @@ Version 0.3, Phase 0. Version 0.2 passed the independent design audit. Version 0
 - **Scopes.** An effect is `floor` (one floor), `world` (every floor in one world), or `global` (everything).
 - **Names are defaults.** The Writer may polish names and the Art Director owns how everything looks. Ids are stable.
 - Section 13 says exactly how bonuses stack. Read it before implementing any multiplier. Section 13.5 is the one rule for everything that lasts a set time.
-- Section 17.6 separates what a rough pacing script has checked from what is still a first guess.
+- Section 17.6 says what the balance simulator has checked, which targets it was held to, and what still waits for a playtest.
 
 ## 1. Vision and pillars
 
@@ -1065,35 +1065,37 @@ One new thing at a time. Conditions are exact. Times are targets for a new playe
 | 8 | Plants and planters | world 1 floor 5 opened (first seed packet) | 3:30 |
 | 9 | Bumper taps | player level 2 | about 4:00 |
 | 10 | Garden Visitors | world 1 floor 6 opened | 5:30 |
-| 11 | Manager abilities | the manager of world 1 floor 7 is hired (Old Moss, Tea Break) | about 11:00 |
-| 12 | Growth Spurt | world 1 floor 8 opened | 13:00 |
+| 11 | Manager abilities | the manager of world 1 floor 7 is hired (Old Moss, Tea Break) | about 9:00 |
+| 12 | Growth Spurt | world 1 floor 8 opened | 11:00 |
 | 13 | Morning Basket | 15 minutes of play | 15:00 |
-| 14 | Achievements and Codex | world 1 floor 9 opened | 21:00 |
-| 15 | Skill tree | player level 6 | about 26:00 |
+| 14 | Achievements and Codex | world 1 floor 9 opened | about 14:00 |
+| 15 | Skill tree | player level 6 | about 16:00 |
 | 16 | Offline earnings screen | first return after 5 minutes away with a manager hired | first return |
-| 17 | Replant | world 1 floor 10 opened (32:00). The button is live at 60 Compost pending | about 50:00 |
-| 18 | Compost Shop and Research | first Replant | about 55:00 |
-| 19 | Heirlooms | third Replant (the story gives the Sprouting Trowel) | about 1 h 30 |
+| 17 | Replant | world 1 floor 10 opened (about 20:00). The button is live at 440 Compost pending | about 40:00 |
+| 18 | Compost Shop and Research | first Replant | about 40:00 |
+| 19 | Heirlooms | third Replant (the story gives the Sprouting Trowel) | about 3 h (second session) |
 | 20 | World 2, Customers, World Mastery, weekly quests | ticket: 3e23 Coins | day 1 (about 12 hours) |
 | 21 | Bees and Pollen | research "Bee Hotel" | day 1 to 2 |
-| 22 | Weekend events | player level 12 | day 1 to 2 |
+| 22 | Weekend events | player level 12 | day 1 |
 | 23 | Cross-pollination | research "Pollination Bench" (needs world 2) | day 2 |
 | 24 | World 3, Weather | ticket: 4.5e23 Notes | day 3 |
-| 25 | Mutation and Exotic plants | research "Mutation Chamber" (needs world 3) | day 5 to 7 |
+| 25 | Mutation and Exotic plants | research "Mutation Chamber" (needs world 3) | about day 10 |
 | 26 | Harvest Festival, Ribbon Shop and the Heirloom Pick | world 3 reached and 8 Ribbons pending | day 4 to 5 |
 | 27 | Auto-buy (the Auto-Gardener) | Ribbon Shop, 4 Ribbons | after the first Festival |
 | 28 | World 4, Hearth Heat | deed (8 Ribbons) and ticket | week 1 to 2 |
 | 29 | Head copies | 5 Mastery stars in a world (the first copy of that world's Head) | week 2 (about day 11) |
-| 30 | World 5, Floating Harvests (after launch) | deed (60 Ribbons) and ticket | week 2 to 3 |
+| 30 | World 5, Floating Harvests (after launch) | deed (60 Ribbons) and ticket | week 2 (about day 12) |
 | 31 | World 6, Orbital Sunrise (after launch) | deed (250 Ribbons) and ticket | week 3 (about day 20) |
 
 Nothing that is locked shows more than a silhouette and a one-line hint. The bottom bar starts with no buttons and gains them as features unlock.
 
-Rows 1 to 10 arrive in the first six minutes. Rows 11 to 16 are spread over the next forty-five, so there is something new about every eight minutes right up to the first Replant. Achievements count from the first second of play, so several pop at once when the panel opens at floor 9.
+Rows 1 to 10 arrive in the first six minutes and rows 11 to 15 in the next ten. Rows 13 and 14 can come in either order. The top floor follows at about 20 minutes and the first Replant at about 40, so the stretch before the first Replant is for pushing floors toward it. Achievements count from the first second of play, so several pop at once when the panel opens at floor 9.
+
+From version 0.4, the times in rows 11 to 31 follow the balance simulator's new active player on version 0.4's numbers. Rows 1 to 10 were already close to it. The top floor at 20 minutes is faster than the 32 minutes first planned. That was accepted for version 0.4, and a playtest decides.
 
 ## 17. Pacing
 
-All times in 17.1 to 17.4 are design targets for a real new player. Section 17.6 says what a script has checked.
+All times in 17.1 to 17.5 are targets for a real new player. From version 0.4 they follow the balance simulator's accepted run (section 17.6). A playtest decides the rest.
 
 ### 17.1 First 10 minutes
 
@@ -1114,53 +1116,52 @@ All times in 17.1 to 17.4 are design targets for a real new player. Section 17.6
 | 8:30 | Floor 7, the Tea House. Another Hiring Crate. Old Moss's card shows the first ability, Tea Break | |
 | 10:00 | Seven floors, five of them managed, seven managers met, three plants, several card level-ups, level 3 | |
 
-A new thing roughly every 60 to 90 seconds for the first six minutes, each one taught by doing it once. Then the pace eases on purpose: minutes 6 to 13 are for playing with what is already there, and the only new thing in them is the first ability. The skill tree, achievements and the Codex wait for the quieter stretch before the first Replant (section 17.2).
+A new thing roughly every 60 to 90 seconds for the first six minutes, each one taught by doing it once. Then the pace eases on purpose: minutes 6 to 11 are for playing with what is already there, and the only new thing in them is the first ability. The skill tree, achievements and the Codex wait for the quieter stretch before the first Replant (section 17.2).
 
 ### 17.2 First hour
 
 | Time | Beat |
 |---|---|
-| 11 min | Old Moss is hired. The first ability button: Tea Break fills the Combo meter |
-| 13 min | Floor 8, the Ropewalk. First Growth Spurt |
+| 9 min | Old Moss is hired. The first ability button: Tea Break fills the Combo meter |
+| 11 min | Floor 8, the Ropewalk. First Growth Spurt |
+| 14 min | Floor 9. Achievements and the Codex open, and the first handful of achievements pop at once |
 | 15 min | The Morning Basket appears |
-| 21 min | Floor 9. Achievements and the Codex open, and the first handful of achievements pop at once |
-| 26 min | Level 6. The skill tree opens with five points to spend |
-| 32 min | Floor 10, Sprout Tower HQ, run by Granny Evergreen, the Head of Thymeford. The ticket plate to Loomington appears far out of reach, with its first waypoint mark. Pip mentions the compost heap, and the Replant button shows a bar toward 60 Compost |
-| 32 to 50 min | Push floors to 50 and 100, hit the first tower milestones. Pending Compost climbs to 60 |
-| 50 to 60 min | **First Replant.** ×2.2 profit, two levels of Rich Soil, the Compost Shop and Research open |
-| 60 min | Level 8. All ten Thymeford managers met, 5 plants. The second run reaches HQ in about 12 minutes |
+| 16 min | Level 6. The skill tree opens with five points to spend |
+| 20 min | Floor 10, Sprout Tower HQ, run by Granny Evergreen, the Head of Thymeford. The ticket plate to Loomington appears far out of reach, with its first waypoint mark. Pip mentions the compost heap, and the Replant button shows a bar toward 440 Compost |
+| 20 to 40 min | Push floors to 50 and 100, hit the first tower milestones. Pending Compost climbs to 440 |
+| about 40 min | **First Replant.** ×9.8 profit, four levels of Rich Soil, the Compost Shop and Research open |
+| 60 min | Level 10 to 11. All ten Thymeford managers met, 5 plants. The second run climbs much faster than the first |
 
 ### 17.3 Day 1 (about 3 hours of play)
 
-- 6 to 10 Replants. Compost goes from 60 to tens of thousands.
+- About 10 Replants (the simulator's active player makes 11). Compost goes from 440 to tens of thousands.
 - Heirlooms unlock at the third Replant. Two slots filled by the end of the day.
 - First research: Soil Science I, Sturdy Baskets, Bee Hotel.
 - First return from a break shows offline earnings and Morning Dew.
-- Level about 18. Commons at card level 2 to 3.
-- The day ends at or near the ticket to **Loomington**.
+- Level about 23. Commons at card level 2 to 3.
+- The active player reaches **Loomington** about 12 hours after first launch.
 
 ### 17.4 Week 1
 
 | Day | Active player | New |
 |---|---|---|
-| 1 to 2 | Arrives in Loomington | Customers, World Mastery, weekly quests, 8 new floors |
+| 1 | Arrives in Loomington, about 12 hours after first launch | Customers, World Mastery, weekly quests, 8 new floors |
 | 2 | Pollination Bench built. First hybrid on day 2 to 3 | Cross-pollination |
 | 3 | Arrives in Papaya Cay | Weather |
 | 4 to 5 | **First Harvest Festival.** 8 Ribbons, Golden Hour, auto-buy, and a Legendary heirloom of the player's choice | Ribbon Shop, Heirloom Pick |
-| 5 to 7 | Mutation Chamber built. First Exotic plant around day 7 (Ember Basil is the easy one) | Exotics |
-| 6 to 7 | Deed and ticket to Mount Mitten | Hearth Heat |
-| 7 | Level about 40. Commons at level 5, Old Moss (Rare) at level 4, Clementine Zest (Legendary) at level 2. 12 to 15 research projects done. 3 to 4 Festivals | |
+| 7 to 8 | Deed and ticket to Mount Mitten | Hearth Heat |
+| 7 | Level about 40. Commons at level 5, Old Moss (Rare) at level 4, Clementine Zest (Legendary) at level 2. About 19 research projects done. Two Festivals | |
 
 ### 17.5 Weeks 2 to 8
 
 | When (active player) | Beat |
 |---|---|
-| Week 2 | The first Head copy, for Granny Evergreen, around day 11 (Mastery star 5 in Thymeford). Frosted Mint and Crystal Sage from the Frost climate. A first full heirloom set. Festivals every one to two days. The Moon, once it ships |
-| Week 3 | Mastery stars 7 and 8 in Thymeford, star 5 in Loomington and Papaya Cay. All six heirloom slots. Nebula Nursery, once it ships |
-| Week 4 | Level about 70. Research about half done. Commons at level 8 to 9. Festivals every three to five days |
-| Weeks 5 to 8 | Mastery stars 9 and 10 in Thymeford and stars 6 to 8 in the later worlds. Last research projects. Level about 90, with the cap of 112 around month 3. Hybrids and Exotics levelling up |
+| Week 2 | Mutation Chamber built around day 10 and the first Exotic plant around day 11 (Ember Basil is the easy one). The first Head copy, for Granny Evergreen, around day 11 (Mastery star 5 in Thymeford), and Loomington's soon after. Frosted Mint and Crystal Sage from the Frost climate. A first full heirloom set. Festivals every one to two days. The Moon, once it ships (about day 12) |
+| Week 3 | Mastery star 7 in Thymeford, Loomington and Papaya Cay, and star 5 in Mount Mitten. The first long research project, Living Soil I, starts. All six heirloom slots. Festivals every two to three days. Nebula Nursery, once it ships (about day 20) |
+| Week 4 | Level about 70. Research about three quarters done (35 of 48 projects). Commons at level 8 to 9. Festivals every three to five days |
+| Weeks 5 to 8 | Mastery stars 8 to 10 in Thymeford and 8 and 9 in the later worlds. The long research projects finish about one every five days, the last around day 60. Festivals every five to ten days. Level about 95 by day 60, with the cap of 112 around month 3. Hybrids and Exotics levelling up |
 
-With four worlds at launch, new places stop arriving around day 7. From there the game is carried by Exotic plants, levelling the Heads, heirloom sets, World Mastery, research (two to three months), the Ribbon Shop and card levels. Worlds 5 and 6 slot into weeks 2 and 3 when they ship.
+With four worlds at launch, new places stop arriving around day 8. From there the game is carried by Exotic plants, levelling the Heads, heirloom sets, World Mastery, research (about two months), the Ribbon Shop and card levels. Worlds 5 and 6 slot into weeks 2 and 3 when they ship.
 
 Card levels over time for an active player (about 100 cards a day). The figures are for Thymeford's managers, who are met first. Managers of later worlds trail them, because the copies of a rarity are shared among every met manager of that rarity. This is rough arithmetic from the chest odds, not a measurement.
 
@@ -1175,9 +1176,12 @@ Card levels over time for an active player (about 100 cards a day). The figures 
 
 ### 17.6 What has been checked, and how
 
-A rough pacing script was run for this document. **It is a sanity check, not the balance simulator.** It models floors, levels, milestones, hires, taps, Replant, Compost, Rich Soil, tickets, deeds, Festivals, Ribbons and Golden Hour exactly as written here. Everything else enters as the multiplier budget below.
+Two tools have checked the numbers.
 
-**Player profiles** (the simulator should use the same three):
+- **The balance simulator** (`apps/sim`, report in `docs/balance/REPORT.md`) plays the whole economy as written here, every system included, for three play styles over 60 to 90 days, with six worlds and with the four-world launch build. **Version 0.4's numbers are its accepted run, and they are frozen until a playtest.** After a playtest, change them through the simulator, one knob at a time (section 19).
+- **A rough pacing script** came first (versions 0.1 and 0.2, `/mnt/project-files/design/pacing-check/`). It modelled floors, levels, milestones, hires, taps, Replant, Compost, Rich Soil, tickets, deeds, Festivals, Ribbons and Golden Hour, with everything else as a multiplier budget. Its findings below still give the reasons for the rules. Its numbers are replaced by the simulator's.
+
+**Player profiles** (both tools use the same three):
 
 | Profile | Play per day | Tapping | First session |
 |---|---|---|---|
@@ -1185,69 +1189,56 @@ A rough pacing script was run for this document. **It is a sanity check, not the
 | Mixed | 8 sessions of 6 minutes | half of each session | 30 minutes |
 | Idle | 3 sessions of 4 minutes | none | 15 minutes |
 
-The script buys greedily (lowest wait plus payback time), Replants when pending Compost is at least equal to current Compost, and holds a Festival when pending Ribbons are at least equal to current Ribbons.
+Both buy greedily (lowest wait plus payback time), Replant when pending Compost is at least equal to current Compost, and hold a Festival when pending Ribbons are at least equal to current Ribbons. The simulator also Replants when a run is six hours old and a fifth of the era's Compost is pending, and saves up when a world ticket is close. Its new active player plays like a beginner in the first hour.
 
-**Multiplier budget.** The systems that never reset must add up to roughly this. The simulator should measure the real systems against it.
+**Targets** (the Game Designer's rulings of 2026-11-26, held for version 0.4):
 
-| Day | Manager profit on a typical floor | Everything else that never resets, plus the capped Compost Shop items other than Rich Soil | Tap income as a multiple of `steadyIPS`, before Spurts and boosts |
-|---|---|---|---|
-| 0 | ×2 | ×1 | 1.1 |
-| 1 | ×2.5 | ×4 | 2.5 |
-| 3 | ×3.4 | ×16 | 3.3 |
-| 7 | ×5 | ×120 | 5 |
-| 14 | ×6.2 | ×700 | 6.5 |
-| 30 | ×9 | ×7,000 | 10 |
-| 60 | ×13 | ×20,000 | 14 |
+1. The gate table below. A day or time counts as met from a third early to half late.
+2. Every play style's first Replant lands inside its first 24 hours. The active player's lands in 30 to 55 minutes.
+3. The idle player may be slower in weeks 1 and 2, and there is no catch-up just for idle players. Idle rhythm: a new world about every six days.
+4. Festival rhythm: the first Festival about day 4 for an active player, then gaps of 1 to 3 days up to day 10, 3 to 6 days up to day 30 and 5 to 9 days after. Never more than 10 days, and no gap more than about twice the one before.
+5. Festivals by day 30: 9 to 12 for active and mixed players, 6 to 8 for idle players.
+6. The multiplier budget of versions 0.1 to 0.3 (how much managers, taps and everything else multiply income by on each day) is retired as a target. The simulator still reports it as a reading aid.
 
-**The manager column has not been measured for version 0.3.** It was set when a manager could be seated on any floor, and the rough script has not been run again. With one fixed manager per floor, the floors that earn the most have the rarest managers. Those start at ×3 to ×5 on day 0, where the column says ×2. By day 7 the two agree (×4 to ×5). At day 30 the fixed managers are a little lower (×6 to ×7.5 against ×9), because rare cards level slowly (section 17.5). So the first days should run a little ahead of the results below, and the second month a little behind. Measuring this column again is the simulator's first job on version 0.3. The knobs are `MGR_BASE` and `MGR_STEP` (section 7.2).
+**Gates: targets and the simulator's results on version 0.4's numbers** (days from first launch):
 
-**Where the budget comes from.** This is a rough estimate of the middle column, built from the rows in CONTENT.md for an active player. The budget is the product of these parts.
+| Gate | Active target | Active | Mixed target | Mixed | Idle target | Idle |
+|---|---|---|---|---|---|---|
+| Thymeford top floor | 32 min | 20 min (accepted) | 30 min | 26 min | 11 h | 10.9 h |
+| First Replant | 30 to 55 min | 38 min | inside day 1 | 6.5 h | inside day 1 | 16.2 h |
+| World 2 | 12 h | 11.7 h | day 1.4 | day 2.3 (accepted) | by day 8 | day 7.2 |
+| World 3 | day 2.6 | day 3.1 | day 4.1 | day 5.5 | by day 13 | day 12.5 |
+| First Festival | day 4.1 | day 4.6 | day 5.4 | day 7.1 | by day 16 | day 15.2 |
+| World 4 | day 6.7 | day 7.6 | day 10.1 | day 9.3 | by day 20 | day 19.7 |
+| World 5 | day 12.2 | day 12.1 | day 18.1 | day 13.6 | by day 27 | day 26.2 |
+| World 6 | day 19.5 | day 20.1 | day 30.5 | day 23.1 | day 30 or later | day 37.7 |
+| Festivals by day 30 | 9 to 12 | 12 | 9 to 12 | 12 | 6 to 8 | 8 |
 
-| Part | Day 7 | Day 30 |
-|---|---|---|
-| Research (Soil Science, Crop Rotation) | ×4.9 | ×10 |
-| Achievements and Codex | ×1.65 | ×2.1 |
-| World Mastery | ×1.45 | ×1.7 |
-| Skills (profit, speed, tower milestones) | ×1.7 | ×2.5 |
-| Heirlooms and set bonuses | ×1.6 | ×4 |
-| Plants and manager perks | ×1.6 | ×3.5 |
-| World twists | ×1.5 | ×1.6 |
-| Timed boosts, as average uptime (section 6.7) | ×1.3 | ×1.5 |
-| Cheaper levels (a discount is worth about as much as the same factor of income) | ×1.5 | ×2.2 |
-| Master Composter | ×1 | ×1.75 |
-| **Product** | **about ×150** | **about ×11,500** |
+25 of the 27 checks are on target. The two misses were accepted: the active player's top floor comes early because floor prices were not part of the refit, and the mixed player's World 2 is set by its short sessions, not by the ticket. A playtest decides both.
 
-Both land within about a factor of two of the budget (×120 and ×7,000), on the high side. So the content can carry the pacing in the results below, and the simulator is more likely to trim a little than to need more. The timed-boost row is the tower average in the world on screen (section 6.7), discounted because nobody presses every button on cooldown. The row for plants and manager perks was estimated for version 0.2 and has not been estimated again for the fixed perks. If the simulator finds it high, ability strengths in CONTENT.md 2.2 are the first thing to trim, before `BOOST_CAP`.
+Days between Festivals in the same runs, in order:
 
-**Results** (days from first launch):
+| Profile | Gaps |
+|---|---|
+| Active | 1.5, 1.3, 1.7, 1.0, 1.3, 1.7, 2.0, 1.3, 2.2, 3.0, 4.7, 6.9, 5.9, 5.0, 6.0, 9.6 |
+| Mixed | 1.0, 1.0, 1.2, 1.0, 1.2, 1.5, 2.0, 1.6, 2.4, 3.3, 4.7, 6.2, 5.8, 7.3, 6.7 |
+| Idle | 1.4, 2.0, 2.0, 2.0, 2.0, 2.0, 2.6, 2.4, 3.6, 3.4, 3.6, 6.0, 6.2 |
 
-| Event | Active | Mixed | Idle |
-|---|---|---|---|
-| World 1 top floor | 17 min | 30 min | 11 h |
-| First Replant | 36 min | 4.4 h | 16 h |
-| World 2 | day 0.5 | day 1.4 | day 3.2 |
-| World 3 | day 2.6 | day 4.1 | day 5.2 |
-| First Festival | day 4.1 | day 5.4 | day 8.2 |
-| World 4 | day 6.7 | day 10.1 | day 16.2 |
-| World 5 | day 12.2 | day 18.1 | day 27.2 |
-| World 6 | day 19.5 | day 30.5 | day 52.2 |
-| Festivals by day 30 | 13 | 11 | 7 |
+Between days 10 and 18 the gaps are one to two days where the rhythm asks for three to six, so the step to longer gaps comes about a week late. That step was accepted.
 
-This table was run again for version 0.2 with the new offline start (40% for 4 hours, rising to 100% for 24 hours over three weeks) and with the first Replant held to 60 Compost. The biggest move is 1.2 days (World 6 for the mixed profile).
+**What the checks found**
 
-The script plays perfectly. A real new player is about twice as slow in the first ten minutes and about 1.5 times as slow in the first hour, which is where the targets in 17.1 and 17.2 come from.
+1. **No runaway, with these exponents.** A first draft used a square root for Compost, an uncapped Rich Soil and a square root for Ribbons. It reached ten Festivals on day 1. The cause is simple arithmetic. If income grows as `lifetime ^ e`, growth stays polynomial only while `e < 1`. Here `e` is about 0.15 (milestones) + 0.4 (Compost) + 0.2 (Ribbons, the square root of a 0.4 power) = 0.75. Any uncapped multiplier bought with Compost or Ribbons adds to `e`. **Rule for all future content: nothing bought with Compost or Ribbons may multiply profit by a fixed factor per level unless it has a level cap.** Blue Ribbon Polish is the one endless item. It adds a fixed step for a price that rises 15% a level, so it adds about 0.01 to `e`. The simulator agrees: no play style ever grows faster than in its own first week.
+2. **Dead zones are short.** The simulator's longest stretch of open game with nothing to buy is 12 minutes for the mixed player and 4 for the idle player. The active player has one of 52 minutes on day 51, late in a long Festival cycle. That is a playtest question.
+3. **Idle players start slower and are not left behind.** The idle player reaches Loomington on day 7, where the active player is there in 12 hours, but reaches World 5 in about twice the active player's days. The slower start was accepted (target 3).
+4. **Festivals.** They come every one to two days up to about day 18, then every three to seven days, and every five to ten days after day 30. Golden Hour's prices (3, 10, 40, 150, 600) were kept: eight other price lists were tried and none did better. The eight long research projects (section 10, rule 7) keep the gaps after day 30 under 10 days. Without them the active and mixed players had gaps of 10 to 13 days.
+5. **Timed boosts are bounded by rule.** Section 13.5 makes every timed boost add into one number capped at ×15, with the Growth Spurt as the only multiplier on top, and makes lump sums pay from the steady rate. The uptime arithmetic in section 6.7 (`boost_avg03.py`) puts the average Boost near ×1.9 at day 30 in the best world and ×1.5 to ×2.0 for a finished account. The simulator measured ×1.4 to ×2.0 for its active player and ×1.7 to ×2.4 for its mixed player, averaged over days 0 to 60 in each world. On version 0.3's numbers its highest burst, every timed ability held and fired together at 12 taps a second, was ×42 the steady income.
+6. **Managers.** With one fixed manager per floor, the rarest managers sit on the floors that earn the most, so managers multiply a new world's income by about ×5 from the first hour, where the old budget said ×2. The gate prices absorb that early strength. Lower level 1 values were tried and not taken: managers multiply every play style alike, so they do not cause the gap between active and idle players, and the change halved manager power late in the game.
+7. **Older worlds stay alive.** An older world used to go dead after a Replant: floor 1 had no manager, so the world earned nothing and Auto-Hire and auto-buy had nothing to spend. The Auto-Gardener now restarts it (CONTENT.md section 8). Thymeford's lowest floor reaches level 862 by day 90 instead of stopping near 565 in week 2, and after day 30 Thymeford brings in more than half of the active player's Compost.
+8. **XP comes in lumps early.** On version 0.3 the active player was level 13 after an hour, because the first Compost records, daily quests and already-earned achievements all paid at once. Version 0.4's lower daily and achievement XP gives level 11 at one hour and the skill tree at about minute 16.
+9. **World Mastery** levels now come from the simulator (section 14.5). The fair stall's track steps (section 15.3) are still the rough script's (`stall2.py`). The simulator plays the track every weekend, and its active and mixed players finish it on 7 or 8 weekends out of 9.
 
-**What the check found**
-
-1. **No runaway, with these exponents.** A first draft used a square root for Compost, an uncapped Rich Soil and a square root for Ribbons. It reached ten Festivals on day 1. The cause is simple arithmetic. If income grows as `lifetime ^ e`, growth stays polynomial only while `e < 1`. Here `e` is about 0.15 (milestones) + 0.4 (Compost) + 0.2 (Ribbons, the square root of a 0.4 power) = 0.75. Any uncapped multiplier bought with Compost or Ribbons adds to `e`. **Rule for all future content: nothing bought with Compost or Ribbons may multiply profit by a fixed factor per level unless it has a level cap.** Blue Ribbon Polish is the one endless item. It adds a fixed step for a price that rises 15% a level, so it adds about 0.01 to `e`.
-2. **No dead zone longer than about 20 minutes inside a run.** The longest wait is saving for level 100 on several floors late in the first run. That is exactly when the Replant button is glowing.
-3. **Idle players are slower but not left behind.** Idle reaches each world in roughly two to three times the active player's days.
-4. **Festivals are frequent in week 2** (about one a day for the active profile) while Golden Hour's five doublings are being bought, then stretch to every three to eight days. If that feels too fast in play, raise the Golden Hour prices first.
-5. **Timed boosts are bounded by rule, not by this script.** The script has no abilities in it. Section 13.5 makes every timed boost add into one number capped at ×15, with the Growth Spurt as the only multiplier on top, and makes lump sums pay from the steady rate. The uptime arithmetic in section 6.7 (`boost_avg.py`) puts the average Boost near ×2.4 at day 30 and ×3 for a finished account.
-6. **The script's tap model is on the low side for Golden Sprouts.** It counts them at 0.3 times idle income. Section 6.7 now puts them near 1.2 times with every one caught. That makes a real active player a little faster than the Active column, by about a quarter of income.
-7. **World Mastery and the fair stall were sized with the same rough scripts** (`mastery_track.py` and `stall2.py`). The Mastery levels in section 14.5 and the track steps in section 15.3 are first-pass values from them.
-
-**Not checked by any script:** XP and level pacing, Insight income, chest and card rates, heirloom rates, Pollen, Gem flow, twist values, Master Composter, Blue Ribbon Polish, the tap caps, the Combo ramp and the offline build (how soon a player reaches 100%). Boost uptime, Mastery levels and the event track have rough arithmetic only. All of these are estimates from the formulas in this document, and the simulator should run each of them with both tap rates (6 and 12 a second).
+**Still for a playtest:** the Combo for a player who uses only the mouse, how the offline build feels (how soon a player reaches 100%), the event track's pace, the top floor at 20 minutes and the long stretch late in a Festival cycle. Chest, card, heirloom, Pollen, Gem and Insight rates run in the simulator but have no targets of their own yet. The card-level table in section 17.5 is rough arithmetic from the chest odds.
 
 ## 18. Currency sources and sinks
 
@@ -1263,13 +1254,13 @@ The script plays perfectly. A real new player is about twice as slow in the firs
 | Card and heirloom copies | Chests, Hiring Crates, bench jobs, Mastery stars, the Heirloom Pick, Pollen | Card and heirloom levels |
 | Fair Tickets | Fair stall | None. They only move the reward track |
 
-Expected flow for an active player in week 1: about 150 to 200 Gems a day (about 100 a day later), 200 to 400 Pollen a day once bees are out, 1,700 Insight a day rising to about 5,000 by week 2.
+Expected flow for an active player in week 1: about 150 to 200 Gems a day (about 100 a day later), 200 to 400 Pollen a day once bees are out, 1,700 Insight a day rising to about 5,000 by week 2, and about 11,000 to 13,000 a day from day 20 (simulator).
 
 Every currency has at least one sink that lasts past month 1: card levels for copies, Exotic copies for Pollen, the last research tiers for Insight, Blue Ribbon Polish for Ribbons, and Crystal Chests for Gems.
 
 ## 19. Tuning knobs
 
-In the order to reach for them. Change one at a time.
+Version 0.4's numbers are frozen until a playtest. After one, reach for these in this order, one at a time, and run each change through the simulator first (`pnpm sim calibrate --only` with the gates that move).
 
 | # | Knob | Constant | Effect |
 |---|---|---|---|
@@ -1288,6 +1279,7 @@ In the order to reach for them. Change one at a time.
 | 13 | Ability strengths, then the Boost cap | CONTENT.md section 2.2, `BOOST_CAP` | What timed boosts add on average, and how big a lined-up burst can get |
 | 14 | Mastery levels and event steps | `MASTERY_LEVELS` (one list per world), section 15.3 | When Head copies arrive, and how long a weekend event takes |
 | 15 | Manager level 1 values and steps | `MGR_BASE`, `MGR_STEP` | How strong the first day is, and what a manager copy is worth |
+| 16 | Living Soil strength | CONTENT.md section 6.2 | How far apart Festivals are after day 30. Lower the ×1.3 before touching the costs |
 
 ## Appendix A. Constants
 
