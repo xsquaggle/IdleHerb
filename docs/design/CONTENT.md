@@ -192,7 +192,7 @@ A manager's card is owned at level 1 from the first time its floor is opened. Ch
 | M01 | `card.manager.nana_sprig` | Nana Sprig | `floor.w1.windowsill` | common | `floor.levelCost` -5% (floor) | Grandmother with a trowel who never overpays | B5, 2nd | yes |
 | M02 | `card.manager.basil_brumble` | Basil Brumble | `floor.w1.balcony` | common | `floor.profit` +20% (floor) | Jolly shopkeeper in an apron | B5, 3rd | yes |
 | M03 | `card.manager.rowan_rake` | Rowan Rake | `floor.w1.hemp_patch` | common | `floor.speed` +10% (floor) | Hemp field hand, up before the sun | new, hemp cast | yes |
-| M04 | `card.manager.posy_seedwell` | Posy Seedwell | `floor.w1.garden_shed` | uncommon | `plant.power` +15% (floor) | Seed keeper with a sack on each shoulder | new, hemp cast | yes |
+| M04 | `card.manager.posy_seedwell` | Posy Seedwell | `floor.w1.garden_shed` | uncommon | `plant.power` +15% (floor) | Seed keeper with a sack on each shoulder | new | yes |
 | M05 | `card.manager.fern_petrie` | Fern Petrie | `floor.w1.greenhouse` | uncommon | `insight.gain` +4% (global) | Curious botanist in goggles | B5, 5th | yes |
 | M06 | `card.manager.juniper_jones` | Juniper Jones | `floor.w1.market` | uncommon | `tap.power` +8% (world) | Cheerful market runner with a basket | B21, 2nd | yes |
 | M07 | `card.manager.old_moss` | Old Moss | `floor.w1.tea_house` | rare | `offline.earnings` +12% (world) | Serene tea master | B21, 1st | yes |
@@ -298,7 +298,7 @@ The Welcome Chest arrives at the moment the player can pay the first hire fee (1
 - **New for worlds 2 to 4 (18):** M13, M14, M16, M17, M18, M20 to M26, M27 to M31, M34.
 - **Later (16):** M35 to M50.
 - **New characters in version 0.3 (7 at launch):** Tansy Treadle, Kit Foldaway, Marina Bolt, Ned Knotwell, Wren Woolsey, Bertie Bundle, Purl Garter. Fourteen more belong to worlds 5 and 6.
-- **Hemp cast** (brisk, proud craftspeople): every manager of a hemp floor. At launch: M03 Rowan Rake, M04 Posy Seedwell, M08 Captain Kelp, M13 Tansy Treadle, M14 Kit Foldaway, M16 Hazel Thimble, M17 Bjorn Barrow, M18 Madame Loom, M21 Marina Bolt, M22 Ned Knotwell, M30 Purl Garter. Chip runs the Sled Works and is a robot, which reads as neither.
+- **Hemp cast** (brisk, proud craftspeople): every manager of a hemp floor. At launch: M03 Rowan Rake, M08 Captain Kelp, M13 Tansy Treadle, M14 Kit Foldaway, M16 Hazel Thimble, M17 Bjorn Barrow, M18 Madame Loom, M21 Marina Bolt, M22 Ned Knotwell, M30 Purl Garter. Chip runs the Sled Works and is a robot, which reads as neither.
 - A manager now belongs to one room, so a sprite can be drawn for that room and no longer needs a floor-neutral pose. Every floor still needs one manager spot. Whether the pictured twelve need new poses is the Art Director's call.
 - The hemp-floor rule is now a casting rule: the easygoing beach gardener (M19) and the night-shift keeper (M33) are on herb floors and stay there. The Art Director still keeps mortars, pipes, steam and smoke puffs off every manager sprite. Role hints, bios and ability text stay clear of them too.
 - World 1 has three grandmothers: the lead worker on floor 1 (Lawson's art), Nana Sprig, who manages that same floor, and Granny Evergreen. A hint for the Writer: the floor 1 worker and Nana Sprig can be sisters, so the likeness reads as a joke.

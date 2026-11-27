@@ -8,7 +8,7 @@ Version 0.4, Phase 0. Version 0.2 passed the independent design audit, and versi
 - **Every tunable number has a constant name** in `CODE_STYLE`. Appendix A lists all of them in one table. The simulator and the game should read these names from data, not hard-code them.
 - **Numbers are big numbers** (mantissa and exponent). Nothing is rounded internally except where a formula says `floor`. Display rounding is a UI matter.
 - **"Profit"** means a multiplier on a floor's payout. **"Speed"** means a multiplier on how fast a floor's cycle runs. **"IPS"** means income per second.
-- **Scopes.** An effect is `floor` (one floor), `world` (every floor in one world), or `global` (everything).
+- **Scopes.** An effect is `floor` (one floor), `adjacent` (the floors directly above and below one floor), `world` (every floor in one world), or `global` (everything).
 - **Names are defaults.** The Writer may polish names and the Art Director owns how everything looks. Ids are stable.
 - Section 13 says exactly how bonuses stack. Read it before implementing any multiplier. Section 13.5 is the one rule for everything that lasts a set time.
 - Section 17.6 says what the balance simulator has checked, which targets it was held to, and what still waits for a playtest.
@@ -781,7 +781,7 @@ speedMult(floor) = 2 ^ milestoneCount x towerMilestoneMult ^ towerMilestoneCount
   x spurt                                            Growth Spurt speed while one is active, else 1
 ```
 
-Abilities written as speed (All Hands, Fireside Story) are timed boosts. They count in the Boost of section 13.5, not here.
+Abilities written as speed (All Hands) are timed boosts. They count in the Boost of section 13.5, not here.
 
 `towerMilestoneMult` is `TOWER_MILESTONE_MULT` plus any flat additions (a Tycoon skill, a set bonus, Granny Evergreen in Thymeford), capped at `TOWER_MILESTONE_CAP = 2.0`.
 
@@ -1014,10 +1014,10 @@ for each unlocked world:
 The design requirement is that changing the PC clock can never break a save or pay out more than one normal return.
 
 1. Live play is timed by a clock that only counts up. Changing the PC clock while the game is running does nothing.
-2. On return, `away` is the larger of what the PC clock claims and the time that provably passed. It is never negative and never more than 30 days. Earnings use at most the offline cap.
+2. On return, `away` is the larger of what the PC clock claims and the time that provably passed. It is never negative and never more than `MAX_AWAY = 30 days`. Earnings use at most the offline cap.
 3. If the clock moves **back**, the player gets the time that provably passed, which is often none. Timers carry on from where they were. Nothing is lost, nothing is locked and nothing is paid twice.
 4. If the clock moves **forward**, the player gets one capped return.
-5. Daily and weekly quests, Morning Baskets and events are keyed to a guarded day counter. Moving the clock back never grants a new set. A clock that was once far ahead cannot strand the player either: the counter re-anchors, and the next reset is the next real midnight.
+5. Daily and weekly quests and weekend events are keyed to a guarded day counter. (Morning Baskets are timers, section 15.1, and follow rules 1 to 4.) Moving the clock back never grants a new set. A clock that was once far ahead cannot strand the player either: the counter re-anchors, and the next reset is the next real midnight.
 
 `docs/tech/07-offline-and-time.md` owns the mechanism (three clocks, the proven-time floor and the day counter), and the Save and Offline thread owns the implementation. These five rules are the behaviour to test. In `away` above, `trustedNow - lastSeen` is shorthand for rule 2.
 
@@ -1370,4 +1370,5 @@ Version 0.4's numbers are frozen until a playtest. After one, reach for these in
 | `OFFLINE_CAP_BASE`, `OFFLINE_CAP_MAX` | 4 h, 36 h | 15.1, 13.4 |
 | `OFFLINE_EFF_BASE` | 0.4 | 15.1 |
 | `DEW_AWAY`, `DEW_DURATION` | 1 h, 120 s | 15.1 |
+| `MAX_AWAY` | 30 days | 15.2 |
 | `FAIR_OFFLINE_EFF`, `FAIR_OFFLINE_CAP` | 0.5, 12 h | 15.3 |
