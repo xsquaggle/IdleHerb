@@ -10,7 +10,7 @@ Names follow the game design document (version 0.4); Mythic and Godly follow the
 
 ## How to do it on your phone
 
-The easiest way is the **master file**: attach `Sprout_Tower_Batch4_Master.md` and `Sprout_Tower_Batch4_References.zip` (both in the project files, `art/batch04/master/`) to one new ChatGPT chat and type **next** between images. If the chat gets full, start a new chat with the same two files and type **start at image N**. Every picture in the zip is named for the images it belongs to (`img05_...` is for image 5, `img01-13_...` for images 1 to 13), so nothing has to be attached by hand. The rounds below are the same images, one prompt at a time, if you prefer that.
+The easiest way is the **master files**. ChatGPT takes at most 20 attachments, so the batch comes in two parts. Part 1 is images 1 to 13 (the people): attach `Sprout_Tower_Batch4_Part1_Master.md` and the 12 pictures in `Sprout_Tower_Batch4_Part1_References.zip` to one new ChatGPT chat and type **next** between images. Part 2 is images 14 to 19 (events and the Mythic and Godly kit): the same with `Sprout_Tower_Batch4_Part2_Master.md` and the 11 pictures in `Sprout_Tower_Batch4_Part2_References.zip`, in a second new chat. All four files are in the project files, `art/batch04/master/`. If a chat gets full, start a new one with the same files and type **start at image N**. Every picture is named for the images it belongs to (`img05_...` is for image 5, `img01-13_...` for images 1 to 13). The rounds below are the same images, one prompt at a time, if you prefer that.
 
 1. Each round is **one new ChatGPT chat**.
 2. At the start of a round, **attach that round's two reference images** (listed below) and paste the round's first prompt in the same message.
