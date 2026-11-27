@@ -1,6 +1,6 @@
 # Sprout Tower Style Bible v1
 
-Status: v1.4, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
+Status: v1.5, Phase 0. Owner: Art Director. Applies to every sprite, background, UI piece, icon, effect and marketing image in the game.
 
 This is the single source of truth for how Sprout Tower looks. If an asset and this document disagree, the asset is wrong, or this document gets a new version. Nobody "interprets around" it.
 
@@ -57,11 +57,11 @@ Things found in the references that production must fix:
 - **B11 compass lid** carries a many-fingered fan-leaf emblem. Replace with the two-leaf sprout. See the never list in HEMP_ART.md.
 - **B12** has a purple "plus" token that can read as a medical cross. Redesign as a gem or a seed. Its blue flask (the research currency, now called Insight) becomes a lightbulb with a sprout inside, so nothing reads as extraction.
 - **B5 botanist** carries test tubes in the coat pocket. In the redraw they become plant labels and a pencil.
-- **B21 cook** grinds in a mortar and **B21 tea master** holds a steaming cup. Managers can be seated on any floor, including hemp floors, so the cook's sprite carries a ladle and a copper pan instead, and the tea master's cup has no drawn steam (steam is a game effect, off on hemp floors).
+- **B21 cook** grinds in a mortar and **B21 tea master** holds a steaming cup. No manager sprite shows a mortar or drawn steam (section 10), so the cook's sprite carries a ladle and a copper pan instead, and the tea master's cup has no drawn steam (steam is a game effect, off on hemp floors).
 - **B11 pruners** carry a purple leaf with five pointed lobes. It becomes a rounded bramble leaf.
 - **B11 mortar** is redrawn as the **Moonstone Birdbath**: a stone bowl of moonlit water on a short pedestal, with a moonstone set in the rim and no pestle. A mortar read badly beside hemp, so no heirloom shows one.
 - **B29** bakes "+$" into the art and includes a flame row. Text and currency signs are drawn by the game. Flames are for stoves and ember herbs only.
-- **B5 beach-shirt manager** and **B21 sleepy night-shift manager** are fine characters, but default art and story hires never place them on hemp floors.
+- **B5 beach-shirt manager** (Sandy Tidewell) and **B21 sleepy night-shift manager** (Barnaby Moonwort) are fine characters. Each manages an herb floor (design 0.3), so they never appear in a hemp room.
 - **B28 customer and the floor 09 perfumer** sniff herbs. Fine on herb floors, never on hemp floors.
 - **v2 floor 03** becomes the Backyard Hemp Patch. Its two gardeners stay. Its side shelf (jars, hanging dried bunches) and work table (mortar and pestle) are replaced with hemp-patch props, because those items are on the hemp never list.
 - **v2 floor 09** becomes the Soap and Scent Workshop. Its copper still with a flame and its lab flasks are replaced with a soap kettle, moulds and drying racks, so nothing reads as a laboratory.
@@ -284,15 +284,17 @@ Each material has one recipe. Steps are ramp steps, dark to light.
 
 ### Managers
 
-Managers are collectible cards that the player can assign to any floor in any world. So:
+Every floor has its own manager, who never moves to another floor (Lawson's call on 2026-11-25; design version 0.3, GDD 7 and CONTENT 2). So:
 
-- **A manager never depends on a floor.** The pose is floor-neutral: standing or sitting, facing the viewer or slightly right, holding only their own signature item. No floor tools, no floor furniture drawn into the sprite.
-- **Frames:** stand, blink, cheer, and one "boost" gesture (ring the bell, point, clap). No walk cycle. Same 64 pixel height and 80×80 canvas as workers.
-- **Card and portrait** are cut from the same design: full body for the large card, a 48×48 bust for lists.
-- **Every floor has a manager spot** (section 13). An unassigned spot shows the empty stool.
-- The beach-shirt and sleepy night-shift managers are valid cards. Default art and story hires never place them on hemp floors.
-- **Every manager must be safe on a hemp floor,** because the player can put them there. So no manager sprite has drawn steam or smoke, a mortar, a pipe, or anything held to the mouth or nose.
-- **Three grandmothers share the tower:** the floor 1 worker (salmon cardigan, red apron, bow headband), Nana Sprig (purple cardigan, green apron, lavender in her bun) and Granny Evergreen (Legendary). Their colours, hair and silhouettes are kept far apart, and Granny Evergreen gets a grand, unmistakable outline.
+- **A manager belongs to one room.** The sprite may work at that room's job and hold its tools. Their own signature item, hat or hairstyle still makes them read alone, because the same sprite is their card picture.
+- **Four body poses**, same 64 pixel height, 80×80 canvas and feet line (y 76) as workers: *stand* (facing the viewer, holding their item), *work* (facing right, at their job), *cheer* (hired or levelled up) and *big moment* (the ability for Rare and better, a signature gesture for the rest). Head and face are built like a worker's (below), and the blink comes from the Face Kit. No walk cycle.
+- **Card and portrait** come from the stand pose: the full body on the large card over the rarity backdrop, and a 48×48 bust for lists.
+- **Every floor has a manager spot** at its right end (section 13). Before the manager is hired the spot shows its empty stool, crate or desk.
+- **Rarity follows the floor** (CONTENT 2.1). The top floor's manager is that world's Head, Exotic, and is drawn as the grandest person in the world: the biggest silhouette and the richest outfit.
+- **Hemp floors get the hemp cast:** brisk, proud craftspeople (CONTENT 2.4). The beach-shirt gardener (Sandy Tidewell) and the sleepy night-shift keeper (Barnaby Moonwort) manage herb floors and never appear in a hemp room.
+- **Every manager is still safe in any picture:** no manager sprite has drawn steam or smoke, a mortar, a pipe, or anything held to the mouth or nose. The cook carries a ladle and a copper pan, the tea master's cup has no steam, and the perfumer's bottle is never sprayed.
+- **Three grandmothers share World 1:** the floor 1 worker (salmon cardigan, red apron, bow headband), Nana Sprig, who manages that same floor (plum cardigan, green apron, lavender in her bun) and Granny Evergreen, the Exotic Head of Thymeford (deep brown skin, a cloud of white curls, green suit and a green velvet cape, from the desk in v2 floor 10). Their colours, hair and silhouettes are kept far apart, and Granny Evergreen gets a grand, unmistakable outline.
+- **World 1's ten managers** are drawn in Batch 2, round 8. Six come from the B5 and B21 lineups (Nana Sprig, Basil Brumble, Fern Petrie, Juniper Jones, Old Moss, Clementine Zest), four are new (Rowan Rake, Posy Seedwell, Captain Kelp, Granny Evergreen).
 
 ### How characters are built so they can move
 
@@ -518,7 +520,7 @@ Getting something rare is the best moment in the game, so it is staged. One rule
 - Don't mix pixel sizes in one image, or scale a sprite to fit.
 - Don't bake text, numbers or currency signs into art.
 - Don't bake sky, frames or characters into a floor.
-- Don't reuse a worker on another floor. Managers are cards and can go anywhere.
+- Don't reuse a worker on another floor. Each manager belongs to one floor too.
 - Don't use any leaf as an emblem except the two-leaf sprout.
 - Don't show smoke, anything held to a face on hemp floors, or any item on the never list in HEMP_ART.md.
 - Don't copy anything from Cash, Inc. or any other game: no names, characters, art or layouts.
@@ -618,7 +620,7 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 | Room back walls for every floor | The shell interiors are transparent. World 1 floors 1 to 8 in **B1**. 26 more for launch |
 | Growth stages for every plant except mint | Basil, rosemary, lavender in **B1** |
 | Animation sheets for every worker except the B22 gardener | Lead workers of floors 1, 2 and 3 in **B1**. 31 more lead workers for launch, and a short sheet (stand, blink, two work frames) for each room's second worker |
-| In-world manager sprites in floor-neutral poses | 30 managers in the design document, 28 at launch. Twelve have pictures: six in B5 (redrawn in the crisp style by **B1** prompt 18) and six in B21. Sixteen more are needed for launch: nine for the World 1 chest pool, and seven for worlds 2 to 4 (Mayor Thyme, Bjorn Barrow, Maestro Fennel, Madame Loom, The Amazing Marrow, Skipper Papaya, Grandpa Mitten) |
+| Manager sprites, four poses each | 50 managers in the design document (version 0.3), one per floor, 34 at launch. Twelve are pictured in B5 and B21 and are redrawn in the crisp style with their poses. 22 are new for launch. World 1's ten (six redrawn, four new) are Batch 2, round 8; worlds 2 to 4 follow in later batches |
 | Plants | 38 in the design document, 36 at launch. Nine herbs are pictured (B9, B23), seven of them launch cards. **B1** adds the six hemp cards. 23 more herb cards are needed for launch. Growth stages are drawn once per family: mint exists (B24), hemp, basil, rosemary and lavender are in **B1**, and thyme, sage and chamomile are still to make |
 | Heirlooms | Six new icons: clover locket, bramble gloves, whetstone, spindle, guild banner, golden rope coil. One redraw: the B11 mortar becomes the Moonstone Birdbath |
 | Visitors | Six new animated sprites: three Golden Sprouts with badges, Dewdrop, Mystery Crate, Busy Bee |
@@ -664,3 +666,4 @@ After both packs, this is still to be made. Batch 1 covers the items marked **B1
 - **v1.2:** follows design version 0.2, which plans four worlds at launch. Mount Mitten's look is fixed (section 7), the missing list has launch counts (section 23), the B11 mortar becomes the Moonstone Birdbath, the ticket plate and "Coming soon" card join the UI kit, and the later batches are laid out in BATCH_PLAN.md. The look, grid, palette and prompt suffix are unchanged.
 - **v1.3:** after the first full batch of our own images. Adds the wall veil (section 13) and the 32-colour budget for a worker frame that holds a prop (section 6). Managers still read as in v1.1 and wait for design version 0.3.
 - **v1.4:** the rarity reveal ladder (section 19), the six rarity emblems with two free slots above Exotic (section 8), and chests named by the design's six chest tiers instead of by rarity (section 15). Lawson asked for reveals that build up more the rarer the item is.
+- **v1.5:** managers follow design version 0.3 (merged 2026-11-26): one fixed manager per floor, drawn at work in their own room with four poses, rarity by floor, the Head as the grandest person in each world, and hemp floors cast with the hemp cast (section 10). The floor-neutral pose is gone.

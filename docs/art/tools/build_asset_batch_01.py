@@ -472,8 +472,9 @@ w("")
 w("Floor and card names follow the game design document, which is still in review. Each prompt describes a look, not "
   "a name, so a rename does not spoil an image. The prompt's **Name flag** says what could still change.")
 w("")
-w("Managers: prompt 18 redraws the six from your B5 lineup, who are the first hires, in the crisp expansion style. "
-  "Your B21 lineup is already in that style. Managers who have no picture yet follow in Batch 2.")
+w("**Prompt 18 is replaced. Do not run it.** Since design version 0.3 every floor has its own fixed manager, so the "
+  "ten World 1 managers are drawn at work in their own rooms by Batch 2, round 8 (prompts 24 to 27). Prompt 18 stays "
+  "below only as a record.")
 w("")
 w("## How to do it on your phone")
 w("")
@@ -533,6 +534,9 @@ for r, theme, s, ns, pri in ROUNDS:
         w("")
         w(f"### Prompt {p['n']}: {p['title']}")
         w("")
+        if p['n'] == 18:
+            w("**Replaced by Batch 2, round 8 (prompts 24 to 27). Do not run this prompt.**")
+            w("")
         w(f"- **File name:** `{p['fname']}`")
         w(f"- **Shape and size:** {p['shape']}, {p['size']} (any size ChatGPT gives at this shape is fine)")
         w(f"- **Transparent background:** {p['transparent']}")

@@ -106,11 +106,11 @@ The Soap and Scent Workshop (World 1, floor 9) is led by lavender, not hemp, but
 
 Gardeners on the hemp patch, then ropemakers, weavers, papermakers, tailors, masons and sailmakers on the product floors. They are **brisk, proud and bright-eyed**: skilled trades people who love their craft.
 
-The design document's hemp managers, to be drawn in later batches: Rowan Rake (hemp field hand), Posy Seedwell (seed keeper), Hazel Thimble (tailor), Captain Kelp (rope master, a retired sailor with no pipe), Bjorn Barrow (hempcrete builder) and Madame Loom (head of the weavers' guild).
+Every floor has its own fixed manager (design version 0.3), and every manager of a hemp floor is cast from the hemp cast (CONTENT 2.4). At launch: Rowan Rake (hemp field hand), Posy Seedwell (seed keeper), Captain Kelp (rope master, a retired sailor with no pipe), Tansy Treadle (weaver), Kit Foldaway (papermaker and kite builder), Hazel Thimble (tailor), Bjorn Barrow (hempcrete builder), Madame Loom (Head of Loomington and of the weavers' guild), Marina Bolt (sailmaker), Ned Knotwell (net weaver) and Purl Garter (knitter). Rowan Rake, Posy Seedwell and Captain Kelp are drawn in Batch 2, round 8.
 
-Every manager can be seated on a hemp floor, so no manager sprite has drawn steam or smoke, a mortar, a pipe, or anything held to the mouth or nose. Humour comes from pride, competition and scale (the giant cane, the endless rope, the sparrows stealing seed).
+No manager sprite has drawn steam or smoke, a mortar, a pipe, or anything held to the mouth or nose, on any floor, because every sprite is also a card picture. Humour comes from pride, competition and scale (the giant cane, the endless rope, the sparrows stealing seed).
 
-Managers are cards the player can place on any floor, so the game cannot forbid a pairing. But default art, story hires, card pictures and marketing never show the B5 beach-shirt manager, the B21 sleepy night-shift manager, or any character whose joke is being drowsy, dazed or "chill", on a hemp floor.
+Managers no longer move between floors, so the pairing is fixed by the design: the B5 beach-shirt manager (Sandy Tidewell) and the B21 sleepy night-shift manager (Barnaby Moonwort) manage herb floors. Default art, story scenes, card pictures and marketing never show them, or any character whose joke is being drowsy, dazed or "chill", in a hemp room.
 
 ## The never list
 

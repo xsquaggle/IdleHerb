@@ -2,11 +2,11 @@
 
 Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **1**. Style suffix version: **v1**. Hemp guards version: **v1**. Written by `tools/build_asset_batch_02.py`, which copies the suffix and guards word for word from section 21 of the bible. Never edit this file by hand.
 
-**23 images in 7 rounds.** They finish World 1: the six visitors, six currency icons, every World 1 herb card and the last three herb growth charts, the soap workshop and the walls of the top two floors, Pip, and moving workers for every floor. The worker sheets now carry two workers each, which is why the batch is shorter than planned.
+**27 images in 8 rounds.** They finish World 1: the six visitors, six currency icons, every World 1 herb card and the last three herb growth charts, the soap workshop and the walls of the top two floors, Pip, moving workers for every floor, the rarity reveal kit and the ten World 1 managers. The worker sheets now carry two workers each, which is why the batch is shorter than planned.
 
-**Round 7 was added later** (2026-11-26): the rarity reveal kit, so that opening something rare builds up more the rarer it is. Rounds 1 to 6 are unchanged.
+**Round 7 was added later** (2026-11-26): the rarity reveal kit, so that opening something rare builds up more the rarer it is. **Round 8 was added the same evening:** the ten World 1 managers, one per floor, once the design's manager list (version 0.3) was final. It replaces prompt 18 of Batch 1. Rounds 1 to 6 are unchanged.
 
-The manager images are not in this batch. They wait until the new manager list (one manager per floor) is approved, then follow as a short round of their own.
+Managers of worlds 2 to 4 come in later batches. Each manager now belongs to one floor (design version 0.3), so a manager can be drawn at work in their own room.
 
 Names follow the game design document, which is still in review. Each prompt describes a look, not a name, so a rename does not spoil an image. The prompt's **Name flag** says what could still change.
 
@@ -14,7 +14,7 @@ Names follow the game design document, which is still in review. Each prompt des
 
 1. Each round is **one new ChatGPT chat**.
 2. At the start of a round, **attach that round's two reference images** from your expansion pack (listed below) and paste the round's first prompt in the same message.
-3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the reference images again. **Rounds 4 to 7 are different:** some of their prompts need one or two more of your pictures, attached in the same message as that prompt. They are listed in the table "Extra pictures" below and in bold at the top of each prompt.
+3. Then paste the round's other prompts **one at a time, in the same chat**. You do not need to attach the reference images again. **Rounds 4 to 8 are different:** some of their prompts need one or two more of your pictures, attached in the same message as that prompt. They are listed in the table "Extra pictures" below and in bold at the top of each prompt.
 4. Each prompt is one grey box. Copy the whole box, change nothing.
 5. New in this batch: the end of every prompt asks ChatGPT for the zip it made on its own last time (true-size parts and a slices file). **Upload the zip as well as the picture.** If ChatGPT makes no zip, the picture alone is fine.
 6. Save each picture as it comes: **PNG, original size**. No screenshots, no JPG, no cropping or resizing.
@@ -32,9 +32,9 @@ Names follow the game design document, which is still in review. Each prompt des
 
 Sets A to C are from your expansion pack, the same as in Batch 1. Set D is one picture you made yourself in Batch 1 (`b01_11_chest_opening_frames.png`, your chest animation sheet) and one from the expansion pack. A copy of both is in the project files, in `art/batch02/attach_with_prompts/`.
 
-### Extra pictures for rounds 4 to 7
+### Extra pictures for rounds 4 to 8
 
-The worker prompts draw people who are already in your room pictures, so each needs that picture attached in the same message as the prompt. Prompt 23 needs your tap-effects picture. The `B4_floor..._v2` files are in your expansion pack. The `b01_15` file is the ropewalk picture you made in Batch 1. A copy of every one of them is in the project files, in the folder `art/batch02/attach_with_prompts/`. Use the `_v2` files, not the older painted room pictures, which show other people.
+The worker prompts draw people who are already in your room pictures, so each needs that picture attached in the same message as the prompt. Prompt 23 needs your tap-effects picture. Prompts 24 and 25 need your first manager lineup (`B5_manager_lineup.png`, from your first pack). The `B4_floor..._v2` files are in your expansion pack. The `b01_15` file is the ropewalk picture you made in Batch 1. A copy of every one of them is in the project files, in the folder `art/batch02/attach_with_prompts/`. Use the `_v2` files, not the older painted room pictures, which show other people.
 
 | Prompt | Also attach |
 |---|---|
@@ -47,6 +47,9 @@ The worker prompts draw people who are already in your room pictures, so each ne
 | 16 | `B4_floor10_herb_empire_hq_v2.png` and `B4_floor01_windowsill_planter_v2.png` |
 | 17 | `B4_floor02_balcony_pots_v2.png` and `B4_floor03_backyard_patch_v2.png` |
 | 23 | `B29_tap_feedback_vfx.png` |
+| 24 | `B5_manager_lineup.png` |
+| 25 | `B5_manager_lineup.png` |
+| 27 | `B4_floor10_herb_empire_hq_v2.png` |
 
 ### The rounds
 
@@ -59,6 +62,7 @@ The worker prompts draw people who are already in your room pictures, so each ne
 | 5 | Workers of floors 5 to 7 | Set B plus extra pictures | 11, 12, 13 | Needed next |
 | 6 | Workers of floors 8 to 10 and the second workers of floors 1 to 3 | Set B plus extra pictures | 14, 15, 16, 17 | Needed next |
 | 7 | The rarity reveal kit | Set D plus extra pictures | 18, 19, 20, 21, 22, 23 | Needed for the chest opening |
+| 8 | The World 1 managers | Set B plus extra pictures | 24, 25, 26, 27 | Needed first: the player meets them in the first half hour |
 
 ### All prompts at a glance
 
@@ -87,6 +91,10 @@ The worker prompts draw people who are already in your room pictures, so each ne
 | 21 | Card frames: Common, Uncommon, Rare | `b02_21_card_frames_common_rare.png` | landscape 3:2 | Yes |
 | 22 | Card frames: Epic, Legendary, Exotic | `b02_22_card_frames_epic_exotic.png` | landscape 3:2 | Yes |
 | 23 | Reveal effects: one burst per rarity | `b02_23_reveal_effects.png` | portrait 2:3 | Yes |
+| 24 | Managers of floors 1 to 3: Nana Sprig, Basil Brumble, Rowan Rake | `b02_24_managers_floors01_03.png` | landscape 3:2 | Yes |
+| 25 | Managers of floors 4 to 6: Posy Seedwell, Fern Petrie, Juniper Jones | `b02_25_managers_floors04_06.png` | landscape 3:2 | Yes |
+| 26 | Managers of floors 7 and 8: Old Moss, Captain Kelp | `b02_26_managers_floors07_08.png` | landscape 16:9 | Yes |
+| 27 | Managers of floors 9 and 10: Clementine Zest, Granny Evergreen | `b02_27_managers_floors09_10.png` | landscape 16:9 | Yes |
 
 ---
 
@@ -939,6 +947,166 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ---
 
+## Round 8: The World 1 managers
+
+**New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Some prompts in this round need one or two more pictures as well.** Each one is named in bold at the top of its prompt.
+
+### Prompt 24: Managers of floors 1 to 3: Nana Sprig, Basil Brumble, Rowan Rake
+
+**Attach with this prompt:** `B5_manager_lineup.png`
+
+- **File name:** `b02_24_managers_floors01_03.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The first three managers a new player meets and hires, in the first minutes of the game. The Welcome Chest gives two copies of each. They stand at the manager spot on the right of their own floor.
+- **Parts we cut from it:** 12 poses, 4 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame. The standing pose also gives the card picture and the 48×48 bust.
+- **Name flag:** Names are from the game design document (version 0.3). Rowan Rake is new; the other two are from your manager lineup.
+
+```text
+Use the attached animation sheet and the lineup with a robot in it for style only (pixel size, outline, shading, colours). The attached lineup of six people on a cream background, with a beekeeper in the middle, shows two of the characters: CHARACTER 1 is the grandmother second from the left and CHARACTER 2 is the big laughing man in the red apron, third from the left. Keep their faces, hair, outfits and colours, but draw them in the crisp, flat pixel style of the animation sheet, not in a soft painted style. CHARACTER 3 is new.
+
+A character animation sheet for a cozy pixel-art idle game with THREE different characters, four poses each. The sheet is a grid of THREE rows and four columns: each row is ONE character, one pose per cell, evenly spaced, nothing touching, with a slightly wider gap between the rows. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all four of its poses, exactly like the attached animation sheet reference. All are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+The four columns are the same for every character: (1) standing, facing the viewer. (2) at work, facing right. (3) cheering. (4) their big moment.
+
+ROW 1, CHARACTER 1: a small, round grandmother with light skin, grey hair in a tidy bun with a sprig of lavender tucked into it, round glasses, a plum-purple knitted cardigan, a green apron embroidered with little lavender flowers, a plaid skirt and brown boots. Her item is a small garden trowel.
+(1) standing, holding the trowel at her side, with a proud, knowing smile. (2) bending a little to press soil down firmly with the trowel at waist height. (3) cheering, the trowel raised high, her other hand on her hip, a little hop. (4) holding one gold coin out at chest height between finger and thumb, one eyebrow raised, with a shrewd smile: she never overpays.
+
+ROW 2, CHARACTER 2: a big, round, jolly man with light skin, curly brown hair and a full brown beard, a cream shirt with rolled sleeves, a red checked shopkeeper's apron with a green two-leaf sprout stitched on the chest, dark trousers and brown boots. His item is a small green watering can.
+(1) standing, holding the watering can at his side, laughing. (2) watering something at waist height from the watering can. (3) cheering, both arms flung wide, laughing. (4) a big thumbs-up with one hand, the other hand patting his apron pocket, beaming.
+
+ROW 3, CHARACTER 3: a tall, lanky young woman with warm brown skin, freckles and short black curls under a leaf-green knitted beanie with a bobble, a sky-blue work shirt with rolled sleeves, a tan canvas vest with lots of pockets, dark green work trousers tucked into tall brown boots, and a small round brass alarm clock hanging from her belt. Her item is a long wooden rake as tall as she is.
+(1) standing tall and proud, the rake held upright at her side like a flag. (2) raking the ground in a long stroke, the rake head on the ground in front of her. (3) cheering, the rake held high above her head in both hands. (4) grinning and tapping the alarm clock on her belt with one finger, the rake tucked under her arm: she is up before the sun.
+
+Every character looks cheerful and wide awake in every pose. Nothing is held up to a face or a mouth, and nothing gives off steam, smoke or mist.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 25: Managers of floors 4 to 6: Posy Seedwell, Fern Petrie, Juniper Jones
+
+**Attach with this prompt:** `B5_manager_lineup.png`
+
+- **File name:** `b02_25_managers_floors04_06.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The three managers of the middle floors of World 1. Each arrives in a Hiring Crate when their floor opens.
+- **Parts we cut from it:** 12 poses, 4 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame. The standing pose also gives the card picture and the 48×48 bust.
+- **Name flag:** Names are from the game design document (version 0.3). Posy Seedwell is new; the other two are from your manager lineups.
+
+```text
+Use the attached animation sheet and the lineup with a robot in it for style only (pixel size, outline, shading, colours). The two attached lineups show two of the characters: CHARACTER 2 is the botanist in goggles and a white coat, second from the right in the lineup with a beekeeper in the middle; CHARACTER 3 is the cheerful young man jumping with a basket, second from the left in the lineup with the robot. Keep their faces, hair, outfits and colours, but draw them in the crisp, flat pixel style of the animation sheet, not in a soft painted style. Give the botanist plant labels instead of the test tubes in his pocket. CHARACTER 1 is new.
+
+A character animation sheet for a cozy pixel-art idle game with THREE different characters, four poses each. The sheet is a grid of THREE rows and four columns: each row is ONE character, one pose per cell, evenly spaced, nothing touching, with a slightly wider gap between the rows. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all four of its poses, exactly like the attached animation sheet reference. All are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+The four columns are the same for every character: (1) standing, facing the viewer. (2) at work, facing right. (3) cheering. (4) their big moment.
+
+ROW 1, CHARACTER 1: a short, sturdy, strong woman in her fifties with tan skin, rosy cheeks and a grey-streaked auburn braid wound round her head like a crown, a dark green field jacket over a cream shirt, a brown belt hung with little cloth seed pouches, rust-brown breeches and green rubber boots. Her items are two plump burlap seed sacks.
+(1) standing proudly with a seed sack balanced on each shoulder, smiling. (2) pouring seed from a small wooden scoop into a little paper seed packet at waist height. (3) cheering, one fist up, one sack still on her other shoulder. (4) flexing one arm proudly while she holds a seed sack up on the flat of her other hand.
+
+ROW 2, CHARACTER 2: a slim young botanist with light skin and curly dark brown hair, round clear safety goggles pushed up on his forehead, a white coat over a green shirt with wooden plant labels and a pencil in the coat pocket, brown trousers and brown boots. His item is a small seedling in a tiny terracotta planter.
+(1) standing, holding the little planter in one hand, smiling. (2) looking closely at a leaf of the seedling through a small magnifying glass held at chest height. (3) cheering, holding the little planter up high in triumph. (4) one finger raised at shoulder height, eyes wide with a bright idea, the planter in his other hand.
+
+ROW 3, CHARACTER 3: a small, bouncy young man with light skin, freckles and curly auburn hair under an orange flat cap, a red neckerchief, a cream shirt with rolled sleeves, a green striped waistcoat, brown shorts, striped socks and brown boots, with pruning shears in a belt pouch. His item is a wicker basket of fresh herbs and vegetables.
+(1) standing with the basket on one arm, grinning. (2) trotting to the right with the basket, mid-stride. (3) jumping with one fist punching the air, laughing. (4) holding out a bunch of fresh herbs from the basket at chest height, as if offering it to a customer.
+
+Every character looks cheerful and wide awake in every pose. Nothing is held up to a face or a mouth, and nothing gives off steam, smoke or mist.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 26: Managers of floors 7 and 8: Old Moss, Captain Kelp
+
+- **File name:** `b02_26_managers_floors07_08.png`
+- **Shape and size:** landscape 16:9, about 1664×936 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The Rare manager of the Tea House and the Epic manager of the Ropewalk. Both have an ability, and pose 4 is what they do when the player uses it.
+- **Parts we cut from it:** 8 poses, 4 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame. The standing pose also gives the card picture and the 48×48 bust.
+- **Name flag:** Names are from the game design document (version 0.3). Captain Kelp is new; Old Moss is from your second manager lineup.
+
+```text
+Use the attached animation sheet and the lineup with a robot in it for style only (pixel size, outline, shading, colours). The lineup with the robot also shows one of the characters: CHARACTER 1 is the white-bearded tea master on the far left. Keep his face, hair, outfit and colours. CHARACTER 2 is new.
+
+A character animation sheet for a cozy pixel-art idle game with TWO different characters, four poses each. The sheet is a grid of TWO rows and four columns: each row is ONE character, one pose per cell, evenly spaced, nothing touching, with a slightly wider gap between the rows. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all four of its poses, exactly like the attached animation sheet reference. All are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+The four columns are the same for every character: (1) standing, facing the viewer. (2) at work, facing right. (3) cheering. (4) their big moment.
+
+ROW 1, CHARACTER 1: a tall, serene old man with light skin, a long white beard and a long white moustache, long white hair tied up in a topknot with a small white flower and a green leaf in it, a long flowing sage-green robe with a pale leaf pattern, a cream sash with gold tassels, and wooden sandals. His item is a small white teacup with a green leaf painted on it. The cup has no steam.
+(1) standing serenely, holding the teacup in both hands at chest height, with a calm, warm smile. (2) pouring tea from a small round teapot into the cup, both at chest height. (3) cheering, raising the teacup in a toast with one hand, his other hand up. (4) bowing gracefully and offering the teacup forward with both hands.
+
+ROW 2, CHARACTER 2: a broad, barrel-chested retired sea captain with weathered tan skin, a big bushy white beard trimmed square, bushy white eyebrows, a navy-blue captain's cap with a gold rope-knot badge, a navy double-breasted coat with gold buttons over a cream and blue striped shirt, rolled-up trousers and tall black boots. His item is a big coil of thick cream rope over one shoulder.
+(1) standing proudly, thumbs hooked into his coat, the rope coil over his shoulder. (2) leaning back and hauling a long cream rope hand over hand at chest height. (3) cheering, waving his cap high above his head. (4) pointing ahead with one arm stretched out like a captain giving an order, his other hand on his hip, with a hearty shout.
+
+Every character looks cheerful and wide awake in every pose. Nothing is held up to a face or a mouth, and nothing gives off steam, smoke or mist.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+HEMP PRODUCTS: everything here is made from industrial hemp fibre and seed, shown as plain farm and workshop goods. Harvested stalks are long, straight and pale, like thin bamboo canes or straw. Any mark on a product is a rope knot or a simple two-leaf sprout. No fan-shaped leaf anywhere as an emblem, pattern or decoration, no plant close-ups, no smoke, no jars of dried leaves, nothing held to a face.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 16:9.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 27: Managers of floors 9 and 10: Clementine Zest, Granny Evergreen
+
+**Attach with this prompt:** `B4_floor10_herb_empire_hq_v2.png`
+
+- **File name:** `b02_27_managers_floors09_10.png`
+- **Shape and size:** landscape 16:9, about 1664×936 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The Legendary manager of the Soap and Scent Workshop and the Exotic manager of the HQ, Granny Evergreen, the Head of Thymeford. She must look like the grandest person in the tower.
+- **Parts we cut from it:** 8 poses, 4 per character. Bodies become frames of 80×80 art pixels. One head per character is redrawn by hand and reused on every frame. The standing pose also gives the card picture and the 48×48 bust.
+- **Name flag:** Names are from the game design document (version 0.3). Clementine Zest is from your second manager lineup; Granny Evergreen is the grandmother at the desk in your v2 floor 10.
+
+```text
+Use the attached animation sheet and the lineup with a robot in it for style only (pixel size, outline, shading, colours). The lineup with the robot also shows CHARACTER 1: the perfumer in purple, third from the left. The HQ room picture attached with this message shows CHARACTER 2: the grandmother in the green suit at the big desk, holding a little gold trophy. Keep both characters' faces, hair, outfits and colours.
+
+A character animation sheet for a cozy pixel-art idle game with TWO different characters, four poses each. The sheet is a grid of TWO rows and four columns: each row is ONE character, one pose per cell, evenly spaced, nothing touching, with a slightly wider gap between the rows. Full body in every cell. Each character has the same face, outfit, colours, size and proportions in all four of its poses, exactly like the attached animation sheet reference. All are chunky, about two and a half heads tall, and drawn at the same scale. Feet in each row stand on the same baseline.
+
+The four columns are the same for every character: (1) standing, facing the viewer. (2) at work, facing right. (3) cheering. (4) their big moment.
+
+ROW 1, CHARACTER 1: a curvy, theatrical woman with light skin and big glossy chestnut curls, a plum-purple beret with a sprig of lavender, gold earrings, a cream lace jabot with an amethyst brooch, a long plum-purple coat with gold trim and gold leaf embroidery over a long skirt, and black heeled shoes. Her item is a round glass perfume bottle with a tasselled squeeze bulb, never sprayed.
+(1) standing with a flourish, one hand held out palm-up at shoulder height, the perfume bottle in her other hand at chest height. (2) pressing a small wooden stamp onto a bar of soap at waist height. (3) arms flung wide in a theatrical ta-da, beaming. (4) a deep theatrical bow, one arm sweeping out wide, the other hand holding her beret to her chest.
+
+ROW 2, CHARACTER 2: a grand, stately grandmother with deep brown skin and a big cloud of white curls piled high, green glasses, a dark green tailored suit jacket with a gold brooch shaped like a two-leaf sprout, a cream blouse with a ruffled collar, a long dark green skirt, gold shoes, and a dark green velvet cape with gold trim around her shoulders. Her item is a small gold trophy cup with a green sprout growing out of it.
+(1) standing tall and grand, holding the trophy at chest height, with a warm, proud smile. (2) stamping a document with a big gold seal at waist height. (3) cheering, raising the trophy high above her head with both hands. (4) sweeping her cape open wide with one arm and holding the trophy high in the other, chin up, radiant.
+
+Every character looks cheerful and wide awake in every pose. Nothing is held up to a face or a mouth, and nothing gives off steam, smoke or mist.
+
+CAST: characters invented for this game, not based on any real person or any existing cartoon character.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: landscape 16:9.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+---
+
 ## If a result is off
 
 Send the matching sentence in the same chat.
@@ -954,6 +1122,7 @@ Send the matching sentence in the same chat.
 | The three Golden Sprouts look different from each other | `Redo the three sprouts as the exact same golden seed and sprout, same size and pose. Only the small badge on the front changes.` |
 | The character changes between poses | `Redo the sheet. Every pose must show the exact same character as pose 1: same face, hair, outfit, colours and body size.` |
 | On a two-worker sheet the two characters mix or change | `Redo the sheet. The left three columns show only character A and the right three columns only character B, each exactly the same in all nine of its poses.` |
+| On a manager sheet a character changes between rows or poses | `Redo the sheet. Each row shows only its own character, exactly the same in all four of its poses.` |
 | Two workers on one sheet still fails after two tries | `Draw only character A, in nine poses in three rows of three. Then, as a second image, draw character B the same way.` |
 | A person looks like someone real or a known cartoon | `Redo with a clearly different, original face and hairstyle.` |
 | A chest changes size or place between frames | `Redo so each chest is exactly the same size and in exactly the same place in all four frames of its row. Only the lid moves.` |

@@ -27,10 +27,11 @@ set_of = {n: s for _, _, s, ns, _ in ROUNDS for n in ns}
 
 
 def body(p):
-    """The image's own text: the prompt without the shared opening line and the shared closing blocks."""
+    """The image's own text: the prompt without the shared opening line and the shared closing blocks.
+    A prompt that opens with its own reference line (people sheets name which person to redraw) keeps it."""
     t = p['prompt']
-    assert t.startswith(REF + '\n\n')
-    t = t[len(REF) + 2:]
+    if t.startswith(REF + '\n\n'):
+        t = t[len(REF) + 2:]
     t = t.split('\n\n' + STYLE, 1)[0]
     assert BG_T in p['prompt'] and FILES in p['prompt'], p['n']
     return t
@@ -64,7 +65,8 @@ w('3. When I type **next**, make the next image the same way. When I type **redo
 w('4. Every image must follow its own description **and** all of the shared rules below, word for word. Do not '
   'shorten the style rules when you write the prompt for the image tool.')
 w('5. Use the reference pictures only for style (pixel size, outline, shading, colours) and for the layouts the '
-  'description asks you to copy. Do not copy their content.')
+  'description asks you to copy. Do not copy their content, except where an image\'s description names a person '
+  'in a reference picture to redraw: then keep that person\'s face, hair, outfit and colours.')
 w('6. If this chat runs out of room, I will start a new chat with the same files and type **start at image N**. '
   'Then begin at that image.')
 w('')

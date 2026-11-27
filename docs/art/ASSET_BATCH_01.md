@@ -6,7 +6,7 @@ Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **4** (aligned with t
 
 Floor and card names follow the game design document, which is still in review. Each prompt describes a look, not a name, so a rename does not spoil an image. The prompt's **Name flag** says what could still change.
 
-Managers: prompt 18 redraws the six from your B5 lineup, who are the first hires, in the crisp expansion style. Your B21 lineup is already in that style. Managers who have no picture yet follow in Batch 2.
+**Prompt 18 is replaced. Do not run it.** Since design version 0.3 every floor has its own fixed manager, so the ten World 1 managers are drawn at work in their own rooms by Batch 2, round 8 (prompts 24 to 27). Prompt 18 stays below only as a record.
 
 ## How to do it on your phone
 
@@ -619,6 +619,8 @@ Image shape: landscape 16:9.
 **New chat. Attach Set B:** `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png`. **Also attach** `B5_manager_lineup.png` (three images in total).
 
 ### Prompt 18: First six managers in the house style
+
+**Replaced by Batch 2, round 8 (prompts 24 to 27). Do not run this prompt.**
 
 - **File name:** `b01_18_managers_first_six.png`
 - **Shape and size:** landscape 16:9, about 1664×936 (any size ChatGPT gives at this shape is fine)
