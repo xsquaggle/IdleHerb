@@ -57,6 +57,13 @@ Every new constant is listed in EXPANSION.md, Appendix B.
 
 **Fresh-eyes reviewer.** Audit design 0.5 before it merges, as for every design version.
 
+### C.5 Two record notes from the audit of 0.4
+
+The audit that passed version 0.4 (the review on PR #7) left two notes for the record in GDD 17.6. Both are written in, and no number changes.
+
+1. **Targets list, item 5:** two targets were widened after the final run. Festivals by day 30 went from 9 to 11 to 9 to 12 for active and mixed players, and the idle player's World 5 went from day 26 to day 27.
+2. **Still for a playtest:** the idle player's Festival rhythm steps up late too. Its gaps are 2 days up to about day 27, where 3 to 6 are wanted, and 3.4 to 3.6 days after day 30, where 5 to 9 are wanted.
+
 ## Version 0.4: the balance simulator's numbers
 
 The balance simulator (`apps/sim`, report in `docs/balance/REPORT.md`) ran version 0.3 for three play styles over 60 to 90 days. On 2026-11-26 the Game Designer accepted four of its overlays (`p1-levels`, `p2-taps`, `p4-gates`, `p5-late-research`), turned one down (`p3-managers`), and made three rulings on the results: the idle player may start slower, the multiplier budget is retired as a target, and the Auto-Gardener restarts older worlds. Version 0.4 writes all of it in, together with the seven non-blocking notes from the fresh-eyes audit of 0.3. **The numbers are frozen until a playtest.** Everything not listed here is as it was in 0.3.

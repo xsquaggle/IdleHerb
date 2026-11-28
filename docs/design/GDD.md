@@ -1221,7 +1221,7 @@ Both buy greedily (lowest wait plus payback time), Replant when pending Compost 
 2. Every play style's first Replant lands inside its first 24 hours. The active player's lands in 30 to 55 minutes.
 3. The idle player may be slower in weeks 1 and 2, and there is no catch-up just for idle players. Idle rhythm: a new world about every six days.
 4. Festival rhythm: the first Festival about day 4 for an active player, then gaps of 1 to 3 days up to day 10, 3 to 6 days up to day 30 and 5 to 9 days after. Never more than 10 days, and no gap more than about twice the one before.
-5. Festivals by day 30: 9 to 12 for active and mixed players, 6 to 8 for idle players.
+5. Festivals by day 30: 9 to 12 for active and mixed players, 6 to 8 for idle players. Two targets were widened after the final run: this one, from 9 to 11 for active and mixed players, and the idle player's World 5 in the gate table, from day 26 to day 27.
 6. The multiplier budget of versions 0.1 to 0.3 (how much managers, taps and everything else multiply income by on each day) is retired as a target. The simulator still reports it as a reading aid.
 
 **Gates: targets and the simulator's results on version 0.4's numbers** (days from first launch):
@@ -1262,7 +1262,7 @@ Between days 10 and 18 the gaps are one to two days where the rhythm asks for th
 8. **XP comes in lumps early.** On version 0.3 the active player was level 13 after an hour, because the first Compost records, daily quests and already-earned achievements all paid at once. Version 0.4's lower daily and achievement XP gives level 11 at one hour and the skill tree at about minute 16.
 9. **World Mastery** levels now come from the simulator (section 14.5). The fair stall's track steps (section 15.3) are still the rough script's (`stall2.py`). The simulator plays the track every weekend, and its active and mixed players finish it on 7 or 8 weekends out of 9.
 
-**Still for a playtest:** the Combo for a player who uses only the mouse, how the offline build feels (how soon a player reaches 100%), the event track's pace, the top floor at 20 minutes and the long stretch late in a Festival cycle. Chest, card, heirloom, Pollen, Gem and Insight rates run in the simulator but have no targets of their own yet. The card-level table in section 17.5 is rough arithmetic from the chest odds.
+**Still for a playtest:** the Combo for a player who uses only the mouse, how the offline build feels (how soon a player reaches 100%), the event track's pace, the top floor at 20 minutes, the long stretch late in a Festival cycle, and the idle player's Festival rhythm, which also steps up late: gaps of 2 days up to about day 27, where 3 to 6 are wanted, and 3.4 to 3.6 days after day 30, where 5 to 9 are wanted. Chest, card, heirloom, Pollen, Gem and Insight rates run in the simulator but have no targets of their own yet. The card-level table in section 17.5 is rough arithmetic from the chest odds.
 
 ## 18. Currency sources and sinks
 
