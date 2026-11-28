@@ -145,7 +145,7 @@ Weekend events run from the calendar on the player's PC. Anything you miss comes
 
 ### 7.1 The balance is a first pass
 
-The numbers in the GDD were checked with a rough pacing script, not proven. An early version of the reset layers ran away (ten prestiges on day one) until two rules were tightened: shop upgrades that multiply profit are capped, and Compost and Ribbons use gentle roots of lifetime totals. The Economy thread's simulator is the proof. Section 19 of the GDD lists the tuning knobs in the order to turn them.
+The numbers in the GDD were checked with a rough pacing script, not proven. An early version of the reset layers ran away (ten prestiges on day one) until two rules were tightened: shop upgrades that multiply profit are capped, and Compost and Ribbons use gentle roots of lifetime totals. The Economy thread's simulator is the proof. Section 19 of the GDD lists the tuning knobs in the order to turn them. Since version 0.4 the GDD carries the simulator's accepted numbers (section 11), frozen until a playtest.
 
 ### 7.2 Hemp wording
 
@@ -208,3 +208,20 @@ Version 0.2 passed the independent audit and was merged. Lawson then answered th
 **What is not proven.** The rough pacing script has not been run again. Two things should be measured first by the balance simulator: manager profit on the top floors over the first two days, and the average Boost per world, which is lower than in version 0.2 because a world can only use its own four abilities (GDD 6.7, 17.6).
 
 **Art.** Launch needs 22 new manager sprites where version 0.2 needed 16. Four of them are needed for Thymeford before anything else: Rowan Rake, Posy Seedwell, Captain Kelp and Granny Evergreen. Worlds 5 and 6 need 16 more later. A manager now belongs to one room, so a sprite no longer has to fit every floor.
+
+## 11. What changed in version 0.4: the balance simulator's numbers
+
+The balance simulator played version 0.3 for three play styles (active, mixed, idle) over 60 to 90 days. With 0.3's numbers 4 of its 27 pacing checks were on target: almost everything came two to six times too early. The Game Designer made these calls on 2026-11-26, and version 0.4 writes them in. The full list is in [CHANGES.md](CHANGES.md).
+
+| Call | Why |
+|---|---|
+| **Taken:** lower early XP, half-strength tap skills, refit gate prices | They bring the gates back to their days. 25 of 27 checks are on target, and the two misses were accepted |
+| **Taken:** first Replant at 440 Compost | One rule for every play style: the first Replant lands inside the first 24 hours |
+| **Taken:** a slower start for idle players, with no catch-up just for them | Idle players reach Loomington around day 7, then close in. A catch-up only for idle play would reward leaving the game shut |
+| **Taken:** eight long research projects | After day 30, Festivals drifted 10 to 13 days apart. Slow, cheap projects keep new power coming in month 2 |
+| **Taken:** Mastery levels per world | One list could not fit six worlds that grow at different speeds. Each world's stars now land near the same days after arrival |
+| **New rule:** the Auto-Gardener restarts older worlds | An older world went dead after a Replant, so its late stars, and three Head copies, were out of reach |
+| **Not taken:** weaker managers | Managers multiply every play style alike, so they do not cause the gap between active and idle players, and the change halved their power late in the game |
+| **Retired:** the multiplier budget as a target | The targets are the gate table and the Festival rhythm (GDD 17.6). The simulator still reports the budget as a reading aid |
+
+**What is not proven.** The numbers come from a simulation, not from people playing. They are frozen until a playtest, which should look first at the top floor at about 20 minutes, the long quiet stretch late in a Festival cycle, and the Combo for a player who uses only the mouse.
