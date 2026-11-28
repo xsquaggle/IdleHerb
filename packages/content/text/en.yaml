@@ -245,5 +245,8 @@ ui:
   reset_done: Starting over...
   build: Build
   controls_help: "Tap a floor to harvest and earn. Space taps too (hold it). F starts a Growth Spurt, B changes how many levels to buy, arrows scroll."
+  controls_help_desktop: "F11 switches full screen."
+  fullscreen: Full screen
+  open_saves: Open save folder
   player_level: Level
   quest_done: Quest done!

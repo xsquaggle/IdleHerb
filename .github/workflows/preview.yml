@@ -1,7 +1,7 @@
 # Publishes the phone preview to GitHub Pages at https://xsquaggle.github.io/IdleHerb/
 #
-# Until the first playable web build exists (Phase 1), it publishes the holding page in tools/preview/.
-# Phase 1 Step 0 replaces the "Assemble the site" step with the real web build (docs/tech/08).
+# It publishes the playable web build of the game (pnpm build:web), the same code as the Windows app,
+# saving to the browser. It plays on a phone held either way and on a PC browser.
 #
 # It needs one repository setting, switched on by an owner:
 #   Settings > Pages > Build and deployment > Source: GitHub Actions
@@ -45,14 +45,26 @@ jobs:
           repository yet. An owner can switch it on under Settings, Pages, Build and deployment,
           Source: GitHub Actions. Then run this workflow again."
 
+      - uses: pnpm/action-setup@v4
+        if: steps.pages.outcome == 'success'
+
+      - uses: actions/setup-node@v4
+        if: steps.pages.outcome == 'success'
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Build the game
+        if: steps.pages.outcome == 'success'
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build:web
+
       - name: Assemble the site
         if: steps.pages.outcome == 'success'
         run: |
           mkdir -p _site
-          cp -r tools/preview/. _site/
-          short="${GITHUB_SHA::7}"
-          when="$(date -u +'%Y-%m-%d %H:%M UTC')"
-          sed -i "s/__BUILD__/${short}/; s/__DATE__/${when}/" _site/index.html
+          cp -r packages/game/dist/. _site/
 
       - name: Upload the site
         if: steps.pages.outcome == 'success'

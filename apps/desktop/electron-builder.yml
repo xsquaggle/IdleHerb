@@ -1,0 +1,56 @@
+# Windows builds of Sprout Tower (docs/tech/08, "Windows builds"). Built on the
+# Windows runner by .github/workflows/desktop.yml. Unsigned: Windows shows
+# "Windows protected your PC" the first time; "More info" then "Run anyway".
+appId: com.sprouttower.game
+productName: Sprout Tower
+copyright: Sprout Tower team
+electronVersion: 45.5.0
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - main.cjs
+  - preload.cjs
+  - package.json
+
+# The game itself: the one-file web build (pnpm build:single).
+extraResources:
+  - from: ../../packages/game/dist-single/index.html
+    to: game/index.html
+
+asar: true
+compression: normal
+publish: null
+
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+
+# Installs for the current user with no administrator prompt; the player can pick the folder.
+# Uninstalling leaves the saves in place.
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Sprout Tower
+  deleteAppDataOnUninstall: false
+  artifactName: SproutTower-Setup-${version}.${ext}
+
+# One file that unpacks itself on launch. Saves go in SproutTowerData beside it.
+portable:
+  artifactName: SproutTower-${version}-portable.${ext}
+
+# Only used for the Linux check run in cloud sessions (pnpm --filter @sprout/desktop exec electron-builder --linux dir).
+linux:
+  target: dir
+  executableName: sprout-tower
+  icon: build/icon.png
+  category: Game

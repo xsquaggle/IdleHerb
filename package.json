@@ -15,7 +15,8 @@
     "content:bundle": "tsx packages/content/src/bundle.ts",
     "dev": "pnpm content:bundle && pnpm --filter @sprout/game dev",
     "build:web": "pnpm content:bundle && pnpm --filter @sprout/game build",
-    "build:single": "pnpm content:bundle && SINGLE=1 pnpm --filter @sprout/game build"
+    "build:single": "pnpm content:bundle && pnpm --filter @sprout/game build --mode single",
+    "build:desktop": "pnpm build:single && pnpm --filter @sprout/desktop dist"
   },
   "devDependencies": {
     "@types/node": "22.10.2",

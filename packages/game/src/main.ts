@@ -50,7 +50,7 @@ async function boot(): Promise<void> {
   await loadArt((f) => setBoot(`Sprouting… ${Math.round(f * 100)}%`));
 
   // The game: a save if there is one, else a new tower.
-  const saved = loadSave();
+  const saved = await loadSave();
   const game = new Game({ content, seed: saved?.state.seed ?? (Date.now() % 2147483647), state: saved?.state, rollTaps: true });
   session.game = game;
   session.settings = settings;
@@ -312,14 +312,14 @@ async function boot(): Promise<void> {
   if (game.state.counters.harvests === undefined || game.state.counters.harvests === 0) pip.say('hello', 'wave');
 
   // Saves: every 10 seconds, when hidden, and on the way out.
-  const save = () => {
-    if (!(window as unknown as { __sproutNoSave?: boolean }).__sproutNoSave) writeSave(game.state);
+  const save = (final = false) => {
+    if (!(window as unknown as { __sproutNoSave?: boolean }).__sproutNoSave) writeSave(game.state, final);
   };
   setInterval(save, 10000);
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') save();
   });
-  window.addEventListener('pagehide', save);
+  window.addEventListener('pagehide', () => save(true));
 
   // The loop. Long gaps (a hidden tab) count as time away.
   let last = performance.now();

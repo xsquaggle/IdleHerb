@@ -12,7 +12,7 @@ import { clock } from '../engine/tween';
 import { setMuted, sfx } from '../engine/audio';
 import { content, txt, ui, floorName, cardName } from '../app/content';
 import { session } from '../app/session';
-import { wipeSave } from '../app/save';
+import { shell, wipeSave } from '../app/save';
 import { Window, ink } from './window';
 import { bigCard, smallCard, TILE_H, TILE_W } from './cards';
 
@@ -377,10 +377,16 @@ export class SettingsPanel extends Window {
       }
       this.rebuild();
     });
-    const info = ink(`${ui('build')} ${__BUILD__} · design ${content.tuning ? '0.4' : ''}`, { font: F.small, color: C['wood-3'] });
+    if (shell) {
+      const sh = shell;
+      mk(ui('fullscreen'), 'wood', () => sh.toggleFullscreen());
+      mk(ui('open_saves'), 'wood', () => sh.openSaveFolder());
+    }
+    const where = shell ? ` · v${shell.info.version}${shell.info.portable ? ' portable' : ''}` : '';
+    const info = ink(`${ui('build')} ${__BUILD__}${where}`, { font: F.small, color: C['wood-3'] });
     info.position.set(0, y + 4);
     this.body.addChild(info);
-    const help = ink(ui('controls_help'), { maxWidth: width, color: C['wood-2'] });
+    const help = ink(shell ? `${ui('controls_help')} ${ui('controls_help_desktop')}` : ui('controls_help'), { maxWidth: width, color: C['wood-2'] });
     help.position.set(0, y + 18);
     this.body.addChild(help);
   }

@@ -1,8 +1,10 @@
 /**
- * Browser saves (docs/tech/06, first version for the slice): the core's save
- * text in an envelope with the real time it was written and a checksum, kept
- * in localStorage with one backup. The Electron app uses the same storage for
- * now; the file-based save with atomic writes is a follow-up.
+ * Saves (docs/tech/06, first version for the slice): the core's save text in an
+ * envelope with the real time it was written and a checksum, plus one backup.
+ *
+ * In the Windows app the envelope goes to a file through the shell, which writes
+ * it with a temporary file and an atomic rename (apps/desktop/main.cjs). In a
+ * browser (the phone preview and tests) it goes to localStorage.
  */
 import { deserializeState, serializeState, type GameState } from '@sprout/core';
 
@@ -16,6 +18,19 @@ interface Envelope {
   data: string;
 }
 
+/** What the Windows app's preload script offers (apps/desktop/preload.cjs). */
+export interface Shell {
+  info: { portable: boolean; version: string; saveDir: string };
+  readSave(): Promise<{ main: string | null; backup: string | null }>;
+  writeSave(text: string): void;
+  writeSaveNow(text: string): boolean;
+  wipeSave(): boolean;
+  toggleFullscreen(): void;
+  openSaveFolder(): void;
+}
+
+export const shell: Shell | null = (window as unknown as { sproutShell?: Shell }).sproutShell ?? null;
+
 function checksum(s: string): number {
   let h = 2166136261;
   for (let i = 0; i < s.length; i++) {
@@ -25,9 +40,8 @@ function checksum(s: string): number {
   return h >>> 0;
 }
 
-function read(key: string): { state: GameState; savedAt: number } | null {
+function parse(raw: string | null): { state: GameState; savedAt: number } | null {
   try {
-    const raw = localStorage.getItem(key);
     if (!raw) return null;
     const env = JSON.parse(raw) as Envelope;
     if (env.v !== 1 || checksum(env.data) !== env.sum) return null;
@@ -37,18 +51,37 @@ function read(key: string): { state: GameState; savedAt: number } | null {
   }
 }
 
-/** The newest good save, or null for a new game. */
-export function loadSave(): { state: GameState; savedAt: number } | null {
-  return read(KEY) ?? read(BACKUP);
+function local(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
 }
 
-export function writeSave(state: GameState): boolean {
+/** The newest good save, or null for a new game. A damaged save falls back to the backup. */
+export async function loadSave(): Promise<{ state: GameState; savedAt: number } | null> {
+  if (shell) {
+    const files = await shell.readSave().catch(() => ({ main: null, backup: null }));
+    return parse(files.main) ?? parse(files.backup);
+  }
+  return parse(local(KEY)) ?? parse(local(BACKUP));
+}
+
+/** `final`: the last save on the way out, written before this returns where the platform allows. */
+export function writeSave(state: GameState, final = false): boolean {
   try {
     const data = serializeState(state);
     const env: Envelope = { v: 1, savedAt: Date.now(), sum: checksum(data), data };
+    const text = JSON.stringify(env);
+    if (shell) {
+      if (final) return shell.writeSaveNow(text);
+      shell.writeSave(text);
+      return true;
+    }
     const prev = localStorage.getItem(KEY);
     if (prev) localStorage.setItem(BACKUP, prev);
-    localStorage.setItem(KEY, JSON.stringify(env));
+    localStorage.setItem(KEY, text);
     return true;
   } catch (err) {
     console.warn('[save] could not write', err);
@@ -57,6 +90,7 @@ export function writeSave(state: GameState): boolean {
 }
 
 export function wipeSave(): void {
+  if (shell) shell.wipeSave();
   try {
     localStorage.removeItem(KEY);
     localStorage.removeItem(BACKUP);
