@@ -8,9 +8,11 @@ let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
 let muted = false;
 let lastTap = 0;
+let gestured = false;
 
 function ac(): AudioContext | null {
-  if (muted) return null;
+  // Browsers refuse audio before the first tap or key; stay silent until then.
+  if (muted || !gestured) return null;
   if (!ctx) {
     const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!AC) return null;
@@ -25,6 +27,7 @@ function ac(): AudioContext | null {
 
 /** Browsers start audio only after a gesture; call this on the first pointer down. */
 export function unlockAudio(): void {
+  gestured = true;
   ac();
 }
 

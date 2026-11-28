@@ -57,7 +57,12 @@ async function boot(): Promise<void> {
   session.saveSettings = () => saveSettings(settings);
 
   // Pixi at the logical size; CSS scales it by whole device pixels.
-  let view: View = computeView(window.innerWidth, window.innerHeight, window.devicePixelRatio || 1);
+  const stageEl = document.getElementById('stage')!;
+  const stageSize = () => {
+    const r = stageEl.getBoundingClientRect();
+    return { w: r.width || window.innerWidth, h: r.height || window.innerHeight };
+  };
+  let view: View = computeView(stageSize().w, stageSize().h, window.devicePixelRatio || 1);
   const app = new Application();
   await app.init({
     width: view.w,
@@ -70,7 +75,7 @@ async function boot(): Promise<void> {
     preference: 'webgl',
   });
   const canvas = app.canvas;
-  document.getElementById('stage')!.appendChild(canvas);
+  stageEl.appendChild(canvas);
   bootEl?.remove();
 
   // Layers, back to front.
@@ -121,14 +126,16 @@ async function boot(): Promise<void> {
   }
 
   function layout(): void {
-    view = computeView(window.innerWidth, window.innerHeight, window.devicePixelRatio || 1);
+    const size = stageSize();
+    view = computeView(size.w, size.h, window.devicePixelRatio || 1);
     app.renderer.resize(view.w, view.h);
-    applyView(canvas, view, window.innerWidth, window.innerHeight);
+    applyView(canvas, view, size.w, size.h);
     app.stage.hitArea = new Rectangle(0, 0, view.w, view.h);
     backdrop.resize(view.w, view.h);
     tower.setView(TOP_H, view.h - BOTTOM_H);
     hud.layout(view.w, view.h);
-    pip.layout(view.w, view.h - BOTTOM_H);
+    const besideTower = Math.floor((view.w - 360) / 2) - 54;
+    pip.layout(view.w, view.h - BOTTOM_H, besideTower >= 120 ? besideTower : view.w - 70);
     toasts.layout(view.w, () => hud.pinnedBottom());
     visitors.layout(view.w, TOP_H + 30, view.h - BOTTOM_H - 30);
     panel?.layout(view.w, view.h);
@@ -137,6 +144,7 @@ async function boot(): Promise<void> {
   layout();
   window.addEventListener('resize', layout);
   window.visualViewport?.addEventListener('resize', layout);
+  new ResizeObserver(() => layout()).observe(stageEl);
 
   // Start the camera on the highest open floor.
   const openCount = game.state.worlds[0]!.floors.filter((f) => f.level > 0).length;

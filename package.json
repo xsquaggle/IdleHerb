@@ -14,7 +14,8 @@
     "sim": "tsx apps/sim/src/cli.ts",
     "content:bundle": "tsx packages/content/src/bundle.ts",
     "dev": "pnpm content:bundle && pnpm --filter @sprout/game dev",
-    "build:web": "pnpm content:bundle && pnpm --filter @sprout/game build"
+    "build:web": "pnpm content:bundle && pnpm --filter @sprout/game build",
+    "build:single": "pnpm content:bundle && SINGLE=1 pnpm --filter @sprout/game build"
   },
   "devDependencies": {
     "@types/node": "22.10.2",

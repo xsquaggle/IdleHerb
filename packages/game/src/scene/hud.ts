@@ -117,6 +117,7 @@ export class Hud extends Container {
   layout(w: number, h: number): void {
     this.w = w;
     this.h = h;
+    this.questId = ''; // re-wrap the quest for the new width
     // Bottom bar: buttons share the width, the gear stays square.
     this.bottomBg.clear();
     this.bottomBg.rect(0, h - BOTTOM_H, w, BOTTOM_H).fill(C['wood-2']);

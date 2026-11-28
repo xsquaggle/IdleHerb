@@ -5,3 +5,4 @@ apps/sim/out*/
 *.log
 .DS_Store
 apps/sim/proposals/tmp-*.yaml
+dist-single/

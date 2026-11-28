@@ -34,6 +34,7 @@ export class Pip extends Container {
   private baseY = 0;
   private w = 0;
   private talkT = 0;
+  private room = 300;
 
   constructor() {
     super();
@@ -60,8 +61,10 @@ export class Pip extends Container {
     });
   }
 
-  layout(w: number, bottom: number): void {
+  /** `room`: how wide the bubble may be (wide screens keep it beside the tower). */
+  layout(w: number, bottom: number, room = w - 70): void {
     this.w = w;
+    this.room = room;
     this.baseY = bottom - 52;
     this.x = 4;
     if (!this.showing) this.y = this.baseY + 60;
@@ -96,7 +99,7 @@ export class Pip extends Container {
       /* storage blocked */
     }
     const line = pipLine(item.id)!;
-    const maxW = Math.max(140, Math.min(260, this.w - 70));
+    const maxW = Math.max(120, Math.min(260, this.room));
     this.text.setMaxWidth(maxW - 14);
     this.text.text = line;
     const bw = this.text.textWidth + 14;
