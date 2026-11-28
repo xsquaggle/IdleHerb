@@ -8,34 +8,35 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 6,
-   "rules": "gdd-0.2",
-   "seconds": 129.422
+   "rules": "design-0.4",
+   "seconds": 132.35
   },
   "gates": {
-   "topFloor": 1130,
-   "replant": 1590,
-   "festival": 50675,
+   "topFloor": 1203,
+   "replant": 2265,
+   "festival": 387210,
    "worlds": [
     0,
-    13010,
-    22343,
-    127069,
-    299401,
-    703555
+    41997,
+    270864,
+    654601,
+    1086638,
+    1875593
    ]
   },
-  "festivalsBy30": 15,
+  "festivalsBy30": 12,
   "levels": {
-   "day1": 29,
-   "day7": 52,
-   "day30": 78,
-   "day60": 98
+   "day1": 22,
+   "day7": 39,
+   "day30": 72,
+   "day60": 95
   },
-  "quietSeconds": 3590,
+  "quietSeconds": 2180,
   "firstLevel": {
-   "6": 801,
-   "8": 1106
-  }
+   "6": 964,
+   "8": 1207
+  },
+  "ribbonShopAllBought": 2085050
  },
  "gdd-mixed": {
   "meta": {
@@ -46,34 +47,35 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 6,
-   "rules": "gdd-0.2",
-   "seconds": 40.638
+   "rules": "design-0.4",
+   "seconds": 43.215
   },
   "gates": {
-   "topFloor": 1524,
-   "replant": 1695,
-   "festival": 181675,
+   "topFloor": 1555,
+   "replant": 23255,
+   "festival": 570590,
    "worlds": [
     0,
-    95041,
-    123841,
-    282298,
-    527041,
-    901557
+    196128,
+    469514,
+    750348,
+    1247301,
+    1945582
    ]
   },
-  "festivalsBy30": 14,
+  "festivalsBy30": 12,
   "levels": {
-   "day1": 16,
-   "day7": 48,
-   "day30": 75,
-   "day60": 91
+   "day1": 15,
+   "day7": 34,
+   "day30": 68,
+   "day60": 88
   },
-  "quietSeconds": 714,
+  "quietSeconds": 715,
   "firstLevel": {
-   "6": 1051,
-   "8": 1502
-  }
+   "6": 1101,
+   "8": 1561
+  },
+  "ribbonShopAllBought": 2341481
  },
  "gdd-idle": {
   "meta": {
@@ -84,198 +86,8 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 6,
-   "rules": "gdd-0.2",
-   "seconds": 16.72
-  },
-  "gates": {
-   "topFloor": 39245,
-   "replant": 58335,
-   "festival": 557585,
-   "worlds": [
-    0,
-    403861,
-    451861,
-    816661,
-    1143061,
-    1747861
-   ]
-  },
-  "festivalsBy30": 12,
-  "levels": {
-   "day1": 10,
-   "day7": 29,
-   "day30": 63,
-   "day60": 79
-  },
-  "quietSeconds": 237,
-  "firstLevel": {
-   "6": 39062,
-   "8": 39255
-  }
- },
- "launch-active": {
-  "meta": {
-   "profile": "active",
-   "tapRate": 6,
-   "skill": "human",
-   "burst": false,
-   "seed": 1,
-   "days": 60,
-   "maxWorld": 4,
-   "rules": "gdd-0.2",
-   "seconds": 92.939
-  },
-  "gates": {
-   "topFloor": 1130,
-   "replant": 1590,
-   "festival": 50675,
-   "worlds": [
-    0,
-    13010,
-    22343,
-    127069,
-    null,
-    null
-   ]
-  },
-  "festivalsBy30": 15,
-  "levels": {
-   "day1": 29,
-   "day7": 53,
-   "day30": 78,
-   "day60": 95
-  },
-  "quietSeconds": 3598,
-  "firstLevel": {
-   "6": 801,
-   "8": 1106
-  }
- },
- "launch-idle": {
-  "meta": {
-   "profile": "idle",
-   "tapRate": 6,
-   "skill": "human",
-   "burst": false,
-   "seed": 1,
-   "days": 60,
-   "maxWorld": 4,
-   "rules": "gdd-0.2",
-   "seconds": 13.632
-  },
-  "gates": {
-   "topFloor": 39245,
-   "replant": 58335,
-   "festival": 557585,
-   "worlds": [
-    0,
-    403861,
-    451861,
-    816661,
-    null,
-    null
-   ]
-  },
-  "festivalsBy30": 11,
-  "levels": {
-   "day1": 10,
-   "day7": 29,
-   "day30": 60,
-   "day60": 73
-  },
-  "quietSeconds": 239,
-  "firstLevel": {
-   "6": 39062,
-   "8": 39255
-  }
- },
- "fix-active": {
-  "meta": {
-   "profile": "active",
-   "tapRate": 6,
-   "skill": "human",
-   "burst": false,
-   "seed": 1,
-   "days": 60,
-   "maxWorld": 6,
-   "rules": "p1-levels+p2-taps+p4-gates+p5-late-research",
-   "seconds": 111.141
-  },
-  "gates": {
-   "topFloor": 1203,
-   "replant": 2265,
-   "festival": 396255,
-   "worlds": [
-    0,
-    41997,
-    271088,
-    654601,
-    1049713,
-    1739401
-   ]
-  },
-  "festivalsBy30": 12,
-  "levels": {
-   "day1": 22,
-   "day7": 39,
-   "day30": 73,
-   "day60": 95
-  },
-  "quietSeconds": 3126,
-  "firstLevel": {
-   "6": 964,
-   "8": 1207
-  }
- },
- "fix-mixed": {
-  "meta": {
-   "profile": "mixed",
-   "tapRate": 6,
-   "skill": "human",
-   "burst": false,
-   "seed": 1,
-   "days": 60,
-   "maxWorld": 6,
-   "rules": "p1-levels+p2-taps+p4-gates+p5-late-research",
-   "seconds": 38.901
-  },
-  "gates": {
-   "topFloor": 1555,
-   "replant": 23255,
-   "festival": 613470,
-   "worlds": [
-    0,
-    196128,
-    476641,
-    800737,
-    1175104,
-    1995841
-   ]
-  },
-  "festivalsBy30": 12,
-  "levels": {
-   "day1": 15,
-   "day7": 32,
-   "day30": 69,
-   "day60": 89
-  },
-  "quietSeconds": 714,
-  "firstLevel": {
-   "6": 1101,
-   "8": 1561
-  }
- },
- "fix-idle": {
-  "meta": {
-   "profile": "idle",
-   "tapRate": 6,
-   "skill": "human",
-   "burst": false,
-   "seed": 1,
-   "days": 60,
-   "maxWorld": 6,
-   "rules": "p1-levels+p2-taps+p4-gates+p5-late-research",
-   "seconds": 13.223
+   "rules": "design-0.4",
+   "seconds": 15.147
   },
   "gates": {
    "topFloor": 39230,
@@ -301,9 +113,88 @@
   "firstLevel": {
    "6": 39196,
    "8": 58460
-  }
+  },
+  "ribbonShopAllBought": 3341487
  },
- "fix-launch-active": {
+ "long-active": {
+  "meta": {
+   "profile": "active",
+   "tapRate": 6,
+   "skill": "human",
+   "burst": false,
+   "seed": 1,
+   "days": 90,
+   "maxWorld": 6,
+   "rules": "design-0.4",
+   "seconds": 210.234
+  },
+  "gates": {
+   "topFloor": 1203,
+   "replant": 2265,
+   "festival": 387210,
+   "worlds": [
+    0,
+    41997,
+    270864,
+    654601,
+    1086638,
+    1875593
+   ]
+  },
+  "festivalsBy30": 12,
+  "levels": {
+   "day1": 22,
+   "day7": 39,
+   "day30": 72,
+   "day60": 95
+  },
+  "quietSeconds": 3444.9999999995343,
+  "firstLevel": {
+   "6": 964,
+   "8": 1207
+  },
+  "ribbonShopAllBought": 2085050
+ },
+ "long-mixed": {
+  "meta": {
+   "profile": "mixed",
+   "tapRate": 6,
+   "skill": "human",
+   "burst": false,
+   "seed": 1,
+   "days": 90,
+   "maxWorld": 6,
+   "rules": "design-0.4",
+   "seconds": 68.596
+  },
+  "gates": {
+   "topFloor": 1555,
+   "replant": 23255,
+   "festival": 570590,
+   "worlds": [
+    0,
+    196128,
+    469514,
+    750348,
+    1247301,
+    1945582
+   ]
+  },
+  "festivalsBy30": 12,
+  "levels": {
+   "day1": 15,
+   "day7": 34,
+   "day30": 68,
+   "day60": 88
+  },
+  "quietSeconds": 719,
+  "firstLevel": {
+   "6": 1101,
+   "8": 1561
+  },
+  "ribbonShopAllBought": 2341481
+ },
+ "launch-active": {
   "meta": {
    "profile": "active",
    "tapRate": 6,
@@ -312,17 +203,17 @@
    "seed": 1,
    "days": 60,
    "maxWorld": 4,
-   "rules": "p1-levels+p2-taps+p4-gates+p5-late-research",
-   "seconds": 90.553
+   "rules": "design-0.4",
+   "seconds": 112.536
   },
   "gates": {
    "topFloor": 1203,
    "replant": 2265,
-   "festival": 396255,
+   "festival": 387210,
    "worlds": [
     0,
     41997,
-    271088,
+    270864,
     654601,
     null,
     null
@@ -332,13 +223,53 @@
   "levels": {
    "day1": 22,
    "day7": 39,
-   "day30": 72,
+   "day30": 71,
    "day60": 93
   },
-  "quietSeconds": 3014,
+  "quietSeconds": 3593.999999999767,
   "firstLevel": {
    "6": 964,
    "8": 1207
-  }
+  },
+  "ribbonShopAllBought": null
+ },
+ "launch-idle": {
+  "meta": {
+   "profile": "idle",
+   "tapRate": 6,
+   "skill": "human",
+   "burst": false,
+   "seed": 1,
+   "days": 60,
+   "maxWorld": 4,
+   "rules": "design-0.4",
+   "seconds": 13.712
+  },
+  "gates": {
+   "topFloor": 39230,
+   "replant": 58460,
+   "festival": 1315880,
+   "worlds": [
+    0,
+    624661,
+    1075861,
+    1699861,
+    null,
+    null
+   ]
+  },
+  "festivalsBy30": 8,
+  "levels": {
+   "day1": 9,
+   "day7": 19,
+   "day30": 52,
+   "day60": 70
+  },
+  "quietSeconds": 239,
+  "firstLevel": {
+   "6": 39196,
+   "8": 58460
+  },
+  "ribbonShopAllBought": null
  }
 }

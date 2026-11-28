@@ -40,3 +40,12 @@
 - { id: research.people.sprout_lure,       lane: people, requires: [], cost: 700,  timeSec: 5400,   effect: { stat: visitor.interval, op: reduce, value: 0.10 } }
 - { id: research.people.field_journal_1,   lane: people, requires: [], cost: 1000, timeSec: 7200,   effect: { stat: insight.gain, op: inc, value: 0.25 } }
 - { id: research.people.field_journal_2,   lane: people, requires: [research.people.field_journal_1], cost: 10000, timeSec: 43200, effect: { stat: insight.gain, op: inc, value: 0.25 } }
+# Design 0.4 (CONTENT.md section 6): the late tiers. Living Soil I hangs on Soil Science III, so the long chain can start in week 3.
+- { id: research.soil.crop_rotation_4,     lane: soil, requires: [research.soil.crop_rotation_3], cost: 12000, timeSec: 345600, effect: { stat: floor.speed, op: mul, value: 1.4 } }
+- { id: research.people.training_day_4,    lane: people, requires: [research.people.training_day_3], cost: 15000, timeSec: 345600, effect: { stat: manager.power, op: inc, value: 0.25 } }
+- { id: research.soil.living_soil_1,       lane: soil, requires: [research.soil.soil_science_3], cost: 18000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.3 } }
+- { id: research.soil.living_soil_2,       lane: soil, requires: [research.soil.living_soil_1], cost: 21000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.3 } }
+- { id: research.soil.living_soil_3,       lane: soil, requires: [research.soil.living_soil_2], cost: 24000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.3 } }
+- { id: research.soil.living_soil_4,       lane: soil, requires: [research.soil.living_soil_3], cost: 27000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.3 } }
+- { id: research.soil.living_soil_5,       lane: soil, requires: [research.soil.living_soil_4], cost: 30000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.3 } }
+- { id: research.soil.living_soil_6,       lane: soil, requires: [research.soil.living_soil_5], cost: 36000, timeSec: 432000, effect: { stat: floor.profit, op: mul, value: 1.3 } }

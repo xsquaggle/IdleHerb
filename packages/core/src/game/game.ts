@@ -26,7 +26,7 @@ import { compostRecordXp, compostTotal, ribbonsTotal, shopCost } from '../system
 import { comboRun, expectedCrit } from '../systems/tapping/logic';
 import { bubbleSweepAverage, heatMult, masteryStars, sunriseMult, weatherAt, weatherLoopSeconds, weatherGroupOf } from '../systems/worlds/logic';
 import { computeDerived, type Derived } from './derive';
-import { newWorldState, type Buff, type FairState, type GameState, type QuestSlot, type VisitorKind, type WorldState } from './state';
+import { newWorldState, switchOn, type Buff, type FairState, type GameState, type QuestSlot, type VisitorKind, type WorldState } from './state';
 import type { Command, EventBody, GameEvent, IncomeSource } from './types';
 
 export const SAVE_VERSION = 1;
@@ -133,7 +133,6 @@ export function newGameState(content: Content, seed: number, clockOffsetSec = 8 
     heirloomPicks: 0,
     compostShop: {},
     ribbonShop: {},
-    autoBuy: true,
     autoReplant: worlds.map(() => 0),
     researchDone: {},
     researchQueue: [],
@@ -518,8 +517,6 @@ export class Game {
       let worlds: number[];
       if (owner.ownerKind === 'manager') {
         worlds = [];
-        s.worlds.forEach((ws, w) => {
-        });
         // A manager's ability belongs to its own world, and works while the manager is hired (GDD 7.1 rule 7).
         const m = this.content.cards.get(owner.ownerId) as ManagerDef;
         const f = s.worlds[m.world]!.floors[m.floorIndex]!;
@@ -887,10 +884,11 @@ export class Game {
           continue;
         }
       }
-      const restarts = this.gardenerRestarts();
-      if (restarts) {
+      const gardener = !!sp['unlock.auto_gardener'];
+      if (gardener) {
+        // Floor 1's manager works with no fee while floor 1's switch is on.
         const f0 = ws.floors[0]!;
-        if (f0.level > 0 && !f0.hired) this.putToWork(w, 0);
+        if (f0.level > 0 && !f0.hired && switchOn(f0)) this.putToWork(w, 0);
       }
       if (sp['unlock.auto_hire']) {
         for (let i = 0; i < ws.floors.length; i++) {
@@ -898,14 +896,12 @@ export class Game {
           if (f.level > 0 && !f.hired && ws.coins.gte(this.hireFee(w, i))) this.hire(w, i);
         }
       }
-      if (sp['unlock.auto_gardener'] && s.autoBuy) {
-        if (restarts) {
-          // Opens the next floor when it costs at most AUTO_BUY_SHARE of the coins in hand.
-          const n = this.nextFloor(w);
-          if (n >= 0 && this.content.worlds[w]!.floors[n]!.openCost.lte(ws.coins.mul(this.t.AUTO_BUY_SHARE))) this.openFloor(w);
-        }
+      if (gardener) {
+        // A floor that is not open yet opens itself when that costs at most AUTO_BUY_SHARE of the coins in hand.
+        const n = this.nextFloor(w);
+        if (n >= 0 && switchOn(ws.floors[n]!) && this.content.worlds[w]!.floors[n]!.openCost.lte(ws.coins.mul(this.t.AUTO_BUY_SHARE))) this.openFloor(w);
         for (let i = ws.floors.length - 1; i >= 0; i--) {
-          if (ws.floors[i]!.level <= 0) continue;
+          if (ws.floors[i]!.level <= 0 || !switchOn(ws.floors[i]!)) continue;
           const k = this.maxLevels(w, i, ws.coins.mul(this.t.AUTO_BUY_SHARE));
           if (k > 0) this.buyLevels(w, i, k);
         }
@@ -1075,8 +1071,7 @@ export class Game {
       case 'buyCompostShop': return this.buyCompostShop(cmd.id);
       case 'buyRibbonShop': return this.buyRibbonShop(cmd.id);
       case 'setAutoBuy':
-        this.state.autoBuy = cmd.on;
-        return true;
+        return this.setAutoBuy(cmd.on, cmd.world, cmd.floor);
       case 'setAutoReplant':
         if (cmd.world < 0 || cmd.world >= this.state.worlds.length || cmd.multiple < 0) return false;
         this.state.autoReplant[cmd.world] = cmd.multiple;
@@ -1164,7 +1159,7 @@ export class Game {
   private updateStars(w: number): void {
     const s = this.state;
     const t = this.t;
-    // World Mastery starts when the player first reaches world 2 (GDD 16, row 19).
+    // World Mastery starts when the player first reaches world 2 (GDD 16, row 20).
     if (s.worldReached < 2) return;
     const ws = s.worlds[w]!;
     const stars = masteryStars(ws.bestMinLevel, this.content.worlds[w]!.mastery);
@@ -1257,13 +1252,27 @@ export class Game {
   }
 
   /**
-   * Design 0.4 (Game Designer's ruling, 2026-11-26): while the Auto-Gardener is
-   * owned and switched on, no world goes dead. Floor 1's manager stays hired
-   * through every Replant and Festival with no fee, and worlds open their next
-   * floor on their own. Off in the 0.3 tables (`AUTO_GARDENER_RESTARTS`).
+   * CONTENT.md 8 (design 0.4): while the Auto-Gardener is owned, no world goes
+   * dead. Floor 1's manager in every unlocked world works with no fee while
+   * floor 1's switch is on: hired free the moment the world is reached and kept
+   * through every Replant and Festival.
    */
-  private gardenerRestarts(): boolean {
-    return this.t.AUTO_GARDENER_RESTARTS && !!this.derived.global.specials['unlock.auto_gardener'] && this.state.autoBuy;
+  private freeFirstManager(w: number): boolean {
+    return !!this.derived.global.specials['unlock.auto_gardener'] && switchOn(this.state.worlds[w]!.floors[0]!);
+  }
+
+  /** Auto-Gardener switches. No world: every floor of every world; no floor: every floor of that world. */
+  private setAutoBuy(on: boolean, world?: number, floor?: number): boolean {
+    const worlds = this.state.worlds;
+    if (world !== undefined && (world < 0 || world >= worlds.length)) return false;
+    if (floor !== undefined && (world === undefined || floor < 0 || floor >= worlds[world]!.floors.length)) return false;
+    for (let w = 0; w < worlds.length; w++) {
+      if (world !== undefined && w !== world) continue;
+      worlds[w]!.floors.forEach((f, i) => {
+        if (floor === undefined || i === floor) f.autoBuy = on;
+      });
+    }
+    return true;
   }
 
   /** The first time a floor opens, in any run, its manager's card is owned at level 1. */
@@ -1332,7 +1341,7 @@ export class Game {
     const s = this.state;
     const ws = s.worlds[w]!;
     const loyal = (s.compostShop['shop.compost.loyal_staff'] ?? 0) * (this.loyalFloorsPerLevel());
-    const keepFirst = this.gardenerRestarts();
+    const keepFirst = this.freeFirstManager(w);
     ws.floors.forEach((f, i) => {
       if (f.constructing > 0) this.constructingCount--;
       f.level = 0;
@@ -1560,7 +1569,7 @@ export class Game {
         break;
       }
       case 'comboLock':
-        // Keep the Beat: Combo jumps to full and cannot fall.
+        // Tea Break (Old Moss, CONTENT 2): Combo jumps to full and cannot fall.
         if (w === s.focus) s.combo = this.derived.worlds[w]!.comboCap;
         s.comboIdle = 0;
         s.comboLock = a.durationSec!;
@@ -2153,12 +2162,15 @@ export class Game {
     return true;
   }
 
-  /** Taps on the fair stall. Tap skills apply; Combo is shared with the main game. */
+  /**
+   * Taps on the fair stall (GDD 15.3). Only tap skills and heirloom passives
+   * apply, never cards; Combo is shared with the main game.
+   */
   private fairTap(count: number): boolean {
     const s = this.state;
     const t = this.t;
     if (!s.fair.active || !(count > 0)) return false;
-    const wd = this.derived.worlds[0]!;
+    const wd = this.derived.global.fairTap;
     const run = comboRun(s.combo, count, wd.comboCap, 1 / t.COMBO_TAPS_PER_STACK, t.COMBO_PER_STACK);
     s.combo = run.stacks;
     s.comboIdle = 0;
@@ -2280,7 +2292,7 @@ export class Game {
       case 'worldReached': return s.worldReached >= c.world!;
       case 'research': return s.researchDone[c.id!] === true;
       case 'shopLevel': return (s.compostShop[c.id!] ?? s.ribbonShop[c.id!] ?? 0) >= Number(c.gte ?? 1);
-      case 'masteryStars': return s.worlds.some((w) => w.stars >= Number(c.gte));
+      case 'masteryStars': return s.worlds.filter((w) => w.stars >= Number(c.gte)).length >= (c.worlds ?? 1);
       case 'managerHired': return s.worlds[c.world! - 1]?.floors[c.floor! - 1]?.hired === true;
       case 'allFloorsLevel': return this.minLevel(c.world! - 1) >= c.level!;
       case 'holdCoins': {

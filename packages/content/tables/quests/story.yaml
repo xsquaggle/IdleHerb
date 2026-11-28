@@ -34,7 +34,7 @@
 - { n: 32, id: quest.story.busy_bees,         goal: { kind: counter, counter: beesCaught, gte: 1 }, rewards: [{ pollen: 50 }], xp: 600 }
 - { n: 33, id: quest.story.matchmaker,        goal: { kind: counter, counter: hybridsMade, gte: 1 }, rewards: [{ gems: 30 }], xp: 1000 }
 - { n: 34, id: quest.story.city_slicker,      goal: { kind: floorOpened, world: 2, floor: 8 }, rewards: [{ chest: chest.golden }], xp: 1000 }
-- { n: 35, id: quest.story.rising_star,       goal: { kind: masteryStars, gte: 3 }, rewards: [{ gems: 30 }], xp: 1000 }
+- { n: 35, id: quest.story.rising_star,       goal: { kind: masteryStars, gte: 1, worlds: 2 }, rewards: [{ gems: 30 }], xp: 1000 }
 - { n: 36, id: quest.story.island_time,       goal: { kind: worldReached, world: 3 }, rewards: [{ chest: chest.golden }], xp: 1500 }
 - { n: 37, id: quest.story.rain_or_shine,     goal: { kind: counter, counter: weatherGroupsPlanted, gte: 3 }, rewards: [{ gems: 40 }], xp: 1000 }
 - { n: 38, id: quest.story.festival_season,   goal: { kind: ribbonsPending, gte: 8 }, rewards: [{ chest: chest.silver }], xp: 1500 }

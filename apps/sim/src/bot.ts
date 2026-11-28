@@ -9,7 +9,7 @@
  * docs/balance/REPORT.md, "How the simulated players decide".
  */
 import {
-  Num, RARITY_ORDER, managerProfit, milestoneCount, nextMilestone, weatherGroupOf,
+  Num, RARITY_ORDER, managerProfit, milestoneCount, nextMilestone, switchOn, weatherGroupOf,
   type Command, type Game, type ManagerDef, type PlantDef,
   type AbilityInfo,
 } from '@sprout/core';
@@ -655,11 +655,11 @@ export class Bot {
     const want = s.time < 7 * 86400 ? 'chest.golden' : 'chest.crystal';
     while (s.gems >= g.t.GEM_CHEST_COST[want === 'chest.golden' ? 'golden' : 'crystal'] && this.act({ type: 'buyChest', chest: want })) this.cardsDirty = true;
 
-    // The Auto-Gardener is switched off while a ticket is close, so the coins can pile up.
+    // Every Auto-Gardener switch is turned off while a ticket is close, so the coins can pile up.
     if (g.derived.global.specials['unlock.auto_gardener']) {
       let saving = false;
       for (let w = 0; w < s.worlds.length; w++) if (s.worlds[w]!.unlocked && this.ticketSoon(w)) saving = true;
-      if (s.autoBuy === saving) g.dispatch({ type: 'setAutoBuy', on: !saving });
+      if (switchOn(s.worlds[0]!.floors[0]!) === saving) g.dispatch({ type: 'setAutoBuy', on: !saving });
     }
   }
 
