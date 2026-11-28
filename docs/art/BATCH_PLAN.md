@@ -19,7 +19,7 @@ This page says which batch makes which art, so that nothing the launch needs is 
 | 1 | World 1 vertical slice | 18 | 17 of 18 are back, passed with no redos and cleaned into sprites. Prompt 18 (managers) is replaced by Batch 2, round 8 |
 | 2 | Finish World 1, the rarity reveal kit and the World 1 managers | 27 | Written 2026-11-26, with Lawson. Prompts 1 to 23 back and cleaned the same day (round 7, the rarity reveal kit, was added after Lawson asked for bigger rare reveals). Round 8 (prompts 24 to 27, the ten World 1 managers) added that evening, once design 0.3 merged, and back and cleaned the same night (sheets 26 and 27 redone at the right size). **Done** |
 | 3 | Loomington rooms and collection | 17 | Written 2026-11-26 as [ASSET_BATCH_03.md](ASSET_BATCH_03.md) and sent to Lawson as one master file. All 17 back on 2026-11-27, no redo, cleaned the same morning. **Done** |
-| 4 | Loomington cast, managers, weekend events, and the Mythic and Godly kit | 19 | Written 2026-11-27 as [ASSET_BATCH_04.md](ASSET_BATCH_04.md) and sent to Lawson as one master file. Every image states its size in art pixels. Waiting for the images |
+| 4 | Loomington cast, managers, weekend events, and the five new top rarities | 19 | Written 2026-11-27 as [ASSET_BATCH_04.md](ASSET_BATCH_04.md) and sent to Lawson in two parts. Revision 2 (2026-11-28) rewrote images 16 to 19 for Lawson's eleven-tier ladder. Every image states its size in art pixels. Waiting for the images |
 | 5 | Papaya Cay rooms | 16 | Planned |
 | 6 | Papaya Cay cast and managers | 13 | Planned |
 | 7 | Mount Mitten rooms | 16 | Planned |
@@ -85,7 +85,7 @@ Written as [ASSET_BATCH_03.md](ASSET_BATCH_03.md) (`tools/build_asset_batch_03.p
 
 ## Batch 4: Loomington cast, managers and weekend events
 
-Written 2026-11-27 as [ASSET_BATCH_04.md](ASSET_BATCH_04.md) (19 images in 6 rounds). The plan's round of "second workers on short sheets" is gone: every worker sheet carries both workers of its room, as in Batch 2. The Mythic and Godly kit joined this batch the same day, after the Game Designer's call (design proposal p6).
+Written 2026-11-27 as [ASSET_BATCH_04.md](ASSET_BATCH_04.md) (19 images in 6 rounds). The plan's round of "second workers on short sheets" is gone: every worker sheet carries both workers of its room, as in Batch 2. The Mythic and Godly kit joined this batch the same day, after the Game Designer's call (design proposal p6). On 2026-11-28 Lawson set eleven tiers (Common, Uncommon, Rare, Epic, Legendary, Mythic, Exotic, Godly, Ungodly, Holy, Grailed), so revision 2 replaced rounds 5 and 6 with one round for the five tiers above Legendary.
 
 | Round | Images | Contents |
 |---|---|---|
@@ -93,8 +93,7 @@ Written 2026-11-27 as [ASSET_BATCH_04.md](ASSET_BATCH_04.md) (19 images in 6 rou
 | 2 | 4 | Worker sheets for floors 5 to 8. The bistro's second cook is from v2 floor 08; its first is new, because its manager Barley Biggs is a moustached chef too |
 | 3 | 5 | Managers of Loomington: Bram Applewhite, Olive Ledger and Tansy Treadle; Kit Foldaway, Barley Biggs and Hazel Thimble; Bjorn Barrow and Madame Loom (Head). Bram, Olive and Barley are redrawn from B5 and B21, Barley with a wooden spoon instead of the mortar. Then Baron Fauxliage (nine poses and expressions) and Mayor Thyme crowning a Head (four poses) |
 | 4 | 2 | Weekend events. First image: four event emblems (Herb Fair, Night Market, Hemp Harvest Home, Blossom Parade). The Fair Tickets icon is in Batch 2. Second image: fair-stall dressing for World 1 rooms 1 to 5 (one garland per event, awning, prize table, ticket booth, pennant pole) |
-| 5 | 3 | The Mythic and Godly kit: two card frames; two badges, two bursts and the Godly crown; the Full Bloom bud opening |
-| 6 | 1 | The Mythic forms of five launch Exotics. Clockwork Thyme's Mythic form is drawn beside it in Batch 5 |
+| 5 | 4 | The five new top rarities: card frames for Mythic, Godly and Ungodly, then Holy and Grailed; five badges and the Godly crown; five reveal bursts. The Full Bloom bud is held until design 0.5 says where a card's rise to a new tier is shown, and the Mythic plant forms are dropped (Mythic now sits below Exotic, and a card that rises keeps its own picture) |
 
 The Hemp Harvest Home emblem is a sheaf tied with rope. It never shows a leaf.
 
@@ -105,7 +104,7 @@ The Hemp Harvest Home emblem is a sheaf tied with rope. It never shows a leaf.
 | 1 | 8 | Rooms: Beach Hut Planters, Jungle Herb Terrace, Sailcloth Loft, Hammock and Net Weavers, Hot-Spring Greenhouse, Floating Market Boats, Seed Snack Shack, Lighthouse Conservatory |
 | 2 | 4 | Back walls for all eight rooms |
 | 3 | 2 | The island background in layers. B18 is the guide for what is in it |
-| 4 | 1 | Plant cards: Golden Chamomile, Elfin Thyme, Clockwork Thyme, and Clockwork Thyme's Mythic form in Full Bloom (same look rules as Batch 4 prompt 19) |
+| 4 | 1 | Plant cards: Golden Chamomile, Elfin Thyme, Clockwork Thyme |
 | 5 | 1 | Four weather signs: sunshine, rain, breeze, rainbow. The Shells icon is in Batch 2 |
 
 ## Batch 6: Papaya Cay cast and managers
@@ -157,8 +156,7 @@ Every "new for launch" count in the design document's section 13 has a batch.
 | Currency icons | 6 | Batch 2 (all six) |
 | Story characters | 2 | Batch 2 (Pip), Batch 4 (Baron Fauxliage) |
 | Chests | 4 more tiers | Batch 2 (round 7), done |
-| Rarity kit | 8 emblems, 8 card frames, 8 bursts | Batch 2 (round 7), done for the first six. Mythic and Godly (design call p6): Batch 4 round 5, with the Godly crown and the Full Bloom bud |
-| Mythic plants and Godly Heads | 6 Mythic plants, 4 Godly Heads at launch | Batch 4 round 6 (five plants) and Batch 5 (Clockwork Thyme). A Godly Head is its own sprite with the Godly crown placed by hand, so it needs no prompt |
+| Rarity kit | 11 emblems, 11 card frames, 11 bursts | Batch 2 (round 7), done for Common to Legendary and Exotic. Mythic, Godly, Ungodly, Holy and Grailed: Batch 4 round 5 (revision 2), with the Godly crown. A card that rises a tier keeps its picture and takes the new frame, emblem and glow; a Godly Head wears the crown, placed by hand |
 
 ## Made by hand, with no prompt
 

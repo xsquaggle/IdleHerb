@@ -1,16 +1,18 @@
-# Production Asset Batch 4: Loomington cast, managers, events, Mythic and Godly
+# Production Asset Batch 4: Loomington cast, managers, events and the top rarities
 
-Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **1**. Style suffix version: **v1**. Hemp guards version: **v1**. Written by `tools/build_asset_batch_04.py`, which copies the suffix and guards word for word from section 21 of the bible. Never edit this file by hand.
+Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **2**. Style suffix version: **v1**. Hemp guards version: **v1**. Written by `tools/build_asset_batch_04.py`, which copies the suffix and guards word for word from section 21 of the bible. Never edit this file by hand.
 
-**19 images in 6 rounds.** They bring Loomington to life: moving sheets for the sixteen workers of its eight rooms, its eight managers, Baron Fauxliage and the weekend events. Then comes the kit for the two new top rarities, Mythic and Godly: two card frames, two badges and bursts, the crown, the Full Bloom bud, the Mythic forms of five Exotics and Mayor Thyme crowning a Head.
+**19 images in 5 rounds.** They bring Loomington to life: moving sheets for the sixteen workers of its eight rooms, its eight managers, Baron Fauxliage, Mayor Thyme crowning a Head and the weekend events. Then come the frames, badges and bursts of the five new top rarities, Mythic, Godly, Ungodly, Holy and Grailed, and the crown a Godly Head wears.
+
+**Revision 2** (2026-11-28): Lawson set an eleven-rarity ladder: Common, Uncommon, Rare, Epic, Legendary, Mythic, Exotic, Godly, Ungodly, Holy, Grailed. Images 1 to 15 are unchanged. Images 16 to 19 are new: they replace revision 1's Mythic and Godly kit, its Full Bloom bud (held until design 0.5 says where a card's rise to a new tier is shown) and its Mythic plant forms (dropped, because Mythic now sits below Exotic).
 
 Every sheet carries two workers, as in Batch 2, so the plan's separate "second worker" sheets are no longer needed. **Every image now says its size in art pixels** ("big square pixels"): in Batches 2 and 3, sheets that did not say it came back with people up to 40% too big and cards up to four times too big.
 
-Names follow the game design document (version 0.4); Mythic and Godly follow the Game Designer's call of 2026-11-27 (version 0.5). Each prompt describes a look, not a name, so a rename does not spoil an image.
+Names follow the game design document (version 0.4); the rarities follow Lawson's ladder of 2026-11-28 (version 0.5). Each prompt describes a look, not a name, so a rename does not spoil an image.
 
 ## How to do it on your phone
 
-The easiest way is the **master files**. ChatGPT takes at most 20 attachments, so the batch comes in two parts. Part 1 is images 1 to 13 (the people): attach `Sprout_Tower_Batch4_Part1_Master.md` and the 12 pictures in `Sprout_Tower_Batch4_Part1_References.zip` to one new ChatGPT chat and type **next** between images. Part 2 is images 14 to 19 (events and the Mythic and Godly kit): the same with `Sprout_Tower_Batch4_Part2_Master.md` and the 11 pictures in `Sprout_Tower_Batch4_Part2_References.zip`, in a second new chat. All four files are in the project files, `art/batch04/master/`. If a chat gets full, start a new one with the same files and type **start at image N**. Every picture is named for the images it belongs to (`img05_...` is for image 5, `img01-13_...` for images 1 to 13). The rounds below are the same images, one prompt at a time, if you prefer that.
+The easiest way is the **master files**. ChatGPT takes at most 20 attachments, so the batch comes in two parts. Part 1 is images 1 to 13 (the people): attach `Sprout_Tower_Batch4_Part1_Master.md` and the 12 pictures in `Sprout_Tower_Batch4_Part1_References.zip` to one new ChatGPT chat and type **next** between images. Part 2 is images 14 to 19 (events and the top rarities): the same with `Sprout_Tower_Batch4_Part2_Master.md` and the 8 pictures in `Sprout_Tower_Batch4_Part2_References.zip`, in a second new chat. All four files are in the project files, `art/batch04/master/`. If a chat gets full, start a new one with the same files and type **start at image N**. Every picture is named for the images it belongs to (`img05_...` is for image 5, `img01-13_...` for images 1 to 13). The rounds below are the same images, one prompt at a time, if you prefer that.
 
 1. Each round is **one new ChatGPT chat**.
 2. At the start of a round, **attach that round's two reference images** (listed below) and paste the round's first prompt in the same message.
@@ -26,7 +28,6 @@ The easiest way is the **master files**. ChatGPT takes at most 20 attachments, s
 |---|---|---|
 | **A** | Scenes | `B4_floor04_garden_shed_nursery_v2.png` and `B4_floor_frame_shell.png` |
 | **B** | People | `B22_character_animation_sheet.png` and `B21_manager_lineup_2.png` |
-| **C** | Plants and items | `B24_plant_growth_stages.png` and `B23_exotic_plants.png` |
 | **D** | Chests and cards | `b01_11_chest_opening_frames.png` and `B25_card_layout_mockup.png` |
 
 All four sets are from your expansion pack and your Batch 1 pictures, the same as before.
@@ -48,9 +49,9 @@ All four sets are from your expansion pack and your Batch 1 pictures, the same a
 | 14 | `b02_02_currency_icons.png` |
 | 15 | `B4_floor01_windowsill_planter_v2.png` |
 | 16 | `ref_card_frames_six.png` |
-| 17 | `ref_rarity_badges_bursts.png` |
+| 17 | `ref_card_frames_six.png` |
 | 18 | `ref_rarity_badges_bursts.png` |
-| 19 | `ref_sunspun_hemp_card.png` |
+| 19 | `ref_rarity_badges_bursts.png` |
 
 The `b03_` and `b02_` pictures are your own from Batches 2 and 3. The three `ref_` pictures are made from the cleaned game sprites, so the new pieces match what is in the game. A copy of every picture is in the reference zip.
 
@@ -62,8 +63,7 @@ The `b03_` and `b02_` pictures are your own from Batches 2 and 3. The three `ref
 | 2 | Workers of Loomington floors 5 to 8 | Set B plus extra pictures | 5, 6, 7, 8 | Needed next |
 | 3 | The Loomington managers, Baron Fauxliage and the crowning | Set B plus extra pictures | 9, 10, 11, 12, 13 | Managers needed first: each arrives when their floor opens |
 | 4 | Weekend events | Set A plus extra pictures | 14, 15 | Needed by player level 12 (about day 1) |
-| 5 | The Mythic and Godly kit | Set D plus extra pictures | 16, 17, 18 | Needed late: the first Mythic is around day 25 |
-| 6 | The Mythic plants | Set C plus extra pictures | 19 | Needed late, with round 5 |
+| 5 | The five new top rarities: Mythic, Godly, Ungodly, Holy, Grailed | Set D plus extra pictures | 16, 17, 18, 19 | Needed for the reveal ladder; the top tiers come late in play |
 
 ### All prompts at a glance
 
@@ -84,10 +84,10 @@ The `b03_` and `b02_` pictures are your own from Batches 2 and 3. The three `ref
 | 13 | Mayor Thyme crowns a Head: four poses | `b04_13_mayor_thyme_crowning.png` | landscape 16:9 | Yes |
 | 14 | Weekend event emblems: Herb Fair, Night Market, Hemp Harvest Home, Blossom Parade | `b04_14_event_emblems.png` | square 1:1 | Yes |
 | 15 | Fair stall dressing for the weekend events | `b04_15_fair_stall_dressing.png` | landscape 3:2 | Yes |
-| 16 | Card frames: Mythic and Godly | `b04_16_card_frames_mythic_godly.png` | landscape 3:2 | Yes |
-| 17 | Rarity badges, bursts and the crown: Mythic and Godly | `b04_17_mythic_godly_badges_bursts.png` | landscape 3:2 | Yes |
-| 18 | Full Bloom: the Mythic bud opening | `b04_18_full_bloom_bud.png` | landscape 16:9 | Yes |
-| 19 | Plant card art: the Mythic forms of five Exotics | `b04_19_mythic_plant_cards.png` | landscape 3:2 | Yes |
+| 16 | Card frames: Mythic, Godly, Ungodly | `b04_16_card_frames_mythic_godly_ungodly.png` | landscape 3:2 | Yes |
+| 17 | Card frames: Holy and Grailed | `b04_17_card_frames_holy_grailed.png` | landscape 3:2 | Yes |
+| 18 | Rarity badges: Mythic to Grailed, and the crown | `b04_18_rarity_badges_mythic_grailed.png` | landscape 3:2 | Yes |
+| 19 | Reveal bursts: Mythic to Grailed | `b04_19_reveal_bursts_mythic_grailed.png` | portrait 2:3 | Yes |
 
 ---
 
@@ -724,67 +724,34 @@ FILES: after the image, please also give me a zip file with (1) the sheet as exa
 
 ---
 
-## Round 5: The Mythic and Godly kit
+## Round 5: The five new top rarities: Mythic, Godly, Ungodly, Holy, Grailed
 
 **New chat. Attach Set D:** `b01_11_chest_opening_frames.png` and `B25_card_layout_mockup.png`. **Some prompts in this round need more pictures as well.** Each one is named in bold at its top.
 
-### Prompt 16: Card frames: Mythic and Godly
+### Prompt 16: Card frames: Mythic, Godly, Ungodly
 
 **Attach with this prompt:** `ref_card_frames_six.png`
 
-- **File name:** `b04_16_card_frames_mythic_godly.png`
+- **File name:** `b04_16_card_frames_mythic_godly_ungodly.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** The two top card frames. Mythic is the frame of a plant raised by the Full Bloom bench job; Godly is the frame of a crowned Head. Each must look grander than the Exotic frame, and their shapes tell them apart without colour.
-- **Parts we cut from it:** 2 frames at 180×240 art pixels. The small card frames and the 7 and 8 pips are made by hand.
-- **Name flag:** Mythic and Godly are from the Game Designer's call of 2026-11-27 (design version 0.5). The look is the Art Director's.
+- **Purpose:** Three of the five new card frames. Mythic sits between the gold Legendary frame and the pearly Exotic one; Godly and Ungodly sit above Exotic. Each must look grander than the one before it, and the shapes tell them apart without colour.
+- **Parts we cut from it:** 3 frames at 180×240 art pixels. The small card frames and the pips are made by hand.
+- **Name flag:** The eleven rarities are Lawson's (2026-11-28); design version 0.5 carries them. The look is the Art Director's (style bible v1.7).
 
 ```text
 Use the reference images attached in this chat for style (pixel size, outline, shading, colours). The attached pictures of the six card frames and of the six rarity badges and bursts are the set these new pieces join: match their size, layout and level of detail exactly, but do not copy their ornaments.
 
-Two empty collectible card frames for a cozy pixel-art idle game, side by side in one row, evenly spaced, each in its own cell, nothing touching or overlapping, nothing cut off by the edge. Both have exactly the same size and the same layout as the attached six card frames: a tall card exactly 180 big square pixels wide and 240 tall, with an ornate border, an arched picture window in the upper half, a blank name ribbon across the middle, and a blank parchment panel in the lower part with two plain empty rows. Only the border ornament and its colours change. The picture window is EMPTY and transparent. The ribbon and the panel are plain, with no writing, numbers, icons or bars on them. No plant and no picture anywhere.
+Three empty collectible card frames for a cozy pixel-art idle game, side by side in one row, evenly spaced, each in its own cell, nothing touching or overlapping, nothing cut off by the edge. All three have exactly the same size and the same layout as the attached six card frames: a tall card exactly 180 big square pixels wide and 240 tall, with an ornate border, an arched picture window in the upper half, a blank name ribbon across the middle, and a blank parchment panel in the lower part with two plain empty rows. Only the border ornament and its colours change. The picture window is EMPTY and transparent. The ribbon and the panel are plain, with no writing, numbers, icons or bars on them. No plant and no picture anywhere.
+
+The game has eleven rarities, each clearly grander than the one before: Common, Uncommon, Rare, Epic, Legendary, Mythic, Exotic, Godly, Ungodly, Holy, Grailed. You can see the first five, and Exotic, in the attached pictures.
 
 Left to right:
-1. Mythic: a deep midnight-blue border edged with thin gold, with flowing ribbons in aurora colours: green-teal flowing into violet waving along it, a large fully open flower with long pointed petals in teal and violet and a gold centre at the top centre, a smaller open flower at the bottom centre, and small closed buds along each side. It is darker and richer than the pearly Exotic frame.
-2. Godly: a radiant border of polished white gold with thick gold edges. At the top centre sits a small crown of polished white gold, a circlet with five upright points shaped like sprout leaves and one round pearl at the front, with short straight spikes of solid gold fanning out behind it like a sunburst. A row of small pearls runs down each side, and a gold laurel spray sits at the bottom centre. It is the brightest, heaviest and most ornate frame of all.
+1. Mythic: a deep midnight-blue border edged with thin gold, with flowing ribbons in aurora colours: green-teal flowing into violet waving along it, a large fully open flower with long pointed petals in teal and violet and a gold centre at the top centre, a smaller open flower at the bottom centre, and small closed buds along each side. It is richer than the gold Legendary frame and a little less grand than the pearly Exotic frame.
+2. Godly: a radiant border of polished white gold with thick gold edges. At the top centre sits a small crown of polished white gold, a circlet with five upright points shaped like sprout leaves and one round pearl at the front, with short straight spikes of solid gold fanning out behind it like a sunburst. A row of small pearls runs down each side, and a gold laurel spray sits at the bottom centre. It is brighter and heavier than the Exotic frame.
+3. Ungodly: a dramatic border of dark plum-black polished stone with a thin ruby-red inner edge. At the top centre is an eclipsed sun: a round black disc ringed by a blazing corona of short ruby-red and gold spikes. Small ruby gems run down each side, and a dark crescent with a gold rim sits at the bottom centre. It is the dark, striking step after Godly, and grander than it.
 
-No glow halo, no soft light and no floating dots anywhere in the image. Hard pixel edges only.
-
-STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
-
-BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
-
-Image shape: landscape 3:2.
-
-FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
-```
-
-### Prompt 17: Rarity badges, bursts and the crown: Mythic and Godly
-
-**Attach with this prompt:** `ref_rarity_badges_bursts.png`
-
-- **File name:** `b04_17_mythic_godly_badges_bursts.png`
-- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
-- **Transparent background:** Yes
-- **Purpose:** The two new rarity badges, the burst that plays when each is revealed, and the small crown a Godly Head wears on every pose. The badge appears wherever rarity shows: frame, small card, slot and the bench.
-- **Parts we cut from it:** 2 badges at 48×48, 8 burst frames at 64×64 and the crown at about 24×14, all in art pixels.
-- **Name flag:** Mythic and Godly are from the Game Designer's call of 2026-11-27 (design version 0.5). The look is the Art Director's.
-
-```text
-Use the reference images attached in this chat for style (pixel size, outline, shading, colours). The attached pictures of the six card frames and of the six rarity badges and bursts are the set these new pieces join: match their size, layout and level of detail exactly, but do not copy their ornaments.
-
-Rarity art for a cozy pixel-art idle game, in three rows, evenly spaced, each in its own cell, nothing touching or overlapping, nothing cut off by the edge. Sizes are given in big square pixels; keep every piece at its size. Draw the badges like the attached six rarity badges: chunky, seen from the front, with a golden-yellow highlight on the upper left. Each new piece must look clearly richer than the Exotic one.
-
-Row 1, three pieces:
-1. The Mythic badge, fitting inside 44 by 44: an open flower with long pointed petals that shade from green-teal at the centre to violet at the tips, around a round gold centre, on a small round midnight-blue plate with a thin gold rim.
-2. The Godly badge, fitting inside 44 by 44: a small crown of polished white gold, a circlet with five upright points shaped like sprout leaves and one round pearl at the front, standing in front of a round white-gold sunburst disc with short straight solid spikes.
-3. The crown on its own: a small crown of polished white gold, a circlet with five upright points shaped like sprout leaves and one round pearl at the front, seen from the front, about 24 wide and 14 tall, made to sit on top of a character's head. It is the same crown as in badge 2.
-
-Row 2, the Mythic burst: four frames, each in a 64 by 64 cell, one short burst animation that grows from frame 1 to frame 3 and fades and scatters in frame 4, like the attached bursts: long pointed flower petals in teal, green-teal and violet spiralling outward, with small round gold pollen grains and four-point sparkles in teal and violet.
-
-Row 3, the Godly burst: four frames, each in a 64 by 64 cell, growing the same way: a ring of short straight white-gold spikes like a sunburst, small round pearls and gold laurel leaves flying outward, with eight-point white and gold sparkles.
-
-No dollar signs, plus signs, numbers or text. No glow halo, no soft light and no floating dots anywhere in the image. Hard pixel edges only.
+No wings, no halo above anything, no cross, star of any faith or other religious sign. No glow halo, no soft light and no floating dots anywhere in the image. Hard pixel edges only.
 
 STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
 
@@ -795,77 +762,103 @@ Image shape: landscape 3:2.
 FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
 ```
 
-### Prompt 18: Full Bloom: the Mythic bud opening
+### Prompt 17: Card frames: Holy and Grailed
 
-**Attach with this prompt:** `ref_rarity_badges_bursts.png`
+**Attach with this prompt:** `ref_card_frames_six.png`
 
-- **File name:** `b04_18_full_bloom_bud.png`
-- **Shape and size:** landscape 16:9, about 1664×936 (any size ChatGPT gives at this shape is fine)
+- **File name:** `b04_17_card_frames_holy_grailed.png`
+- **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** The reveal of a Mythic plant at the bench: the slowest build-up the bench has. A great bud swells and opens, and the new Mythic card rises out of its centre (the game moves the card and adds the light).
-- **Parts we cut from it:** 4 frames at 112×112 art pixels, the stem in the same place in each.
-- **Name flag:** Mythic and Godly are from the Game Designer's call of 2026-11-27 (design version 0.5). The look is the Art Director's.
+- **Purpose:** The two highest card frames. Grailed is the top of the whole ladder and must be the grandest frame in the game.
+- **Parts we cut from it:** 2 frames at 180×240 art pixels. The small card frames and the pips are made by hand.
+- **Name flag:** The eleven rarities are Lawson's (2026-11-28); design version 0.5 carries them. The look is the Art Director's (style bible v1.7).
 
 ```text
 Use the reference images attached in this chat for style (pixel size, outline, shading, colours). The attached pictures of the six card frames and of the six rarity badges and bursts are the set these new pieces join: match their size, layout and level of detail exactly, but do not copy their ornaments.
 
-An animation sheet for a cozy pixel-art idle game: ONE magical flower bud opening, in four frames in one row across the middle of the image, evenly spaced, each in its own cell, nothing touching or overlapping, nothing cut off by the edge. Each frame is a cell 112 big square pixels wide and 112 tall. The bud grows from a short thick green stem with two broad leaves at its base, and the stem and leaves stand in exactly the same place in every cell, so the frames line up as an animation.
+Two empty collectible card frames for a cozy pixel-art idle game, side by side in one row, evenly spaced, each in its own cell, nothing touching or overlapping, nothing cut off by the edge. Both have exactly the same size and the same layout as the attached six card frames: a tall card exactly 180 big square pixels wide and 240 tall, with an ornate border, an arched picture window in the upper half, a blank name ribbon across the middle, and a blank parchment panel in the lower part with two plain empty rows. Only the border ornament and its colours change. The picture window is EMPTY and transparent. The ribbon and the panel are plain, with no writing, numbers, icons or bars on them. No plant and no picture anywhere. They join the Mythic, Godly and Ungodly frames you made in the previous image, and must look grander still.
 
-(1) A tall closed bud, its petals wrapped tight: midnight blue at the base shading into aurora colours: green-teal flowing into violet at the tips, with a thin gold edge on each petal. (2) The petals loosening, their tips curling apart. (3) Half open, the petals curling outward and showing a pale gold centre. (4) Fully open: a wide flower with long pointed petals spread out in a big star shape around a large, round, EMPTY pale gold centre, the outer tips violet. The open flower fills most of its cell.
+The game has eleven rarities, each clearly grander than the one before: Common, Uncommon, Rare, Epic, Legendary, Mythic, Exotic, Godly, Ungodly, Holy, Grailed. You can see the first five, and Exotic, in the attached pictures.
 
-No glow halo, no soft light and no floating dots anywhere in the image. Hard pixel edges only. No sparkles.
+Left to right:
+1. Holy: a gleaming border of pearl white with a pale sky-blue and soft rose shimmer along its edges. At the top centre a big round lustrous pearl rests on a small soft white cloud, inside a thin ring of silver. Rows of small pearls are set along the sides, and white cloud scrolls curl at the bottom centre. It is the calm, shining step after the dark Ungodly frame.
+2. Grailed: a heavy border of rich polished gold that looks almost liquid, with a braided ribbon running all the way round it in ten colours: wood brown, leaf green, sapphire blue, amethyst purple, gold, aurora teal, prism rose, white gold, ruby red and pearl white. At the top centre sits a small golden watering can, tipped forward, set with a tiny gem in each of those colours, pouring three golden drops. Small gold leaves curl at each corner and a gold two-leaf sprout sits at the bottom centre. It is the grandest frame in the game.
+
+No wings, no halo above anything, no cross, star of any faith or other religious sign. No glow halo, no soft light and no floating dots anywhere in the image. Hard pixel edges only.
 
 STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
 
 BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
 
-Image shape: landscape 16:9.
+Image shape: landscape 3:2.
 
 FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
 ```
 
----
+### Prompt 18: Rarity badges: Mythic to Grailed, and the crown
 
-## Round 6: The Mythic plants
+**Attach with this prompt:** `ref_rarity_badges_bursts.png`
 
-**New chat. Attach Set C:** `B24_plant_growth_stages.png` and `B23_exotic_plants.png`. **Some prompts in this round need more pictures as well.** Each one is named in bold at its top.
-
-### Prompt 19: Plant card art: the Mythic forms of five Exotics
-
-**Attach with this prompt:** `ref_sunspun_hemp_card.png`
-
-- **File name:** `b04_19_mythic_plant_cards.png`
+- **File name:** `b04_18_rarity_badges_mythic_grailed.png`
 - **Shape and size:** landscape 3:2, about 1536×1024 (any size ChatGPT gives at this shape is fine)
 - **Transparent background:** Yes
-- **Purpose:** When a max-level Exotic finishes the Full Bloom bench job it becomes its Mythic form: the same plant, grown into its grandest self. Clockwork Thyme, the sixth launch Exotic, is drawn in Batch 5 with its Mythic form beside it.
-- **Parts we cut from it:** 5 card pictures at 108×100 art pixels: Frosted Mint, Ember Basil, Crystal Sage, Thunder Rosemary and Sunspun Hemp in Full Bloom.
-- **Name flag:** Mythic and Godly are from the Game Designer's call of 2026-11-27 (design version 0.5). The look is the Art Director's.
+- **Purpose:** The five new rarity badges and the small crown a Godly Head wears. A badge appears wherever rarity shows: the frame, the small card, the inventory slot, the chest light and the reveal.
+- **Parts we cut from it:** 5 badges at 48×48 and the crown at about 24×14, all in art pixels.
+- **Name flag:** The eleven rarities are Lawson's (2026-11-28); design version 0.5 carries them. The look is the Art Director's (style bible v1.7).
 
 ```text
-Use the reference images attached in this chat for style (pixel size, outline, shading, colours). The attached sheet of six plants in fancy planters and the attached golden hemp card show the plants to follow: keep each plant's leaves, colours and planter, as described below. Do not draw the lavender or the white daisy from that sheet.
+Use the reference images attached in this chat for style (pixel size, outline, shading, colours). The attached pictures of the six card frames and of the six rarity badges and bursts are the set these new pieces join: match their size, layout and level of detail exactly, but do not copy their ornaments.
 
-Five hero plants for collectible cards in a cozy pixel-art farming game, in two rows, three on top and two below, centred, evenly spaced, each in its own cell, nothing touching or overlapping, nothing cut off by the edge. Each is one whole herb plant growing in its own planter, seen from the front and slightly above, like the attached plants. SIZE: each plant with its planter is about 94 big square pixels tall and at most 96 wide; the plant fills the upper two thirds and the planter the lower third.
-
-Each is an Exotic plant from the attached pictures in FULL BLOOM: the same plant, colours and planter, but fuller and grander, and its planter is now gilded, with a thick gold rim, small gold feet and a band of aurora colours: green-teal flowing into violet around its middle. Each keeps the emblem on its planter.
+Rarity badges for a cozy pixel-art idle game, in two rows of three, evenly spaced, each in its own cell, nothing touching or overlapping, nothing cut off by the edge. Draw the badges like the attached six rarity badges: chunky, seen from the front, with a golden-yellow highlight on the upper left. SIZE: each badge fits inside a square of 44 by 44 big square pixels. The game has eleven rarities, each clearly grander than the one before: Common, Uncommon, Rare, Epic, Legendary, Mythic, Exotic, Godly, Ungodly, Holy, Grailed. You can see the first five, and Exotic, in the attached pictures. Each new badge must look clearly richer than the one before it.
 
 Row 1:
-1. The frosty teal mint with snow on its planter, now crowned with tall spikes of tiny white and pale teal flowers, with small icicles hanging from the planter rim.
-2. The fiery orange-red basil in the lava-cracked planter, its leaves fuller, now crowned with tall spikes of small gold and rose flowers. No flames.
-3. The sage with shimmering teal and pink leaves in the faceted crystal planter, now with tall spikes of violet sage flowers tipped with small crystal points.
+1. Mythic: an open flower with long pointed petals that shade from green-teal at the centre to violet at the tips, around a round gold centre, on a small round midnight-blue plate with a thin gold rim.
+2. Godly: a small crown of polished white gold, a circlet with five upright points shaped like sprout leaves and one round pearl at the front, standing in front of a round white-gold sunburst disc with short straight solid spikes.
+3. Ungodly: an eclipsed sun: a round black disc with a thin ruby rim, ringed by a blazing corona of short ruby-red and gold spikes.
 
 Row 2:
-4. The rosemary in the storm-cloud planter with the lightning bolt, taller and bushier and covered in small violet flowers. No lightning in the air.
-5. The golden hemp from the hemp card: now five tall slim golden-green canes instead of three, wound together with a spiral of shining golden thread and a second spiral ribbon in aurora colours: green-teal flowing into violet, in the golden planter with the sun on it. No flowers on the hemp.
+4. Holy: a big round lustrous pearl resting on a small soft white cloud, inside a thin ring of silver.
+5. Grailed: a small golden watering can, tipped forward, set with tiny gems in green, blue, purple, teal, rose and ruby, with a braided ribbon of many colours tied round its handle.
+6. The crown on its own: a small crown of polished white gold, a circlet with five upright points shaped like sprout leaves and one round pearl at the front, seen from the front, about 24 big square pixels wide and 14 tall, made to sit on top of a character's head. It is the same crown as in badge 2.
 
-No sparkles, glints, light rays, motion lines, music notes, stars or floating dots anywhere in the image. The game adds those.
-
-HEMP LOOK: industrial fibre hemp drawn as a tall farm crop, like bamboo or tall corn: a straight slim green cane with ringed joints, bare in its lower half, with small drooping groups of 3 to 5 narrow leaflets seen from the side in the upper half and a slim leafy tuft on top. Whole plants only, in farm context. No flower buds, no close-up of plant tops, no single fan-shaped leaf shown alone or used as an emblem, no smoke, no jars of dried leaves, nothing held to a face.
+No wings, no halo above anything, no cross, star of any faith or other religious sign. No glow halo, no soft light and no floating dots anywhere in the image. Hard pixel edges only.
 
 STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
 
 BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
 
 Image shape: landscape 3:2.
+
+FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
+```
+
+### Prompt 19: Reveal bursts: Mythic to Grailed
+
+**Attach with this prompt:** `ref_rarity_badges_bursts.png`
+
+- **File name:** `b04_19_reveal_bursts_mythic_grailed.png`
+- **Shape and size:** portrait 2:3, about 1024×1536 (any size ChatGPT gives at this shape is fine)
+- **Transparent background:** Yes
+- **Purpose:** The bursts that play when a card of each new rarity is revealed, from aurora petals for Mythic to a fountain of golden drops and confetti for Grailed. The game adds the light, rays and screen colour around them.
+- **Parts we cut from it:** 20 frames: 5 rarities × 4 frames, each burst on a 64×64 art pixel cell.
+- **Name flag:** The eleven rarities are Lawson's (2026-11-28); design version 0.5 carries them. The look is the Art Director's (style bible v1.7).
+
+```text
+Use the reference images attached in this chat for style (pixel size, outline, shading, colours). The attached pictures of the six card frames and of the six rarity badges and bursts are the set these new pieces join: match their size, layout and level of detail exactly, but do not copy their ornaments.
+
+An effects sheet for a cozy pixel-art idle game, drawn like the bursts in the attached picture: five rows of four frames, evenly spaced, each in its own cell, nothing touching or overlapping, nothing cut off by the edge. Each frame is a cell of 64 by 64 big square pixels. Each row is one short burst animation that grows from frame 1 to frame 3 and fades and scatters in frame 4. Each row must look clearly bigger and richer than the row above it, and richer than every burst in the attached picture.
+Row 1, Mythic: long pointed flower petals in teal, green-teal and violet spiralling outward, with small round gold pollen grains and four-point sparkles in teal and violet.
+Row 2, Godly: a ring of short straight white-gold spikes like a sunburst, small round pearls and gold laurel leaves flying outward, with eight-point white and gold sparkles.
+Row 3, Ungodly: sharp plum-black shards and ruby-red and gold sparks flying outward from a dark centre in a ring, with a thin ruby ring expanding behind them.
+Row 4, Holy: lustrous pearls and small round white cloud puffs spreading outward in a wide ring, with silver and pale blue four-point sparkles.
+Row 5, Grailed: a fountain of golden water drops and tiny confetti pieces in wood brown, leaf green, sapphire blue, amethyst purple, gold, aurora teal, prism rose, white gold, ruby red and pearl white, bursting up and out, with gold eight-point sparkles and a few small gold leaves.
+Hard pixel edges only, no glow halo and no soft light around any effect. No dollar signs, plus signs, numbers or text. No wings, no halo above anything, no cross, star of any faith or other religious sign.
+
+STYLE (Sprout Tower house style v1): cozy 2D pixel art that looks like low-resolution game sprites enlarged, with big, clearly visible square pixels on one even grid, the same pixel size everywhere in the image. Flat cel shading with only 3 to 4 tones per material. Bold dark plum-black outline around every object. Crisp hard edges only: no anti-aliasing, no blur, no soft gradients, no glow, no noise, no dithering. Chunky, rounded, friendly shapes with simple readable silhouettes. Warm golden-hour light from the upper left; shadows lean purple, highlights lean golden yellow. Limited cozy palette: wood browns, terracotta orange, golden yellow, cream, fresh herb greens, lavender purple, dusk blue. Match the pixel size, outline and shading of the attached reference images exactly. Family-friendly, original designs only. No text, letters, numbers, logos, watermark or signature.
+
+BACKGROUND: transparent (PNG with alpha). No ground shadow, no floor, no scenery, no frame.
+
+Image shape: portrait 2:3.
 
 FILES: after the image, please also give me a zip file with (1) the sheet as exact pixel art, every art pixel the same whole number of image pixels, (2) each item, frame or layer as its own transparent PNG at true size, one image pixel per art pixel, and (3) a slices.json that names each item and gives its box on the sheet. If you cannot make the zip, the image alone is fine.
 ```
@@ -886,7 +879,8 @@ Send the matching sentence in the same chat.
 | Sparkles, glints, stars, music notes or dots appear where they should not | `Same image with every sparkle, glint, star, music note, light ray and floating dot removed. Keep everything else.` |
 | Workers are drawn too big | `Redo with the same characters and poses, drawn smaller: about 64 big square pixels tall from the feet to the top of the head, hats included, with lots of empty space around each one.` |
 | Managers, the Baron or the Mayor are drawn too big | `Redo with the same characters and poses, drawn smaller: about 76 big square pixels tall from the feet to the top of the head, hats included, with lots of empty space around each one.` |
-| Plants on the cards are drawn too big | `Redo with the same plants, drawn smaller: each plant with its planter about 94 big square pixels tall and at most 96 wide.` |
+| A card frame or badge is drawn the wrong size | `Redo the same pieces at the size given: each card frame exactly 180 big square pixels wide and 240 tall, each badge inside 44 by 44.` |
+| A cross, halo, wings or other religious sign appears | `Same piece with that sign removed and nothing in its place except the ornament the description names.` |
 | Something is held to a face, or steam or smoke appears | `Same pose, but keep every item at chest height or lower, away from the face, and remove all steam, smoke and mist.` |
 | A leaf appears on the Hemp Harvest Home emblem or in the stalk garland | `Same piece, but only straight pale stalks tied with rope: no leaves anywhere on it.` |
 | A garland's two ends hang at different heights | `Same garland, but its left and right ends hang at exactly the same height, so two copies join end to end.` |
@@ -901,4 +895,4 @@ Send the matching sentence in the same chat.
 
 1. Each image is checked against Gate A of the style bible, and its size is measured against the size the prompt asked for. If one needs a redo, you get its number and the exact sentence to send.
 2. Accepted images go through the clean-up route and become game-size sprites.
-3. Every image with hemp in it (prompts 3, 4, 6, 7, 8, 9, 10, 11, 14, 15, 19) is checked with the five-question hemp review.
+3. Every image with hemp in it (prompts 3, 4, 6, 7, 8, 9, 10, 11, 14, 15) is checked with the five-question hemp review.

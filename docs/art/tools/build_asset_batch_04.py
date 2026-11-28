@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Builds ASSET_BATCH_04.md: the Loomington cast and managers, Baron Fauxliage, the weekend events, and the Mythic and
-Godly kit. The style suffix and hemp guards are read word for word from section 21 of the style bible.
+"""Builds ASSET_BATCH_04.md: the Loomington cast and managers, Baron Fauxliage, the weekend events, and the frames,
+badges and bursts of the five rarities above Legendary. The style suffix and hemp guards are read word for word from
+section 21 of the style bible.
 
 Lessons from Batches 2 and 3 built in here: every image states its size in art pixels ("big square pixels"), because
 ChatGPT fills a sheet with bigger people or plants when it is not told; hats and hair count inside a character's
@@ -35,6 +36,8 @@ FILES = ("FILES: after the image, please also give me a zip file with (1) the sh
 FLAG = "Names are from the game design document (version 0.4). Each look is described, not named, so a rename is fine."
 FLAG_P6 = ("Mythic and Godly are from the Game Designer's call of 2026-11-27 (design version 0.5). The look is the Art "
            "Director's.")
+FLAG_11 = ("The eleven rarities are Lawson's (2026-11-28); design version 0.5 carries them. The look is the Art "
+           "Director's (style bible v1.7).")
 
 P = []
 
@@ -500,123 +503,127 @@ add(15, "Fair stall dressing for the weekend events", "b04_15_fair_stall_dressin
     extra="With this prompt also attach `B4_floor01_windowsill_planter_v2.png` from your expansion pack, one of the "
           "World 1 rooms these pieces dress up.")
 
-# ---------------------------------------------------------------- Round 5: the Mythic and Godly kit (Set D)
-# Design call p6 (2026-11-27): two rarities above Exotic, never rolled. Mythic is earned by the Full Bloom bench job and
-# revealed at the bench; Godly crowns a world's Head at the Harvest Festival. The look (style bible sections 8 and 19):
-# Exotic is pearly white and prismatic; Mythic goes dark and rich, an aurora on midnight blue, with a full-bloom flower
-# as its shape cue; Godly is the brightest of all, white gold with a sprout crown and a sunburst.
+# ---------------------------------------------------------------- Round 5: the five new top rarities (Set D)
+# Revision 2 (2026-11-28). Lawson set an eleven-tier ladder that night: Common, Uncommon, Rare, Epic, Legendary,
+# Mythic, Exotic, Godly, Ungodly, Holy, Grailed, "each rarity should be noticeably better than the one before". Mythic now
+# sits below Exotic, so the Mythic plant forms of revision 1 (old prompt 19) are dropped, and the Full Bloom bud (old
+# prompt 18) waits until design 0.5 says where a card's rise to a new tier is shown. The look (style bible v1.7,
+# sections 8 and 19): Mythic an aurora on midnight with a full-bloom flower; Exotic the pearly winged prism (Batch 2);
+# Godly white gold with a sprout crown and sunburst; Ungodly an eclipse, plum-black with a ruby and gold corona, the dark
+# beat after Godly; Holy pearl and cloud; Grailed liquid gold with all ten earlier colours braided in, and a golden
+# watering can as its grail. The names are rarity labels only, so no religious signs are drawn.
 KIT_REF = ("Use the reference images attached in this chat for style (pixel size, outline, shading, colours). The "
            "attached pictures of the six card frames and of the six rarity badges and bursts are the set these new "
            "pieces join: match their size, layout and level of detail exactly, but do not copy their ornaments.")
 MYTHIC = "aurora colours: green-teal flowing into violet"
+TEN = ("wood brown, leaf green, sapphire blue, amethyst purple, gold, aurora teal, prism rose, white gold, ruby red and "
+       "pearl white")
+NO_SIGNS = "No wings, no halo above anything, no cross, star of any faith or other religious sign."
 NO_FX_KIT = "No glow halo, no soft light and no floating dots anywhere in the image. Hard pixel edges only."
+LADDER = ("The game has eleven rarities, each clearly grander than the one before: Common, Uncommon, Rare, Epic, "
+          "Legendary, Mythic, Exotic, Godly, Ungodly, Holy, Grailed. You can see the first five, and Exotic, in the "
+          "attached pictures.")
+FRAME_LAYOUT = ("the same size and the same layout as the attached six card frames: a tall card exactly 180 big square "
+                "pixels wide and 240 tall, with an ornate border, an arched picture window in the upper half, a blank "
+                "name ribbon across the middle, and a blank parchment panel in the lower part with two plain empty "
+                "rows. Only the border ornament and its colours change. The picture window is EMPTY and transparent. "
+                "The ribbon and the panel are plain, with no writing, numbers, icons or bars on them. No plant and no "
+                "picture anywhere.")
 
-add(16, "Card frames: Mythic and Godly", "b04_16_card_frames_mythic_godly.png", "landscape 3:2", "about 1536×1024",
-    "Yes", "D",
-    "The two top card frames. Mythic is the frame of a plant raised by the Full Bloom bench job; Godly is the frame of "
-    "a crowned Head. Each must look grander than the Exotic frame, and their shapes tell them apart without colour.",
-    "2 frames at 180×240 art pixels. The small card frames and the 7 and 8 pips are made by hand.",
-    FLAG_P6,
-    "Two empty collectible card frames for a cozy pixel-art idle game, side by side in one row, " + GRID + ". Both "
-    "have exactly the same size and the same layout as the attached six card frames: a tall card exactly 180 big "
-    "square pixels wide and 240 tall, with an ornate border, an arched picture window in the upper half, a blank name "
-    "ribbon across the middle, and a blank parchment panel in the lower part with two plain empty rows. Only the "
-    "border ornament and its colours change. The picture window is EMPTY and transparent. The ribbon and the panel "
-    "are plain, with no writing, numbers, icons or bars on them. No plant and no picture anywhere.\n\n"
+add(16, "Card frames: Mythic, Godly, Ungodly", "b04_16_card_frames_mythic_godly_ungodly.png", "landscape 3:2",
+    "about 1536×1024", "Yes", "D",
+    "Three of the five new card frames. Mythic sits between the gold Legendary frame and the pearly Exotic one; Godly "
+    "and Ungodly sit above Exotic. Each must look grander than the one before it, and the shapes tell them apart "
+    "without colour.",
+    "3 frames at 180×240 art pixels. The small card frames and the pips are made by hand.",
+    FLAG_11,
+    "Three empty collectible card frames for a cozy pixel-art idle game, side by side in one row, " + GRID + ". All "
+    "three have exactly " + FRAME_LAYOUT + "\n\n" + LADDER + "\n\n"
     "Left to right:\n"
     "1. Mythic: a deep midnight-blue border edged with thin gold, with flowing ribbons in " + MYTHIC + " waving along "
     "it, a large fully open flower with long pointed petals in teal and violet and a gold centre at the top centre, "
-    "a smaller open flower at the bottom centre, and small closed buds along each side. It is darker and richer than "
-    "the pearly Exotic frame.\n"
+    "a smaller open flower at the bottom centre, and small closed buds along each side. It is richer than the gold "
+    "Legendary frame and a little less grand than the pearly Exotic frame.\n"
     "2. Godly: a radiant border of polished white gold with thick gold edges. At the top centre sits " + CROWN + ", "
     "with short straight spikes of solid gold fanning out behind it like a sunburst. A row of small pearls runs down "
-    "each side, and a gold laurel spray sits at the bottom centre. It is the brightest, heaviest and most ornate frame "
-    "of all.\n\n"
-    + NO_FX_KIT, ref=KIT_REF,
+    "each side, and a gold laurel spray sits at the bottom centre. It is brighter and heavier than the Exotic frame.\n"
+    "3. Ungodly: a dramatic border of dark plum-black polished stone with a thin ruby-red inner edge. At the top "
+    "centre is an eclipsed sun: a round black disc ringed by a blazing corona of short ruby-red and gold spikes. Small "
+    "ruby gems run down each side, and a dark crescent with a gold rim sits at the bottom centre. It is the dark, "
+    "striking step after Godly, and grander than it.\n\n" + NO_SIGNS + " " + NO_FX_KIT, ref=KIT_REF,
     extra="With this prompt also attach `ref_card_frames_six.png` (in the reference zip), the six frames you made in "
           "Batch 2 as they look in the game.")
 
-add(17, "Rarity badges, bursts and the crown: Mythic and Godly", "b04_17_mythic_godly_badges_bursts.png",
+add(17, "Card frames: Holy and Grailed", "b04_17_card_frames_holy_grailed.png", "landscape 3:2",
+    "about 1536×1024", "Yes", "D",
+    "The two highest card frames. Grailed is the top of the whole ladder and must be the grandest frame in the game.",
+    "2 frames at 180×240 art pixels. The small card frames and the pips are made by hand.",
+    FLAG_11,
+    "Two empty collectible card frames for a cozy pixel-art idle game, side by side in one row, " + GRID + ". Both "
+    "have exactly " + FRAME_LAYOUT + " They join the Mythic, Godly and Ungodly frames you made in the previous image, "
+    "and must look grander still.\n\n" + LADDER + "\n\n"
+    "Left to right:\n"
+    "1. Holy: a gleaming border of pearl white with a pale sky-blue and soft rose shimmer along its edges. At the top "
+    "centre a big round lustrous pearl rests on a small soft white cloud, inside a thin ring of silver. Rows of small "
+    "pearls are set along the sides, and white cloud scrolls curl at the bottom centre. It is the calm, shining step "
+    "after the dark Ungodly frame.\n"
+    "2. Grailed: a heavy border of rich polished gold that looks almost liquid, with a braided ribbon running all the "
+    "way round it in ten colours: " + TEN + ". At the top centre sits a small golden watering can, tipped forward, "
+    "set with a tiny gem in each of those colours, pouring three golden drops. Small gold leaves curl at each corner "
+    "and a gold two-leaf sprout sits at the bottom centre. It is the grandest frame in the game.\n\n"
+    + NO_SIGNS + " " + NO_FX_KIT, ref=KIT_REF,
+    extra="With this prompt also attach `ref_card_frames_six.png` (in the reference zip).")
+
+add(18, "Rarity badges: Mythic to Grailed, and the crown", "b04_18_rarity_badges_mythic_grailed.png",
     "landscape 3:2", "about 1536×1024", "Yes", "D",
-    "The two new rarity badges, the burst that plays when each is revealed, and the small crown a Godly Head wears on "
-    "every pose. The badge appears wherever rarity shows: frame, small card, slot and the bench.",
-    "2 badges at 48×48, 8 burst frames at 64×64 and the crown at about 24×14, all in art pixels.",
-    FLAG_P6,
-    "Rarity art for a cozy pixel-art idle game, in three rows, " + GRID + ". Sizes are given in big square pixels; "
-    "keep every piece at its size. Draw the badges like the attached six rarity badges: chunky, seen from the front, "
-    "with a golden-yellow highlight on the upper left. Each new piece must look clearly richer than the Exotic one.\n\n"
-    "Row 1, three pieces:\n"
-    "1. The Mythic badge, fitting inside 44 by 44: an open flower with long pointed petals that shade from green-teal "
-    "at the centre to violet at the tips, around a round gold centre, on a small round midnight-blue plate with a thin "
-    "gold rim.\n"
-    "2. The Godly badge, fitting inside 44 by 44: " + CROWN + ", standing in front of a round white-gold sunburst disc "
-    "with short straight solid spikes.\n"
-    "3. The crown on its own: " + CROWN + ", seen from the front, about 24 wide and 14 tall, made to sit on top of a "
-    "character's head. It is the same crown as in badge 2.\n\n"
-    "Row 2, the Mythic burst: four frames, each in a 64 by 64 cell, one short burst animation that grows from frame 1 "
-    "to frame 3 and fades and scatters in frame 4, like the attached bursts: long pointed flower petals in teal, "
-    "green-teal and violet spiralling outward, with small round gold pollen grains and four-point sparkles in teal "
-    "and violet.\n\n"
-    "Row 3, the Godly burst: four frames, each in a 64 by 64 cell, growing the same way: a ring of short straight "
-    "white-gold spikes like a sunburst, small round pearls and gold laurel leaves flying outward, with eight-point "
-    "white and gold sparkles.\n\n"
-    "No dollar signs, plus signs, numbers or text. " + NO_FX_KIT, ref=KIT_REF,
+    "The five new rarity badges and the small crown a Godly Head wears. A badge appears wherever rarity shows: the "
+    "frame, the small card, the inventory slot, the chest light and the reveal.",
+    "5 badges at 48×48 and the crown at about 24×14, all in art pixels.",
+    FLAG_11,
+    "Rarity badges for a cozy pixel-art idle game, in two rows of three, " + GRID + ". Draw the badges like the "
+    "attached six rarity badges: chunky, seen from the front, with a golden-yellow highlight on the upper left. SIZE: "
+    "each badge fits inside a square of 44 by 44 big square pixels. " + LADDER + " Each new badge must look clearly "
+    "richer than the one before it.\n\n"
+    "Row 1:\n"
+    "1. Mythic: an open flower with long pointed petals that shade from green-teal at the centre to violet at the "
+    "tips, around a round gold centre, on a small round midnight-blue plate with a thin gold rim.\n"
+    "2. Godly: " + CROWN + ", standing in front of a round white-gold sunburst disc with short straight solid spikes.\n"
+    "3. Ungodly: an eclipsed sun: a round black disc with a thin ruby rim, ringed by a blazing corona of short "
+    "ruby-red and gold spikes.\n\n"
+    "Row 2:\n"
+    "4. Holy: a big round lustrous pearl resting on a small soft white cloud, inside a thin ring of silver.\n"
+    "5. Grailed: a small golden watering can, tipped forward, set with tiny gems in green, blue, purple, teal, rose "
+    "and ruby, with a braided ribbon of many colours tied round its handle.\n"
+    "6. The crown on its own: " + CROWN + ", seen from the front, about 24 big square pixels wide and 14 tall, made "
+    "to sit on top of a character's head. It is the same crown as in badge 2.\n\n" + NO_SIGNS + " " + NO_FX_KIT,
+    ref=KIT_REF,
     extra="With this prompt also attach `ref_rarity_badges_bursts.png` (in the reference zip), the badges and bursts "
           "you made in Batch 2 as they look in the game.")
 
-add(18, "Full Bloom: the Mythic bud opening", "b04_18_full_bloom_bud.png", "landscape 16:9", "about 1664×936",
-    "Yes", "D",
-    "The reveal of a Mythic plant at the bench: the slowest build-up the bench has. A great bud swells and opens, and "
-    "the new Mythic card rises out of its centre (the game moves the card and adds the light).",
-    "4 frames at 112×112 art pixels, the stem in the same place in each.",
-    FLAG_P6,
-    "An animation sheet for a cozy pixel-art idle game: ONE magical flower bud opening, in four frames in one row "
-    "across the middle of the image, " + GRID + ". Each frame is a cell 112 big square pixels wide and 112 tall. The "
-    "bud grows from a short thick green stem with two broad leaves at its base, and the stem and leaves stand in "
-    "exactly the same place in every cell, so the frames line up as an animation.\n\n"
-    "(1) A tall closed bud, its petals wrapped tight: midnight blue at the base shading into " + MYTHIC + " at the "
-    "tips, with a thin gold edge on each petal. (2) The petals loosening, their tips curling apart. (3) Half open, "
-    "the petals curling outward and showing a pale gold centre. (4) Fully open: a wide flower with long pointed "
-    "petals spread out in a big star shape around a large, round, EMPTY pale gold centre, the outer tips violet. The "
-    "open flower fills most of its cell.\n\n" + NO_FX_KIT + " No sparkles.", ref=KIT_REF,
+add(19, "Reveal bursts: Mythic to Grailed", "b04_19_reveal_bursts_mythic_grailed.png", "portrait 2:3",
+    "about 1024×1536", "Yes", "D",
+    "The bursts that play when a card of each new rarity is revealed, from aurora petals for Mythic to a fountain of "
+    "golden drops and confetti for Grailed. The game adds the light, rays and screen colour around them.",
+    "20 frames: 5 rarities × 4 frames, each burst on a 64×64 art pixel cell.",
+    FLAG_11,
+    "An effects sheet for a cozy pixel-art idle game, drawn like the bursts in the attached picture: five rows of four "
+    "frames, " + GRID + ". Each frame is a cell of 64 by 64 big square pixels. Each row is one short burst animation "
+    "that grows from frame 1 to frame 3 and fades and scatters in frame 4. Each row must look clearly bigger and "
+    "richer than the row above it, and richer than every burst in the attached picture.\n"
+    "Row 1, Mythic: long pointed flower petals in teal, green-teal and violet spiralling outward, with small round "
+    "gold pollen grains and four-point sparkles in teal and violet.\n"
+    "Row 2, Godly: a ring of short straight white-gold spikes like a sunburst, small round pearls and gold laurel "
+    "leaves flying outward, with eight-point white and gold sparkles.\n"
+    "Row 3, Ungodly: sharp plum-black shards and ruby-red and gold sparks flying outward from a dark centre in a "
+    "ring, with a thin ruby ring expanding behind them.\n"
+    "Row 4, Holy: lustrous pearls and small round white cloud puffs spreading outward in a wide ring, with silver "
+    "and pale blue four-point sparkles.\n"
+    "Row 5, Grailed: a fountain of golden water drops and tiny confetti pieces in " + TEN + ", bursting up and out, "
+    "with gold eight-point sparkles and a few small gold leaves.\n"
+    "Hard pixel edges only, no glow halo and no soft light around any effect. No dollar signs, plus signs, numbers or "
+    "text. " + NO_SIGNS,
+    ref=KIT_REF,
     extra="With this prompt also attach `ref_rarity_badges_bursts.png` (in the reference zip).")
-
-# ---------------------------------------------------------------- Round 6: the Mythic plants (Set C)
-MYTHIC_REF = ("Use the reference images attached in this chat for style (pixel size, outline, shading, colours). "
-              "The attached sheet of six plants in fancy planters and the attached golden hemp card show the plants "
-              "to follow: keep each plant's leaves, colours and planter, as described below. Do not draw the lavender "
-              "or the white daisy from that sheet.")
-
-add(19, "Plant card art: the Mythic forms of five Exotics", "b04_19_mythic_plant_cards.png",
-    "landscape 3:2", "about 1536×1024", "Yes", "C",
-    "When a max-level Exotic finishes the Full Bloom bench job it becomes its Mythic form: the same plant, grown into "
-    "its grandest self. Clockwork Thyme, the sixth launch Exotic, is drawn in Batch 5 with its Mythic form beside it.",
-    "5 card pictures at 108×100 art pixels: Frosted Mint, Ember Basil, Crystal Sage, Thunder Rosemary and Sunspun "
-    "Hemp in Full Bloom.",
-    FLAG_P6,
-    "Five hero plants for collectible cards in a cozy pixel-art farming game, in two rows, three on top and two "
-    "below, centred, " + GRID + ". Each is one whole herb plant growing in its own planter, seen from the front and "
-    "slightly above, like the attached plants. SIZE: each plant with its planter is about 94 big square pixels tall "
-    "and at most 96 wide; the plant fills the upper two thirds and the planter the lower third.\n\n"
-    "Each is an Exotic plant from the attached pictures in FULL BLOOM: the same plant, colours and planter, but fuller "
-    "and grander, and its planter is now gilded, with a thick gold rim, small gold feet and a band of " + MYTHIC +
-    " around its middle. Each keeps the emblem on its planter.\n\n"
-    "Row 1:\n"
-    "1. The frosty teal mint with snow on its planter, now crowned with tall spikes of tiny white and pale teal "
-    "flowers, with small icicles hanging from the planter rim.\n"
-    "2. The fiery orange-red basil in the lava-cracked planter, its leaves fuller, now crowned with tall spikes of "
-    "small gold and rose flowers. No flames.\n"
-    "3. The sage with shimmering teal and pink leaves in the faceted crystal planter, now with tall spikes of violet "
-    "sage flowers tipped with small crystal points.\n\n"
-    "Row 2:\n"
-    "4. The rosemary in the storm-cloud planter with the lightning bolt, taller and bushier and covered in small "
-    "violet flowers. No lightning in the air.\n"
-    "5. The golden hemp from the hemp card: now five tall slim golden-green canes instead of three, wound together "
-    "with a spiral of shining golden thread and a second spiral ribbon in " + MYTHIC + ", in the golden planter with "
-    "the sun on it. No flowers on the hemp.\n\n" + NO_FX,
-    hemp='plant', ref=MYTHIC_REF,
-    extra="With this prompt also attach `ref_sunspun_hemp_card.png` (in the reference zip), your Sunspun Hemp card "
-          "as it looks in the game.")
 
 ROUNDS = [
     (1, "Workers of Loomington floors 1 to 4", "B", [1, 2, 3, 4], "Needed first: the player's first hour in Loomington"),
@@ -624,10 +631,10 @@ ROUNDS = [
     (3, "The Loomington managers, Baron Fauxliage and the crowning", "B", [9, 10, 11, 12, 13],
      "Managers needed first: each arrives when their floor opens"),
     (4, "Weekend events", "A", [14, 15], "Needed by player level 12 (about day 1)"),
-    (5, "The Mythic and Godly kit", "D", [16, 17, 18], "Needed late: the first Mythic is around day 25"),
-    (6, "The Mythic plants", "C", [19], "Needed late, with round 5"),
+    (5, "The five new top rarities: Mythic, Godly, Ungodly, Holy, Grailed", "D", [16, 17, 18, 19],
+     "Needed for the reveal ladder; the top tiers come late in play"),
 ]
-EXTRA_ROUNDS = {1, 2, 3, 4, 5, 6}
+EXTRA_ROUNDS = {1, 2, 3, 4, 5}
 SETS = {
     "A": ("Scenes", ["B4_floor04_garden_shed_nursery_v2.png", "B4_floor_frame_shell.png"]),
     "B": ("People", ["B22_character_animation_sheet.png", "B21_manager_lineup_2.png"]),
@@ -653,8 +660,10 @@ FIX = [
      "Redo with the same characters and poses, drawn smaller: about 64 big square pixels tall from the feet to the top of the head, hats included, with lots of empty space around each one."),
     ("Managers, the Baron or the Mayor are drawn too big",
      "Redo with the same characters and poses, drawn smaller: about 76 big square pixels tall from the feet to the top of the head, hats included, with lots of empty space around each one."),
-    ("Plants on the cards are drawn too big",
-     "Redo with the same plants, drawn smaller: each plant with its planter about 94 big square pixels tall and at most 96 wide."),
+    ("A card frame or badge is drawn the wrong size",
+     "Redo the same pieces at the size given: each card frame exactly 180 big square pixels wide and 240 tall, each badge inside 44 by 44."),
+    ("A cross, halo, wings or other religious sign appears",
+     "Same piece with that sign removed and nothing in its place except the ornament the description names."),
     ("Something is held to a face, or steam or smoke appears",
      "Same pose, but keep every item at chest height or lower, away from the face, and remove all steam, smoke and mist."),
     ("A leaf appears on the Hemp Harvest Home emblem or in the stalk garland",
@@ -678,31 +687,36 @@ FIX = [
 if __name__ == '__main__':
     L = []
     w = L.append
-    w("# Production Asset Batch 4: Loomington cast, managers, events, Mythic and Godly")
+    w("# Production Asset Batch 4: Loomington cast, managers, events and the top rarities")
     w("")
-    w("Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **1**. Style suffix version: **v1**. Hemp guards "
+    w("Part of the [Style Bible](STYLE_BIBLE.md). Batch revision: **2**. Style suffix version: **v1**. Hemp guards "
       "version: **v1**. Written by `tools/build_asset_batch_04.py`, which copies the suffix and guards word for word "
       "from section 21 of the bible. Never edit this file by hand.")
     w("")
     w(f"**{len(P)} images in {len(ROUNDS)} rounds.** They bring Loomington to life: moving sheets for the sixteen "
-      "workers of its eight rooms, its eight managers, Baron Fauxliage and the weekend events. Then comes the kit for "
-      "the two new top rarities, Mythic and Godly: two card frames, two badges and bursts, the crown, the Full Bloom "
-      "bud, the Mythic forms of five Exotics and Mayor Thyme crowning a Head.")
+      "workers of its eight rooms, its eight managers, Baron Fauxliage, Mayor Thyme crowning a Head and the weekend "
+      "events. Then come the frames, badges and bursts of the five new top rarities, Mythic, Godly, Ungodly, Holy and "
+      "Grailed, and the crown a Godly Head wears.")
+    w("")
+    w("**Revision 2** (2026-11-28): Lawson set an eleven-rarity ladder: Common, Uncommon, Rare, Epic, Legendary, "
+      "Mythic, Exotic, Godly, Ungodly, Holy, Grailed. Images 1 to 15 are unchanged. Images 16 to 19 are new: they "
+      "replace revision 1's Mythic and Godly kit, its Full Bloom bud (held until design 0.5 says where a card's rise "
+      "to a new tier is shown) and its Mythic plant forms (dropped, because Mythic now sits below Exotic).")
     w("")
     w("Every sheet carries two workers, as in Batch 2, so the plan's separate \"second worker\" sheets are no longer "
       "needed. **Every image now says its size in art pixels** (\"big square pixels\"): in Batches 2 and 3, sheets "
       "that did not say it came back with people up to 40% too big and cards up to four times too big.")
     w("")
-    w("Names follow the game design document (version 0.4); Mythic and Godly follow the Game Designer's call of "
-      "2026-11-27 (version 0.5). Each prompt describes a look, not a name, so a rename does not spoil an image.")
+    w("Names follow the game design document (version 0.4); the rarities follow Lawson's ladder of 2026-11-28 "
+      "(version 0.5). Each prompt describes a look, not a name, so a rename does not spoil an image.")
     w("")
     w("## How to do it on your phone")
     w("")
     w("The easiest way is the **master files**. ChatGPT takes at most 20 attachments, so the batch comes in two parts. "
       "Part 1 is images 1 to 13 (the people): attach `Sprout_Tower_Batch4_Part1_Master.md` and the 12 pictures in "
       "`Sprout_Tower_Batch4_Part1_References.zip` to one new ChatGPT chat and type **next** between images. Part 2 is "
-      "images 14 to 19 (events and the Mythic and Godly kit): the same with `Sprout_Tower_Batch4_Part2_Master.md` and "
-      "the 11 pictures in `Sprout_Tower_Batch4_Part2_References.zip`, in a second new chat. All four files are in the "
+      "images 14 to 19 (events and the top rarities): the same with `Sprout_Tower_Batch4_Part2_Master.md` and "
+      "the 8 pictures in `Sprout_Tower_Batch4_Part2_References.zip`, in a second new chat. All four files are in the "
       "project files, `art/batch04/master/`. If a chat gets full, start a new one with the same files and type "
       "**start at image N**. Every picture is named for the images it belongs to (`img05_...` is for image 5, "
       "`img01-13_...` for images 1 to 13). The rounds below are the same images, one prompt at a time, if you prefer "
