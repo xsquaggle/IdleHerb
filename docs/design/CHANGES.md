@@ -119,14 +119,35 @@ The fresh-eyes audit of C.7 (the review on PR #11) passed all four calls and cor
 
 ### C.11 Record notes: the late Festival gaps and the Head crowning
 
-The simulator's Head crowning check (PR #14) and the audit's fix to its report (PR #15) read the 90-day runs of version 0.4 for the first time. No number changes. These notes record what they found and the Game Designer's calls of 2026-11-28.
+These sources read 90-day runs of version 0.4 for the first time: the simulator's Head crowning check (PR #14), the audit's fix to its report (PR #15) and the audit of this section (the review on PR #16). The runs cover six worlds and the four-world launch build. No number changes. These notes record what the runs found and the Game Designer's calls of 2026-11-28.
 
-1. **What 0.4 does alone after day 56.** The eight long research projects are done by about day 56 to 60. After that, the 90-day runs have Festival gaps above the 10-day limit: for the active player, 11.0 days from day 56.6 and 12.6 from day 67.6, and for the mixed player, 15.5 days from day 71.7. The 60-day runs that GDD 17.6 quotes end before these.
-2. **The Head crowning holds the limit from about day 67.** The crownings come on days 67.6 and 72.4 for the active player and 71.7 and 81.4 for the mixed player. Every Festival before the first crowning falls on the same day as without it, so GDD 17.5 is untouched. After it, the gaps are 4.8 and 8.2 days (active) and 9.7 and 8.3 (mixed).
-3. **The whole step is needed.** With profit ×1.5 alone, the gap after the second crowning is still open at 12.9 days on day 90. Profit with the crest and no perk step gives 10.0. The crest and perk with no profit step give 11.2. The whole step gives 8.2. If the step ever has to shrink, keep the crest and the perk.
-4. **The crowning ships with Tier Up in v1.0 and never later** (ROADMAP 3, Phase 2b step 6). Any change to its timing, its step or its crest reruns the 90-day check.
-5. **The active player's 11.0-day gap from day 56.6 is accepted.** It is one day over the limit, and the crowning cannot shorten it, because the first crowning comes at the Festival that closes it. Crowning at the 10th star itself would shorten it but was not taken. It would either give the power before its reveal (EXPANSION 3.1, rule 8) or move a Godly scene off the Festival that GDD 14.5 and the art plan give it, to win about a day for one play style. The simulator's scratch test of it confirms the trade is poor: the 11.0-day gap becomes 8.5, but the active player's last gap is then still open at 11.5 days on day 90, where crowning at the Festival leaves 9.4. By day 57 a launch player has had v1.1 for about four weeks, and New Generation reshapes everything after day 30.
-6. **From about day 80 the rhythm rests on v1.1.** Each world's crowning is one lift. After the last one, the active player's gap is 9.4 days and still open on day 90. So the launch game alone keeps the rhythm to about day 80, and v1.1's date (about four weeks after launch) stays the one hard date in ROADMAP. GDD 17.6, point 4, now says so.
+1. **What 0.4 does late in the game.** The eight long research projects finish around day 60, as GDD 17.5 says: the last one, Training Day IV, lands on day 60.2 for the active player and day 63.1 for the mixed player. After that, the 90-day runs have Festival gaps above the 10-day limit:
+
+   | 90-day run | Design 0.4 alone | With the Head crowning | Heads crowned |
+   |---|---|---|---|
+   | Four worlds (v1.0), active | 11.0 days from day 67.4; 11.6 from day 78.4, still open | none | all four on day 67.4 |
+   | Four worlds (v1.0), mixed | 10.5 from day 48.6; 12.1 from day 68.3 | the same two | all four on day 80.4 |
+   | Four worlds (v1.0), idle | 10.6 from day 78.7 | none | days 78.7 and 85.5 |
+   | Six worlds, active | 11.0 from day 56.6; 12.6 from day 67.6 | 11.0 from day 56.6 | days 67.6 and 72.4 |
+   | Six worlds, mixed | 15.5 from day 71.7 | none | days 71.7 and 81.4 |
+   | Six worlds, idle | 11.2 from day 71.2 | 12.8 from day 77.2, still open on day 90 | days 71.2 and 77.2 (Worlds 1 to 4) |
+
+   The 60-day runs that GDD 17.6 quotes end before most of these. The six-world runs describe a game that only exists with v1.3, which also brings New Generation and Big Bloom. EXPANSION 15.2, item 5, checks them again with those layers.
+2. **The crowning holds the limit for the launch build's active and idle players.** With it, neither player has a gap above 10 days up to day 90 in the four-world build. Every Festival before the first crowning falls on the same day as without it, so GDD 17.5 is untouched. The four-world mixed player's 10th stars land on days 73 to 80, so its Heads are crowned on day 80.4, after both of its long gaps.
+3. **The crest matters most, then the profit step.** In the six-world active run, the gap after the second crowning was measured with parts of the step removed:
+   - With profit ×1.5 only and no crest, it is still open at 12.9 days on day 90.
+   - With profit and the crest but no perk step, it is 10.0.
+   - With the crest and the perk but no profit step, it is 11.2.
+   - With the whole step, it is 8.2.
+
+   If the step ever has to shrink, keep the crest, and cut the perk step before the profit step.
+4. **The crowning ships with Tier Up in v1.0 and never later** (ROADMAP 3, Phase 2b step 6). Any change to its timing, its step or its crest means rerunning the 90-day checks with four worlds and with six. The audit asked the simulator to add the four-world 90-day runs to its suite and report.
+5. **The gaps that are left are accepted.** They are the four-world mixed player's 10.5 days from day 48.6 and 12.1 from day 68.3, the six-world active player's 11.0 days from day 56.6, and the six-world idle player's 12.8 days from day 77.2. The crowning cannot shorten the first three:
+   - The mixed player's Heads are crowned after both of its gaps.
+   - The 11.0-day gap ends at the Festival where the first Heads are crowned.
+
+   Crowning at the 10th star itself was tested and not taken. It would either give the power before its reveal (EXPANSION 3.1, rule 8) or move the Godly scene off the Festival that GDD 14.5 gives it. In the simulator's test, the 11.0-day gap became 8.5, but all six lifts were spent by day 67. The active player's last gap was then still open at 11.5 days on day 90, where crowning at the Festival leaves 9.4. Every accepted gap starts on day 48 or later. A launch player has had v1.1 for about three weeks by day 48 (ROADMAP 2), and New Generation reshapes everything after day 30.
+6. **From about day 48 the rhythm leans on v1.1.** On its own, the launch game keeps every play style's gaps under 10 days to about day 48. With the crowning, the active and idle players stay under 10 to day 90. v1.1's date, about four weeks after launch, therefore stays the one hard date in ROADMAP, and it matters more than the first draft of this section said. GDD 17.6, point 4, and ROADMAP 2 now say so. For the record, in the six-world active run the last crowning (day 72.4) is followed by a closed gap of 8.2 days, and then by one of 9.4 days still open on day 90.
 7. **Two wording notes from the second audit of PR #11.** The deep pity aims by default at the deepest open depth within the pickaxe's reach (EXPANSION 6.5). C.9 now gives proposal p7's path.
 
 ## Version 0.4: the balance simulator's numbers
