@@ -16,7 +16,8 @@ export type Command =
   | { type: 'buyTicket'; world: number }
   | { type: 'focus'; world: number }
   // Tapping and visitors
-  | { type: 'tap'; count: number }
+  /** `floor`: the floor the tap landed on, if any. It harvests that floor when it is ready (GDD 6.1). */
+  | { type: 'tap'; count: number; floor?: number }
   | { type: 'startSpurt' }
   | { type: 'catchVisitor'; index: number }
   | { type: 'useAbility'; id: string; world?: number }
@@ -76,6 +77,8 @@ export type GameEvent = { t: number } & (
   | { type: 'offline'; seconds: number; paidSeconds: number; earned: Num[] }
   | { type: 'fairStep'; step: number }
   | { type: 'sunrise'; world: number; caught: boolean }
+  /** One counted tap, rolled on its own (only with `GameOptions.rollTaps`): what it paid and whether it was a Bumper. */
+  | { type: 'tapped'; world: number; amount: Num; bumper: boolean; harvested: number; combo: number }
 );
 
 export type GameEventOf<T extends GameEvent['type']> = Extract<GameEvent, { type: T }>;

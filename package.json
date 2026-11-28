@@ -3,13 +3,18 @@
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.28.0",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
-    "check": "tsc --noEmit -p tsconfig.json",
+    "check": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p packages/game/tsconfig.json",
     "test": "vitest run",
     "content:build": "tsx packages/content/src/cli.ts",
     "content:floors": "tsx packages/content/tables/floors/generate.ts",
-    "sim": "tsx apps/sim/src/cli.ts"
+    "sim": "tsx apps/sim/src/cli.ts",
+    "content:bundle": "tsx packages/content/src/bundle.ts",
+    "dev": "pnpm content:bundle && pnpm --filter @sprout/game dev",
+    "build:web": "pnpm content:bundle && pnpm --filter @sprout/game build"
   },
   "devDependencies": {
     "@types/node": "22.10.2",

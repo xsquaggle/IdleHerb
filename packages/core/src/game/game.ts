@@ -14,7 +14,7 @@
  */
 import { Num, assertFinite } from '../kernel/num/num';
 import { bulkCost, maxAffordable } from '../kernel/formulas/geometric';
-import { nextRange, pickWeighted, seedRng } from '../kernel/rng/rng';
+import { nextFloat, nextRange, pickWeighted, seedRng } from '../kernel/rng/rng';
 import type { Content, FloorDef, ManagerDef, PlantDef } from '../content/content';
 import { RARITY_ORDER } from '../content/content';
 import type { Ability, ChestRow, Condition, Effect, PoolQuestRow, Reward, Tuning } from '../content/schema';
@@ -54,6 +54,12 @@ export interface GameOptions {
   debug?: boolean;
   /** Continue from a saved state instead of starting a new game. */
   state?: GameState;
+  /**
+   * The game client sets this: each single tap rolls its own Bumper from a seeded stream and
+   * announces itself with a `tapped` event, so the screen can show the x10. The simulator leaves
+   * it off and pays tap batches at the average Bumper factor (see the note at the top).
+   */
+  rollTaps?: boolean;
 }
 
 export interface FloorInfo {
@@ -187,6 +193,7 @@ export class Game {
 
   private readonly maxWorld: number;
   private readonly debug: boolean;
+  private readonly rollTaps: boolean;
   private listeners: ((e: GameEvent) => void)[] = [];
   private derivedCache: Derived | null = null;
   private caches: WorldCache[];
@@ -202,6 +209,7 @@ export class Game {
     this.t = opts.content.tuning;
     this.maxWorld = Math.min(opts.maxWorld ?? opts.content.worlds.length, opts.content.worlds.length);
     this.debug = opts.debug ?? false;
+    this.rollTaps = opts.rollTaps ?? false;
     this.state = opts.state ?? newGameState(opts.content, opts.seed, opts.clockOffsetSec);
     this.caches = this.state.worlds.map((w) => ({
       dirty: true,
@@ -1050,7 +1058,7 @@ export class Game {
       case 'plant': return this.plant(cmd.world, cmd.floor, cmd.plants);
       case 'buyTicket': return this.buyTicket(cmd.world);
       case 'focus': return this.setFocus(cmd.world);
-      case 'tap': return this.tap(cmd.count);
+      case 'tap': return this.tap(cmd.count, cmd.floor);
       case 'startSpurt': return this.startSpurt(false);
       case 'catchVisitor': return this.catchVisitor(cmd.index);
       case 'useAbility': return this.useAbility(cmd.id, cmd.world);
@@ -1381,7 +1389,7 @@ export class Game {
    * The caller keeps to TAP_RATE_CAP; fractions are allowed so a tick of any
    * length can carry its share of a tapping rate.
    */
-  private tap(count: number): boolean {
+  private tap(count: number, floor?: number): boolean {
     if (!(count > 0)) return false;
     const s = this.state;
     const t = this.t;
@@ -1389,14 +1397,28 @@ export class Game {
     const ws = s.worlds[w]!;
     const d = this.derived;
     const wd = d.worlds[w]!;
+    const single = this.rollTaps && count === 1;
+    const coinsBefore = single ? ws.coins : Num.ZERO;
     this.count('taps', count);
     if (this.content.worlds[w]!.twist === 'heat') ws.heat = Math.min(t.HEAT_MAX, ws.heat + t.HEAT_PER_TAP * count);
     // A tap harvests the unmanaged floor that has been waiting, one floor per tap (GDD 6.1).
+    // A tap on a floor that is ready harvests that floor; anywhere else, the first one waiting.
+    let harvested = -1;
     s.tapHarvestCredit = Math.min(s.tapHarvestCredit + count, Math.max(1, count));
-    for (let i = 0; i < ws.floors.length && s.tapHarvestCredit >= 1; i++) {
-      if (ws.floors[i]!.ready && this.harvest(w, i)) s.tapHarvestCredit -= 1;
+    if (floor !== undefined && s.tapHarvestCredit >= 1 && ws.floors[floor]?.ready && this.harvest(w, floor)) {
+      s.tapHarvestCredit -= 1;
+      harvested = floor;
     }
-    if (s.unlocked['feature.tap_bonus'] === undefined) return true;
+    for (let i = 0; i < ws.floors.length && s.tapHarvestCredit >= 1; i++) {
+      if (ws.floors[i]!.ready && this.harvest(w, i)) {
+        s.tapHarvestCredit -= 1;
+        if (harvested < 0) harvested = i;
+      }
+    }
+    if (s.unlocked['feature.tap_bonus'] === undefined) {
+      if (single) this.emit({ type: 'tapped', world: w, amount: ws.coins.sub(coinsBefore), bumper: false, harvested, combo: 0 });
+      return true;
+    }
 
     const run = comboRun(s.combo, count, wd.comboCap, 1 / t.COMBO_TAPS_PER_STACK, t.COMBO_PER_STACK);
     s.combo = run.stacks;
@@ -1406,8 +1428,17 @@ export class Game {
     const sure = Math.min(s.guaranteedCrits, count);
     s.guaranteedCrits -= sure;
     const rolled = count - sure;
-    const bumpers = sure + (critOn ? rolled * wd.critChance : 0);
-    const critFactor = (sure * wd.critMult + rolled * (critOn ? expectedCrit(wd.critChance, wd.critMult) : 1)) / count;
+    let bumpers: number;
+    let critFactor: number;
+    if (single) {
+      if (!s.rng.taps) s.rng.taps = seedRng(s.seed, 'taps');
+      const hit = sure > 0 || (critOn && nextFloat(s.rng.taps) < wd.critChance);
+      bumpers = hit ? 1 : 0;
+      critFactor = hit ? wd.critMult : 1;
+    } else {
+      bumpers = sure + (critOn ? rolled * wd.critChance : 0);
+      critFactor = (sure * wd.critMult + rolled * (critOn ? expectedCrit(wd.critChance, wd.critMult) : 1)) / count;
+    }
     // tapBoost: the world's Boost plus tap-only boosts, under the same cap (GDD 13.5).
     let tapBoost = this.boost(w, -1, true);
     if (s.tapBoostTaps > 0) {
@@ -1418,6 +1449,7 @@ export class Game {
     const value = t.TAP_SECONDS * wd.tapPower * run.multSum * critFactor * this.spurtMult(w) * tapBoost;
     this.earn(w, this.steadyIps(w).mul(value), 'taps');
     if (bumpers > 0) this.count('bumpers', bumpers);
+    if (single) this.emit({ type: 'tapped', world: w, amount: ws.coins.sub(coinsBefore), bumper: bumpers > 0, harvested, combo: s.combo });
 
     const spurt = this.spurtActive(w);
     if (spurt) {

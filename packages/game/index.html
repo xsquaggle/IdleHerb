@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#1A1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>Sprout Tower</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #1A1024; overflow: hidden; touch-action: none;
+        -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+      #stage { position: fixed; inset: 0; }
+      canvas { position: absolute; image-rendering: pixelated; image-rendering: crisp-edges; }
+      #boot { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #F6DDB0;
+        font: 14px/1.4 system-ui, sans-serif; text-align: center; padding: 24px; }
+    </style>
+  </head>
+  <body>
+    <div id="stage"></div>
+    <div id="boot">Sprouting…</div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

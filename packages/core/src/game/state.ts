@@ -150,7 +150,8 @@ export interface GameState {
   /** Seconds between a local Monday 00:00 and game time 0. Day and week numbers come from it. */
   clockOffset: number;
   seed: number;
-  rng: { loot: RngState; events: RngState; quests: RngState };
+  /** `taps` exists once the client has rolled a single tap (GameOptions.rollTaps). */
+  rng: { loot: RngState; events: RngState; quests: RngState; taps?: RngState };
 
   worlds: WorldState[];
   /** The world on screen: taps, Combo, Spurts and visitors belong to it. */
