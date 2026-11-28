@@ -161,6 +161,11 @@ AUTO_BUY_SHARE: 0.10
 # --- World Mastery (GDD 14.5) ---
 MASTERY_PCT: 0.10
 MASTERY_EXOTIC_STARS: [5, 7, 9, 10]
+# Design 0.5 (draft, GDD 14.5 and EXPANSION 2.2, 3.1 rule 6): at the Festival after a world's 10th star its Head
+# is crowned Godly, with this many Tier Up steps and the Crown crest. 0 in design 0.4; the simulator's c4-head-crowning sets 1.
+HEAD_CROWN_TIERUPS: 0
+TIERUP_STEP: 1.5                      # manager profit x this per Tier Up step
+TIERUP_PERK_STEP: 0.25                # perk x (1 + this) per Tier Up step
 
 # --- World twists (GDD 14.4) ---
 CUSTOMER_INTERVAL: 20

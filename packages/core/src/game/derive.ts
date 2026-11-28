@@ -165,6 +165,14 @@ interface PlantPower {
 }
 
 /** Recomputes every derived stat from the state. Called when something that grants a bonus changes. */
+/** Tier Up steps of a world's Head from the crowning (design 0.5, GDD 14.5). 0 until crowned. */
+function crownSteps(ws: GameState['worlds'][number], t: Content['tuning']): number {
+  return ws.crowned ? t.HEAD_CROWN_TIERUPS : 0;
+}
+
+/** The Crown crest's reach (EXPANSION 2.3): one step further. */
+const CROWN_REACH: Record<string, Effect['scope']> = { floor: 'adjacent', adjacent: 'world', world: 'global', global: 'global' };
+
 export function computeDerived(state: GameState, content: Content, eventBonus: Effect | null): Derived {
   const t = content.tuning;
   const global: AccMap = {};
@@ -257,12 +265,16 @@ export function computeDerived(state: GameState, content: Content, eventBonus: E
       const lv = managerLevel[w]![i]!;
       if (lv <= 0) return;
       const def: ManagerDef = floorDefs[i]!.manager;
-      const scope = def.perk.scope ?? 'global';
+      // A crowned Head (design 0.5): its perk grows by TIERUP_PERK_STEP a step, and the Crown crest
+      // makes it reach one step further: floor to adjacent, adjacent to world, world to every world.
+      const steps = i === top ? crownSteps(ws, t) : 0;
+      const perk = steps > 0 ? { ...def.perk, scope: CROWN_REACH[def.perk.scope ?? 'global'] } : def.perk;
+      const scope = perk.scope ?? 'global';
       if (scope === 'global') {
         if (globalPerkSeen.has(def.id)) return;
         globalPerkSeen.add(def.id);
       }
-      put(def.perk, perkValue(def.perk.value, lv, t), 'floor', w, i);
+      put(perk, perkValue(perk.value, lv, t) * (1 + t.TIERUP_PERK_STEP * steps), 'floor', w, i);
     });
   });
   if (starPupil) acc(global, 'manager.cooldown').put('add', starPupil.cooldownReduction ?? 0, 'skill');
@@ -377,7 +389,8 @@ export function computeDerived(state: GameState, content: Content, eventBonus: E
       parts.mastery = mastery;
       const profit = bucketProduct(...P) * achievements * codex * mastery;
       const lv = managerLevel[w]![i]!;
-      const manager = lv > 0 ? managerProfit(content.worlds[w]!.floors[i]!.manager.rarity, lv, managerPower, t) : 1;
+      const crown = i === ws.floors.length - 1 ? t.TIERUP_STEP ** crownSteps(ws, t) : 1;
+      const manager = lv > 0 ? managerProfit(content.worlds[w]!.floors[i]!.manager.rarity, lv, managerPower, t) * crown : 1;
       const S: (Acc | undefined)[] = [global['floor.speed'], wa['floor.speed'], fa['floor.speed']];
       const C: (Acc | undefined)[] = [global['floor.levelCost'], wa['floor.levelCost'], fa['floor.levelCost']];
       const floorDiscount = Math.max(-t.FLOOR_DISCOUNT_CAP, incOf('floor', ...C));

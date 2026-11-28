@@ -29,7 +29,7 @@ export interface RunOptions {
 export interface TimelineEvent {
   t: number;
   play: number;
-  kind: 'unlock' | 'floor' | 'world' | 'replant' | 'festival' | 'level' | 'star' | 'story' | 'research' | 'bench' | 'heirloom' | 'fair' | 'hire';
+  kind: 'unlock' | 'floor' | 'world' | 'replant' | 'festival' | 'level' | 'star' | 'story' | 'research' | 'bench' | 'heirloom' | 'fair' | 'hire' | 'crown';
   id: string;
   world?: number;
   n?: number;
@@ -255,6 +255,10 @@ class Recorder {
         break;
       case 'fairStep':
         this.add({ kind: 'fair', id: `fair.step.${e.step}`, n: e.step });
+        break;
+      case 'crowned':
+        // Recorded without a reward beat, so the beat measures stay comparable with runs before the crowning.
+        this.timeline.push({ t: s.time, play: s.playTime, kind: 'crown', id: `crown.w${e.world + 1}`, world: e.world });
         break;
       case 'hire':
         if ((this.counts.hires ?? 0) === 0) this.add({ kind: 'hire', id: 'first_hire', world: e.world, n: e.floor + 1 });

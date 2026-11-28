@@ -1,0 +1,10 @@
+id: c4-head-crowning
+title: The Head crowning of design 0.5 (CHANGES C.4)
+why: >
+  Design 0.5 (GDD 14.5, EXPANSION 2.2, 2.3 and 3.1 rule 6): at the Harvest Festival after a world's
+  10th Mastery star, its Head is crowned Godly. That is one Tier Up step (manager profit x1.5, perk
+  x1.25) and the Crown crest (the perk reaches one step further, so a Head's world perk works in
+  every world). The check the designer asked for: the crowning, around day 58 to 68, must not move
+  the Festival rhythm of GDD 17.5.
+tuning:
+  HEAD_CROWN_TIERUPS: 1

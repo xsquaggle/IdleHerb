@@ -70,6 +70,7 @@ export type GameEvent = { t: number } & (
   | { type: 'quest'; kind: 'daily' | 'weekly' | 'chapter'; id: string }
   | { type: 'achievement'; id: string; tier: number }
   | { type: 'star'; world: number; stars: number }
+  | { type: 'crowned'; world: number }
   | { type: 'researchDone'; id: string }
   | { type: 'benchDone'; id: string }
   | { type: 'visitor'; kind: VisitorKind }

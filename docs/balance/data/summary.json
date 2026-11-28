@@ -9,7 +9,7 @@
    "days": 60,
    "maxWorld": 6,
    "rules": "design-0.4",
-   "seconds": 132.35
+   "seconds": 125.014
   },
   "gates": {
    "topFloor": 1203,
@@ -48,7 +48,7 @@
    "days": 60,
    "maxWorld": 6,
    "rules": "design-0.4",
-   "seconds": 43.215
+   "seconds": 39.964
   },
   "gates": {
    "topFloor": 1555,
@@ -87,7 +87,7 @@
    "days": 60,
    "maxWorld": 6,
    "rules": "design-0.4",
-   "seconds": 15.147
+   "seconds": 15.328
   },
   "gates": {
    "topFloor": 39230,
@@ -126,7 +126,7 @@
    "days": 90,
    "maxWorld": 6,
    "rules": "design-0.4",
-   "seconds": 210.234
+   "seconds": 183.933
   },
   "gates": {
    "topFloor": 1203,
@@ -165,7 +165,7 @@
    "days": 90,
    "maxWorld": 6,
    "rules": "design-0.4",
-   "seconds": 68.596
+   "seconds": 62.501
   },
   "gates": {
    "topFloor": 1555,
@@ -204,7 +204,7 @@
    "days": 60,
    "maxWorld": 4,
    "rules": "design-0.4",
-   "seconds": 112.536
+   "seconds": 101.622
   },
   "gates": {
    "topFloor": 1203,
@@ -243,7 +243,7 @@
    "days": 60,
    "maxWorld": 4,
    "rules": "design-0.4",
-   "seconds": 13.712
+   "seconds": 13.948
   },
   "gates": {
    "topFloor": 39230,

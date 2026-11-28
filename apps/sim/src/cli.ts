@@ -21,7 +21,7 @@
  *
  * Options for `suite` and the default command:
  *   --proposal id[,id]            also run the before-and-after set with these overlays
- *   --only group[,group]          baseline, check, seeds, ablation, burst, proposal, launch
+ *   --only group[,group]          baseline, check, seeds, ablation, burst, proposal, launch, next (design 0.5 checks)
  *   --jobs N                      parallel runs (default: the machine's processors)
  */
 import { spawn } from 'node:child_process';
