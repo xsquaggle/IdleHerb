@@ -170,3 +170,29 @@ describe('the fair stall (GDD 15.3)', () => {
     expect(skilled.global.fairTap.tapPower).toBeCloseTo(1.2, 9);
   });
 });
+
+describe('the Head crowning (design 0.5 draft, GDD 14.5)', () => {
+  const crowning = loadContent({ overlays: [{ id: 'crown', tuning: { HEAD_CROWN_TIERUPS: 1 } }] });
+  const base = played(50).state;
+
+  it('gives a crowned Head one Tier Up step and the Crown crest', () => {
+    const state = deserializeState(serializeState(base));
+    const top = state.worlds[0]!.floors.length - 1;
+    expect(state.worlds[0]!.floors[top]!.hired).toBe(true);
+    const before = computeDerived(state, crowning, null);
+    state.worlds[0]!.crowned = true;
+    const after = computeDerived(state, crowning, null);
+    // Manager profit x1.5 on the Head's floor (TIERUP_STEP).
+    expect(after.worlds[0]!.floors[top]!.manager / before.worlds[0]!.floors[top]!.manager).toBeCloseTo(1.5, 9);
+    // Granny Evergreen's perk (tower milestone step, world) grows by a quarter and reaches every world.
+    expect(after.worlds[1]!.towerMult).toBeGreaterThan(before.worlds[1]!.towerMult);
+    expect(after.worlds[0]!.towerMult - crowning.tuning.TOWER_MILESTONE_MULT).toBeCloseTo((before.worlds[0]!.towerMult - crowning.tuning.TOWER_MILESTONE_MULT) * 1.25, 9);
+  });
+
+  it('does nothing in design 0.4 (HEAD_CROWN_TIERUPS 0)', () => {
+    const state = deserializeState(serializeState(base));
+    const before = computeDerived(state, content, null);
+    state.worlds[0]!.crowned = true;
+    expect(JSON.stringify(computeDerived(state, content, null).worlds)).toBe(JSON.stringify(before.worlds));
+  });
+});

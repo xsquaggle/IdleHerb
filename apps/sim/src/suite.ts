@@ -15,7 +15,7 @@ export interface RunSpec {
   proposals?: string[];
   burst?: boolean;
   off?: string[];
-  group: 'baseline' | 'check' | 'seeds' | 'ablation' | 'burst' | 'proposal' | 'launch';
+  group: 'baseline' | 'check' | 'seeds' | 'ablation' | 'burst' | 'proposal' | 'launch' | 'next';
 }
 
 export const SYSTEMS = ['skills', 'cardLevels', 'plants', 'heirlooms', 'abilities', 'visitors', 'research', 'shopExtras', 'spurt'] as const;
@@ -46,6 +46,9 @@ export function suite(proposal: string | null): RunSpec[] {
     // 90 days, for Mastery stars that land up to 65 days after a world opens, and the late research.
     { name: 'long-active', profile: 'active', days: 90, maxWorld: 6, group: 'baseline' },
     { name: 'long-mixed', profile: 'mixed', days: 90, maxWorld: 6, group: 'baseline' },
+    // Design 0.5 rules checked on top of the 0.4 tables before they are built (CHANGES C.4).
+    { name: 'crown-long-active', profile: 'active', days: 90, maxWorld: 6, proposals: ['c4-head-crowning'], group: 'next' },
+    { name: 'crown-long-mixed', profile: 'mixed', days: 90, maxWorld: 6, proposals: ['c4-head-crowning'], group: 'next' },
     // The launch build stops at world 4.
     { name: 'launch-active', profile: 'active', days: 60, maxWorld: 4, group: 'launch' },
     { name: 'launch-idle', profile: 'idle', days: 60, maxWorld: 4, group: 'launch' },

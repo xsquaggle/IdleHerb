@@ -790,6 +790,71 @@ function designerAsksSection(R: Runs): string {
   return out.join('\n');
 }
 
+/** Design 0.5 rules run on top of the 0.4 tables before they are built (EXPANSION 15.2, CHANGES C.4). */
+function nextChecksSection(R: Runs): string {
+  const pairs: [string, RunResult | null, RunResult | null][] = [
+    ['Active, 90 days', R.get('long-active'), R.get('crown-long-active')],
+    ['Mixed, 90 days', R.get('long-mixed'), R.get('crown-long-mixed')],
+  ];
+  if (pairs.every(([, , c]) => !c)) return '';
+  const out: string[] = ['## Design 0.5 checks', '', '### Head crowning (CHANGES C.4)', ''];
+  out.push('Design 0.5 (GDD 14.5, EXPANSION 2.2, 2.3 and 3.1 rule 6): at the Harvest Festival after a world\'s 10th Mastery star, its Head is crowned Godly. That gives the Head one Tier Up step (manager profit ×1.5, perk ×1.25) and the Crown crest, so its perk reaches one step further. Every Head\'s perk is a world perk, so a crowned Head\'s perk works in every world. The overlay `c4-head-crowning` switches it on (`HEAD_CROWN_TIERUPS` 1; it is 0 in the 0.4 tables). The check the designer asked for: the crowning must not move the Festival rhythm of GDD 17.5.');
+  out.push('');
+  const fest = (r: RunResult): number[] => r.timeline.filter((e) => e.kind === 'festival').map((e) => e.t / DAY);
+  const gapsFrom = (r: RunResult, from: number): { from: number; days: number }[] => {
+    const f = fest(r);
+    const g = f.slice(1).map((t, i) => ({ from: f[i]!, days: t - f[i]! })).filter((x) => x.from >= from - 0.01);
+    const last = f[f.length - 1];
+    if (last !== undefined && last >= from - 0.01) g.push({ from: last, days: r.meta.days - last });
+    return g;
+  };
+  const text = (gs: { from: number; days: number }[], days: number): string => gs.map((g, i) => `${g.days.toFixed(1)}${i === gs.length - 1 && g.from + g.days >= days - 0.01 ? ' (open)' : ''}`).join(', ') || '-';
+  const rows: string[][] = [];
+  const notes: string[] = [];
+  const facts: { first: number | null; same: boolean; baseMax: number; crownMin: number; crownMax: number }[] = [];
+  for (const [label, base, crown] of pairs) {
+    if (!base || !crown) continue;
+    const crowns = crown.timeline.filter((e) => e.kind === 'crown');
+    const first = crowns[0] ? crowns[0].t / DAY : null;
+    const byDay = new Map<string, number[]>();
+    for (const e of crowns) {
+      const k = (e.t / DAY).toFixed(1);
+      byDay.set(k, [...(byDay.get(k) ?? []), (e.world ?? 0) + 1]);
+    }
+    const when2 = [...byDay].map(([d, ws]) => `World${ws.length > 1 ? 's' : ''} ${ws.join(', ')} on day ${d}`).join('; ') || 'none';
+    const before = first === null ? fest(base) : fest(base).filter((t) => t < first);
+    const same = JSON.stringify(before) === JSON.stringify(first === null ? fest(crown) : fest(crown).filter((t) => t < first));
+    const gb = first === null ? [] : gapsFrom(base, first);
+    const gc = first === null ? [] : gapsFrom(crown, first);
+    rows.push([label, when2, same ? 'yes' : 'no', text(gb, base.meta.days), text(gc, crown.meta.days)]);
+    const closed = (gs: { from: number; days: number }[], days: number) => gs.filter((g) => g.from + g.days < days - 0.01);
+    const cb = closed(gb, base.meta.days);
+    const cc = closed(gc, crown.meta.days);
+    facts.push({ first, same, baseMax: Math.max(0, ...cb.map((g) => g.days)), crownMin: Math.min(Infinity, ...cc.map((g) => g.days)), crownMax: Math.max(0, ...cc.map((g) => g.days)) });
+    if (first !== null && cb.length && cc.length) {
+      notes.push(`${label.split(',')[0]} player: the first crowning is on day ${first.toFixed(1)}. After it, the closed gaps between Festivals are ${cb.map((g) => g.days.toFixed(1)).join(' and ')} days without the crowning and ${cc.map((g) => g.days.toFixed(1)).join(' and ')} with it`);
+    }
+  }
+  out.push(table(['Run', 'Heads crowned', 'Festivals the same up to the first crowning', 'Gaps from the first crowning (days), design 0.4', 'The same with the crowning'], rows));
+  out.push('');
+  if (notes.length) {
+    const firstDay = Math.min(...facts.map((f) => f.first ?? Infinity));
+    const untouched = facts.every((f) => f.same) && firstDay > 56;
+    const baseOver = facts.some((f) => f.baseMax > VERDICT.festivalGapDays);
+    const crownIn = facts.every((f) => f.crownMax <= VERDICT.festivalGapDays && f.crownMin >= 4);
+    const crownFaster = facts.every((f) => f.crownMax <= f.baseMax);
+    const parts = [`${notes.join('. ')}.`];
+    if (untouched) parts.push(`Weeks 2 to 8 of GDD 17.5 are untouched: the first crowning comes on day ${firstDay.toFixed(1)}, and every Festival before it is the same.`);
+    else parts.push('The crowning changes Festivals before week 9, so it does move the rhythm of GDD 17.5.');
+    if (crownFaster) parts.push('After it, the crowning makes Festivals come faster.');
+    if (baseOver) parts.push(`Without it, design 0.4's 90-day players have a gap above the ${VERDICT.festivalGapDays}-day limit after the late research is done.`);
+    if (crownIn) parts.push(`With it, every closed gap after the crowning is between 4 and ${VERDICT.festivalGapDays} days${baseOver ? ', so the crowning brings the late gaps back towards GDD 17.5\'s "every five to ten days"' : ''}.`);
+    out.push(parts.join(' '));
+  }
+  out.push('');
+  return out.join('\n');
+}
+
 function checkSection(R: Runs): string {
   const out: string[] = ['## Check against the designer\'s pacing script', ''];
   const bare = R.get('check-bare-perfect');
@@ -837,7 +902,6 @@ function openItemsSection(R: Runs): string {
   out.push(`- **Late research (design 0.4, CONTENT 6).** Festival gaps above 10 days after day 14: ${long.join(', ')}. The shortest gap after day 30 is ${shortest.join(', ')} days. When the eight late projects finish, active player (90-day run): ${lateDays(longA)}. Mixed player: ${lateDays(longM)}. How their costs, Living Soil I's place after Soil Science III and Living Soil's ×1.3 were chosen is in CHANGES.md part B (earlier trial runs of 2026-11-26).`);
   const share = longA ? compostShare(longA, 0, 30, longA.meta.days) : null;
   out.push(`- **The Auto-Gardener (CONTENT 8).** Every floor has a switch, and switches start on. The simulated player turns all of them off while a world ticket is close, so the coins can pile up, and on again once it is bought; it never turns single floors off. No world goes dead after a reset: Thymeford keeps climbing and gives ${share === null ? 'a large share' : `${Math.round(share * 100)}%`} of the active player's Compost after day 30.`);
-  out.push('- **`visitor.reward` (for the Game Designer).** CONTENT 0.2 calls it the "value of Golden Sprout outcomes", and Skipper Papaya, the Head of Papaya Cay, gives +100% of it in that world. The core applies it to Windfalls only (so in Papaya Cay a Windfall or a Jackpot pays double); Sunbeam and Tap Storm, the other two Golden Sprout outcomes, are timed boosts and stay as they are. Confirm that reading, or say what +100% should do to a boost (twice as long, for example).');
   const accepted = new Set(['active:Top floor of Thymeford', 'mixed:World 2']);
   const misses: string[] = [];
   for (const p of PROFILES) for (const c of checks(set[p], p)) if (!c.ok && !accepted.has(`${p}:${c.label}`)) misses.push(`${NAME[p].toLowerCase()} player's ${c.label} ${c.measured} against ${c.target} (${c.verdict})`);
@@ -861,14 +925,14 @@ __OPEN_ITEMS__
 
 ## Tests
 
-\`pnpm test\` runs 66 tests (Vitest and fast-check) in about 10 seconds:
+\`pnpm test\` runs 68 tests (Vitest and fast-check) in about 10 seconds:
 
 - **Big numbers.** Save text round-trips bit for bit at any size; multiply then divide keeps 15 significant digits; integers are exact to 15 digits and within one part in 1e15 past that; comparisons agree with logarithms; a 10,000-level cost curve and 1e(2e12) stay finite; NaN, infinity and junk text are refused.
 - **One formatter.** A golden table (1,234, 1.23M, 12.3M, 123M, 1.00Dc, 1.00Ce, 1.00e306, long names, scientific, engineering, durations, multipliers), and properties over a million random sizes: always three significant digits once abbreviated, holdings round down and prices round up, never more than one step in the third digit.
 - **Formulas.** Bulk buy equals buying one level at a time; max affordable buys the most the cash covers and no more; Compost and its inverse; Compost and Ribbons never fall as lifetime rises; Compost-record XP; shop prices.
 - **Chests.** One fixed manager per floor with the Head on top; manager cards only from managers already met and never a Head; the Starlight Head copy only for a Head with five stars; card counts and guarantees; Legendary pity draws a Legendary, and with no Legendary in the pool leaves the roll as it was; same seed, same chest.
 - **Content.** Tables validate; floor tables equal what the template generates; the tables hold design 0.4's numbers (gates, tickets, the late research at 808,900 Insight and 1,354 hours, the Ribbon Shop's fixed items at 3,600 Ribbons); every proposal overlay applies and validates; an overlay can add rows and give a world its own Mastery levels; a typo, a duplicate row or falling Mastery levels are errors.
-- **Under play.** A save reads back to the same state and carries on identically; ten one-second ticks equal one ten-second tick; offline pay is proportional to time away up to the cap and stops at the cap; a two-day active soak stays finite and inside the Boost cap. The Auto-Gardener (CONTENT 8): every switch starts on; floor 1 stays hired through a Replant with no fee and the world opens floors on its own; with a world's switches off, a Replanted world with no hired manager stands still; a floor whose switch is off is not levelled while the others are; a save from before the switches reads as every switch on; a switch for a world or floor that does not exist is refused.
+- **Under play.** A save reads back to the same state and carries on identically; ten one-second ticks equal one ten-second tick; offline pay is proportional to time away up to the cap and stops at the cap; a two-day active soak stays finite and inside the Boost cap. The Auto-Gardener (CONTENT 8): every switch starts on; floor 1 stays hired through a Replant with no fee and the world opens floors on its own; with a world's switches off, a Replanted world with no hired manager stands still; a floor whose switch is off is not levelled while the others are; a save from before the switches reads as every switch on; a switch for a world or floor that does not exist is refused. The fair stall uses tap skills and heirlooms, never cards. The Head crowning (design 0.5, off in 0.4) gives a crowned Head ×1.5 manager profit and a perk ×1.25 that reaches every world, and does nothing while \`HEAD_CROWN_TIERUPS\` is 0.
 
 One thing the tests found: the big-number library turns a NaN or infinite part into 0 without a word, so the core's NaN guard (\`assertFinite\`) could never fire for a broken formula. \`Num.fromParts\` now refuses non-finite parts. Division by zero still gives 0 in the library, so code that divides must check its divisor; a test pins that behaviour down so a library change cannot slip by.
 
@@ -1009,6 +1073,7 @@ export async function writeReport(): Promise<void> {
     longevitySection(R),
     worthSection(R),
     designerAsksSection(R),
+    nextChecksSection(R),
     checkSection(R),
     staticSections().replace('__OPEN_ITEMS__', openItemsSection(R)),
   ];

@@ -51,6 +51,8 @@ export interface WorldState {
   /** Best-ever lowest floor level (World Mastery). */
   bestMinLevel: number;
   stars: number;
+  /** Design 0.5: this world's Head has been crowned Godly (GDD 14.5). Never resets. Missing in older saves. */
+  crowned?: boolean;
   /** Highest level any floor in this world has ever reached, for milestone crates. */
   bestLevelEver: number;
   /** Best-ever "all floors at level 100 x n" chapter goal claimed. */

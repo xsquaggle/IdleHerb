@@ -2026,6 +2026,16 @@ export class Game {
     s.focus = 0;
     s.combo = 0;
     s.visitors = [];
+    // Design 0.5 (GDD 14.5): a world with its 10th star has its Head crowned at this Festival.
+    const crowned: number[] = [];
+    if (this.t.HEAD_CROWN_TIERUPS > 0) {
+      s.worlds.forEach((ws, w) => {
+        if (!ws.crowned && ws.stars >= this.content.worlds[w]!.mastery.length) {
+          ws.crowned = true;
+          crowned.push(w);
+        }
+      });
+    }
     s.worlds.forEach((ws, w) => {
       ws.lifetime = Num.ZERO;
       ws.claimed = Num.ZERO;
@@ -2045,6 +2055,7 @@ export class Game {
     });
     this.invalidate();
     this.emit({ type: 'festival', gained, ribbons: s.ribbonsClaimed, n: s.festivals });
+    for (const w of crowned) this.emit({ type: 'crowned', world: w });
     return true;
   }
 
