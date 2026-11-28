@@ -1,0 +1,48 @@
+{
+ "who": "Glass Greenhouse, lead: the botanist in the wheelchair",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "source": "b02_11_workers_floor05_greenhouse.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png"
+  },
+  {
+   "name": "roll_1",
+   "file": "04_roll_1_80x80.png"
+  },
+  {
+   "name": "roll_2",
+   "file": "05_roll_2_80x80.png"
+  },
+  {
+   "name": "roll_3",
+   "file": "06_roll_3_80x80.png"
+  },
+  {
+   "name": "inspect_flower",
+   "file": "07_inspect_flower_80x80.png"
+  },
+  {
+   "name": "write_notes",
+   "file": "08_write_notes_80x80.png"
+  },
+  {
+   "name": "roll_with_herbs",
+   "file": "09_roll_with_herbs_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}

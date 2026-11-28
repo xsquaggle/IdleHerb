@@ -1,0 +1,48 @@
+{
+ "who": "Ropewalk and Twine Shop, second: the twine winder",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "source": "b02_14_workers_floor08_ropewalk.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "cap_greeting",
+   "file": "03_cap_greeting_80x80.png"
+  },
+  {
+   "name": "walk_right_contact",
+   "file": "04_walk_right_contact_80x80.png"
+  },
+  {
+   "name": "walk_passing",
+   "file": "05_walk_passing_80x80.png"
+  },
+  {
+   "name": "walk_left_contact",
+   "file": "06_walk_left_contact_80x80.png"
+  },
+  {
+   "name": "wind_twine",
+   "file": "07_wind_twine_80x80.png"
+  },
+  {
+   "name": "present_twine",
+   "file": "08_present_twine_80x80.png"
+  },
+  {
+   "name": "carry_twine_basket",
+   "file": "09_carry_twine_basket_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}

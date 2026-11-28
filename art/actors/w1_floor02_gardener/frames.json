@@ -1,0 +1,114 @@
+{
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png",
+   "head_offset": [
+    0,
+    0
+   ],
+   "body": "layers/01_idle.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png",
+   "head_offset": [
+    0,
+    0
+   ],
+   "body": "layers/02_blink.png",
+   "head_patch": "blink"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png",
+   "head_offset": [
+    4,
+    4
+   ],
+   "body": "layers/03_cheer.png",
+   "head_patch": "hat_lifted"
+  },
+  {
+   "name": "walk_right_contact",
+   "file": "04_walk_right_contact_80x80.png",
+   "head_offset": [
+    -2,
+    0
+   ],
+   "body": "layers/04_walk_right_contact.png"
+  },
+  {
+   "name": "walk_pass",
+   "file": "05_walk_pass_80x80.png",
+   "head_offset": [
+    -1,
+    -1
+   ],
+   "body": "layers/05_walk_pass.png"
+  },
+  {
+   "name": "walk_left_contact",
+   "file": "06_walk_left_contact_80x80.png",
+   "head_offset": [
+    -2,
+    0
+   ],
+   "body": "layers/06_walk_left_contact.png"
+  },
+  {
+   "name": "lift_can",
+   "file": "07_lift_can_80x80.png",
+   "head_offset": [
+    -11,
+    -3
+   ],
+   "body": "layers/07_lift_can.png",
+   "prop": "layers/watering_can_upright.png"
+  },
+  {
+   "name": "pour_water",
+   "file": "08_pour_water_80x80.png",
+   "head_offset": [
+    -9,
+    -2
+   ],
+   "body": "layers/08_pour_water.png",
+   "prop": "layers/watering_can_tipped.png"
+  },
+  {
+   "name": "carry_planter",
+   "file": "09_carry_planter_80x80.png",
+   "head_offset": [
+    -6,
+    -3
+   ],
+   "body": "layers/09_carry_planter.png"
+  }
+ ],
+ "head": {
+  "file": "layers/floor02_balcony_shared_head.png",
+  "patches": {
+   "blink": {
+    "file": "layers/floor02_balcony_blink_patch.png",
+    "replace_at": [
+     39,
+     18
+    ]
+   },
+   "hat_lifted": {
+    "file": "layers/floor02_balcony_hat_lifted_patch.png",
+    "replace_at": [
+     22,
+     5
+    ]
+   }
+  }
+ },
+ "recipe": "Ground layer and prop at the origin, then the shared head at head_offset, then the body at the origin."
+}

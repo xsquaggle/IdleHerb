@@ -1,0 +1,105 @@
+{
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png",
+   "head_offset": [
+    0,
+    0
+   ],
+   "body": "layers/01_idle.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png",
+   "head_offset": [
+    0,
+    0
+   ],
+   "body": "layers/02_blink.png",
+   "head_patch": "blink"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png",
+   "head_offset": [
+    -5,
+    -1
+   ],
+   "body": "layers/03_cheer.png",
+   "head_patch": "blink"
+  },
+  {
+   "name": "walk_right_contact",
+   "file": "04_walk_right_contact_80x80.png",
+   "head_offset": [
+    -2,
+    1
+   ],
+   "body": "layers/04_walk_right_contact.png"
+  },
+  {
+   "name": "walk_pass",
+   "file": "05_walk_pass_80x80.png",
+   "head_offset": [
+    -1,
+    0
+   ],
+   "body": "layers/05_walk_pass.png"
+  },
+  {
+   "name": "walk_left_contact",
+   "file": "06_walk_left_contact_80x80.png",
+   "head_offset": [
+    -1,
+    0
+   ],
+   "body": "layers/06_walk_left_contact.png"
+  },
+  {
+   "name": "pick_leaves",
+   "file": "07_pick_leaves_80x80.png",
+   "head_offset": [
+    1,
+    7
+   ],
+   "body": "layers/07_pick_leaves.png"
+  },
+  {
+   "name": "hold_bowl",
+   "file": "08_hold_bowl_80x80.png",
+   "head_offset": [
+    -1,
+    -1
+   ],
+   "body": "layers/08_hold_bowl.png"
+  },
+  {
+   "name": "carry_planter",
+   "file": "09_carry_planter_80x80.png",
+   "head_offset": [
+    -4,
+    -1
+   ],
+   "body": "layers/09_carry_planter.png"
+  }
+ ],
+ "head": {
+  "file": "layers/floor01_windowsill_shared_head.png",
+  "patches": {
+   "blink": {
+    "file": "layers/floor01_windowsill_blink_patch.png",
+    "replace_at": [
+     42,
+     18
+    ]
+   }
+  }
+ },
+ "recipe": "Ground layer and prop at the origin, then the shared head at head_offset, then the body at the origin."
+}

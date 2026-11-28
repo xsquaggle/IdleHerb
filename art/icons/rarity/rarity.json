@@ -1,0 +1,27 @@
+{
+ "size": [
+  48,
+  48
+ ],
+ "order": [
+  "common",
+  "uncommon",
+  "rare",
+  "epic",
+  "legendary",
+  "exotic"
+ ],
+ "emblems": {
+  "common": "rarity_common_48.png",
+  "uncommon": "rarity_uncommon_48.png",
+  "rare": "rarity_rare_48.png",
+  "epic": "rarity_epic_48.png",
+  "legendary": "rarity_legendary_48.png",
+  "exotic": "rarity_exotic_48.png"
+ },
+ "free_slots": [
+  "mythic",
+  "godly"
+ ],
+ "note": "One badge per rarity (style bible sections 8 and 19). Two free slots above Exotic wait for the design. Smaller sizes are drawn by hand from these."
+}

@@ -1,0 +1,48 @@
+{
+ "who": "Soap and Scent Workshop, second: the perfumer in the plum coat",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "source": "b02_15_workers_floor09_soap_workshop.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "flourish",
+   "file": "03_flourish_80x80.png"
+  },
+  {
+   "name": "walk_right_contact",
+   "file": "04_walk_right_contact_80x80.png"
+  },
+  {
+   "name": "walk_passing",
+   "file": "05_walk_passing_80x80.png"
+  },
+  {
+   "name": "walk_left_contact",
+   "file": "06_walk_left_contact_80x80.png"
+  },
+  {
+   "name": "stir_soap",
+   "file": "07_stir_soap_80x80.png"
+  },
+  {
+   "name": "present_soap",
+   "file": "08_present_soap_80x80.png"
+  },
+  {
+   "name": "carry_lotion_crate",
+   "file": "09_carry_lotion_crate_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}

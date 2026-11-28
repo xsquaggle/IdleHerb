@@ -1,0 +1,48 @@
+{
+ "who": "Soap and Scent Workshop, lead: the lavender binder",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "source": "b02_15_workers_floor09_soap_workshop.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png"
+  },
+  {
+   "name": "walk_right_contact",
+   "file": "04_walk_right_contact_80x80.png"
+  },
+  {
+   "name": "walk_passing",
+   "file": "05_walk_passing_80x80.png"
+  },
+  {
+   "name": "walk_left_contact",
+   "file": "06_walk_left_contact_80x80.png"
+  },
+  {
+   "name": "tie_lavender",
+   "file": "07_tie_lavender_80x80.png"
+  },
+  {
+   "name": "hold_soap_tray",
+   "file": "08_hold_soap_tray_80x80.png"
+  },
+  {
+   "name": "carry_soap_basket",
+   "file": "09_carry_soap_basket_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}

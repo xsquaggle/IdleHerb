@@ -1,0 +1,48 @@
+{
+ "who": "Sprout Tower HQ: the clerk with the books",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 77,
+ "source": "b02_16_workers_floor10_floor01.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png"
+  },
+  {
+   "name": "walk_right_contact",
+   "file": "04_walk_right_contact_80x80.png"
+  },
+  {
+   "name": "walk_pass",
+   "file": "05_walk_pass_80x80.png"
+  },
+  {
+   "name": "walk_left_contact",
+   "file": "06_walk_left_contact_80x80.png"
+  },
+  {
+   "name": "read_clipboard",
+   "file": "07_read_clipboard_80x80.png"
+  },
+  {
+   "name": "shelve_book",
+   "file": "08_shelve_book_80x80.png"
+  },
+  {
+   "name": "carry_books",
+   "file": "09_carry_books_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}

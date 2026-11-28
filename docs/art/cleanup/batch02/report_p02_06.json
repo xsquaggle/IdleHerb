@@ -1,0 +1,665 @@
+[
+ {
+  "cls": "icon",
+  "name": "currency_insight",
+  "size": [
+   48,
+   48
+  ],
+  "files": 1,
+  "source_colours": 13,
+  "colours": 12,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.034,
+  "max_move": 0.07,
+  "palette": [
+   "cream-1",
+   "cream-4",
+   "gold-3",
+   "gold-5",
+   "ink-2",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4",
+   "leaf-5",
+   "wood-3",
+   "wood-4",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "icon",
+  "name": "currency_pollen",
+  "size": [
+   48,
+   48
+  ],
+  "files": 1,
+  "source_colours": 8,
+  "colours": 8,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.031,
+  "max_move": 0.047,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "cream-4",
+   "gold-5",
+   "ink-2",
+   "wood-3",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "icon",
+  "name": "currency_skill_points",
+  "size": [
+   48,
+   48
+  ],
+  "files": 1,
+  "source_colours": 9,
+  "colours": 8,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.061,
+  "max_move": 0.09,
+  "palette": [
+   "gold-5",
+   "ink-2",
+   "lavender-3",
+   "lavender-4",
+   "lavender-5",
+   "leaf-3",
+   "leaf-4",
+   "leaf-5"
+  ]
+ },
+ {
+  "cls": "icon",
+  "name": "currency_shells",
+  "size": [
+   48,
+   48
+  ],
+  "files": 1,
+  "source_colours": 9,
+  "colours": 8,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.045,
+  "max_move": 0.098,
+  "palette": [
+   "blush-1",
+   "clay-5",
+   "cream-3",
+   "cream-4",
+   "gold-5",
+   "ink-2",
+   "rose-1",
+   "rose-2"
+  ]
+ },
+ {
+  "cls": "icon",
+  "name": "currency_snowmarks",
+  "size": [
+   48,
+   48
+  ],
+  "files": 1,
+  "source_colours": 10,
+  "colours": 8,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.051,
+  "max_move": 0.108,
+  "palette": [
+   "clay-2",
+   "clay-3",
+   "clay-4",
+   "gold-5",
+   "ink-2",
+   "sky-4",
+   "sky-5",
+   "white-1"
+  ]
+ },
+ {
+  "cls": "icon",
+  "name": "currency_fair_tickets",
+  "size": [
+   48,
+   48
+  ],
+  "files": 1,
+  "source_colours": 11,
+  "colours": 10,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.033,
+  "max_move": 0.066,
+  "palette": [
+   "clay-3",
+   "clay-4",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "cream-4",
+   "ink-2",
+   "leaf-2",
+   "leaf-4",
+   "leaf-5"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "sage_garden",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 12,
+  "colours": 12,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.036,
+  "max_move": 0.053,
+  "palette": [
+   "clay-2",
+   "clay-4",
+   "clay-5",
+   "ink-2",
+   "sage-1",
+   "sage-2",
+   "sage-3",
+   "sage-4",
+   "sage-5",
+   "wood-2",
+   "wood-4",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "thyme_garden",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 20,
+  "colours": 16,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.048,
+  "max_move": 0.111,
+  "palette": [
+   "clay-2",
+   "clay-4",
+   "clay-5",
+   "ink-2",
+   "lavender-4",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4",
+   "leaf-5",
+   "rose-1",
+   "rose-3",
+   "rose-4",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "rosemary_kitchen",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 17,
+  "colours": 15,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.043,
+  "max_move": 0.122,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "cream-4",
+   "ink-2",
+   "sage-1",
+   "sage-2",
+   "sage-3",
+   "sage-4",
+   "sage-5",
+   "sky-1",
+   "sky-2",
+   "sky-3",
+   "wood-3",
+   "wood-4"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "chamomile_meadow",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 19,
+  "colours": 18,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.042,
+  "max_move": 0.11,
+  "palette": [
+   "cream-2",
+   "cream-3",
+   "cream-4",
+   "gold-1",
+   "gold-2",
+   "gold-3",
+   "gold-4",
+   "ink-2",
+   "leaf-1",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4",
+   "leaf-5",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "lavender_butterfly",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 17,
+  "colours": 13,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.065,
+  "max_move": 0.11,
+  "palette": [
+   "cream-2",
+   "cream-4",
+   "ink-2",
+   "lavender-2",
+   "lavender-3",
+   "lavender-4",
+   "lavender-5",
+   "rose-3",
+   "rose-4",
+   "sage-1",
+   "sage-2",
+   "sage-4",
+   "sage-5"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "basil_lemon",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 11,
+  "colours": 11,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.05,
+  "max_move": 0.089,
+  "palette": [
+   "gold-1",
+   "gold-2",
+   "gold-3",
+   "gold-4",
+   "gold-5",
+   "ink-2",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4",
+   "leaf-5",
+   "leaf-6"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "mint_pepper",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 13,
+  "colours": 12,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.06,
+  "max_move": 0.117,
+  "palette": [
+   "cream-2",
+   "cream-4",
+   "ink-2",
+   "lavender-2",
+   "lavender-4",
+   "leaf-1",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4",
+   "teal-1",
+   "teal-2",
+   "teal-3"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "rosemary_trailing",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 16,
+  "colours": 15,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.057,
+  "max_move": 0.108,
+  "palette": [
+   "clay-3",
+   "clay-4",
+   "ink-2",
+   "sage-1",
+   "sage-2",
+   "sage-4",
+   "sage-5",
+   "sky-2",
+   "sky-4",
+   "sky-5",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "mint_chocolate",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 15,
+  "colours": 12,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.045,
+  "max_move": 0.088,
+  "palette": [
+   "clay-1",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "cream-4",
+   "ink-2",
+   "leaf-2",
+   "leaf-3",
+   "rose-1",
+   "wood-2",
+   "wood-3",
+   "wood-4"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "chamomile_double",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 16,
+  "colours": 13,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.053,
+  "max_move": 0.129,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "cream-4",
+   "gold-2",
+   "ink-2",
+   "leaf-1",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4",
+   "sky-1",
+   "sky-2",
+   "sky-4"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "thyme_lemon",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 12,
+  "colours": 8,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.061,
+  "max_move": 0.099,
+  "palette": [
+   "gold-2",
+   "gold-3",
+   "gold-4",
+   "gold-5",
+   "ink-2",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "sage_pineapple",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 18,
+  "colours": 13,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.054,
+  "max_move": 0.087,
+  "palette": [
+   "clay-2",
+   "clay-3",
+   "gold-5",
+   "ink-2",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4",
+   "leaf-5",
+   "red-3",
+   "wood-2",
+   "wood-4",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "card",
+  "name": "basil_purple",
+  "size": [
+   108,
+   100
+  ],
+  "files": 1,
+  "source_colours": 16,
+  "colours": 10,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.085,
+  "max_move": 0.125,
+  "palette": [
+   "gold-1",
+   "gold-3",
+   "gold-5",
+   "ink-2",
+   "lavender-2",
+   "lavender-3",
+   "lavender-4",
+   "lavender-5",
+   "rose-3",
+   "rose-4"
+  ]
+ },
+ {
+  "cls": "plant",
+  "name": "thyme (5 growth stages, Batch 1 planter + new foliage)",
+  "size": [
+   72,
+   90
+  ],
+  "files": 5,
+  "source_colours": 13,
+  "colours": 13,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 2,
+  "mean_move": 0.043,
+  "max_move": 0.138,
+  "palette": [
+   "clay-4",
+   "clay-5",
+   "ink-1",
+   "ink-2",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4",
+   "rose-3",
+   "wood-1",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "plant",
+  "name": "sage (5 growth stages, Batch 1 planter + new foliage)",
+  "size": [
+   72,
+   90
+  ],
+  "files": 5,
+  "source_colours": 10,
+  "colours": 16,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 3,
+  "mean_move": 0.05,
+  "max_move": 0.099,
+  "palette": [
+   "clay-4",
+   "clay-5",
+   "ink-1",
+   "ink-2",
+   "lavender-2",
+   "lavender-3",
+   "lavender-5",
+   "lavender-6",
+   "sage-1",
+   "sage-2",
+   "sage-3",
+   "sage-5",
+   "wood-1",
+   "wood-2",
+   "wood-3",
+   "wood-4"
+  ]
+ },
+ {
+  "cls": "plant",
+  "name": "chamomile (5 growth stages, Batch 1 planter + new foliage)",
+  "size": [
+   72,
+   90
+  ],
+  "files": 5,
+  "source_colours": 17,
+  "colours": 16,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 4,
+  "mean_move": 0.033,
+  "max_move": 0.116,
+  "palette": [
+   "clay-4",
+   "clay-5",
+   "cream-1",
+   "cream-3",
+   "cream-4",
+   "gold-1",
+   "gold-3",
+   "ink-1",
+   "ink-2",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4",
+   "wood-1",
+   "wood-2",
+   "wood-3",
+   "wood-4"
+  ]
+ }
+]

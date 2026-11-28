@@ -1,0 +1,44 @@
+{
+ "size": [
+  48,
+  48
+ ],
+ "note": "Heirloom icons (design: artifacts), 48x48. The other heirlooms still use their B11 pictures until those are cleaned. Smaller sizes are drawn by hand.",
+ "icons": {
+  "clover_locket": {
+   "file": "clover_locket_48x48.png",
+   "id": "artifact.clover_locket",
+   "rarity": "legendary"
+  },
+  "moonstone_birdbath": {
+   "file": "moonstone_birdbath_48x48.png",
+   "id": "artifact.moonstone_birdbath",
+   "rarity": "epic"
+  },
+  "bramble_gloves": {
+   "file": "bramble_gloves_48x48.png",
+   "id": "artifact.bramble_gloves",
+   "rarity": "rare"
+  },
+  "whetstone_of_plenty": {
+   "file": "whetstone_of_plenty_48x48.png",
+   "id": "artifact.whetstone_of_plenty",
+   "rarity": "legendary"
+  },
+  "heirloom_spindle": {
+   "file": "heirloom_spindle_48x48.png",
+   "id": "artifact.heirloom_spindle",
+   "rarity": "rare"
+  },
+  "canvas_guild_banner": {
+   "file": "canvas_guild_banner_48x48.png",
+   "id": "artifact.canvas_guild_banner",
+   "rarity": "epic"
+  },
+  "golden_rope_coil": {
+   "file": "golden_rope_coil_48x48.png",
+   "id": "artifact.golden_rope_coil",
+   "rarity": "legendary"
+  }
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "who": "Ropewalk and Twine Shop, lead: the crank worker",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "source": "b02_14_workers_floor08_ropewalk.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png"
+  },
+  {
+   "name": "walk_right_contact",
+   "file": "04_walk_right_contact_80x80.png"
+  },
+  {
+   "name": "walk_passing",
+   "file": "05_walk_passing_80x80.png"
+  },
+  {
+   "name": "walk_left_contact",
+   "file": "06_walk_left_contact_80x80.png"
+  },
+  {
+   "name": "crank_push",
+   "file": "07_crank_push_80x80.png"
+  },
+  {
+   "name": "crank_pull",
+   "file": "08_crank_pull_80x80.png"
+  },
+  {
+   "name": "carry_rope",
+   "file": "09_carry_rope_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}

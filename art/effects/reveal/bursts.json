@@ -1,0 +1,79 @@
+{
+ "frame": [
+  48,
+  48
+ ],
+ "origin": [
+  24,
+  24
+ ],
+ "order": [
+  "common",
+  "uncommon",
+  "rare",
+  "epic",
+  "legendary",
+  "exotic"
+ ],
+ "bursts": {
+  "common": {
+   "what": "dust",
+   "frames": [
+    "common_dust_01_start_48.png",
+    "common_dust_02_expand_48.png",
+    "common_dust_03_peak_48.png",
+    "common_dust_04_scatter_48.png"
+   ]
+  },
+  "uncommon": {
+   "what": "leaves",
+   "frames": [
+    "uncommon_leaves_01_start_48.png",
+    "uncommon_leaves_02_expand_48.png",
+    "uncommon_leaves_03_peak_48.png",
+    "uncommon_leaves_04_scatter_48.png"
+   ]
+  },
+  "rare": {
+   "what": "gem_glints",
+   "frames": [
+    "rare_gem_glints_01_start_48.png",
+    "rare_gem_glints_02_expand_48.png",
+    "rare_gem_glints_03_peak_48.png",
+    "rare_gem_glints_04_scatter_48.png"
+   ]
+  },
+  "epic": {
+   "what": "crystal_shards",
+   "frames": [
+    "epic_crystal_shards_01_start_48.png",
+    "epic_crystal_shards_02_expand_48.png",
+    "epic_crystal_shards_03_peak_48.png",
+    "epic_crystal_shards_04_scatter_48.png"
+   ]
+  },
+  "legendary": {
+   "what": "coins",
+   "frames": [
+    "legendary_coins_01_start_48.png",
+    "legendary_coins_02_expand_48.png",
+    "legendary_coins_03_peak_48.png",
+    "legendary_coins_04_scatter_48.png"
+   ]
+  },
+  "exotic": {
+   "what": "prism_shards",
+   "frames": [
+    "exotic_prism_shards_01_start_48.png",
+    "exotic_prism_shards_02_expand_48.png",
+    "exotic_prism_shards_03_peak_48.png",
+    "exotic_prism_shards_04_scatter_48.png"
+   ]
+  }
+ },
+ "free_slots": [
+  "mythic",
+  "godly"
+ ],
+ "note": "One burst per rarity, four frames: start, expand, peak, scatter. Played at the Burst beat of the reveal ladder (style bible section 19). The game adds the light, rays, beams and colour flood around them."
+}

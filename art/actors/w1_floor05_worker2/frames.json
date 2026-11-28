@@ -1,0 +1,48 @@
+{
+ "who": "Glass Greenhouse, second: the gardener in rust dungarees",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "source": "b02_11_workers_floor05_greenhouse.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png"
+  },
+  {
+   "name": "walk_1",
+   "file": "04_walk_1_80x80.png"
+  },
+  {
+   "name": "walk_2",
+   "file": "05_walk_2_80x80.png"
+  },
+  {
+   "name": "walk_3",
+   "file": "06_walk_3_80x80.png"
+  },
+  {
+   "name": "lift_cloche",
+   "file": "07_lift_cloche_80x80.png"
+  },
+  {
+   "name": "lower_cloche",
+   "file": "08_lower_cloche_80x80.png"
+  },
+  {
+   "name": "walk_with_herbs",
+   "file": "09_walk_with_herbs_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}
