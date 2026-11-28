@@ -1,6 +1,6 @@
 # Game client handoff (Phase 1 vertical slice)
 
-Last updated 2026-11-28 by the Phase 1 build thread. Branch `claude/project-thread-da91tw`.
+Last updated 2026-11-28, about 07:25 UTC, by the Phase 1 build thread. Branch `claude/project-thread-da91tw`.
 
 ## What this is
 
@@ -32,18 +32,37 @@ Debug bridge in the browser console: `__sprout.game` (the core), `__sprout.give(
 - Phone portrait and landscape and PC windows, whole-pixel scaling, safe areas for notches.
 - Saves: localStorage in browsers; files in the Windows app (temp file, flush, read-back, atomic rename, backup) in `%APPDATA%\Sprout Tower\saves\main\` or `SproutTowerData\` beside the portable .exe.
 - Windows app: one locked-down window (no menus, navigation, new windows or network), single instance, full speed in the background, F11 full screen, app icon from Pip.
+- Design 0.5 foundations (EXPANSION 15.1, all seven):
+  - Eleven tiers are one table (`tables/tiers.yaml`); a test fails if any source quotes a tier id. Rules that single out a tier name it in `tuning.yaml`.
+  - Cards carry `nativeTier`, and the save an optional raised `tier` (`cardTier`, `tierUps`).
+  - One reveal player takes (tier, form); Settings, Reveal theatre plays all eleven in either form. Tiers without art borrow the nearest lower art plus a colour band.
+  - One `moment(tier, place, form)` effect, with `tables/moments.yaml` naming each event's tier.
+  - Chests by tier 1 to 11 (Prism, Sunburst, Eclipse, Pearl, Grail added) with fixed extras as data; card slots capped at `CHEST_CARD_TOP`.
+  - Reset layers as a list (`tables/resets/layers.yaml`): Replant and Festival are rows walked by one reset path; New Generation and Big Bloom are rows not enabled yet. One `reset` event and a general `reset` command.
+  - Counted taps are a flag on the input source (`tower`, `key`, `field`).
+  - Design 0.4's numbers are unchanged: the simulator's 14-day active and 10-day idle runs are identical before and after.
+- Tech docs 02, 03, 04, 08, 09 and TECH_PLAN brought in line with design 0.5, the built tables and phone and PC (the 0.5 audit's four places and the PR #5 review's wording list).
 - Workflows: `ci.yml` (check, tests, web build), `desktop.yml` (Windows installer and portable .exe, smoke test, checksums, uploaded to each run as "SproutTower-Windows"), `preview.yml` (now the real game).
 
 ## In progress
 
-Design 0.5 foundations for the slice (EXPANSION.md 15.1, asked by the design thread on 2026-11-28): eleven tiers as one data table, cards with `tier` and `nativeTier`, one reveal player taking (tier, form) with a debug reveal theatre for all eleven, one `moment(tier, place, form)` effect, chests by tier 1 to 11 with fixed extras as data, reset layers as a list, counted taps as a flag on the input source. Version 0.4 numbers stay.
+Merging the balance simulator's PR #12 (design 0.4 in the tables, overlays retired, Auto-Gardener switches per floor) once it is on `main`. A trial merge on 2026-11-28 gave four small conflicts, resolved as follows, and the merged tree's simulator output was identical to PR #12's own:
+- `apps/sim/src/bot.ts` imports: keep `switchOn`, drop `RARITY_ORDER`.
+- `tuning.yaml` and `schema.ts`: keep the tier keys (`TIER_STEP` and the five `*_TIER` keys), drop `MASTERY_LEVELS` and `AUTO_GARDENER_RESTARTS`.
+- `systems/chests/logic.ts`: keep PR #12's pity fix (Legendary pity draws with `rollCard(input, top)` before the step-down loop) written with the tier data (`tiers.atLeast`, `t.PITY_EPIC_TIER`, `ladder[r]`).
+- Then `packages/content/src/bundle.ts` loads the plain tables with no overlays.
+
+## Next
+
+1. Manager ability buttons (keys 1 to 4 and tap buttons), then the screenshot tour and the crispness test of docs/tech/08.
+2. Phase 2 per ROADMAP once Lawson has played the slice.
 
 ## Known gaps
 
 - Manager abilities have no buttons yet.
 - Coins, Gems and Compost icons in `art/ui/` are drawn stand-ins until B12 is cleaned (`tools/art/draw_ui_icons.py`).
 - Sound is procedural placeholder (`src/engine/audio.ts`) until Lawson's sound pack.
-- Tiers above Legendary use placeholder looks until Batch 4 art.
+- Tiers above Legendary use borrowed art with a colour band until Batch 4 and later art (`tiers.yaml` emblem, burst and chest set to null).
 - The debug bridge is always on; docs/tech/02 wants it compiled out of release builds.
 - Saves are the slice's simple envelope, not yet the SPROUTSAVE format with SHA-256, slices and migrations of docs/tech/06; no export or import yet.
 - The Windows builds are unsigned (docs/tech/08, "Code signing").
