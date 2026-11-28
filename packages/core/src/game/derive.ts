@@ -143,6 +143,11 @@ export interface GlobalDerived {
   visitorLifetime: number;
   managerPower: number;
   heirloomPower: number;
+  /**
+   * Tap stats for the weekend fair stall (GDD 15.3): only tap skills and the
+   * passives (and set bonuses) of heirlooms apply. No cards, research, shops or boosts.
+   */
+  fairTap: { tapPower: number; critChance: number; critMult: number; comboCap: number };
   keystones: Record<string, Record<string, number> | undefined>;
   specials: Record<string, true>;
 }
@@ -163,6 +168,8 @@ interface PlantPower {
 export function computeDerived(state: GameState, content: Content, eventBonus: Effect | null): Derived {
   const t = content.tuning;
   const global: AccMap = {};
+  /** The skill and heirloom part of `global`, for the fair stall. */
+  const fair: AccMap = {};
   const world: AccMap[] = state.worlds.map(() => ({}));
   const floor: AccMap[][] = state.worlds.map((w) => w.floors.map(() => ({})));
   const plantPower: PlantPower[] = [];
@@ -176,6 +183,7 @@ export function computeDerived(state: GameState, content: Content, eventBonus: E
       return;
     }
     const scope = e.scope ?? 'global';
+    if ((scope === 'global' || w < 0) && (bucket === 'skill' || bucket === 'heirloom')) acc(fair, e.stat).put(e.op, value, bucket);
     if (scope === 'global' || w < 0) acc(global, e.stat).put(e.op, value, bucket);
     else if (scope === 'world') acc(world[w]!, e.stat).put(e.op, value, bucket);
     else if (scope === 'floor') acc(floor[w]![i]!, e.stat).put(e.op, value, bucket);
@@ -344,6 +352,12 @@ export function computeDerived(state: GameState, content: Content, eventBonus: E
     bumperFill: addOf(global['spurt.bumperFill']),
     visitorLifetime: t.VISITOR_LIFETIME + addOf(global['visitor.lifetime']),
     managerPower,
+    fairTap: {
+      tapPower: Math.min(t.TAP_POWER_CAP, bucketProduct(fair['tap.power'])),
+      critChance: Math.min(t.CRIT_CHANCE_CAP, t.CRIT_CHANCE_BASE + addOf(fair['tap.critChance'])),
+      critMult: Math.min(t.CRIT_MULT_CAP, t.CRIT_MULT_BASE + addOf(fair['tap.critMult'])),
+      comboCap: Math.min(t.COMBO_CAP_MAX, t.COMBO_CAP_BASE + addOf(fair['tap.comboCap'])),
+    },
     heirloomPower,
     keystones,
     specials,

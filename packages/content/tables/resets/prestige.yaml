@@ -12,5 +12,5 @@
 - { id: shop.ribbon.deed_moon,          costs: [60],  special: deed.w5 }
 - { id: shop.ribbon.auto_replant,       costs: [100], special: unlock.auto_replant }
 - { id: shop.ribbon.heirloom_shelf_4,   costs: [250], effect: { stat: heirloom.slots, op: add, value: 1 } }
-- { id: shop.ribbon.deed_nebula,        costs: [600], special: deed.w6 }
+- { id: shop.ribbon.deed_nebula,        costs: [250], special: deed.w6 }
 - { id: shop.ribbon.blue_polish,        endless: { base: 50, growth: 1.15 }, special: shop.blue_polish }

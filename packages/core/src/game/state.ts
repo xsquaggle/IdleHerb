@@ -23,6 +23,12 @@ export interface FloorState {
   eraMilestones: number;
   /** Highest milestone count ever (drives first-time XP). */
   bestMilestones: number;
+  /**
+   * This floor's Auto-Gardener switch (CONTENT.md 8). Starts on and is kept
+   * through every reset. Floor 1's switch also governs its free manager.
+   * Saves from before design 0.4 have no switch: read it with `switchOn`.
+   */
+  autoBuy: boolean;
 }
 
 export interface WorldState {
@@ -199,8 +205,6 @@ export interface GameState {
   // Shops
   compostShop: Record<string, number>;
   ribbonShop: Record<string, number>;
-  /** Auto-Gardener switch (one for the whole game in this version). */
-  autoBuy: boolean;
   /** Auto-Replant rule per world: Replant at this multiple of the era's Compost. 0 = off. */
   autoReplant: number[];
 
@@ -263,7 +267,12 @@ export interface GameState {
 }
 
 export function newFloorState(): FloorState {
-  return { level: 0, hired: false, plants: [], progress: 0, ready: false, constructing: 0, eraMilestones: 0, bestMilestones: 0 };
+  return { level: 0, hired: false, plants: [], progress: 0, ready: false, constructing: 0, eraMilestones: 0, bestMilestones: 0, autoBuy: true };
+}
+
+/** A floor's Auto-Gardener switch. Missing (a save from before design 0.4) counts as on. */
+export function switchOn(f: FloorState): boolean {
+  return f.autoBuy !== false;
 }
 
 export function newWorldState(floorCount: number): WorldState {

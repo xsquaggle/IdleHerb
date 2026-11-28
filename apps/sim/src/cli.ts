@@ -68,7 +68,7 @@ export function execute(spec: RunSpec): RunResult {
     seed: spec.seed ?? 1,
     days: spec.days,
     maxWorld: spec.maxWorld ?? 6,
-    rules: (spec.proposals ?? []).join('+') || 'gdd-0.2',
+    rules: (spec.proposals ?? []).join('+') || 'design-0.4',
   });
 }
 

@@ -56,6 +56,24 @@ describe('chest rolls on design 0.3', () => {
     }
   });
 
+  it('Legendary pity draws a Legendary, and with none in the pool leaves the roll as it was', () => {
+    const order = ['common', 'uncommon', 'rare', 'epic', 'legendary', 'exotic'];
+    const rarityOf = (c: string): string => byId.get(c)?.rarity ?? content.plants.find((p) => p.id === c)!.rarity;
+    const forced = { ...input('chest.wooden', 7), pity: { sinceEpic: 0, sinceLegendary: 1000, heirloomsSinceLegendary: 0 } };
+    expect(rarityOf(rollChest(forced).cards[0]!)).toBe('legendary');
+    // No Legendary met and no plants yet: the pity cannot be paid, so cards keep their rolled rarity.
+    const below: string[] = [];
+    for (let seed = 1; seed <= 40; seed++) {
+      const x = input('chest.wooden', seed);
+      x.plantsUnlocked = false;
+      x.owned = new Set(met.filter((id) => byId.get(id)!.rarity !== 'legendary'));
+      x.pity = { sinceEpic: 0, sinceLegendary: 1000, heirloomsSinceLegendary: 0 };
+      for (const c of rollChest(x).cards) if (order.indexOf(rarityOf(c)) < order.indexOf('epic')) below.push(c);
+      expect(x.pity.sinceLegendary).toBeGreaterThan(1000);
+    }
+    expect(below.length).toBeGreaterThan(0);
+  });
+
   it('gives a Starlight Head copy only for a Head whose world has five stars', () => {
     for (let seed = 1; seed <= 50; seed++) {
       expect(rollChest(input('chest.starlight', seed, [head.id])).exoticManager).toBe(head.id);

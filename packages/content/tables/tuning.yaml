@@ -111,15 +111,15 @@ XP_PER_LEVEL: 250
 LEVEL_CAP: 112
 LEVEL_UP_GEMS: 10
 RESPEC_GEMS: 100
-XP_DAILY: 1500
-XP_DAILY_ALL: 1500
+XP_DAILY: 1000
+XP_DAILY_ALL: 1000
 XP_WEEKLY: 5000
 XP_WEEKLY_ALL: 10000
 XP_MILESTONE_PER_TIER: 50
 REPLANT_XP_STEP: 150                  # x n, the first time all-time Compost passes 2^n
 XP_CHEST_PER_TIER: 20
 XP_VISITOR: 5
-XP_ACHIEVEMENT: [200, 400, 800, 1500, 3000]
+XP_ACHIEVEMENT: [100, 200, 400, 750, 1500]
 XP_MASTERY_STAR: 1000
 XP_CHAPTER: 2000
 
@@ -146,10 +146,10 @@ CODEX_GEMS: 5
 COMPOST_E0: "2e10"
 COMPOST_EXP: 0.4
 COMPOST_PCT: 0.02
-FIRST_REPLANT_MIN: 60
+FIRST_REPLANT_MIN: 440
 
 # --- Harvest Festival (GDD 12.2) ---
-RIBBON_C0: 50000
+RIBBON_C0: 900000
 RIBBON_EXP: 0.5
 RIBBON_PCT: 0.10
 FIRST_FESTIVAL_MIN: 8
@@ -157,12 +157,8 @@ FESTIVAL_NEEDS_WORLD: 3
 MASTER_COMPOSTER_PCT: 0.005
 BLUE_POLISH_PCT: 0.002
 AUTO_BUY_SHARE: 0.10
-# Design 0.4 ruling (2026-11-26), off in 0.3: while the Auto-Gardener is on, floor 1 keeps its manager through Replants and Festivals and worlds open floors on their own.
-AUTO_GARDENER_RESTARTS: false
 
 # --- World Mastery (GDD 14.5) ---
-MASTERY_LEVELS: [25, 50, 100, 250, 350, 400, 450, 500, 550, 600]
-
 # --- Rarity tiers (design 0.5, EXPANSION 1.3 and 2.2; the tiers themselves are tiers.yaml) ---
 TIER_STEP: 1.5
 CHEST_CARD_TOP: legendary             # a chest's card slot never rolls above this

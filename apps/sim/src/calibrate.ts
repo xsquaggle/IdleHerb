@@ -54,7 +54,7 @@ export const STEPS: Step[] = [
   { id: 'w3', label: 'World 3', knob: { ticketOf: 'world.w2' }, target: { active: 2.6 * DAY, mixed: 4.1 * DAY, idle: 13 * DAY }, event: firstWorld(2), stride: 2 },
   { id: 'festival', label: 'First Harvest Festival', knob: { tuning: 'RIBBON_C0' }, target: { active: 4.1 * DAY, mixed: 5.4 * DAY, idle: 16 * DAY }, event: (e) => e.kind === 'festival', stride: 2 },
   { id: 'w4', label: 'World 4', knob: { ticketOf: 'world.w3' }, target: { active: 6.7 * DAY, mixed: 10.1 * DAY, idle: 20 * DAY }, event: firstWorld(3), stride: 3 },
-  { id: 'w5', label: 'World 5', knob: { ticketOf: 'world.w4' }, target: { active: 12.2 * DAY, mixed: 18.1 * DAY, idle: 26 * DAY }, event: firstWorld(4), stride: 3 },
+  { id: 'w5', label: 'World 5', knob: { ticketOf: 'world.w4' }, target: { active: 12.2 * DAY, mixed: 18.1 * DAY, idle: 27 * DAY }, event: firstWorld(4), stride: 3 },
   { id: 'w6', label: 'World 6', knob: { ticketOf: 'world.w5' }, target: { active: 19.5 * DAY, mixed: 30.5 * DAY, idle: 30 * DAY }, event: firstWorld(5), stride: 3 },
 ];
 

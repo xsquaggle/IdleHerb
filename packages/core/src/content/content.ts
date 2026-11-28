@@ -238,7 +238,7 @@ export function hydrateContent(raw: RawContent): Content {
         deedRibbons: w.deedRibbons,
         twist: w.twist,
         launch: w.launch,
-        mastery: w.mastery ?? raw.tuning.MASTERY_LEVELS,
+        mastery: w.mastery,
         floors: floorDefs,
       };
     });

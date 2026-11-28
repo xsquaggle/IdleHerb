@@ -129,11 +129,14 @@ function rollSlot(input: ChestRollInput, atLeast: TierId | null): string | null 
   }
   let rarity = ladder[pickWeighted(input.rng, weights)]!;
   // Pity (rule 5): the counters are shown on the chest screen.
-  if (input.pity.sinceLegendary >= t.PITY_LEGENDARY) rarity = top;
-  else if (input.pity.sinceEpic >= t.PITY_EPIC && !tiers.atLeast(rarity, t.PITY_EPIC_TIER)) rarity = t.PITY_EPIC_TIER;
-
-  // If nothing of this rarity is in the pool yet, step down until something is.
+  if (input.pity.sinceEpic >= t.PITY_EPIC && !tiers.atLeast(rarity, t.PITY_EPIC_TIER)) rarity = t.PITY_EPIC_TIER;
   let card: string | null = null;
+  // Legendary pity draws a card of the top tier. With none in the pool yet, the slot
+  // rolls as usual (Epic pity included) and the counter keeps counting, so the
+  // pity never turns every later card into the best tier on offer.
+  if (input.pity.sinceLegendary >= t.PITY_LEGENDARY) card = rollCard(input, top);
+
+  // If nothing of this tier is in the pool yet, step down until something is.
   let r = tiers.index(rarity);
   for (; r >= 0 && card === null; r--) card = rollCard(input, ladder[r]!);
   if (card === null) return null;

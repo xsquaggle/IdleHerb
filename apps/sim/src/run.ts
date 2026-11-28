@@ -134,6 +134,12 @@ export interface RunResult {
   actions: number;
   fairWeekends: { week: number; step: number; tickets: number | null }[];
   offline: { t: number; seconds: number; paid: number }[];
+  /**
+   * The Ribbon Shop (GDD 18): when each fixed item (every one but the endless
+   * Blue Ribbon Polish) reached its last level, and when all of them had, in game
+   * and play seconds. Missing in runs saved before design 0.4.
+   */
+  ribbonShop?: { done: Record<string, number>; all: { t: number; play: number } | null };
 }
 
 const l10 = (n: Num): number | null => (n.gt(0) ? n.log10() : null);
@@ -165,6 +171,7 @@ class Recorder {
   readonly unlockAt = new Map<string, { t: number; play: number }>();
   readonly fairWeekends: { week: number; step: number; tickets: number | null }[] = [];
   readonly offline: { t: number; seconds: number; paid: number }[] = [];
+  readonly ribbonShop: { done: Record<string, number>; all: { t: number; play: number } | null } = { done: {}, all: null };
 
   private sess = { seconds: 0, boost: 0, tapBoost: 0, tower: 0, spurt: 0, peak: 1, world: 0, moved: false, steady: Num.ZERO };
 
@@ -180,9 +187,20 @@ class Recorder {
         if (s.gems < before.gems) this.spent.gems += before.gems - s.gems;
         if (s.pollen < before.pollen) this.spent.pollen += before.pollen - s.pollen;
         if (s.insight < before.insight) this.spent.insight += before.insight - s.insight;
+        if (cmd.type === 'buyRibbonShop') this.ribbonBought(cmd.id);
       }
       return ok;
     };
+  }
+
+  private ribbonBought(id: string): void {
+    const g = this.g;
+    const s = g.state;
+    const row = g.content.ribbonShop.find((r) => r.id === id);
+    if (row?.costs && (s.ribbonShop[id] ?? 0) >= row.costs.length && !(id in this.ribbonShop.done)) this.ribbonShop.done[id] = s.time;
+    if (this.ribbonShop.all) return;
+    const fixed = g.content.ribbonShop.filter((r) => r.costs);
+    if (fixed.every((r) => r.id in this.ribbonShop.done)) this.ribbonShop.all = { t: s.time, play: s.playTime };
   }
 
   private bump(name: string, n = 1): void {
@@ -502,5 +520,6 @@ export function runSim(o: RunOptions): RunResult {
     actions: bot.actions,
     fairWeekends: rec.fairWeekends,
     offline: rec.offline,
+    ribbonShop: rec.ribbonShop,
   };
 }

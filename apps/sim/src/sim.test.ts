@@ -2,7 +2,7 @@
  * The economy core under a simulated player: saves, ticks, offline time and a
  * two-day soak with no NaN, no Infinity and no Boost above its cap.
  */
-import { Num, createGame, deserializeState, serializeState, type Game } from '@sprout/core';
+import { Num, computeDerived, createGame, deserializeState, serializeState, type Game } from '@sprout/core';
 import { loadContent } from '@sprout/content';
 import { describe, expect, it } from 'vitest';
 import { Bot } from './bot';
@@ -82,22 +82,26 @@ describe('economy core under play', () => {
   });
 });
 
-describe('the Auto-Gardener keeps a world going (design 0.4 ruling)', () => {
-  const g = played(40);
-  /** The 40-minute game with the Auto-Gardener owned and switched on, under the old or the new rule. */
-  const withGardener = (restarts: boolean): Game => {
-    const c = loadContent({ overlays: [{ id: 'test', title: 'test', tuning: { AUTO_GARDENER_RESTARTS: restarts } }] });
+describe('the Auto-Gardener keeps a world going (CONTENT 8, design 0.4)', () => {
+  // At 50 minutes the simulated player has Replanted once and has Compost pending again.
+  const g = played(50);
+  /** The 50-minute game with the Auto-Gardener owned, every switch on as it starts. */
+  const withGardener = (): Game => {
     const state = deserializeState(serializeState(g.state));
     state.ribbonShop['shop.ribbon.auto_gardener'] = 1;
-    state.autoBuy = true;
-    return createGame({ content: c, seed: 3, debug: true, state });
+    return createGame({ content, seed: 3, debug: true, state });
   };
   const minutesAlone = (x: Game, minutes: number): void => {
     for (let s = 0; s < minutes * 60; s++) x.advance(1);
   };
 
+  it('starts with every switch on', () => {
+    const x = withGardener();
+    for (const ws of x.state.worlds) for (const f of ws.floors) expect(f.autoBuy).toBe(true);
+  });
+
   it('keeps floor 1 hired through a Replant with no fee and opens floors on its own', () => {
-    const x = withGardener(true);
+    const x = withGardener();
     expect(x.dispatch({ type: 'replant', world: 0 })).toBe(true);
     const ws = x.state.worlds[0]!;
     expect(ws.floors[0]!.hired).toBe(true);
@@ -108,12 +112,61 @@ describe('the Auto-Gardener keeps a world going (design 0.4 ruling)', () => {
     expect(ws.floors[1]!.level).toBeGreaterThan(0);
   });
 
-  it('under the 0.3 rule a Replanted world with no hired manager stands still', () => {
-    const x = withGardener(false);
+  it("with the world's switches off, a Replanted world with no hired manager stands still", () => {
+    const x = withGardener();
+    expect(x.dispatch({ type: 'setAutoBuy', on: false, world: 0 })).toBe(true);
     expect(x.dispatch({ type: 'replant', world: 0 })).toBe(true);
     const ws = x.state.worlds[0]!;
     expect(ws.floors[0]!.hired).toBe(false);
     minutesAlone(x, 10);
     expect(ws.floors[1]!.level).toBe(0);
+  });
+
+  it('a floor whose switch is off is not levelled; the others are', () => {
+    const x = withGardener();
+    const ws = x.state.worlds[0]!;
+    const open = ws.floors.map((f, i) => (f.level > 0 ? i : -1)).filter((i) => i >= 0);
+    expect(open.length).toBeGreaterThan(1);
+    const off = open[open.length - 1]!;
+    expect(x.dispatch({ type: 'setAutoBuy', on: false, world: 0, floor: off })).toBe(true);
+    const before = ws.floors.map((f) => f.level);
+    minutesAlone(x, 10);
+    expect(ws.floors[off]!.level).toBe(before[off]);
+    expect(open.some((i) => i !== off && ws.floors[i]!.level > before[i]!)).toBe(true);
+  });
+
+  it('reads a save with no floor switches as every switch on', () => {
+    const state = deserializeState(serializeState(g.state));
+    state.ribbonShop['shop.ribbon.auto_gardener'] = 1;
+    for (const ws of state.worlds) for (const f of ws.floors) delete (f as { autoBuy?: boolean }).autoBuy;
+    const x = createGame({ content, seed: 3, debug: true, state });
+    expect(x.dispatch({ type: 'replant', world: 0 })).toBe(true);
+    expect(x.state.worlds[0]!.floors[0]!.hired).toBe(true);
+  });
+
+  it('refuses a switch for a world or floor that does not exist', () => {
+    const x = withGardener();
+    expect(x.dispatch({ type: 'setAutoBuy', on: false, world: 99 })).toBe(false);
+    expect(x.dispatch({ type: 'setAutoBuy', on: false, floor: 0 })).toBe(false);
+    expect(x.dispatch({ type: 'setAutoBuy', on: false, world: 0, floor: 99 })).toBe(false);
+  });
+});
+
+describe('the fair stall (GDD 15.3)', () => {
+  it('uses tap skills and heirlooms, never cards', () => {
+    const state = deserializeState(serializeState(played(50).state));
+    const w1 = state.worlds[0]!;
+    const jj = content.worlds[0]!.floors.findIndex((f) => f.manager.id === 'card.manager.juniper_jones');
+    w1.floors[jj]!.level = Math.max(1, w1.floors[jj]!.level);
+    w1.floors[jj]!.hired = true;
+    state.cards['card.manager.juniper_jones'] ??= { level: 1, copies: 0 };
+    state.skills = {};
+    state.equipped = [];
+    const bare = computeDerived(state, content, null);
+    expect(bare.worlds[0]!.tapPower).toBeGreaterThan(1);
+    expect(bare.global.fairTap.tapPower).toBe(1);
+    state.skills = { 'skill.gt.firm_grip': 2 };
+    const skilled = computeDerived(state, content, null);
+    expect(skilled.global.fairTap.tapPower).toBeCloseTo(1.2, 9);
   });
 });

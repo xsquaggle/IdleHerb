@@ -46,11 +46,7 @@ Debug bridge in the browser console: `__sprout.game` (the core), `__sprout.give(
 
 ## In progress
 
-Merging the balance simulator's PR #12 (design 0.4 in the tables, overlays retired, Auto-Gardener switches per floor) once it is on `main`. A trial merge on 2026-11-28 gave four small conflicts, resolved as follows, and the merged tree's simulator output was identical to PR #12's own:
-- `apps/sim/src/bot.ts` imports: keep `switchOn`, drop `RARITY_ORDER`.
-- `tuning.yaml` and `schema.ts`: keep the tier keys (`TIER_STEP` and the five `*_TIER` keys), drop `MASTERY_LEVELS` and `AUTO_GARDENER_RESTARTS`.
-- `systems/chests/logic.ts`: keep PR #12's pity fix (Legendary pity draws with `rollCard(input, top)` before the step-down loop) written with the tier data (`tiers.atLeast`, `t.PITY_EPIC_TIER`, `ladder[r]`).
-- Then `packages/content/src/bundle.ts` loads the plain tables with no overlays.
+Nothing. PR #12 (design 0.4 in the tables, Auto-Gardener switches per floor) is merged in: the bundle loads the plain tables, and the simulator's 14-day active and 10-day idle runs are identical to PR #12's own. A Windows smoke run failed once at the second launch (the game did not start within 60 s) on a commit that changed no game code; the same test passes here on the Linux build, and the smoke test now prints the page state, the page console and the shell's output, with a screenshot, if a launch stalls again.
 
 ## Next
 
@@ -64,7 +60,7 @@ Merging the balance simulator's PR #12 (design 0.4 in the tables, overlays retir
 - Sound is procedural placeholder (`src/engine/audio.ts`) until Lawson's sound pack.
 - Tiers above Legendary use borrowed art with a colour band until Batch 4 and later art (`tiers.yaml` emblem, burst and chest set to null).
 - The debug bridge is always on; docs/tech/02 wants it compiled out of release builds.
-- Saves are the slice's simple envelope, not yet the SPROUTSAVE format with SHA-256, slices and migrations of docs/tech/06; no export or import yet.
+- Saves are the slice's simple envelope, not yet the SPROUTSAVE format with SHA-256, slices and migrations of docs/tech/06; no export or import yet. Lawson's playable link keeps a save on their phone, so from now on a change to the save's shape needs `SAVE_VERSION` raised and a migration. Every field added so far is optional, and a save from before PR #12 loads (checked 2026-11-28).
 - The Windows builds are unsigned (docs/tech/08, "Code signing").
 
 ## Open questions

@@ -51,7 +51,8 @@ export type Command =
   | { type: 'reset'; layer: string; world?: number }
   | { type: 'buyCompostShop'; id: string }
   | { type: 'buyRibbonShop'; id: string }
-  | { type: 'setAutoBuy'; on: boolean }
+  /** Auto-Gardener switches: one floor, every floor of one world, or (no world) every floor. */
+  | { type: 'setAutoBuy'; on: boolean; world?: number; floor?: number }
   | { type: 'setAutoReplant'; world: number; multiple: number }
   | { type: 'timeWarp'; size: 'small' | 'large' }
   // Weekend fair

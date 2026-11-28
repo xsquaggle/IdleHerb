@@ -38,11 +38,14 @@ export const BARE = ['skills', 'plants', 'abilities', 'cardLevels', 'heirlooms',
 
 export function suite(proposal: string | null): RunSpec[] {
   const runs: RunSpec[] = [
-    // The GDD's numbers, all six planned worlds, the three profiles of GDD 17.6.
+    // The tables (design 0.4), all six planned worlds, the three profiles of GDD 17.6.
     { name: 'gdd-active', profile: 'active', days: 60, maxWorld: 6, group: 'baseline' },
     { name: 'gdd-mixed', profile: 'mixed', days: 60, maxWorld: 6, group: 'baseline' },
     { name: 'gdd-idle', profile: 'idle', days: 60, maxWorld: 6, group: 'baseline' },
     { name: 'gdd-active-tap12', profile: 'active', days: 30, maxWorld: 6, tapRate: 12, group: 'baseline' },
+    // 90 days, for Mastery stars that land up to 65 days after a world opens, and the late research.
+    { name: 'long-active', profile: 'active', days: 90, maxWorld: 6, group: 'baseline' },
+    { name: 'long-mixed', profile: 'mixed', days: 90, maxWorld: 6, group: 'baseline' },
     // The launch build stops at world 4.
     { name: 'launch-active', profile: 'active', days: 60, maxWorld: 4, group: 'launch' },
     { name: 'launch-idle', profile: 'idle', days: 60, maxWorld: 4, group: 'launch' },

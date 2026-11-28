@@ -1,8 +1,8 @@
 # World parameters. Source of truth: docs/design/GDD.md 14.2 and CONTENT.md section 1.
 # D = cost scale, T = payout taper (they feed the floor template in floors/template.yaml).
-- { id: world.w1, order: 1, climate: temperate, currency: cur.coins,       floors: 10, D: "1",    T: 1.00, compostK: 5,   ticket: "5e19", deedRibbons: 0,   twist: none,      launch: true }
-- { id: world.w2, order: 2, climate: urban,     currency: cur.notes,       floors: 8,  D: "1e5",  T: 0.90, compostK: 15,  ticket: "2e19", deedRibbons: 0,   twist: customers, launch: true }
-- { id: world.w3, order: 3, climate: tropical,  currency: cur.shells,      floors: 8,  D: "2e7",  T: 0.85, compostK: 40,  ticket: "1e24", deedRibbons: 0,   twist: weather,   launch: true }
-- { id: world.w4, order: 4, climate: frost,     currency: cur.snowmarks,   floors: 8,  D: "5e10", T: 0.80, compostK: 100, ticket: "2e29", deedRibbons: 8,   twist: heat,      launch: true }
-- { id: world.w5, order: 5, climate: lunar,     currency: cur.moonpennies, floors: 8,  D: "1e16", T: 0.75, compostK: 250, ticket: "1e34", deedRibbons: 60,  twist: bubbles,   launch: false }
-- { id: world.w6, order: 6, climate: stellar,   currency: cur.stardust,    floors: 8,  D: "4e20", T: 0.70, compostK: 600, ticket: null,   deedRibbons: 600, twist: sunrise,   launch: false }
+- { id: world.w1, order: 1, climate: temperate, currency: cur.coins,       floors: 10, D: "1",    T: 1.00, compostK: 5,   ticket: "3e23", deedRibbons: 0,   twist: none,      launch: true, mastery: [25, 325, 350, 400, 475, 525, 625, 675, 725, 800] }
+- { id: world.w2, order: 2, climate: urban,     currency: cur.notes,       floors: 8,  D: "1e5",  T: 0.90, compostK: 15,  ticket: "4.5e23", deedRibbons: 0,   twist: customers, launch: true, mastery: [150, 225, 250, 275, 350, 400, 500, 550, 600, 675] }
+- { id: world.w3, order: 3, climate: tropical,  currency: cur.shells,      floors: 8,  D: "2e7",  T: 0.85, compostK: 40,  ticket: "1e25", deedRibbons: 0,   twist: weather,   launch: true, mastery: [25, 150, 225, 275, 350, 400, 450, 525, 575, 625] }
+- { id: world.w4, order: 4, climate: frost,     currency: cur.snowmarks,   floors: 8,  D: "5e10", T: 0.80, compostK: 100, ticket: "3e30", deedRibbons: 8,   twist: heat,      launch: true, mastery: [175, 200, 250, 300, 350, 375, 425, 475, 525, 575] }
+- { id: world.w5, order: 5, climate: lunar,     currency: cur.moonpennies, floors: 8,  D: "1e16", T: 0.75, compostK: 250, ticket: "3e35", deedRibbons: 60,  twist: bubbles,   launch: false, mastery: [125, 150, 200, 250, 300, 325, 350, 375, 425, 475] }
+- { id: world.w6, order: 6, climate: stellar,   currency: cur.stardust,    floors: 8,  D: "4e20", T: 0.70, compostK: 600, ticket: null,   deedRibbons: 250, twist: sunrise,   launch: false, mastery: [100, 150, 175, 200, 225, 250, 300, 325, 375, 400] }
