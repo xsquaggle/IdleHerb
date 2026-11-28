@@ -6,7 +6,7 @@ For the Economy and Balance thread, the Engine thread, the Art Director and anyo
 
 Lawson asked on 2026-11-28 for higher retention: better core upgrades and items, longer skill trees, higher currencies and resets, cosmetics that boost, chests and crates from fishing, digging and mining that can also be automated, and eleven rarities from Common to Grailed, each noticeably better than the one before, with effects and reveals that scale with rarity. Design 0.5 answers with two new files. [EXPANSION.md](EXPANSION.md) designs every system in full, with first-pass numbers and named constants. [ROADMAP.md](ROADMAP.md) puts each system in a release: most of it in v1.0, then v1.1 New Generation, v1.2 The Moon and v1.3 Nebula Nursery.
 
-Only the changes in C.1 take effect in the GDD now. Everything else joins the GDD and CONTENT.md when it is built and the simulator has fitted it. **Version 0.4's numbers stay frozen** for everything they cover. This draft was written on Opus 5.5 (design work normally runs on Fable) and waits for a fresh-eyes audit.
+Only the changes in C.1 take effect in the GDD now. Everything else joins the GDD and CONTENT.md when it is built and the simulator has fitted it. **Version 0.4's numbers stay frozen** for everything they cover. This draft waits for a fresh-eyes audit.
 
 ### C.1 Rules that changed now
 

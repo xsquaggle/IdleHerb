@@ -138,7 +138,7 @@ A thing that tiers up keeps its own art: only its frame, emblem, glow and pips c
 
 | Who | Next |
 |---|---|
-| Fresh-eyes reviewer, on Fable | Audit design 0.5 (Lawson's review rule: "Have Fable 5.2 audit it, and if it passes, then move on!") |
+| Fresh-eyes reviewer | Audit design 0.5, as Lawson's review rule asks for every design version |
 | Game Designer | Fold in the audit's notes. Then write each system into the GDD and CONTENT.md when the build reaches it |
 | Phase 1 build thread | The seven foundations in section 3, Phase 1 (EXPANSION 15.1) |
 | Balance simulator | Design 0.4's list first (CHANGES B.6), then EXPANSION 15.2 |
