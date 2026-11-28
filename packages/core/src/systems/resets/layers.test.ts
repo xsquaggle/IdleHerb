@@ -17,7 +17,7 @@ const content = loadContent();
 function readyToReplant(): Game {
   const g = new Game({ content, seed: 11 });
   const ws = g.state.worlds[0]!;
-  ws.lifetime = Num.from(1e14);
+  ws.lifetime = Num.from(1e16);
   ws.floors[ws.floors.length - 1]!.level = 1;
   return g;
 }
@@ -49,7 +49,7 @@ describe('reset layers', () => {
     expect(a.state.compost.eq(pending)).toBe(true);
     expect(a.state.worlds[0]!.claimed.eq(pending)).toBe(true);
     expect(a.counter('replants')).toBe(1);
-    expect(a.state.worlds[0]!.lifetime.eq(Num.from(1e14))).toBe(true);
+    expect(a.state.worlds[0]!.lifetime.eq(Num.from(1e16))).toBe(true);
     expect(a.state.compost.eq(b.state.compost) && a.state.compostRecordPow === b.state.compostRecordPow).toBe(true);
     const reset = events.find((e) => e.type === 'reset');
     expect(reset && reset.type === 'reset' && reset.layer === 'replant' && reset.n === 1).toBe(true);
