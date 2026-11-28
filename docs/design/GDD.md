@@ -761,7 +761,7 @@ Version 0.4 planned no third layer in v1, and v1.0 still has none. Design 0.5 ad
 | 3 | New Generation | Laurels | about day 30 | v1.1 |
 | 4 | Big Bloom | Starseeds | about day 90 | v1.3 |
 
-Both follow the rules of the first two layers: the currency comes from a gentle root of a lifetime total, so quick repeats give nothing; the passive bonus counts every unit earned in its scope, so spending never lowers it; and the shop's power items have level caps. At a New Generation, Ribbons are counted per generation, as Compost is counted per era: `compostAllTime` in section 12.2 becomes `compostThisGeneration`. The layers are designed in EXPANSION.md section 7 and join this section when they are built. The engine holds reset layers as a list (EXPANSION 15.1), so they are new rows, not new code.
+Both follow the rules of the first two layers: the currency comes from a gentle root of a lifetime total, so quick repeats give nothing; the passive bonus counts every unit earned in its scope, so spending never lowers it; and the shop's power items have level caps. A bonus that one layer gives to the gain of the layer below is capped as well (EXPANSION 7.3). At a New Generation, Ribbons are counted per generation, as Compost is counted per era: `compostAllTime` in section 12.2 becomes `compostThisGeneration`. The layers are designed in EXPANSION.md section 7 and join this section when they are built. The engine holds reset layers as a list (EXPANSION 15.1), so they are new rows, not new code.
 
 ## 13. How bonuses stack
 

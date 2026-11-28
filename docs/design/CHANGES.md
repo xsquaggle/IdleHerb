@@ -43,7 +43,7 @@ Every new constant is listed in EXPANSION.md, Appendix B.
 
 **Phase 1 build thread (engine).** Build the seven foundations of EXPANSION 15.1 into the slice: tiers as data, `tier` and `nativeTier` on cards, one reveal player with a debug reveal theatre for all eleven tiers, one `moment(tier, place, form)` effect, chests by tier 1 to 11, reset layers as a list, and counted taps as a flag on the input source. Nothing else from 0.5 goes into the slice. Phase 2's list is in EXPANSION 15.1 and ROADMAP 3.
 
-**Balance simulator.** First design 0.4's list (B.6). Then EXPANSION 15.2, in its order, as each system is built. The new numbers are first-pass and are fitted then. One check is worth doing now: the Head crowning adds one Tier Up step (×1.5 and the Crown crest) to a Head around day 58 to 68. Confirm it does not move the Festival rhythm of GDD 17.5.
+**Balance simulator.** First design 0.4's list (B.6). Then EXPANSION 15.2, in its order, as each system is built. The new numbers are first-pass and are fitted then. One check is worth doing now: the Head crowning adds one Tier Up step (×1.5 and the Crown crest) to a Head around day 58 to 68. Confirm it does not move the Festival rhythm of GDD 17.5. When the reset layers are built, items 5 and 6 of EXPANSION 15.2 include playing several generations and Big Blooms, to confirm the gaps between them do not shrink (C.6).
 
 **Art.** Style bible v1.7 already covers the ladder and the reveal climb. Fit EXPANSION 15.3 into the batch plan in the order of ROADMAP 5. A thing that tiers up keeps its own art: only the frame, emblem, glow and pips change.
 
@@ -63,6 +63,17 @@ The audit that passed version 0.4 (the review on PR #7) left two notes for the r
 
 1. **Targets list, item 5:** two targets were widened after the final run. Festivals by day 30 went from 9 to 11 to 9 to 12 for active and mixed players, and the idle player's World 5 went from day 26 to day 27.
 2. **Still for a playtest:** the idle player's Festival rhythm steps up late too. Its gaps are 2 days up to about day 27, where 3 to 6 are wanted, and 3.4 to 3.6 days after day 30, where 5 to 9 are wanted.
+
+### C.6 Fixes from the fresh-eyes audit of 0.5
+
+The audit of this draft (the review on PR #8) found one thing that had to change before 0.5 could stand, in the two new reset layers. Nothing in version 0.4 changes.
+
+1. **Two gain bonuses had no cap.** Every Laurel gave +10% Ribbon gain and every Starseed +20% Laurel gain, without limit. By the arithmetic of GDD 17.6, point 1, that feeds itself: each New Generation would arrive sooner than the one before. Now only the first `LAUREL_RIBBON_CAP = 10` Laurels and the first `STARSEED_LAUREL_CAP = 5` Starseeds count, so +100% at most each. EXPANSION 1.3 (rule 5) and 7.3 say why, and EXPANSION 7.1 shows where the gain sits in the formulas.
+2. **Laurels are counted per Bloom.** A Big Bloom sets `laurelsClaimed` to 0, but Laurels were counted from every Ribbon ever claimed, so every old Laurel would have been pending again at once. `ribbonsLifetime` is now `ribbonsThisBloom`, which a Big Bloom resets. Starseeds still count every Laurel ever claimed.
+3. **Two more simulator checks** (EXPANSION 15.2, items 5 and 6): play at least six generations and three Big Blooms, and confirm the gaps between them do not shrink.
+4. ROADMAP 1 shows PR #6 and PR #7 as merged, and one art note was reworded.
+
+The two cap values are first-pass, like every number in EXPANSION, and they are the Game Designer's to change.
 
 ## Version 0.4: the balance simulator's numbers
 

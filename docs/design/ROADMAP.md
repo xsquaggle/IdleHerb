@@ -6,8 +6,8 @@ Design version 0.5, draft, 2026-11-28. Owner: Game Designer. This file says whic
 
 | Part | State |
 |---|---|
-| Phase 0: design | GDD 0.4 written (PR #7, open). Design 0.5, the long game, is this draft |
-| Phase 0: balance simulator | Delivered on design 0.4 (PR #6, open). Numbers frozen until a playtest |
+| Phase 0: design | GDD 0.4 merged (PR #7). Design 0.5, the long game, is this draft |
+| Phase 0: balance simulator | Delivered on design 0.4 and merged (PR #6). Numbers frozen until a playtest. The content tables are rebuilt from 0.4 next (CHANGES B.6) |
 | Phase 0: tech plan | Merged (PR #1 and PR #4). TypeScript, PixiJS and Electron, with a phone browser build |
 | Phase 0: art direction | Style bible v1.7 (PR #2, open) already draws all eleven tiers. Batches 1 to 3 are made and cleaned. Batch 4 is written and waiting for images. Batches 5 to 8 (about 58 images) are left for launch |
 | Phase 1: vertical slice | Started 2026-11-28 |
@@ -132,7 +132,7 @@ The Art Director numbers the batches and may reorder them. This is the order the
 | The Moon's three spots | v1.2 | New |
 | The Constellation sky and Nebula Nursery's two spots | v1.3 | New |
 
-A thing that tiers up keeps its own art: only its frame, emblem, glow and pips change. Where a recolour or an overlay can stand in for a drawn variant (a chest's trim, a rod's wrap), the Art Director decides.
+A thing that tiers up keeps its own art: only its frame, emblem, glow and pips change. Where a recolour or an overlay can stand in for a drawn variant (a chest's edging, a rod's grip), the Art Director decides.
 
 ## 6. Who does what next
 
@@ -168,7 +168,7 @@ The long game adds these checks:
 | Risk | Plan |
 |---|---|
 | **Scope.** The launch part of the long game is about as big again as Phase 2a | Section 3 orders it so each step stands alone. If time runs short, steps 7 to 9 of Phase 2b move to v1.1, and v1.0 is still a complete game |
-| **Balance.** Tier Up and Floor Improvements add a lot of power | The simulator refits before Phase 3 (EXPANSION 15.2), and every power item has a cap or a gentle root (GDD 13.6) |
+| **Balance.** Tier Up and Floor Improvements add a lot of power | The simulator refits before Phase 3 (EXPANSION 15.2), and every power item has a cap or a gentle root (GDD 13.6). The two new reset layers are played over several generations before v1.1 and v1.3 ship, to confirm the gaps between resets do not shrink (EXPANSION 15.2, items 5 and 6) |
 | **Too much at once** | One new thing at a time (EXPANSION 13). The first hour gains only Golden Sprout tiers and Floor Improvements |
 | **Art volume** | Kits per world for props, recolours and overlays where they work, and art ordered by what the build needs next |
 | **Reveal fatigue** | The short form for things that happen often, skipping after two seconds once a tier has been seen, and a setting for reveal length |

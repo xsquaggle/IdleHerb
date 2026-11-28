@@ -55,7 +55,7 @@ Owner: Game Designer. Companion files: [GDD.md](GDD.md) (rules and formulas, ver
 2. **Every roll shows its odds and has pity.** That covers chests, catches, finds, rocks, Golden Sprout tiers and weekend tiers.
 3. **Nothing is ever taken from the player.** A missed bite, a half-dug tile, a lost challenge and an unused charge cost nothing. A tier-up never lowers anything.
 4. **Timed bonuses add into the one capped Boost** (GDD 13.5), Garden Treats included. Lump sums pay from `steadyIPS`.
-5. **Nothing bought with any currency or material multiplies profit by a fixed factor per level unless it has a level cap.** Endless items add a fixed step, so they grow slowly.
+5. **Nothing bought with any currency or material multiplies profit by a fixed factor per level unless it has a level cap.** Endless items add a fixed step, so they grow slowly. **A bonus to the gain of a reset currency (Ribbons or Laurels) always has a cap** as well (section 7.3).
 6. **Chest luck still comes only from skills and research, and Compost gain only from skills and the Compost Shop** (GDD 13.4). The Constellation map counts as a skill tree here, and none of its stars give either. Style, collections, heirlooms, tools, Treats and the Laurel Shop never give either. Chest luck means the stat in GDD 8.3 rule 6: an activity's own crate (a Tackle Box, a Buried Chest, a Geode) can be made better by that activity's gear and sets, because that is not chest luck.
 7. **Activity taps are not counted taps** (GDD 6.1). They give no Combo, no Spurt meter, no Hearth Heat and no tap achievements. The tower and the field each have their own fun.
 8. **One new thing at a time.** Every system here unlocks alone, with a story beat and one line from Pip (section 13).
@@ -369,23 +369,27 @@ A helper can go on an **Outing** instead of working the overflow: 4, 8 or 24 hou
 | 3 | **New Generation** | **Laurels** | about day 30 | every 1 to 2 weeks |
 | 4 | **Big Bloom** | **Starseeds** | about day 90 | every 3 to 6 weeks |
 
-The same three promises hold at every layer: the currency comes from a gentle root of a lifetime total, so quick repeats give nothing; the passive bonus counts every unit ever earned in its scope, so spending never costs the bonus; and the shop's power items have level caps.
+The same three promises hold at every layer: the currency comes from a gentle root of a lifetime total, so quick repeats give nothing; the passive bonus counts every unit ever earned in its scope, so spending never costs the bonus; and the shop's power items have level caps. The new layers add a fourth promise: a bonus that one layer gives to the gain of the layer below is always capped (section 7.3).
 
 ### 7.1 New Generation (Laurels)
 
 **Fiction:** the Head Gardener retires with honours. Their portrait goes up in the Hall of Fame, the trowel passes to the next generation of the family, and the whole brand starts again from one windowsill, with the family's laurels on the wall.
 
 ```
-ribbonsTotal  = floor( (compostThisGeneration / RIBBON_C0) ^ RIBBON_EXP )      (GDD 12.2, scoped to the generation)
-laurelsTotal  = floor( (ribbonsLifetime / LAUREL_R0) ^ LAUREL_EXP )
+ribbonGain    = 1 + LAUREL_RIBBON_PCT x min(laurelsClaimed, LAUREL_RIBBON_CAP) + (the other Ribbon gain bonuses)
+ribbonsTotal  = floor( ribbonGain x (compostThisGeneration / RIBBON_C0) ^ RIBBON_EXP )      (GDD 12.2, scoped to the generation)
+laurelGain    = 1 + STARSEED_LAUREL_PCT x min(starseedsClaimed, STARSEED_LAUREL_CAP)        (section 7.2)
+laurelsTotal  = floor( laurelGain x (ribbonsThisBloom / LAUREL_R0) ^ LAUREL_EXP )
 laurelsPending = laurelsTotal - laurelsClaimed
 ```
 
-- `compostThisGeneration` is what 0.4 calls `compostAllTime`, counted from the start of the current generation. `ribbonsLifetime` is every Ribbon ever claimed, in every generation. `LAUREL_EXP = 0.5`. `LAUREL_R0` is fitted by the simulator so that `FIRST_GEN_MIN = 3` Laurels are pending around day 30 for an active player.
+- `compostThisGeneration` is what 0.4 calls `compostAllTime`, counted from the start of the current generation. `ribbonsThisBloom` is every Ribbon claimed since the last Big Bloom, in every generation since then. Before the first Big Bloom that is every Ribbon ever claimed. It is scoped the way `compostThisGeneration` is: a Big Bloom sets `laurelsClaimed` to 0, so the total that Laurels are counted from has to start again with it, or every old Laurel would be pending again at once.
+- **Ribbon gain** is one number. Its bonuses add together, by the rule of GDD 13: Laurels (below, capped), Festival Fame (ten levels), the Legacy Builder skill (section 8.1) and the Golden Gardener's Hat (section 9.1). Every one of them is finite. A pending count never shows below 0.
+- `LAUREL_EXP = 0.5`. `LAUREL_R0` is fitted by the simulator so that `FIRST_GEN_MIN = 3` Laurels are pending around day 30 for an active player.
 - **Unlocks** when Mount Mitten has been reached and 3 Laurels are pending. Later generations need 1.
 - **On New Generation:** `laurelsClaimed += laurelsPending`. Everything a Festival resets resets (GDD 12.2). `compostThisGeneration` and `ribbonsClaimed` reset to 0. The Ribbon Shop's power items reset: Golden Hour, Master Composter, Festival Fireworks and Blue Ribbon Polish. The Ribbon passive (GDD 12.2) then counts the Ribbons of the new generation, as the Compost passive counts the Compost of the current era.
 - **Kept:** every slot and convenience bought in the Ribbon Shop (deeds, the Auto-Gardener, Auto-Replant, the second desk, heirloom shelves, the third planter, the Deluxe Basket), and everything a Festival keeps, plus activities, tools, helpers, ores, tier-ups, cosmetics and collections.
-- **Passive:** every Laurel ever claimed gives `LAUREL_PCT = +50%` profit in every world and `LAUREL_RIBBON_PCT = +10%` Ribbon gain. Spending Laurels does not lower either.
+- **Passive:** every Laurel claimed gives `LAUREL_PCT = +50%` profit in every world. The first `LAUREL_RIBBON_CAP = 10` Laurels also give `LAUREL_RIBBON_PCT = +10%` Ribbon gain each, so +100% at most. Spending Laurels does not lower either.
 - Each New Generation gives a Prism Chest (a Sunburst Chest every fifth time), a free respec, an Ungodly Sprout and a new rooftop ornament for the tower, up to ten.
 - **Targets:** after the first New Generation, an active player is back to their old Ribbon total within 3 days and ahead of it after that. Generations land 7 to 14 days apart.
 
@@ -416,10 +420,10 @@ starseedsTotal   = floor( (laurelsLifetime / STARSEED_L0) ^ STARSEED_EXP )
 starseedsPending = starseedsTotal - starseedsClaimed
 ```
 
-- `STARSEED_EXP = 0.5`. `STARSEED_L0` is fitted so that the first Starseed is pending around day 90 for an active player.
+- `laurelsLifetime` is every Laurel ever claimed, in every Bloom. It never resets. `STARSEED_EXP = 0.5`. `STARSEED_L0` is fitted so that the first Starseed is pending around day 90 for an active player.
 - **Unlocks** when the Nebula Nursery has been reached and a Starseed is pending. It ships with that world (ROADMAP).
-- **On Big Bloom:** everything a New Generation resets resets, plus `laurelsClaimed` and the Laurel Shop's power items (Golden Legacy, Festival Fame, Laurel Polish). Its slots and conveniences stay, and so does the Hall of Fame.
-- **Passive:** every Starseed gives `STARSEED_PCT = +100%` profit in every world and `STARSEED_LAUREL_PCT = +20%` Laurel gain.
+- **On Big Bloom:** everything a New Generation resets resets, plus `laurelsClaimed`, `ribbonsThisBloom` and the Laurel Shop's power items (Golden Legacy, Festival Fame, Laurel Polish). Its slots and conveniences stay, and so does the Hall of Fame.
+- **Passive:** every Starseed gives `STARSEED_PCT = +100%` profit in every world. The first `STARSEED_LAUREL_CAP = 5` Starseeds also give `STARSEED_LAUREL_PCT = +20%` Laurel gain each, so +100% at most.
 - Starseeds are spent on the **Constellation map** (section 8.4). The first Big Bloom opens Grailstone, the Grailed tier and the Holy Sprout, and gives a Grail Chest.
 
 ### 7.3 How the profit formula grows
@@ -438,6 +442,10 @@ profitMult(floor) = (version 0.4 formula, with managerProfit and the trait value
 ```
 
 Laurel Polish and the Evergreen ranks are the only endless items. Both add a fixed step whose price rises, so they grow with the logarithm of the effort, like Blue Ribbon Polish.
+
+**The arithmetic of GDD 17.6, point 1, for four layers.** Version 0.4 has `e` at about 0.75. Laurels are the square root of the Ribbon term and add about 0.1, and Starseeds are the square root of that and add about 0.05. So `e` is about 0.9. That is still below 1, with little room left.
+
+**Why the two gain bonuses are capped.** Ribbon gain and Laurel gain are not profit, so rule 5 of section 1.3 did not cover them at first. They multiply the count of a currency whose own passive multiplies profit, so an open-ended one feeds itself. With +10% Ribbon gain for every Laurel and no cap, the Ribbons of one generation would grow faster than the Ribbons the next Laurel costs, and each New Generation would arrive sooner than the one before, where the target is 7 to 14 days apart. By the same arithmetic, with the caps the wait for the next Laurel grows slowly with the Laurels held, as the wait for the next Ribbon does in 0.4. The cap values are first-pass and the simulator fits them (section 15.2, items 5 and 6). The fresh-eyes audit of 0.5 added both caps and scoped `ribbonsThisBloom` (CHANGES C.6).
 
 ## 8. Longer trees
 
@@ -724,8 +732,8 @@ In this order, after design 0.4's own list (CHANGES B.6):
 2. Golden Sprout tiers: check that the average visitor payout matches 0.4.
 3. Fishing and digging: measure cards and Pollen per day with them, and keep total chests per day within about +40% of 0.4.
 4. Mining and Tier Up: measure the power curve from day 8 and keep the Festival rhythm near 0.4's (GDD 17.5: one to five days apart up to day 30).
-5. New Generation: fit `LAUREL_R0` (first one around day 30) and check the return to the old Ribbon total within 3 days.
-6. Big Bloom: fit `STARSEED_L0` (around day 90) once worlds 5 and 6 are in the tables.
+5. New Generation: fit `LAUREL_R0` (first one around day 30) and check the return to the old Ribbon total within 3 days. Then play at least six generations and confirm that the gaps between them do not shrink (target 7 to 14 days), and fit `LAUREL_RIBBON_CAP` there. This is the check of GDD 17.6, point 1, for layer 3.
+6. Big Bloom: fit `STARSEED_L0` (around day 90) once worlds 5 and 6 are in the tables. Play to at least the third Big Bloom, confirm that the gaps do not shrink (target 3 to 6 weeks), and fit `STARSEED_LAUREL_CAP`.
 7. Report the day of each tier's first item for each play style.
 
 ### 15.3 Art Director
@@ -808,10 +816,12 @@ Eleven climbing chime notes and eleven closing stings (section 4.1), the cast, b
 | `LAUREL_R0` | fitted by the simulator | 7.1 |
 | `LAUREL_PCT` | 0.5 | 7.1 |
 | `LAUREL_RIBBON_PCT` | 0.1 | 7.1 |
+| `LAUREL_RIBBON_CAP` | the first 10 Laurels (+100% Ribbon gain at most) | 7.1 |
 | `STARSEED_EXP` | 0.5 | 7.2 |
 | `STARSEED_L0` | fitted by the simulator | 7.2 |
 | `STARSEED_PCT` | 1.0 | 7.2 |
 | `STARSEED_LAUREL_PCT` | 0.2 | 7.2 |
+| `STARSEED_LAUREL_CAP` | the first 5 Starseeds (+100% Laurel gain at most) | 7.2 |
 | `LEVEL_CAP` | 250 (was 112) | 8.2 |
 | `EVERGREEN_XP` | 60,000 | 8.2 |
 | `HEIRLOOM_SLOTS` (most) | 8 (was 6) | 9.1 |
