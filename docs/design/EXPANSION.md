@@ -43,6 +43,7 @@ Owner: Game Designer. Companion files: [GDD.md](GDD.md) (rules and formulas, ver
 | Expeditions cut from v1 (AUDIT 6) | They return as Outings for the helpers, in the second update | Section 6.6 |
 | Tower skins cut from v1 (AUDIT 6) | Style is a planned system with tower skins, outfits and effects | Section 10 |
 | Achievements have five tiers | Eleven, named and drawn by rarity | Section 12.1 |
+| Offline efficiency stops at 100%, with only Compound Interest and the Night Market after the cap (GDD 13.4) | The Lavender bright star raises the cap to 125%, and the Patient Hearts motto joins the after-cap bonuses. Nothing else changes | Section 1.3, rule 10 |
 | The Ribbon Shop never resets (CONTENT 8) | A New Generation resets its four power items. Its slots and conveniences stay | Section 7.1 |
 | `RARITY_FACTOR` for an Exotic plant is 8 | 11, with Mythic at 7.5 below it | Section 2.2 |
 | A Windfall pays `WINDFALL_SECONDS = 60` | `WINDFALL_BASE = 40 s` times the visitor's `tierPower`, the same on average | Section 4.4 |
@@ -60,6 +61,7 @@ Owner: Game Designer. Companion files: [GDD.md](GDD.md) (rules and formulas, ver
 7. **Activity taps are not counted taps** (GDD 6.1). They give no Combo, no Spurt meter, no Hearth Heat and no tap achievements. The tower and the field each have their own fun.
 8. **One new thing at a time.** Every system here unlocks alone, with a story beat and one line from Pip (section 13).
 9. **Hemp guardrails and words** (GDD 2.2 and 2.3) apply to every new name. Section 14 adds words for the new systems. Fish are always caught and released.
+10. **Offline efficiency may go above 100%, in named ways only.** Its cap stays `OFFLINE_EFF_CAP = 1.0` (GDD 13.4), and every point and "offline earnings" bonus still counts under it, Evergreen ranks, the Millpond's display and outfit sets included. The Lavender bright star (section 8.4) raises that cap to `LAVENDER_OFFLINE_CAP = 1.25`, and nothing else moves it. After the cap, only three named bonuses apply: Compound Interest and the Night Market, as in 0.4, and the Patient Hearts motto (section 7.1). They apply only to real time away, so Time Warp and the Time Capsule pay at the capped efficiency, and the fair stall keeps its own fixed rule (GDD 15.3). The formula and the reasons are in CHANGES C.7.
 
 ## 2. The rarity ladder
 
@@ -407,7 +409,7 @@ laurelsPending = laurelsTotal - laurelsClaimed
 | Family Album | Hall of Fame frames and the portrait kit's extra parts | 1 | 5 |
 | Laurel Polish | Each Laurel gives +2 points more profit per level (50% becomes 52%, 54% and so on) | endless | `20 x 1.15^(n-1)`, rounded up |
 
-**Family Mottos** (one at a time): **Busy Hands** (tap power +100%, under the tap cap), **Patient Hearts** (offline efficiency +20 points, applied after the cap), **Keen Eyes** (Pollen from every source +50%), **Field Folk** (charges regrow 50% faster) and **Showfolk** (Golden Sprouts roll one tier higher, up to Exotic). A motto changes how a generation plays, which keeps the fourth and fifth generation fresh.
+**Family Mottos** (one at a time): **Busy Hands** (tap power +100%, under the tap cap), **Patient Hearts** (offline efficiency +20 points, `PATIENT_HEARTS_PTS = 0.20`, added after the cap, so it can lift efficiency above 100%: rule 10 of section 1.3), **Keen Eyes** (Pollen from every source +50%), **Field Folk** (charges regrow 50% faster) and **Showfolk** (Golden Sprouts roll one tier higher, up to Exotic). A motto changes how a generation plays, which keeps the fourth and fifth generation fresh.
 
 **The Hall of Fame** holds a portrait of every retired Head Gardener, built from a small kit of hats, hair and aprons, with that generation's records: Festivals held, best Ribbons, first Mythic, best fish. It is the family album of the save.
 
@@ -445,7 +447,7 @@ Laurel Polish and the Evergreen ranks are the only endless items. Both add a fix
 
 **The arithmetic of GDD 17.6, point 1, for four layers.** Version 0.4 has `e` at about 0.75. Laurels are the square root of the Ribbon term and add about 0.1, and Starseeds are the square root of that and add about 0.05. So `e` is about 0.9. That is still below 1, with little room left.
 
-**Why the two gain bonuses are capped.** Ribbon gain and Laurel gain are not profit, so rule 5 of section 1.3 did not cover them at first. They multiply the count of a currency whose own passive multiplies profit, so an open-ended one feeds itself. With +10% Ribbon gain for every Laurel and no cap, the Ribbons of one generation would grow faster than the Ribbons the next Laurel costs, and each New Generation would arrive sooner than the one before, where the target is 7 to 14 days apart. By the same arithmetic, with the caps the wait for the next Laurel grows slowly with the Laurels held, as the wait for the next Ribbon does in 0.4. The cap values are first-pass and the simulator fits them (section 15.2, items 5 and 6). The fresh-eyes audit of 0.5 added both caps and scoped `ribbonsThisBloom` (CHANGES C.6).
+**Why the two gain bonuses are capped.** Ribbon gain and Laurel gain are not profit, so rule 5 of section 1.3 did not cover them at first. They multiply the count of a currency whose own passive multiplies profit, so an open-ended one feeds itself. With +10% Ribbon gain for every Laurel and no cap, the Ribbons of one generation would grow faster than the Ribbons the next Laurel costs, and each New Generation would arrive sooner than the one before, where the target is 7 to 14 days apart. By the same arithmetic, with the caps the wait for the next Laurel grows slowly with the Laurels held, as the wait for the next Ribbon does in 0.4. The cap values are first-pass and the simulator fits them (section 15.2, items 5 and 6). The fresh-eyes audit of 0.5 added both caps and scoped `ribbonsThisBloom` (CHANGES C.6), and the Game Designer confirmed both caps, the one summed Ribbon gain and the count per Bloom on 2026-11-28 (CHANGES C.7).
 
 ## 8. Longer trees
 
@@ -547,7 +549,7 @@ Bought with Starseeds after the first Big Bloom. Eight constellations, one per p
 | Mint, the Cool Breeze | `SPURT_DURATION_CAP` rises from 45 s to 60 s, and Growth Spurts last 50% longer |
 | Basil, the Ember | `CRIT_MULT_CAP` rises from 20 to 25 |
 | Rosemary, the Storm | Tap Storms last twice as long |
-| Lavender, the Dreamer | Offline efficiency can reach 125% |
+| Lavender, the Dreamer | The offline efficiency cap rises from 100% to 125% (rule 10 of section 1.3) |
 | Sage, the Scholar | Research and bench jobs run 50% faster |
 | Chamomile, the Sleepy Sun | Morning Dew is ×3 and lasts 5 minutes |
 | Thyme, the Old Clock | The cooldown reduction cap rises from 50% to 60% |
@@ -732,7 +734,7 @@ In this order, after design 0.4's own list (CHANGES B.6):
 2. Golden Sprout tiers: check that the average visitor payout matches 0.4.
 3. Fishing and digging: measure cards and Pollen per day with them, and keep total chests per day within about +40% of 0.4.
 4. Mining and Tier Up: measure the power curve from day 8 and keep the Festival rhythm near 0.4's (GDD 17.5: one to five days apart up to day 30).
-5. New Generation: fit `LAUREL_R0` (first one around day 30) and check the return to the old Ribbon total within 3 days. Then play at least six generations and confirm that the gaps between them do not shrink (target 7 to 14 days), and fit `LAUREL_RIBBON_CAP` there. This is the check of GDD 17.6, point 1, for layer 3.
+5. New Generation: fit `LAUREL_R0` (first one around day 30) and check the return to the old Ribbon total within 3 days. Then play at least six generations and confirm that the gaps between them do not shrink (target 7 to 14 days), and fit `LAUREL_RIBBON_CAP` there. This is the check of GDD 17.6, point 1, for layer 3. Run the idle player once with Patient Hearts worn in every generation and confirm its Festival rhythm after day 30 stays in the window of GDD 17.6 (rule 10 of section 1.3).
 6. Big Bloom: fit `STARSEED_L0` (around day 90) once worlds 5 and 6 are in the tables. Play to at least the third Big Bloom, confirm that the gaps do not shrink (target 3 to 6 weeks), and fit `STARSEED_LAUREL_CAP`.
 7. Report the day of each tier's first item for each play style.
 
@@ -763,6 +765,9 @@ Eleven climbing chime notes and eleven closing stings (section 4.1), the cast, b
 
 | Constant | Value | Section |
 |---|---|---|
+| `OFFLINE_EFF_CAP` (names the cap of GDD 13.4) | 1.0 | 1.3 |
+| `LAVENDER_OFFLINE_CAP` | 1.25 | 1.3, 8.4 |
+| `PATIENT_HEARTS_PTS` | 0.20, added after the cap | 1.3, 7.1 |
 | `TIER_COUNT` | 11 | 2.1 |
 | `TIER_STEP` | 1.5 | 2.2 |
 | `RARITY_FACTOR` | 1, 1.5, 2.2, 3.2, 5, 7.5, 11, 16, 24, 36, 54 | 2.2 |
