@@ -2,7 +2,7 @@
 
 Phase 0 design audit. It covers the brief, the Cash, Inc. game bible, the earlier idle-RPG brainstorm and both art reference packs (B1 to B29). The full design that follows from these calls is in [GDD.md](GDD.md), and the content rows are in [CONTENT.md](CONTENT.md).
 
-Each call below is a decision, not an option. Where a call is big, the reason is given in a sentence or two. Section 9 lists what changed after an independent audit of the first version. Section 10 lists what changed in version 0.3, when Lawson chose one fixed manager per floor.
+Each call below is a decision, not an option. Where a call is big, the reason is given in a sentence or two. Section 9 lists what changed after an independent audit of the first version. Section 10 lists what changed in version 0.3, when Lawson chose one fixed manager per floor. Section 11 lists the calls of version 0.4, and section 12 the calls of design 0.5, the long game.
 
 ## 1. Verdict
 
@@ -225,3 +225,27 @@ The balance simulator played version 0.3 for three play styles (active, mixed, i
 | **Retired:** the multiplier budget as a target | The targets are the gate table and the Festival rhythm (GDD 17.6). The simulator still reports the budget as a reading aid |
 
 **What is not proven.** The numbers come from a simulation, not from people playing. They are frozen until a playtest, which should look first at the top floor at about 20 minutes, the long quiet stretch late in a Festival cycle, and the Combo for a player who uses only the mouse.
+
+## 12. What changed in design 0.5: the long game
+
+On 2026-11-28 Lawson asked for higher retention: better core upgrades and items, longer skill trees, higher currencies and resets, cosmetics that boost, chests from fishing, digging and mining that can be automated, and eleven rarities from Common to Grailed, each noticeably better than the one before, with reveals that scale with rarity. Lawson's words: "Add on - be creative, give it your all!" The design is in [EXPANSION.md](EXPANSION.md) and the release plan in [ROADMAP.md](ROADMAP.md). The full list of changes is in [CHANGES.md](CHANGES.md).
+
+| Call | Why |
+|---|---|
+| **Added:** eleven tiers, one ladder for everything, in Lawson's order with Mythic below Exotic | One ladder means one look, one sound and one meaning. A player who learns that aurora means Mythic knows it everywhere. Lawson's newest message wins over call p6's order |
+| **Added:** each tier about 1.5 times the one below, and a crest from Godly up | Fifty percent is a step anyone can feel. Crests make the top four tiers reach further, not only hit harder |
+| **Added:** Tier Up, so anything owned can climb to Grailed with ores and Pollen | Every card already owned becomes a long-term project. Nothing is ever replaced or thrown away, which fits pillar 5 |
+| **Kept:** chests never roll a card above Legendary | The top tiers stay goals, and chest odds stay honest. Chests of tiers 7 to 11 exist, but their extras are fixed, not rolled |
+| **Added:** fishing, digging and mining, each with a helper that uses only overflow | Lawson asked for activities that can be automated. A helper that spends only the charges a full store would waste never competes with the player, and gives an idle player everything that would have been lost |
+| **Added:** two more reset layers after launch | Festivals drift apart after week 4. New Generation (about day 30) and Big Bloom (about day 90) carry the game into months, and each one opens a deeper ore, so the top tiers arrive with them |
+| **Changed:** the call against a third layer (section 6) | It was about readability in the first hour. The new layers unlock a month or more in, one at a time, so the first hour reads exactly as before |
+| **Added:** Floor Improvements | The core loop had one kind of purchase in a run besides floors and hires. Three Improvements per floor add a choice and a doubling that shows on the floor |
+| **Added:** longer trees: a fourth branch, two more tiers, grand keystones, level cap 250 and Evergreen ranks | Lawson asked for longer trees. Each part arrives when the one before it runs out |
+| **Added:** Style, where owning a cosmetic gives the power | Lawson asked for cosmetic boosts. Because owning gives the power, a player can always wear what they like. It replaces the plan in section 6 to spend spare Ribbons on tower decorations |
+| **Added:** the Garden Diary, the Season Almanac and Baron Fauxliage's Challenges | A reason to come back every day that never punishes a missed day |
+| **Added:** rarity rolls on Golden Sprouts and weekend events, scaled so the average pays what 0.4 measured | The same income, but lumpier and more exciting |
+| **Added:** one effect call for every big moment, scaled by tier | The effort of the juice goes where the moment is biggest |
+| **Reversed in part:** expeditions and tower skins (section 6) | Expeditions return as Outings in v1.2. Tower skins return as Style. Pets stay cut: the three helpers belong to their activities |
+| **Renamed:** "Ascension" became Tier Up, and a few first-pass names were changed | "Ascension" is a religious word, and the tier names already go as far as the game should. Words like "halo", and "crack" next to "rock", were dropped for the same reason as GDD 2.3 (EXPANSION 14) |
+
+**What is not proven.** Every number in EXPANSION is first-pass. The biggest risk is power: Tier Up and Floor Improvements add a lot, so the simulator refits the new systems before Phase 3 (EXPANSION 15.2), and every new power item has a cap or a gentle root, so GDD 13.6 still holds on paper. The fresh-eyes audit of 0.5 capped the two gain bonuses that were open-ended, Ribbon gain from Laurels and Laurel gain from Starseeds (EXPANSION 7.3), and the simulator has not played the new reset layers yet (EXPANSION 15.2, items 5 and 6). The second risk is scope: the launch part of the long game is about as big again as Phase 2, so ROADMAP 8 says what moves to v1.1 if time runs short. The tier names Godly, Ungodly, Holy and Grailed are Lawson's and are rarity labels only; no religious sign is drawn or written anywhere.
