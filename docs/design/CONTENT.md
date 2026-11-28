@@ -10,6 +10,8 @@ Version 0.4, Phase 0: the balance simulator's numbers, frozen until a playtest (
 - **Art** columns say which picture already exists in Lawson's packs (B numbers) and what is new. How things look belongs to the Art Director.
 - **Launch** `yes` means the row is needed for the four-world launch. `later` rows belong to worlds 5 and 6.
 - Numbers such as `2.5e10` are big numbers.
+- **Rarity** columns use the eleven-tier ladder of GDD 8.1 (design 0.5). Every row here is Common to Legendary or Exotic, as in version 0.4.
+- **The long game** (design 0.5) has its rows as patterns in [EXPANSION.md](EXPANSION.md): fish, finds and ores, chests of tiers 7 to 11, Floor Improvements, skill tiers 4 and 5 and the Explorer branch, the four new heirloom sets, Garden Treats, cosmetics, the Laurel Shop and the Constellation map. They join this file when each system is built ([ROADMAP.md](ROADMAP.md)).
 
 ### 0.1 Effects
 
@@ -577,7 +579,7 @@ Rich Soil is the only item that multiplies profit, and its ten levels are ×9.31
 
 ## 8. Ribbon Shop
 
-Rules are in GDD 12.2. Paid in Ribbons. Nothing here ever resets.
+Rules are in GDD 12.2. Paid in Ribbons. A Festival never resets anything here. From v1.1, a New Generation resets the four power items (Golden Hour, Festival Fireworks, Master Composter and Blue Ribbon Polish) and keeps the rest (EXPANSION 7.1).
 
 | `id` | `name` | Effect | Levels | Cost |
 |---|---|---|---|---|
@@ -770,3 +772,5 @@ Each entry gives 5 Gems once and +0.25% profit forever (GDD 11.5).
 | Story characters | 3 | 3 | 0 | 3 (Pip, Baron Fauxliage, and Mayor Thyme, who hosts the Harvest Festival) |
 
 Two more plants are already pictured for the later worlds: Moonlit Lavender and Starlight Chamomile. The Moon's background (B27) exists too.
+
+The long game's launch content and art (field spots, Floor Improvements, new heirloom sets, cosmetics, Diary and Almanac) are counted in ROADMAP.md, sections 3 and 5.
