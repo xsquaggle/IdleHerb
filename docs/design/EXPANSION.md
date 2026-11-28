@@ -276,7 +276,7 @@ All three are built once, as one system with three games on top (section 15.1).
 - **A tool.** The rod, the spade and the pickaxe each have a tier from Common to Grailed. A tool can **reach** one tier above its own: a Legendary rod can hook a Mythic fish, never an Exotic one. Each tool tier above Common adds `GEAR_LUCK_STEP = 10%` luck.
 - **A helper** automates the activity: Otis the Otter fishes, Digby the Mole digs, and the Gnome Crew mines. **A helper only ever uses overflow:** when the store is full, the helper spends the charge that would have been wasted. Away from the game, the helper works through the overflow of the away time, up to the offline cap. So automation never takes a charge the player could have used, and an idle player still gets everything a full store would have thrown away. A helper never gets a Perfect Hook or a Bumper strike. Each helper tier adds `HELPER_LUCK_STEP = 5%` luck.
 - **The roll.** Each action rolls a tier from the spot's weights, `CATCH_WEIGHTS` = Common 50, Uncommon 25, Rare 13, Epic 7, Legendary 3.2, Mythic 1.2, Exotic 0.4, Godly 0.13, Ungodly 0.05, Holy 0.015, Grailed 0.005. Tiers above the tool's reach are left out and the rest are scaled to 100%. Luck multiplies the weights of Rare and better, as in GDD 8.3 rule 6. The odds are shown on the spot.
-- **The Legend Meter** is the pity: after `LEGEND_METER = 60` actions without a result at the tool's own tier or better, the next action is at the tool's tier.
+- **The Legend Meter** is the pity: after `LEGEND_METER = 60` actions without a result at the tool's own tier or better, the next action is at the tool's tier. The helper's actions count too. In the Mine it aims at a depth the player picks (section 6.5).
 - **A token** for upgrading the tool and the helper: Shiny Scales from fishing, Trinkets from digging, and the ores themselves from mining. Every result pays its tier's amount: `TOKENS` = 1, 2, 3, 5, 8, 12, 18, 27, 40, 60, 90.
 - **A crate** of its own, which is a chest of its tier (section 4.3) plus one extra from the activity.
 - **A collection** in the Codex and the Museum (section 6.7).
@@ -327,6 +327,8 @@ All three are built once, as one system with three games on top (section 15.1).
 **How it plays.** A rock face of `ROCK_FACE = 6` rocks. Each rock shows its tier by colour. Tap a rock to start on it (one charge), then strike it by tapping or holding until it splits open. A rock takes `ROCK_HP` strikes: 5, 8, 12, 18, 27, 40, 60, 90, 135, 200, 300, divided by the pickaxe's power, which is ×1.25 per tier. A strike has a 5% chance to be a Bumper strike for ×5 damage, with a crunch and a hit-pause. Rocks above the pickaxe's reach sparkle but cannot be struck yet. This is the most clicker-like of the three, on purpose.
 
 **Ores.** A broken rock gives ores of its tier, `ORE_YIELD` = 3 for Common to Legendary, 2 for Mythic to Godly, 1 for Ungodly to Grailed. 5% of rocks (`GEODE_CHANCE`) also drop a Geode of their tier.
+
+**Deep pity.** In the Mine, the Legend Meter aims at a depth the player picks: any open depth up to the pickaxe's reach, and the reach itself unless the player picks another. After `LEGEND_METER` rocks without one of that tier or better, the next rock is of that tier. Without this, the ore of the next depth would come only from rolls of 0.13% or less, and each of the top pickaxes would take months. With it, an active player breaks about four rocks a day of the picked ore (240 actions a day, one in 60), which is about 8 Sunstone a day, or 4 of a deeper ore. A new depth's pickaxe then takes two to four days, and Pollen, not ore, sets the pace of the top tier-ups. Picking a shallower depth is how a player goes back for an ore the pickaxe has passed, which would otherwise come only from rare rolls.
 
 | Tier | Ore | Opens |
 |---|---|---|
@@ -733,7 +735,7 @@ In this order, after design 0.4's own list (CHANGES B.6):
 1. Floor Improvements: refit `D` and the tickets so the gate table of 0.4 still holds.
 2. Golden Sprout tiers: check that the average visitor payout matches 0.4.
 3. Fishing and digging: measure cards and Pollen per day with them, and keep total chests per day within about +40% of 0.4.
-4. Mining and Tier Up: measure the power curve from day 8 and keep the Festival rhythm near 0.4's (GDD 17.5: one to five days apart up to day 30).
+4. Mining and Tier Up: measure the power curve from day 8 and keep the Festival rhythm near 0.4's (GDD 17.5: one to five days apart up to day 30). Check the supply of each ore against `TIERUP_ORE`, `PICK_ORE` and `GEAR_ORE`, with the deep pity of section 6.5: a picked deep ore should come at about 4 to 8 a day for an active player.
 5. New Generation: fit `LAUREL_R0` (first one around day 30) and check the return to the old Ribbon total within 3 days. Then play at least six generations and confirm that the gaps between them do not shrink (target 7 to 14 days), and fit `LAUREL_RIBBON_CAP` there. This is the check of GDD 17.6, point 1, for layer 3. Run the idle player once with Patient Hearts worn in every generation and confirm its Festival rhythm after day 30 stays in the window of GDD 17.6 (rule 10 of section 1.3).
 6. Big Bloom: fit `STARSEED_L0` (around day 90) once worlds 5 and 6 are in the tables. Play to at least the third Big Bloom, confirm that the gaps do not shrink (target 3 to 6 weeks), and fit `STARSEED_LAUREL_CAP`.
 7. Report the day of each tier's first item for each play style.
@@ -794,7 +796,7 @@ Eleven climbing chime notes and eleven closing stings (section 4.1), the cast, b
 | `GEAR_LUCK_STEP` | 0.10 | 6.1 |
 | `HELPER_LUCK_STEP` | 0.05 | 6.1 |
 | `CATCH_WEIGHTS` | 50, 25, 13, 7, 3.2, 1.2, 0.4, 0.13, 0.05, 0.015, 0.005 | 6.1 |
-| `LEGEND_METER` | 60 actions | 6.1 |
+| `LEGEND_METER` | 60 actions. In the Mine it aims at a picked depth, up to the pickaxe's reach | 6.1, 6.5 |
 | `TOKENS` (per result, by tier) | 1, 2, 3, 5, 8, 12, 18, 27, 40, 60, 90 | 6.1 |
 | `BITE_WINDOW` | 0.8 s | 6.3 |
 | `PERFECT_WINDOW` | 0.25 s | 6.3 |
