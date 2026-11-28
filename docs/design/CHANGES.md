@@ -106,7 +106,7 @@ The simulator's core raises only Windfalls with `visitor.reward` (Skipper Papaya
 
 The audit of 0.5 (the review on PR #8, note 2) found Grailstone and Cloud Pearl very thin. The arithmetic shows a design problem, not a tuning one. Every spot shares `CATCH_WEIGHTS`, and a pickaxe reaches one tier above its own, so the ore of the next depth came only from rolls of 0.13% or less. With gear luck and 240 rocks a day, that is about 0.9 Sunstone, 0.17 Eclipse Stone, 0.05 Cloud Pearl and 0.02 Grailstone a day, so the last three pickaxes would have taken about 3 months, 9 months and 2 years. An ore the pickaxe had passed also nearly stopped, while every tier-up to that tier still needs 5 or 6 of it.
 
-The fix is one rule with no new numbers, from the long-game designer's proposal p7. In the Mine the Legend Meter now aims at a depth the player picks, up to the pickaxe's reach and the reach by default. An active player gets about four rocks a day of the ore they need, the deepest included, and can go back for an ore the pickaxe has passed (EXPANSION 6.5). The helper's actions count toward the meter in all three activities (EXPANSION 6.1), so a player who lets the Gnome Crew work the overflow gets the same pity. Depths still open with the 1st, 3rd and 5th New Generation and the first Big Bloom, each new pickaxe then takes two to four days, and Pollen sets the pace of the top tier-ups. Ore is a gate, not a multiplier, so the growth exponent of GDD 17.6 does not move. The simulator checks the supply against the prices (EXPANSION 15.2, item 4).
+The fix is one rule with no new numbers, from the long-game designer's proposal p7 (`/mnt/project-files/design/proposals/p7-deep-ore-pity.md`, kept outside the repository). In the Mine the Legend Meter now aims at a depth the player picks, up to the pickaxe's reach, and by default at the deepest open depth within reach (C.11). An active player gets about four rocks a day of the ore they need, the deepest included, and can go back for an ore the pickaxe has passed (EXPANSION 6.5). The helper's actions count toward the meter in all three activities (EXPANSION 6.1), so a player who lets the Gnome Crew work the overflow gets the same pity. Depths still open with the 1st, 3rd and 5th New Generation and the first Big Bloom, each new pickaxe then takes two to four days, and Pollen sets the pace of the top tier-ups. Ore is a gate, not a multiplier, so the growth exponent of GDD 17.6 does not move. The simulator checks the supply against the prices (EXPANSION 15.2, item 4).
 
 ### C.10 Three corrections from the audit of C.7
 
@@ -116,6 +116,39 @@ The fresh-eyes audit of C.7 (the review on PR #11) passed all four calls and cor
 2. **What ×1.45 offline income does.** C.7 said it raises Compost by ×1.16 at most. That is the effect on one run of the same length. A fixed factor on all income brings every milestone that much sooner, so an all-idle player's Festival gaps can be up to about 30% shorter with both bonuses, and about a sixth shorter with Patient Hearts alone. It is still a fixed factor, so `e` does not move.
 3. **The idle check in EXPANSION 15.2, item 5.** It asked that the idle player's Festival rhythm after day 30 stay in the window of GDD 17.6. In 0.4 that rhythm is already shorter than the window (C.5, note 2), so the check now sets the run with the motto beside the run without it. Item 4 also asks the simulator to include the launch game's Ribbon gain (Legacy Builder and the Hat, ×1.3 together), because `RIBBON_C0` was fitted with none.
 4. **A note that did not block.** C.7 called Lavender "one bright star of eight", which read as if only one could be owned. A player can own all eight in time (EXPANSION 8.4), so Lavender is a choice of order, and C.7 now says so.
+
+### C.11 Record notes: the late Festival gaps and the Head crowning
+
+These sources read 90-day runs of version 0.4 for the first time: the simulator's Head crowning check (PR #14), the audit's fix to its report (PR #15) and the audit of this section (the review on PR #16). The runs cover six worlds and the four-world launch build. No number changes. These notes record what the runs found and the Game Designer's calls of 2026-11-28.
+
+1. **What 0.4 does late in the game.** The eight long research projects finish around day 60, as GDD 17.5 says: the last one, Training Day IV, lands on day 60.2 for the active player and day 63.1 for the mixed player. After that, the 90-day runs have Festival gaps above the 10-day limit:
+
+   | 90-day run | Design 0.4 alone | With the Head crowning | Heads crowned |
+   |---|---|---|---|
+   | Four worlds (v1.0), active | 11.0 days from day 67.4; 11.6 from day 78.4, still open | none | all four on day 67.4 |
+   | Four worlds (v1.0), mixed | 10.5 from day 48.6; 12.1 from day 68.3 | the same two | all four on day 80.4 |
+   | Four worlds (v1.0), idle | 10.6 from day 78.7 | none | days 78.7 and 85.5 |
+   | Six worlds, active | 11.0 from day 56.6; 12.6 from day 67.6 | 11.0 from day 56.6 | days 67.6 and 72.4 |
+   | Six worlds, mixed | 15.5 from day 71.7 | none | days 71.7 and 81.4 |
+   | Six worlds, idle | 11.2 from day 71.2 | 12.8 from day 77.2, still open on day 90 | days 71.2 and 77.2 (Worlds 1 to 4) |
+
+   The 60-day runs that GDD 17.6 quotes end before most of these. The six-world runs describe a game that only exists with v1.3, which also brings New Generation and Big Bloom. EXPANSION 15.2, item 5, checks them again with those layers.
+2. **The crowning holds the limit for the launch build's active and idle players.** With it, neither player has a gap above 10 days up to day 90 in the four-world build. Every Festival before the first crowning falls on the same day as without it, so GDD 17.5 is untouched. The four-world mixed player's 10th stars land on days 73 to 80, so its Heads are crowned on day 80.4, after both of its long gaps.
+3. **The crest matters most, then the profit step.** In the six-world active run, the gap after the second crowning was measured with parts of the step removed:
+   - With profit ×1.5 only and no crest, it is still open at 12.9 days on day 90.
+   - With profit and the crest but no perk step, it is 10.0.
+   - With the crest and the perk but no profit step, it is 11.2.
+   - With the whole step, it is 8.2.
+
+   If the step ever has to shrink, keep the crest, and cut the perk step before the profit step.
+4. **The crowning ships with Tier Up in v1.0 and never later** (ROADMAP 3, Phase 2b step 6). Any change to its timing, its step or its crest means rerunning the 90-day checks with four worlds and with six. The audit asked the simulator to add the four-world 90-day runs to its suite and report.
+5. **The gaps that are left are accepted.** They are the four-world mixed player's 10.5 days from day 48.6 and 12.1 from day 68.3, the six-world active player's 11.0 days from day 56.6, and the six-world idle player's 12.8 days from day 77.2. The crowning cannot shorten the first three:
+   - The mixed player's Heads are crowned after both of its gaps.
+   - The 11.0-day gap ends at the Festival where the first Heads are crowned.
+
+   Crowning at the 10th star itself was tested and not taken. It would either give the power before its reveal (EXPANSION 3.1, rule 8) or move the Godly scene off the Festival that GDD 14.5 gives it. In the simulator's test, the 11.0-day gap became 8.5, but all six lifts were spent by day 67. The active player's last gap was then still open at 11.5 days on day 90, where crowning at the Festival leaves 9.4. Every accepted gap starts on day 48 or later. A launch player has had v1.1 for about three weeks by day 48 (ROADMAP 2), and New Generation reshapes everything after day 30.
+6. **From about day 48 the rhythm leans on v1.1.** On its own, the launch game keeps every play style's gaps under 10 days to about day 48. With the crowning, the active and idle players stay under 10 to day 90. v1.1's date, about four weeks after launch, therefore stays the one hard date in ROADMAP, and it matters more than the first draft of this section said. GDD 17.6, point 4, and ROADMAP 2 now say so. For the record, in the six-world active run the last crowning (day 72.4) is followed by a closed gap of 8.2 days, and then by one of 9.4 days still open on day 90.
+7. **Two wording notes from the second audit of PR #11.** The deep pity aims by default at the deepest open depth within the pickaxe's reach (EXPANSION 6.5). C.9 now gives proposal p7's path.
 
 ## Version 0.4: the balance simulator's numbers
 

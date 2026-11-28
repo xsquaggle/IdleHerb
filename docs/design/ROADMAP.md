@@ -22,7 +22,7 @@ Design version 0.5, draft, 2026-11-28. Owner: Game Designer. This file says whic
 | v1.3 | Nebula Nursery | before the first players reach month 3 | World 6, the fourth reset layer (Big Bloom and Starseeds), the Constellation map and the Grailed tier |
 | Later | ideas, not promises | | Kite Flying, Beekeeping, the Jukebox, seasonal calendar events, more Almanac themes |
 
-The game never waits on an update to be fun. Before v1.1, an active player past day 30 still has Festivals, World Mastery, research and Tier Up up to Exotic. Every tier that is not out yet shows as a silhouette with one line of hint.
+The game never waits on an update to be fun. Before v1.1, an active player past day 30 still has Festivals, World Mastery, research and Tier Up up to Exotic. Every tier that is not out yet shows as a silhouette with one line of hint. On its own, the launch game keeps every play style's Festival gaps under 10 days to about day 48. With the Head crowning, the active and idle players stay under 10 days to day 90, but the mixed player does not (CHANGES C.11). From about day 48 the rhythm leans on v1.1, so its date is the one hard date.
 
 ## 3. Phase by phase
 
@@ -55,7 +55,7 @@ The long game adds no features to the slice. It adds seven foundations, because 
 | 3 | The field framework, then Fishing | 6.1 to 6.3 | The framework is built once; Fishing is the first game on it |
 | 4 | Garden Diary, Season Almanac and Baron's Challenges | 11.1 to 11.3 | The daily rhythm, on the guarded day counter |
 | 5 | Digging, the Workbench and Garden Treats | 6.4, 9.2 | The second game on the framework |
-| 6 | Mining and Tier Up, with Full Bloom and the Festival crowning | 3, 6.5 | Tier Up needs ores, so it comes with the Mine |
+| 6 | Mining and Tier Up, with Full Bloom and the Festival crowning | 3, 6.5 | Tier Up needs ores, so it comes with the Mine. The crowning never moves to a later release: in the 90-day runs of the launch build, it is what keeps the active and idle players' late Festival gaps under 10 days (CHANGES C.11) |
 | 7 | Style: Wardrobe, Style level and Boutique | 10 | Needs cosmetics from steps 1 to 6 to be worth opening |
 | 8 | Longer trees: skill tiers 4 and 5, the Explorer branch, level cap 250 and Field Science | 8.1 to 8.3 | Needs the field to exist |
 | 9 | Achievements in eleven tiers, field quests, chests of tiers 7 and 8 | 4.3, 12 | Last, because they count everything above |
