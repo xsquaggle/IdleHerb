@@ -448,6 +448,46 @@ export const MomentRowSchema = z
   .strict();
 export type MomentRow = z.infer<typeof MomentRowSchema>;
 
+/** A tuning key or a plain number. */
+const tuningRef = z.union([z.string().regex(/^[A-Z][A-Z0-9_]*$/), z.number()]);
+const stepName = z.string().regex(/^[a-z][A-Za-z.]*$/);
+const resetSteps = z.object({ save: z.array(stepName), world: z.array(stepName) }).strict();
+
+/** A reset layer (tables/resets/layers.yaml; GDD 12, EXPANSION 7 and 15.1 item 6). The core runs its steps by name. */
+export const ResetLayerRowSchema = z
+  .object({
+    id: z.string().regex(/^[a-z_]+$/),
+    order: z.number().int().positive(),
+    enabled: z.boolean(),
+    scope: z.enum(['world', 'save']),
+    currency: z.string().regex(/^[a-z_]+$/),
+    gain: z
+      .object({ source: stepName, claimed: stepName, base: tuningRef, exp: tuningRef, scale: z.string().nullable(), stat: z.string().nullable() })
+      .strict(),
+    claim: z.array(stepName),
+    tally: z.array(stepName),
+    times: stepName,
+    first: tuningRef,
+    needs: z.object({ topFloorOpen: z.boolean().optional(), worldReached: tuningRef.optional() }).strict(),
+    grants: z.array(
+      z
+        .object({
+          step: stepName,
+          count: z.number().int().positive().optional(),
+          chest: z.string().regex(/^chest\.[a-z_]+$/).optional(),
+          first: z.string().regex(/^chest\.[a-z_]+$/).optional(),
+          every: z.object({ n: z.number().int().positive(), chest: z.string().regex(/^chest\.[a-z_]+$/) }).strict().optional(),
+          tier: rarity.optional(),
+          onlyFirst: z.boolean().optional(),
+        })
+        .strict(),
+    ),
+    resets: resetSteps,
+    keeps: resetSteps,
+  })
+  .strict();
+export type ResetLayerRow = z.infer<typeof ResetLayerRowSchema>;
+
 export const ArtifactRowSchema = z
   .object({
     id: z.string().regex(/^artifact\.[a-z_]+$/),
@@ -568,6 +608,7 @@ export const RawContentSchema = z
     dupeCurves: z.array(DupeCurveRowSchema),
     chests: z.array(ChestRowSchema),
     specialChests: z.array(SpecialChestRowSchema),
+    resetLayers: z.array(ResetLayerRowSchema).min(1),
     artifacts: z.array(ArtifactRowSchema),
     sets: z.array(SetRowSchema),
     skills: z.array(SkillRowSchema),

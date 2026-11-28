@@ -4,6 +4,7 @@
  * from the raw tables that packages/content reads and validates.
  */
 import { Num, parseNum } from '../kernel/num/num';
+import { hydrateResetLayers, type ResetLayer } from '../systems/resets/layers';
 import type {
   Ability, AchievementRow, ArtifactRow, ChestRow, CompostShopRow, Effect, Family, FairTable, ManagerRow, PlantRow,
   MomentRow, PoolQuestRow, RawContent, ResearchRow, RibbonShopRow, SetRow, SkillRow, StoryRow, TierId, TierRow, TraitRow, Tuning, UnlockRow,
@@ -155,6 +156,8 @@ export interface Content {
   specialChests: Map<string, number>;
   /** Big moments and their tiers (EXPANSION 4.2). */
   moments: Map<string, MomentRow>;
+  /** Reset layers, lowest first (tables/resets/layers.yaml; EXPANSION 7). */
+  resetLayers: ResetLayer[];
   compostE0: Num;
   ribbonC0: Num;
   worlds: WorldDef[];
@@ -293,6 +296,7 @@ export function hydrateContent(raw: RawContent): Content {
     tiers,
     specialChests: new Map(raw.specialChests.map((c) => [c.id, c.tier])),
     moments: new Map(raw.moments.map((m) => [m.id, m])),
+    resetLayers: hydrateResetLayers(raw.resetLayers, raw.tuning, new Set([...raw.chests.map((c) => c.id), ...raw.specialChests.map((c) => c.id)])),
     compostE0: parseNum(String(raw.tuning.COMPOST_E0)),
     ribbonC0: parseNum(String(raw.tuning.RIBBON_C0)),
     worlds,

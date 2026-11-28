@@ -19,6 +19,7 @@ export * from './systems/progression/logic';
 export * from './systems/offline/logic';
 export * from './systems/worlds/logic';
 export * from './systems/resets/logic';
+export * from './systems/resets/layers';
 export * from './systems/chests/logic';
 
 export * from './game/state';

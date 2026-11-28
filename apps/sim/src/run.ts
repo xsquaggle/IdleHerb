@@ -211,11 +211,9 @@ class Recorder {
       case 'worldReached':
         this.add({ kind: 'world', id: this.g.content.worlds[e.world]!.id, world: e.world, n: e.first ? 1 : 0 });
         break;
-      case 'replant':
-        this.add({ kind: 'replant', id: `replant.w${e.world + 1}`, world: e.world, n: s.worlds[e.world]!.replantsEver, amount: l10(e.gained) ?? 0, runSeconds: e.runSeconds });
-        break;
-      case 'festival':
-        this.add({ kind: 'festival', id: 'festival', n: e.n, amount: l10(e.ribbons) ?? 0 });
+      case 'reset':
+        if (e.layer === 'replant') this.add({ kind: 'replant', id: `replant.w${e.world + 1}`, world: e.world, n: s.worlds[e.world]!.replantsEver, amount: l10(e.gained) ?? 0, runSeconds: e.runSeconds });
+        else if (e.layer === 'festival') this.add({ kind: 'festival', id: 'festival', n: e.n, amount: l10(s.ribbonsClaimed) ?? 0 });
         break;
       case 'levelUp':
         this.add({ kind: 'level', id: `level.${e.level}`, n: e.level });

@@ -278,9 +278,6 @@ async function boot(): Promise<void> {
       case 'worldReached':
         namedMoment('world_reached', center(), { cases: e.first ? ['first'] : [] });
         break;
-      case 'festival':
-        namedMoment('festival', center(), { cases: e.n === 1 ? ['first'] : [] });
-        break;
       case 'star':
         namedMoment('mastery_star', center(), { value: e.stars });
         break;
@@ -323,13 +320,18 @@ async function boot(): Promise<void> {
         sfx.spurt();
         namedMoment('spurt', center());
         break;
-      case 'replant': {
+      case 'reset': {
+        // Every layer plays its own moment (tables/moments.yaml has a row per layer id).
+        const layer = content.resetLayers.find((l) => l.id === e.layer);
         const record = game.state.compostRecordPow > recordPow;
         recordPow = game.state.compostRecordPow;
-        namedMoment('replant', center(), { cases: record ? ['record'] : [] });
-        toasts.show(`+${e.gained.toString()} ${txt('currencies', 'compost')}`, C['leaf-5']);
-        tower.focusFloor(0);
-        pip.say('after_replant', 'jump');
+        const cases = [...(e.n === 1 ? ['first'] : []), ...(record ? ['record'] : [])];
+        namedMoment(e.layer, center(), { cases });
+        if (layer) toasts.show(`+${e.gained.toString()} ${txt('currencies', layer.currency)}`, C['leaf-5']);
+        if (layer?.scope === 'world') {
+          tower.focusFloor(0);
+          pip.say(`after_${e.layer}`, 'jump');
+        }
         break;
       }
       case 'offline': {

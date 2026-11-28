@@ -98,8 +98,7 @@ export class Bot {
           this.seatsDirty = true;
           break;
         case 'floorOpened':
-        case 'replant':
-        case 'festival':
+        case 'reset':
         case 'worldReached':
         case 'unlock':
         case 'researchDone':

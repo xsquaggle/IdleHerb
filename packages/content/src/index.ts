@@ -74,6 +74,7 @@ export function readTables(dir: string = TABLES_DIR): Record<string, unknown> {
     dupeCurves: readYaml(join(dir, 'cards/dupe-curves.yaml')),
     chests: readYaml(join(dir, 'chests/chests.yaml')),
     specialChests: readYaml(join(dir, 'chests/specials.yaml')),
+    resetLayers: readYaml(join(dir, 'resets/layers.yaml')),
     artifacts: readYaml(join(dir, 'artifacts/artifacts.yaml')),
     sets: readYaml(join(dir, 'artifacts/sets.yaml')),
     skills: readYaml(join(dir, 'skills/tree.yaml')),

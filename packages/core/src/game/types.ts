@@ -47,6 +47,8 @@ export type Command =
   // Resets and shops
   | { type: 'replant'; world: number }
   | { type: 'festival' }
+  /** Any reset layer by id (tables/resets/layers.yaml); `replant` and `festival` are the same as the two above. */
+  | { type: 'reset'; layer: string; world?: number }
   | { type: 'buyCompostShop'; id: string }
   | { type: 'buyRibbonShop'; id: string }
   | { type: 'setAutoBuy'; on: boolean }
@@ -62,8 +64,8 @@ export type GameEvent = { t: number } & (
   | { type: 'milestone'; world: number; floor: number; tier: number; record: boolean }
   | { type: 'towerMilestone'; world: number; count: number }
   | { type: 'hire'; world: number; floor: number }
-  | { type: 'replant'; world: number; gained: Num; compostEra: Num; runSeconds: number }
-  | { type: 'festival'; gained: Num; ribbons: Num; n: number }
+  /** A reset layer was taken: `n` counts this one; `runSeconds` is how long the world's run had lasted. */
+  | { type: 'reset'; layer: string; world: number; gained: Num; n: number; runSeconds: number }
   | { type: 'worldReached'; world: number; first: boolean }
   | { type: 'levelUp'; level: number }
   | { type: 'chestOpened'; chest: string; cards: string[]; heirloom: string | null }

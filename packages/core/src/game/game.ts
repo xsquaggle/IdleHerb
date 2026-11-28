@@ -21,7 +21,8 @@ import { rollChest } from '../systems/chests/logic';
 import { floorOutput, milestoneCount } from '../systems/floors/logic';
 import { averageHeat, compoundInterest } from '../systems/offline/logic';
 import { levelUpChest, xpToNext } from '../systems/progression/logic';
-import { compostRecordXp, compostTotal, ribbonsTotal, shopCost } from '../systems/resets/logic';
+import { compostRecordXp, shopCost } from '../systems/resets/logic';
+import { layerTotal, type LayerCounter, type LayerGrant, type LayerTally, type ResetLayer, type SaveStep, type WorldStep } from '../systems/resets/layers';
 import { comboRun, expectedCrit, isCountedTap } from '../systems/tapping/logic';
 import { bubbleSweepAverage, heatMult, masteryStars, sunriseMult, weatherAt, weatherLoopSeconds, weatherGroupOf } from '../systems/worlds/logic';
 import { computeDerived, type Derived } from './derive';
@@ -41,6 +42,17 @@ export const HIRING_CRATE_COPIES = 2;
 export const SEED_PACKET = ['plant.mint.garden', 'plant.hemp.fibre'];
 const TIER_GATE = [0, 5, 15, 30];
 const SOURCES: IncomeSource[] = ['floors', 'taps', 'visitors', 'twist', 'abilities', 'offline', 'autopilot', 'start'];
+
+/** What a reset step can read about the reset being taken. */
+interface ResetContext {
+  w: number;
+  gained: Num;
+  /** compostEra before the claim (the Replant chest compares against it). */
+  eraBefore: Num;
+  runSeconds: number;
+  /** How many times the layer has been taken, this one included. */
+  n: number;
+}
 
 export interface GameOptions {
   content: Content;
@@ -471,32 +483,63 @@ export class Game {
     return floors[floors.length - 1]!.level > 0;
   }
 
+  // Reset layers (GDD 12; EXPANSION 7): every layer is a row of tables/resets/layers.yaml ----
+
+  /** A reset layer by id. */
+  layer(id: string): ResetLayer | undefined {
+    return this.content.resetLayers.find((l) => l.id === id);
+  }
+
+  /** The layer's total before what is already claimed: floor(scale x stat x (source / base) ^ exp). */
+  layerTotal(id: string, w = 0): Num {
+    const l = this.layer(id);
+    if (!l) return Num.ZERO;
+    const scale = (l.scale ? this.content.worlds[w]![l.scale] : 1) * (l.stat ? this.derived.global[l.stat] : 1);
+    return layerTotal(this.layerCounter(l.source, w), l.base, l.exp, scale);
+  }
+
+  /** What taking the layer now would pay. Never below 0. */
+  layerPending(id: string, w = 0): Num {
+    const l = this.layer(id);
+    if (!l) return Num.ZERO;
+    const p = this.layerTotal(id, w).sub(this.layerCounter(l.claimed, w));
+    return p.gt(0) ? p : Num.ZERO;
+  }
+
+  /** How many times the layer has been taken. */
+  layerTimes(id: string, w = 0): number {
+    const l = this.layer(id);
+    return l ? this.layerTally(l.times, w) : 0;
+  }
+
+  canReset(id: string, w = 0): boolean {
+    const l = this.layer(id);
+    if (!l || !l.enabled) return false;
+    const s = this.state;
+    if (l.scope === 'world' && !s.worlds[w]?.unlocked) return false;
+    if (l.needsTopFloor && !this.topFloorOpen(w)) return false;
+    if (s.worldReached < l.needsWorld) return false;
+    return this.layerPending(id, w).gte(this.layerTally(l.times, w) === 0 ? l.first : 1);
+  }
+
   compostTotalOf(w: number): Num {
-    const t = this.t;
-    return compostTotal(this.state.worlds[w]!.lifetime, this.content.worlds[w]!.compostK, this.content.compostE0, t.COMPOST_EXP, this.derived.global.compostGain);
+    return this.layerTotal('replant', w);
   }
 
   pendingCompost(w: number): Num {
-    const p = this.compostTotalOf(w).sub(this.state.worlds[w]!.claimed);
-    return p.gt(0) ? p : Num.ZERO;
+    return this.layerPending('replant', w);
   }
 
   canReplant(w: number): boolean {
-    const ws = this.state.worlds[w]!;
-    if (!ws.unlocked || !this.topFloorOpen(w)) return false;
-    const need = this.counter('replants') === 0 ? this.t.FIRST_REPLANT_MIN : 1;
-    return this.pendingCompost(w).gte(need);
+    return this.canReset('replant', w);
   }
 
   pendingRibbons(): Num {
-    const p = ribbonsTotal(this.state.compostAllTime, this.content.ribbonC0, this.t.RIBBON_EXP).sub(this.state.ribbonsClaimed);
-    return p.gt(0) ? p : Num.ZERO;
+    return this.layerPending('festival');
   }
 
   canFestival(): boolean {
-    const s = this.state;
-    if (s.worldReached < this.t.FESTIVAL_NEEDS_WORLD) return false;
-    return this.pendingRibbons().gte(s.festivals === 0 ? this.t.FIRST_FESTIVAL_MIN : 1);
+    return this.canReset('festival');
   }
 
   insightPerHour(): number {
@@ -1079,6 +1122,7 @@ export class Game {
       case 'bench': return this.startBench(cmd.plantId);
       case 'replant': return this.replant(cmd.world);
       case 'festival': return this.festival();
+      case 'reset': return this.reset(cmd.layer, cmd.world ?? 0);
       case 'buyCompostShop': return this.buyCompostShop(cmd.id);
       case 'buyRibbonShop': return this.buyRibbonShop(cmd.id);
       case 'setAutoBuy':
@@ -2007,73 +2051,149 @@ export class Game {
   // Resets and shops (GDD 12) ------------------------------------------------
 
   private replant(w: number): boolean {
-    if (!this.canReplant(w)) return false;
-    const s = this.state;
-    const t = this.t;
-    const ws = s.worlds[w]!;
-    const gained = this.pendingCompost(w);
-    const before = s.compostEra;
-    const runSeconds = s.time - ws.runStartedAt;
-    ws.claimed = ws.claimed.add(gained);
-    s.compost = s.compost.add(gained);
-    s.compostEra = s.compostEra.add(gained);
-    s.compostAllTime = s.compostAllTime.add(gained);
-    s.counters.compostAllTime = Math.min(1e300, s.compostAllTime.toNumber());
-    ws.replantsEra++;
-    ws.replantsEver++;
-    this.count('replants');
-    // XP only for a new all-time Compost record, never for the Replant itself (GDD 9.1).
-    const record = compostRecordXp(s.compostRecordPow, s.compostAllTime, t.REPLANT_XP_STEP);
-    s.compostRecordPow = record.passed;
-    if (record.xp > 0) this.addXp(record.xp, 'replants');
-    if (gained.gte(before.mul(t.REPLANT_CHEST_FRACTION)) && s.time - ws.lastReplantChestAt >= t.REPLANT_CHEST_COOLDOWN_HOURS * 3600) {
-      ws.lastReplantChestAt = s.time;
-      this.grantChest('chest.copper');
-    }
-    this.startRun(w);
-    this.invalidate();
-    this.emit({ type: 'replant', world: w, gained, compostEra: s.compostEra, runSeconds });
-    return true;
+    return this.reset('replant', w);
   }
 
   private festival(): boolean {
-    if (!this.canFestival()) return false;
+    return this.reset('festival');
+  }
+
+  /** Takes a reset layer by walking its row: claim, count, grants, then the reset steps. */
+  private reset(id: string, w = 0): boolean {
+    if (!this.canReset(id, w)) return false;
+    const l = this.layer(id)!;
     const s = this.state;
-    const gained = this.pendingRibbons();
-    s.ribbonsClaimed = s.ribbonsClaimed.add(gained);
-    s.ribbons = s.ribbons.add(gained);
-    s.festivals++;
-    this.count('festivals');
-    s.freeRespecs++;
-    this.grantChest(s.festivals === 1 ? 'chest.crystal' : s.festivals % 5 === 0 ? 'chest.starlight' : 'chest.golden');
-    if (s.festivals === 1) s.heirloomPicks++;
-    s.compost = Num.ZERO;
-    s.compostEra = Num.ZERO;
-    s.compostShop = {};
-    s.recordMilestones = 0;
-    s.focus = 0;
-    s.combo = 0;
-    s.visitors = [];
-    s.worlds.forEach((ws, w) => {
-      ws.lifetime = Num.ZERO;
-      ws.claimed = Num.ZERO;
-      ws.replantsEra = 0;
-      for (const f of ws.floors) {
-        f.eraMilestones = 0;
-        f.hired = false;
-      }
-      if (w === 0) this.startRun(0);
-      else if (ws.unlocked) {
-        this.startRun(w);
-        ws.floors[0]!.level = 0;
-        ws.floors[0]!.hired = false;
-        ws.unlocked = false;
-        this.caches[w]!.dirty = true;
-      }
-    });
+    const gained = this.layerPending(id, w);
+    const ctx: ResetContext = { w, gained, eraBefore: s.compostEra, runSeconds: s.time - s.worlds[w]!.runStartedAt, n: 0 };
+    for (const c of l.claim) this.addLayerCounter(c, w, gained);
+    for (const t of l.tally) this.addTally(t, w);
+    ctx.n = this.layerTally(l.times, w);
+    for (const g of l.grants) if (!g.onlyFirst || ctx.n === 1) this.resetGrant(g, ctx);
+    for (const step of l.resets.save) this.saveStep(step);
+    const worlds = l.scope === 'world' ? [w] : s.worlds.map((_, i) => i);
+    for (const i of worlds) for (const step of l.resets.world) this.worldStep(step, i);
     this.invalidate();
-    this.emit({ type: 'festival', gained, ribbons: s.ribbonsClaimed, n: s.festivals });
+    this.emit({ type: 'reset', layer: l.id, world: w, gained, n: ctx.n, runSeconds: ctx.runSeconds });
     return true;
+  }
+
+  private layerCounter(c: LayerCounter, w: number): Num {
+    const s = this.state;
+    switch (c) {
+      case 'world.lifetime': return s.worlds[w]!.lifetime;
+      case 'world.claimed': return s.worlds[w]!.claimed;
+      case 'compost': return s.compost;
+      case 'compostEra': return s.compostEra;
+      case 'compostAllTime': return s.compostAllTime;
+      case 'ribbons': return s.ribbons;
+      case 'ribbonsClaimed': return s.ribbonsClaimed;
+    }
+  }
+
+  private addLayerCounter(c: LayerCounter, w: number, n: Num): void {
+    const s = this.state;
+    switch (c) {
+      case 'world.lifetime': s.worlds[w]!.lifetime = s.worlds[w]!.lifetime.add(n); return;
+      case 'world.claimed': s.worlds[w]!.claimed = s.worlds[w]!.claimed.add(n); return;
+      case 'compost': s.compost = s.compost.add(n); return;
+      case 'compostEra': s.compostEra = s.compostEra.add(n); return;
+      case 'compostAllTime':
+        s.compostAllTime = s.compostAllTime.add(n);
+        s.counters.compostAllTime = Math.min(1e300, s.compostAllTime.toNumber());
+        return;
+      case 'ribbons': s.ribbons = s.ribbons.add(n); return;
+      case 'ribbonsClaimed': s.ribbonsClaimed = s.ribbonsClaimed.add(n); return;
+    }
+  }
+
+  private layerTally(t: LayerTally, w: number): number {
+    const s = this.state;
+    switch (t) {
+      case 'world.replantsEra': return s.worlds[w]!.replantsEra;
+      case 'world.replantsEver': return s.worlds[w]!.replantsEver;
+      case 'replants': return this.counter('replants');
+      case 'festivals': return s.festivals;
+    }
+  }
+
+  private addTally(t: LayerTally, w: number): void {
+    const s = this.state;
+    switch (t) {
+      case 'world.replantsEra': s.worlds[w]!.replantsEra++; return;
+      case 'world.replantsEver': s.worlds[w]!.replantsEver++; return;
+      case 'replants': this.count('replants'); return;
+      case 'festivals': s.festivals++; this.count('festivals'); return;
+    }
+  }
+
+  private resetGrant(g: LayerGrant, ctx: ResetContext): void {
+    const s = this.state;
+    const t = this.t;
+    switch (g.step) {
+      case 'compostRecordXp': {
+        // XP only for a new all-time Compost record, never for the Replant itself (GDD 9.1).
+        const record = compostRecordXp(s.compostRecordPow, s.compostAllTime, t.REPLANT_XP_STEP);
+        s.compostRecordPow = record.passed;
+        if (record.xp > 0) this.addXp(record.xp, 'replants');
+        return;
+      }
+      case 'replantChest': {
+        const ws = s.worlds[ctx.w]!;
+        if (ctx.gained.gte(ctx.eraBefore.mul(t.REPLANT_CHEST_FRACTION)) && s.time - ws.lastReplantChestAt >= t.REPLANT_CHEST_COOLDOWN_HOURS * 3600) {
+          ws.lastReplantChestAt = s.time;
+          this.grantChest(g.chest!);
+        }
+        return;
+      }
+      case 'respec':
+        s.freeRespecs += g.count ?? 1;
+        return;
+      case 'chest':
+        this.grantChest(ctx.n === 1 && g.first ? g.first : g.every && ctx.n % g.every.n === 0 ? g.every.chest : g.chest!);
+        return;
+      case 'heirloomPick':
+        s.heirloomPicks += g.count ?? 1;
+        return;
+    }
+  }
+
+  private saveStep(step: SaveStep): void {
+    const s = this.state;
+    switch (step) {
+      case 'compost': s.compost = Num.ZERO; s.compostEra = Num.ZERO; return;
+      case 'compostShop': s.compostShop = {}; return;
+      case 'records': s.recordMilestones = 0; return;
+      case 'focus': s.focus = 0; return;
+      case 'combo': s.combo = 0; return;
+      case 'visitors': s.visitors = []; return;
+    }
+  }
+
+  private worldStep(step: WorldStep, w: number): void {
+    const ws = this.state.worlds[w]!;
+    switch (step) {
+      case 'era':
+        ws.lifetime = Num.ZERO;
+        ws.claimed = Num.ZERO;
+        ws.replantsEra = 0;
+        for (const f of ws.floors) {
+          f.eraMilestones = 0;
+          f.hired = false;
+        }
+        return;
+      case 'run':
+        if (w === 0 || ws.unlocked) this.startRun(w);
+        return;
+      case 'lock':
+        // Every world after the first closes again and is bought back with its ticket.
+        if (w > 0 && ws.unlocked) {
+          ws.floors[0]!.level = 0;
+          ws.floors[0]!.hired = false;
+          ws.unlocked = false;
+          this.caches[w]!.dirty = true;
+        }
+        return;
+    }
   }
 
   compostShopCost(id: string): Num | null {

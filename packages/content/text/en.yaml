@@ -10,6 +10,16 @@ currencies:
   coins: Coins
   gems: Gems
   compost: Compost
+  ribbons: Ribbons
+  laurels: Laurels
+  starseeds: Starseeds
+
+# Reset layers (tables/resets/layers.yaml).
+resets:
+  replant: Replant
+  festival: Harvest Festival
+  new_generation: New Generation
+  big_bloom: Big Bloom
 
 worlds:
   world.w1: Thymeford
