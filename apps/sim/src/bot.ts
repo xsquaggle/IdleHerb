@@ -9,7 +9,7 @@
  * docs/balance/REPORT.md, "How the simulated players decide".
  */
 import {
-  Num, RARITY_ORDER, managerProfit, milestoneCount, nextMilestone, switchOn, weatherGroupOf,
+  Num, managerProfit, milestoneCount, nextMilestone, switchOn, weatherGroupOf,
   type Command, type Game, type ManagerDef, type PlantDef,
   type AbilityInfo,
 } from '@sprout/core';
@@ -98,8 +98,7 @@ export class Bot {
           this.seatsDirty = true;
           break;
         case 'floorOpened':
-        case 'replant':
-        case 'festival':
+        case 'reset':
         case 'worldReached':
         case 'unlock':
         case 'researchDone':
@@ -646,8 +645,8 @@ export class Bot {
     }
     if (s.pollen > 3000) {
       const target = c.managers
-        .filter((m) => m.rarity !== 'exotic' && s.cards[m.id] && s.cards[m.id]!.level < m.maxLevel)
-        .sort((a, b) => RARITY_ORDER[b.rarity] - RARITY_ORDER[a.rarity])[0];
+        .filter((m) => !m.head && s.cards[m.id] && s.cards[m.id]!.level < m.maxLevel)
+        .sort((a, b) => b.nativeTier - a.nativeTier)[0];
       if (target) while (s.pollen > 3000 && this.act({ type: 'buyCopy', id: target.id })) this.cardsDirty = true;
     }
 

@@ -1,0 +1,31 @@
+{
+ "who": "Captain Kelp",
+ "id": "card.manager.captain_kelp",
+ "rarity": "epic",
+ "floor": 8,
+ "frame": [
+  96,
+  96
+ ],
+ "baseline_y": 92,
+ "source": "b02_26_managers_floors07_08.png",
+ "frames": [
+  {
+   "name": "stand",
+   "file": "01_stand_96x96.png"
+  },
+  {
+   "name": "work",
+   "file": "02_work_96x96.png"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_96x96.png"
+  },
+  {
+   "name": "big_moment",
+   "file": "04_big_moment_96x96.png"
+  }
+ ],
+ "note": "Manager frames: stand, work, cheer, big moment. Stand at the manager spot at the right end of the floor. The face is replaced later by one hand-drawn head; the stand frame is also the card picture."
+}

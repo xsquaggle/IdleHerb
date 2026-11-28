@@ -1,0 +1,171 @@
+{
+ "walls": {
+  "w1_floor01_windowsill_336x104.png": {
+   "world": 1,
+   "floor": 1,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w1_floor02_balcony_336x104.png": {
+   "world": 1,
+   "floor": 2,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w1_floor03_backyard_336x104.png": {
+   "world": 1,
+   "floor": 3,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": true
+  },
+  "w1_floor04_garden_shed_336x104.png": {
+   "world": 1,
+   "floor": 4,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w1_floor05_greenhouse_336x104.png": {
+   "world": 1,
+   "floor": 5,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w1_floor06_market_336x104.png": {
+   "world": 1,
+   "floor": 6,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": true
+  },
+  "w1_floor07_tea_house_336x104.png": {
+   "world": 1,
+   "floor": 7,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w1_floor08_ropewalk_336x104.png": {
+   "world": 1,
+   "floor": 8,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w1_floor09_soap_workshop_336x104.png": {
+   "world": 1,
+   "floor": 9,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w1_floor10_hq_336x104.png": {
+   "world": 1,
+   "floor": 10,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor01_rooftop_garden_336x104.png": {
+   "world": 2,
+   "floor": 1,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": true
+  },
+  "w2_floor02_herb_kiosk_336x104.png": {
+   "world": 2,
+   "floor": 2,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor03_weaving_mill_336x104.png": {
+   "world": 2,
+   "floor": 3,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor04_paper_workshop_336x104.png": {
+   "world": 2,
+   "floor": 4,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor05_bistro_336x104.png": {
+   "world": 2,
+   "floor": 5,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor06_atelier_336x104.png": {
+   "world": 2,
+   "floor": 6,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  },
+  "w2_floor07_brickyard_336x104.png": {
+   "world": 2,
+   "floor": 7,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": true
+  },
+  "w2_floor08_emporium_336x104.png": {
+   "world": 2,
+   "floor": 8,
+   "size": [
+    336,
+    104
+   ],
+   "open_sky": false
+  }
+ },
+ "veil": {
+  "colour": "stone-3",
+  "alpha": 0.25,
+  "note": "veiled/ holds each wall as the game shows it"
+ }
+}

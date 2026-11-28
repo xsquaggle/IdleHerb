@@ -1,0 +1,143 @@
+# The rarity ladder: eleven tiers, lowest first (design 0.5: EXPANSION 2.1, 2.2, 4.1 and 4.2;
+# style bible v1.7, sections 8 and 19). Every card, chest, item and moment names its tier by id.
+# No code compares tier names: a rule that singles out a tier names it in data (tuning.yaml).
+# Display names are in text/en.yaml under `rarities`.
+#
+# order    1 to 11. A tier's power is TIER_STEP ^ (order - 1) (tuning.yaml).
+# look     palette tokens (dark to light steps, docs/art/palette): main, light and dark colours,
+#          and the colours the screen floods with at a full reveal's burst.
+# emblem   the badge in art/icons/rarity/, or null until it is drawn.
+# burst    the burst animation in art/effects/reveal/bursts.json, or null for the nearest lower one.
+# chest    the chest art material for a chest of this tier (art/chests/), or null for the nearest lower one.
+# pips     pips on small cards.
+# chime    the climb's chime, in steps up a pentatonic scale: one note higher per tier.
+# sting    notes in the closing sting.
+# reveal   the full form (bible 19). total: seconds from the first jolt to the end of the Show
+#          (EXPANSION 4.1 rule 4); hold: seconds the best card is held up; hops, lift, dim: the Build;
+#          blackout: seconds of darkness before the burst; shake: pixels; rays, ring, beam: burst parts.
+#          short: total seconds of the short form (climb, burst, chime).
+# juice    how hard a moment of this tier hits (EXPANSION 4.2): particles, shake in pixels, flash
+#          strength 0 to 1, hit-pause seconds, sound layers. A short moment flashes at half strength
+#          and pauses for half as long. The Uncommon row is the Bumper tap's punch.
+# The timings are a first pass for the playtest to tune.
+- id: common
+  order: 1
+  look: { main: wood-4, light: wood-6, dark: wood-2, flood: [] }
+  emblem: icons/rarity/rarity_common_48.png
+  burst: common
+  chest: common
+  pips: 1
+  chime: 0
+  sting: 2
+  reveal: { total: 0.4, hold: 0.4, hops: 0, lift: false, dim: 0, blackout: 0, shake: 0, rays: false, ring: false, beam: false, short: 0.3 }
+  juice: { particles: 6, shake: 0, flash: 0, pause: 0, layers: 1 }
+- id: uncommon
+  order: 2
+  look: { main: leaf-4, light: leaf-5, dark: leaf-2, flood: [] }
+  emblem: icons/rarity/rarity_uncommon_48.png
+  burst: uncommon
+  chest: copper
+  pips: 2
+  chime: 1
+  sting: 3
+  reveal: { total: 0.7, hold: 0.5, hops: 1, lift: false, dim: 0, blackout: 0, shake: 0, rays: false, ring: false, beam: false, short: 0.4 }
+  juice: { particles: 10, shake: 2, flash: 0.2, pause: 0.05, layers: 1 }
+- id: rare
+  order: 3
+  look: { main: sky-3, light: sky-4, dark: sky-2, flood: [] }
+  emblem: icons/rarity/rarity_rare_48.png
+  burst: rare
+  chest: silver
+  pips: 3
+  chime: 2
+  sting: 4
+  reveal: { total: 1.0, hold: 0.7, hops: 2, lift: false, dim: 0.15, blackout: 0, shake: 0, rays: false, ring: false, beam: true, short: 0.5 }
+  juice: { particles: 16, shake: 2, flash: 0.25, pause: 0.06, layers: 2 }
+- id: epic
+  order: 4
+  look: { main: lavender-4, light: lavender-5, dark: lavender-2, flood: [] }
+  emblem: icons/rarity/rarity_epic_48.png
+  burst: epic
+  chest: legendary
+  pips: 4
+  chime: 3
+  sting: 5
+  reveal: { total: 1.5, hold: 1.0, hops: 3, lift: false, dim: 0.33, blackout: 0, shake: 1, rays: false, ring: true, beam: true, short: 0.6 }
+  juice: { particles: 24, shake: 3, flash: 0.3, pause: 0.07, layers: 2 }
+- id: legendary
+  order: 5
+  look: { main: gold-3, light: gold-5, dark: gold-2, flood: [gold-4] }
+  emblem: icons/rarity/rarity_legendary_48.png
+  burst: legendary
+  chest: crystal
+  pips: 5
+  chime: 4
+  sting: 6
+  reveal: { total: 2.5, hold: 1.5, hops: 3, lift: true, dim: 0.5, blackout: 0, shake: 2, rays: true, ring: true, beam: true, short: 0.7 }
+  juice: { particles: 34, shake: 3, flash: 0.35, pause: 0.09, layers: 3 }
+- id: mythic
+  order: 6
+  look: { main: teal-3, light: lavender-5, dark: sky-1, flood: [sky-1, teal-2, lavender-4] }
+  emblem: null
+  burst: null
+  chest: starlight
+  pips: 6
+  chime: 5
+  sting: 7
+  reveal: { total: 3.5, hold: 2.0, hops: 3, lift: true, dim: 0.7, blackout: 0, shake: 2, rays: true, ring: true, beam: true, short: 0.8 }
+  juice: { particles: 44, shake: 3, flash: 0.4, pause: 0.11, layers: 3 }
+- id: exotic
+  order: 7
+  look: { main: rose-3, light: teal-4, dark: lavender-3, flood: [teal-3, rose-3, lavender-4] }
+  emblem: icons/rarity/rarity_exotic_48.png
+  burst: exotic
+  chest: null
+  pips: 7
+  chime: 6
+  sting: 8
+  reveal: { total: 4.5, hold: 2.5, hops: 3, lift: true, dim: 0.5, blackout: 0.7, shake: 3, rays: true, ring: true, beam: true, short: 0.9 }
+  juice: { particles: 56, shake: 4, flash: 0.45, pause: 0.13, layers: 4 }
+- id: godly
+  order: 8
+  look: { main: cream-4, light: white-1, dark: gold-4, flood: [gold-5, cream-4, white-1] }
+  emblem: null
+  burst: null
+  chest: null
+  pips: 8
+  chime: 7
+  sting: 9
+  reveal: { total: 5.5, hold: 3.0, hops: 4, lift: true, dim: 0.7, blackout: 0.7, shake: 3, rays: true, ring: true, beam: true, short: 0.9 }
+  juice: { particles: 68, shake: 4, flash: 0.5, pause: 0.15, layers: 4 }
+- id: ungodly
+  order: 9
+  look: { main: lavender-1, light: red-3, dark: ink-1, flood: [ink-2, red-2, gold-3] }
+  emblem: null
+  burst: null
+  chest: null
+  pips: 9
+  chime: 8
+  sting: 10
+  reveal: { total: 6.5, hold: 3.5, hops: 4, lift: true, dim: 0.85, blackout: 1.0, shake: 4, rays: true, ring: true, beam: true, short: 0.9 }
+  juice: { particles: 80, shake: 5, flash: 0.5, pause: 0.17, layers: 5 }
+- id: holy
+  order: 10
+  look: { main: rose-4, light: white-1, dark: sky-4, flood: [white-1, cream-4, sky-5, rose-4] }
+  emblem: null
+  burst: null
+  chest: null
+  pips: 10
+  chime: 9
+  sting: 11
+  reveal: { total: 7.5, hold: 4.0, hops: 4, lift: true, dim: 0.6, blackout: 0.8, shake: 3, rays: true, ring: true, beam: true, short: 0.9 }
+  juice: { particles: 92, shake: 4, flash: 0.55, pause: 0.18, layers: 5 }
+- id: grailed
+  order: 11
+  look: { main: gold-4, light: gold-5, dark: gold-2, flood: [wood-5, leaf-4, sky-3, lavender-4, gold-3, teal-3, rose-3, cream-4, red-3, white-1, gold-4] }
+  emblem: null
+  burst: null
+  chest: null
+  pips: 11
+  chime: 10
+  sting: 12
+  reveal: { total: 9.0, hold: 5.0, hops: 5, lift: true, dim: 0.8, blackout: 1.0, shake: 4, rays: true, ring: true, beam: true, short: 1.0 }
+  juice: { particles: 110, shake: 5, flash: 0.6, pause: 0.22, layers: 6 }

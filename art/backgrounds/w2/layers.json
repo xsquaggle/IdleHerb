@@ -1,0 +1,65 @@
+{
+ "world": 2,
+ "note": "Loomington background, back layers. One pixel per art pixel; each strip repeats left to right. The sky is drawn by the game behind them.",
+ "layers": {
+  "far_skyline": {
+   "file": "far_skyline_360x90.png",
+   "size": [
+    360,
+    90
+   ],
+   "depth": "far",
+   "scroll": 0.15,
+   "outline": "none",
+   "tiles": true
+  },
+  "river_bridge": {
+   "file": "river_bridge_360x90.png",
+   "size": [
+    360,
+    90
+   ],
+   "depth": "river",
+   "scroll": 0.3,
+   "outline": "none",
+   "tiles": true
+  },
+  "town_left": {
+   "file": "town_left_116x90.png",
+   "size": [
+    116,
+    90
+   ],
+   "depth": "town",
+   "scroll": 0.5,
+   "outline": "stone-1",
+   "tiles": false,
+   "x_in_strip": 4,
+   "note": "Stands beside the tower, at the left edge of the screen"
+  },
+  "town_right": {
+   "file": "town_right_116x90.png",
+   "size": [
+    116,
+    90
+   ],
+   "depth": "town",
+   "scroll": 0.5,
+   "outline": "stone-1",
+   "tiles": false,
+   "x_in_strip": 240,
+   "note": "Stands beside the tower, at the right edge of the screen"
+  },
+  "street": {
+   "file": "street_360x90.png",
+   "size": [
+    360,
+    90
+   ],
+   "depth": "street",
+   "scroll": 1.0,
+   "outline": "ink-1",
+   "tiles": true
+  }
+ }
+}

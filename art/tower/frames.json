@@ -1,0 +1,54 @@
+{
+ "shell": {
+  "file": "floors/shell_360x120.png",
+  "source": "B4_floor_frame_shell.png"
+ },
+ "shutter": {
+  "file": "floors/shutter_360x120.png",
+  "source": "B4_floor_locked_shutter.png"
+ },
+ "construction": {
+  "file": "floors/construction_360x120.png",
+  "source": "B4_floor_under_construction.png"
+ },
+ "roof": {
+  "file": "tower/w1_roof_376x271.png",
+  "size": [
+   376,
+   271
+  ],
+  "source": "B20_tower_parts.png"
+ },
+ "entrance": {
+  "file": "tower/w1_entrance_360x232.png",
+  "size": [
+   360,
+   232
+  ],
+  "source": "B20_tower_parts.png"
+ },
+ "backgrounds": {
+  "far_hills_lake": {
+   "file": "backgrounds/w1/far_hills_lake_640x430.png",
+   "size": [
+    640,
+    430
+   ],
+   "source_rows": [
+    1058,
+    2338
+   ]
+  },
+  "town_street": {
+   "file": "backgrounds/w1/town_street_640x85.png",
+   "size": [
+    640,
+    85
+   ],
+   "source_rows": [
+    3010,
+    3264
+   ]
+  }
+ }
+}

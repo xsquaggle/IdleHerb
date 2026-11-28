@@ -1,0 +1,48 @@
+{
+ "who": "Balcony Boxes, second: the planter in the purple waistcoat",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "source": "b02_17_workers_floor02_floor03.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png"
+  },
+  {
+   "name": "walk_right_contact",
+   "file": "04_walk_right_contact_80x80.png"
+  },
+  {
+   "name": "walk_pass",
+   "file": "05_walk_pass_80x80.png"
+  },
+  {
+   "name": "walk_left_contact",
+   "file": "06_walk_left_contact_80x80.png"
+  },
+  {
+   "name": "plant_seedling",
+   "file": "07_plant_seedling_80x80.png"
+  },
+  {
+   "name": "pat_soil",
+   "file": "08_pat_soil_80x80.png"
+  },
+  {
+   "name": "carry_basil_planter",
+   "file": "09_carry_basil_planter_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}

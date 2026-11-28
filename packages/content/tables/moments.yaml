@@ -1,0 +1,25 @@
+# Every big moment has a tier (design 0.5, EXPANSION 4.2). The client has one effect call,
+# moment(tier, place, form), that scales particles, light, shake, sound layers and hit-pause by the
+# tier's `juice` (tiers.yaml), and every big event calls it with the tier named here. A first pass,
+# for the playtest to tune.
+#
+# tier    the moment's tier.
+# form    short (it happens often) or full (rare and big).
+# steps   a higher tier from a number up: the floor or player level reached, the Mastery star.
+# every   a higher tier on every n-th number (every 10th player level).
+# cases   a higher tier for a named case or an exact number: top (a world's top floor), record (a new
+#         all-time Compost record), first (the first time ever).
+# A moment's tier only ever goes up from `tier`, never down.
+- { id: bumper,          tier: uncommon,  form: short }
+- { id: combo_full,      tier: rare,      form: short }
+- { id: spurt,           tier: epic,      form: short }
+- { id: floor_milestone, tier: common,    form: short, steps: [{ at: 50, tier: uncommon }, { at: 100, tier: rare }, { at: 200, tier: epic }, { at: 500, tier: legendary }, { at: 1000, tier: mythic }] }
+- { id: tower_milestone, tier: uncommon,  form: full,  steps: [{ at: 50, tier: rare }, { at: 100, tier: epic }, { at: 200, tier: legendary }, { at: 500, tier: mythic }, { at: 1000, tier: exotic }] }
+- { id: floor_open,      tier: rare,      form: full,  cases: { top: legendary } }
+- { id: world_reached,   tier: epic,      form: full,  cases: { first: exotic } }
+- { id: level_up,        tier: rare,      form: full,  every: { n: 10, tier: legendary }, cases: { "100": godly, "200": godly, "250": godly } }
+- { id: replant,         tier: epic,      form: full,  cases: { record: legendary } }
+- { id: festival,        tier: mythic,    form: full,  cases: { first: exotic } }
+- { id: new_generation,  tier: godly,     form: full,  cases: { first: ungodly } }
+- { id: big_bloom,       tier: holy,      form: full,  cases: { first: grailed } }
+- { id: mastery_star,    tier: legendary, form: full,  steps: [{ at: 5, tier: mythic }, { at: 10, tier: godly }] }

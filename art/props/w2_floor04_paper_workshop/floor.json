@@ -1,0 +1,87 @@
+{
+ "world": 2,
+ "floor": 4,
+ "size": [
+  360,
+  120
+ ],
+ "baseline_y": 112,
+ "tap_target": "paper_pulp_vat",
+ "manager_spot": "manager_stool_bell",
+ "source": "b03_04_w2_floor04_paper_workshop.png",
+ "parts": {
+  "paper_drying_line": {
+   "file": "paper_drying_line_58x47.png",
+   "size": [
+    58,
+    47
+   ],
+   "origin_on_floor": [
+    20,
+    65
+   ],
+   "cls": "prop"
+  },
+  "papermaking_worker": {
+   "file": "../../actors/w2_floor04_paper_workshop/papermaking_worker_38x67.png",
+   "size": [
+    38,
+    67
+   ],
+   "origin_on_floor": [
+    86,
+    45
+   ],
+   "cls": "actor"
+  },
+  "paper_pulp_vat": {
+   "file": "paper_pulp_vat_54x52.png",
+   "size": [
+    54,
+    52
+   ],
+   "origin_on_floor": [
+    131,
+    60
+   ],
+   "cls": "prop"
+  },
+  "kite_worker": {
+   "file": "../../actors/w2_floor04_paper_workshop/kite_worker_44x65.png",
+   "size": [
+    44,
+    65
+   ],
+   "origin_on_floor": [
+    187,
+    47
+   ],
+   "cls": "actor"
+  },
+  "paper_notebooks_kites_table": {
+   "file": "paper_notebooks_kites_table_59x64.png",
+   "size": [
+    59,
+    64
+   ],
+   "origin_on_floor": [
+    233,
+    48
+   ],
+   "cls": "prop"
+  },
+  "manager_stool_bell": {
+   "file": "manager_stool_bell_42x35.png",
+   "size": [
+    42,
+    35
+   ],
+   "origin_on_floor": [
+    294,
+    77
+   ],
+   "cls": "prop"
+  }
+ },
+ "note": "Loomington. Drawn on a finer pixel than the game grid, so every item was brought to five sixths in the clean-up. The two workers are single standing frames until their Batch 4 sheets. Workers are drawn after the props."
+}

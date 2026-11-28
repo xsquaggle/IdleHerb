@@ -1,0 +1,87 @@
+{
+ "world": 2,
+ "floor": 1,
+ "size": [
+  360,
+  120
+ ],
+ "baseline_y": 112,
+ "tap_target": "empty_raised_garden_bed",
+ "manager_spot": "manager_stool_crate_bell",
+ "source": "b03_01_w2_floor01_rooftop_beds.png",
+ "parts": {
+  "trellis_arch": {
+   "file": "trellis_arch_48x67.png",
+   "size": [
+    48,
+    67
+   ],
+   "origin_on_floor": [
+    20,
+    45
+   ],
+   "cls": "prop"
+  },
+  "watering_worker": {
+   "file": "../../actors/w2_floor01_rooftop_garden/watering_worker_38x65.png",
+   "size": [
+    38,
+    65
+   ],
+   "origin_on_floor": [
+    75,
+    47
+   ],
+   "cls": "actor"
+  },
+  "empty_raised_garden_bed": {
+   "file": "empty_raised_garden_bed_81x42.png",
+   "size": [
+    81,
+    42
+   ],
+   "origin_on_floor": [
+    120,
+    70
+   ],
+   "cls": "prop"
+  },
+  "seedling_tray_worker": {
+   "file": "../../actors/w2_floor01_rooftop_garden/seedling_tray_worker_38x64.png",
+   "size": [
+    38,
+    64
+   ],
+   "origin_on_floor": [
+    203,
+    48
+   ],
+   "cls": "actor"
+  },
+  "twin_beehives": {
+   "file": "twin_beehives_46x41.png",
+   "size": [
+    46,
+    41
+   ],
+   "origin_on_floor": [
+    243,
+    71
+   ],
+   "cls": "prop"
+  },
+  "manager_stool_crate_bell": {
+   "file": "manager_stool_crate_bell_45x33.png",
+   "size": [
+    45,
+    33
+   ],
+   "origin_on_floor": [
+    291,
+    79
+   ],
+   "cls": "prop"
+  }
+ },
+ "note": "Loomington. Drawn on a finer pixel than the game grid, so every item was brought to five sixths in the clean-up. The two workers are single standing frames until their Batch 4 sheets. Workers are drawn after the props."
+}

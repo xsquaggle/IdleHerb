@@ -1,0 +1,5 @@
+# Chests with fixed contents that the core hands out (GDD 8.3 and the story). They are never rolled
+# or sold. tier: which tier's chest they look like.
+- { id: chest.welcome,     tier: 2 }
+- { id: chest.hiring,      tier: 1 }
+- { id: chest.seed_packet, tier: 1 }

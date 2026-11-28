@@ -1,0 +1,377 @@
+[
+ {
+  "cls": "wall",
+  "name": "w1_floor01_windowsill",
+  "size": [
+   336,
+   104
+  ],
+  "files": 1,
+  "source_colours": 20,
+  "colours": 13,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.053,
+  "max_move": 0.073,
+  "palette": [
+   "ash-1",
+   "ash-2",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "sage-2",
+   "sage-3",
+   "stone-2",
+   "stone-3",
+   "stone-4",
+   "wood-3",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "wall",
+  "name": "w1_floor02_balcony",
+  "size": [
+   336,
+   104
+  ],
+  "files": 1,
+  "source_colours": 23,
+  "colours": 15,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.051,
+  "max_move": 0.073,
+  "palette": [
+   "ash-1",
+   "ash-2",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "sage-2",
+   "sage-3",
+   "sage-4",
+   "steel-2",
+   "stone-2",
+   "stone-3",
+   "stone-4",
+   "wood-3",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "wall",
+  "name": "w1_floor03_backyard",
+  "size": [
+   336,
+   104
+  ],
+  "files": 1,
+  "source_colours": 16,
+  "colours": 13,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.054,
+  "max_move": 0.105,
+  "palette": [
+   "clay-2",
+   "clay-3",
+   "cream-1",
+   "leaf-2",
+   "leaf-3",
+   "leaf-4",
+   "steel-2",
+   "stone-2",
+   "wood-1",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-5"
+  ]
+ },
+ {
+  "cls": "wall",
+  "name": "w1_floor04_garden_shed",
+  "size": [
+   336,
+   104
+  ],
+  "files": 1,
+  "source_colours": 9,
+  "colours": 7,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.06,
+  "max_move": 0.064,
+  "palette": [
+   "ash-1",
+   "ash-2",
+   "cream-1",
+   "cream-2",
+   "wood-1",
+   "wood-3",
+   "wood-4"
+  ]
+ },
+ {
+  "cls": "wall",
+  "name": "w1_floor05_greenhouse",
+  "size": [
+   336,
+   104
+  ],
+  "files": 1,
+  "source_colours": 8,
+  "colours": 6,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.06,
+  "max_move": 0.107,
+  "palette": [
+   "cream-1",
+   "cream-3",
+   "steel-2",
+   "steel-3",
+   "stone-2",
+   "teal-2"
+  ]
+ },
+ {
+  "cls": "wall",
+  "name": "w1_floor08_ropewalk",
+  "size": [
+   336,
+   104
+  ],
+  "files": 1,
+  "source_colours": 6,
+  "colours": 5,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.049,
+  "max_move": 0.063,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "stone-2",
+   "wood-3",
+   "wood-4"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "scarecrow_fence",
+  "size": [
+   46,
+   56
+  ],
+  "files": 1,
+  "source_colours": 24,
+  "colours": 16,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 66,
+  "mean_move": 0.036,
+  "max_move": 0.096,
+  "palette": [
+   "clay-3",
+   "clay-4",
+   "cream-1",
+   "cream-2",
+   "gold-1",
+   "gold-2",
+   "gold-3",
+   "gold-4",
+   "gold-5",
+   "ink-1",
+   "ink-2",
+   "sage-3",
+   "wood-2",
+   "wood-3",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "tied_stook",
+  "size": [
+   24,
+   30
+  ],
+  "files": 1,
+  "source_colours": 15,
+  "colours": 7,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 22,
+  "mean_move": 0.065,
+  "max_move": 0.105,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "gold-1",
+   "gold-2",
+   "ink-1",
+   "ink-2"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "loaded_wheelbarrow",
+  "size": [
+   44,
+   37
+  ],
+  "files": 1,
+  "source_colours": 17,
+  "colours": 11,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 46,
+  "mean_move": 0.055,
+  "max_move": 0.096,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "gold-1",
+   "gold-2",
+   "gold-5",
+   "ink-1",
+   "ink-2",
+   "wood-2",
+   "wood-3",
+   "wood-4"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "empty_raised_bed",
+  "size": [
+   116,
+   18
+  ],
+  "files": 1,
+  "source_colours": 11,
+  "colours": 10,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 17,
+  "mean_move": 0.037,
+  "max_move": 0.068,
+  "palette": [
+   "clay-3",
+   "clay-4",
+   "gold-1",
+   "gold-3",
+   "ink-1",
+   "ink-2",
+   "wood-2",
+   "wood-3",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "tool_rack",
+  "size": [
+   37,
+   36
+  ],
+  "files": 1,
+  "source_colours": 20,
+  "colours": 15,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 55,
+  "mean_move": 0.042,
+  "max_move": 0.097,
+  "palette": [
+   "ash-1",
+   "ash-2",
+   "ash-3",
+   "ash-4",
+   "clay-2",
+   "clay-3",
+   "clay-4",
+   "gold-2",
+   "gold-5",
+   "ink-1",
+   "ink-2",
+   "wood-2",
+   "wood-3",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "barrel_and_watering_can",
+  "size": [
+   34,
+   24
+  ],
+  "files": 1,
+  "source_colours": 20,
+  "colours": 14,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 31,
+  "mean_move": 0.044,
+  "max_move": 0.097,
+  "palette": [
+   "ash-1",
+   "ash-2",
+   "ash-3",
+   "ash-4",
+   "gold-2",
+   "gold-4",
+   "gold-5",
+   "ink-1",
+   "ink-2",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "stool_crate_and_bell",
+  "size": [
+   31,
+   23
+  ],
+  "files": 1,
+  "source_colours": 14,
+  "colours": 9,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 19,
+  "mean_move": 0.046,
+  "max_move": 0.096,
+  "palette": [
+   "gold-2",
+   "gold-4",
+   "ink-1",
+   "ink-2",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-5",
+   "wood-6"
+  ]
+ }
+]

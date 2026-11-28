@@ -1,0 +1,87 @@
+{
+ "world": 2,
+ "floor": 2,
+ "size": [
+  360,
+  120
+ ],
+ "baseline_y": 112,
+ "tap_target": "herb_kiosk",
+ "manager_spot": "manager_stool_ledger_bell",
+ "source": "b03_02_w2_floor02_herb_kiosk.png",
+ "parts": {
+  "mint_street_lamp": {
+   "file": "mint_street_lamp_34x78.png",
+   "size": [
+    34,
+    78
+   ],
+   "origin_on_floor": [
+    20,
+    34
+   ],
+   "cls": "prop"
+  },
+  "mint_bundling_worker": {
+   "file": "../../actors/w2_floor02_herb_kiosk/mint_bundling_worker_41x62.png",
+   "size": [
+    41,
+    62
+   ],
+   "origin_on_floor": [
+    60,
+    50
+   ],
+   "cls": "actor"
+  },
+  "herb_kiosk": {
+   "file": "herb_kiosk_78x89.png",
+   "size": [
+    78,
+    89
+   ],
+   "origin_on_floor": [
+    108,
+    23
+   ],
+   "cls": "prop"
+  },
+  "mint_serving_worker": {
+   "file": "../../actors/w2_floor02_herb_kiosk/mint_serving_worker_39x65.png",
+   "size": [
+    39,
+    65
+   ],
+   "origin_on_floor": [
+    188,
+    47
+   ],
+   "cls": "actor"
+  },
+  "mint_handcart": {
+   "file": "mint_handcart_55x45.png",
+   "size": [
+    55,
+    45
+   ],
+   "origin_on_floor": [
+    229,
+    67
+   ],
+   "cls": "prop"
+  },
+  "manager_stool_ledger_bell": {
+   "file": "manager_stool_ledger_bell_50x31.png",
+   "size": [
+    50,
+    31
+   ],
+   "origin_on_floor": [
+    286,
+    81
+   ],
+   "cls": "prop"
+  }
+ },
+ "note": "Loomington. Drawn on a finer pixel than the game grid, so every item was brought to five sixths in the clean-up. The two workers are single standing frames until their Batch 4 sheets. Workers are drawn after the props."
+}

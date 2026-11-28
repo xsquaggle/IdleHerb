@@ -1,0 +1,88 @@
+# Builds the Windows app: an installer and a portable .exe (docs/tech/08, "Windows builds").
+#
+# Runs on pushes to main, on version tags, on pull requests and from the "Run workflow" button.
+# Nothing here is scheduled. The builds are unsigned (docs/tech/08, "Code signing"): the first
+# time, Windows says "Windows protected your PC"; choose "More info", then "Run anyway".
+#
+# The builds are attached to each run as "SproutTower-Windows" (Actions tab, open the run).
+name: Windows app
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    name: Build and smoke test the Windows app
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build the game page
+        run: pnpm build:single
+
+      - name: Cache the Electron and installer tool downloads
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~\AppData\Local\electron\Cache
+            ~\AppData\Local\electron-builder\Cache
+          key: electron-${{ runner.os }}-${{ hashFiles('apps/desktop/package.json') }}
+
+      - name: Package the installer and the portable build
+        working-directory: apps/desktop
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: pnpm exec electron-builder --win --x64 --publish never
+
+      - name: Smoke test the packaged app
+        working-directory: apps/desktop
+        run: node smoke.cjs "release/win-unpacked/Sprout Tower.exe" release/smoke
+
+      - name: Write checksums
+        working-directory: apps/desktop/release
+        shell: pwsh
+        run: |
+          Get-FileHash *.exe -Algorithm SHA256 |
+            ForEach-Object { "$($_.Hash.ToLower())  $(Split-Path $_.Path -Leaf)" } |
+            Set-Content SHA256SUMS.txt
+          Get-Content SHA256SUMS.txt
+
+      - name: Upload the Windows builds
+        uses: actions/upload-artifact@v4
+        with:
+          name: SproutTower-Windows
+          path: |
+            apps/desktop/release/*.exe
+            apps/desktop/release/SHA256SUMS.txt
+          if-no-files-found: error
+          compression-level: 0
+
+      - name: Upload the smoke test screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-screenshots
+          path: apps/desktop/release/smoke
+          if-no-files-found: ignore

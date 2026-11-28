@@ -88,7 +88,7 @@ describe('chest rolls on design 0.3', () => {
       for (let seed = 1; seed <= 40; seed++) {
         const res = rollChest(input(chest.id, seed));
         // The Starlight Chest adds one card on top: a Head copy, or a third Legendary when no Head qualifies.
-        expect(res.cards.length).toBeLessThanOrEqual(chest.cards + (chest.exoticManagerCopy ? 1 : 0));
+        expect(res.cards.length).toBeLessThanOrEqual(chest.cards + (chest.headCopies ?? 0));
         const rarities = res.cards.map((c) => byId.get(c)?.rarity ?? content.plants.find((p) => p.id === c)?.rarity).filter((r) => r !== undefined) as string[];
         for (const g of (chest.guarantee ?? []) as string[]) {
           expect(rarities.some((r) => order.indexOf(r) >= order.indexOf(g))).toBe(true);

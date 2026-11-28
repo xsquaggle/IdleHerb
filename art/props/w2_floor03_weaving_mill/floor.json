@@ -1,0 +1,87 @@
+{
+ "world": 2,
+ "floor": 3,
+ "size": [
+  360,
+  120
+ ],
+ "baseline_y": 112,
+ "tap_target": "canvas_floor_loom",
+ "manager_spot": "manager_bench_bell",
+ "source": "b03_03_w2_floor03_weaving_mill.png",
+ "parts": {
+  "thread_cone_rack": {
+   "file": "thread_cone_rack_36x62.png",
+   "size": [
+    36,
+    62
+   ],
+   "origin_on_floor": [
+    20,
+    50
+   ],
+   "cls": "prop"
+  },
+  "weaving_worker": {
+   "file": "../../actors/w2_floor03_weaving_mill/weaving_worker_35x65.png",
+   "size": [
+    35,
+    65
+   ],
+   "origin_on_floor": [
+    72,
+    47
+   ],
+   "cls": "actor"
+  },
+  "canvas_floor_loom": {
+   "file": "canvas_floor_loom_65x72.png",
+   "size": [
+    65,
+    72
+   ],
+   "origin_on_floor": [
+    122,
+    40
+   ],
+   "cls": "prop"
+  },
+  "canvas_carrying_worker": {
+   "file": "../../actors/w2_floor03_weaving_mill/canvas_carrying_worker_43x64.png",
+   "size": [
+    43,
+    64
+   ],
+   "origin_on_floor": [
+    189,
+    48
+   ],
+   "cls": "actor"
+  },
+  "canvas_bolts_shuttles": {
+   "file": "canvas_bolts_shuttles_49x45.png",
+   "size": [
+    49,
+    45
+   ],
+   "origin_on_floor": [
+    234,
+    67
+   ],
+   "cls": "prop"
+  },
+  "manager_bench_bell": {
+   "file": "manager_bench_bell_51x35.png",
+   "size": [
+    51,
+    35
+   ],
+   "origin_on_floor": [
+    285,
+    77
+   ],
+   "cls": "prop"
+  }
+ },
+ "note": "Loomington. Drawn on a finer pixel than the game grid, so every item was brought to five sixths in the clean-up. The two workers are single standing frames until their Batch 4 sheets. Workers are drawn after the props."
+}

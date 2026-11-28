@@ -1,0 +1,118 @@
+# Reset layers, lowest first (GDD 12; design 0.5: EXPANSION 7 and 15.1 item 6). The core holds
+# them as a list, so a new layer is a row. Each row says what the layer pays, from what, when it
+# opens, what it gives and what it resets. The core runs a row's steps by name; the names are
+# declared once in packages/core/src/systems/resets/layers.ts.
+#
+# enabled   false for a layer that ships later (ROADMAP). Its row is checked but never offered,
+#           and it may name steps and counters that are not built yet: those are its to-do list.
+# scope     world: one world at a time (Replant). save: the whole save.
+# currency  what it pays. Display names are in text/en.yaml under `resets` and `currencies`.
+# gain      total = floor(scale x stat x (source / base) ^ exp), and pending = total - claimed.
+#             source, claimed: counters. base, exp: tuning keys or numbers.
+#             scale: a world column (null = 1). stat: a global stat multiplying the gain (null = 1).
+# claim     counters the gain is added to when the layer is taken.
+# tally     tallies counted up by one when the layer is taken.
+# times     the tally that says how many times the layer has been taken.
+# first     the pending amount needed the first time (a tuning key or a number); later times need 1.
+# needs     topFloorOpen: the world's top floor is open. worldReached: the furthest world reached.
+# grants    what taking the layer gives, in order.
+# resets    steps run when it is taken: `save` steps once, then `world` steps for each world in scope.
+# keeps     every other step. A row must name every built step under `resets` or `keeps` (the
+#           content check fails otherwise), so a new part of the save cannot be forgotten by a layer.
+#
+# First-pass numbers for layers 3 and 4 (LAUREL_R0, STARSEED_L0, FIRST_GEN_MIN) are fitted by the
+# simulator (EXPANSION 15.2, items 5 and 6) before those rows are enabled.
+
+- id: replant
+  order: 1
+  enabled: true
+  scope: world
+  currency: compost
+  gain: { source: world.lifetime, claimed: world.claimed, base: COMPOST_E0, exp: COMPOST_EXP, scale: compostK, stat: compostGain }
+  claim: [world.claimed, compost, compostEra, compostAllTime]
+  tally: [world.replantsEra, world.replantsEver, replants]
+  times: replants
+  first: FIRST_REPLANT_MIN
+  needs: { topFloorOpen: true }
+  grants:
+    - { step: compostRecordXp }
+    - { step: replantChest, chest: chest.copper }
+  resets:
+    save: []
+    world: [run]
+  keeps:
+    save: [compost, compostShop, records, focus, combo, visitors]
+    world: [era, lock]
+
+# Ribbon gain (EXPANSION 7.1) becomes this row's stat when its first sources are built in Phase 2
+# (the Legacy Builder skill and the Golden Gardener's Hat); design 0.4 has none, so it is null.
+- id: festival
+  order: 2
+  enabled: true
+  scope: save
+  currency: ribbons
+  gain: { source: compostAllTime, claimed: ribbonsClaimed, base: RIBBON_C0, exp: RIBBON_EXP, scale: null, stat: null }
+  claim: [ribbonsClaimed, ribbons]
+  tally: [festivals]
+  times: festivals
+  first: FIRST_FESTIVAL_MIN
+  needs: { worldReached: FESTIVAL_NEEDS_WORLD }
+  grants:
+    - { step: respec, count: 1 }
+    - { step: chest, chest: chest.golden, first: chest.crystal, every: { n: 5, chest: chest.starlight } }
+    - { step: heirloomPick, count: 1, onlyFirst: true }
+  resets:
+    save: [compost, compostShop, records, focus, combo, visitors]
+    world: [era, run, lock]
+  keeps:
+    save: []
+    world: []
+
+# Layer 3 (EXPANSION 7.1). To build: the counters ribbonsThisBloom, laurelsClaimed and laurels,
+# the tally generations, the steps generation and ribbonShopPower, and the grants below.
+- id: new_generation
+  order: 3
+  enabled: false
+  scope: save
+  currency: laurels
+  gain: { source: ribbonsThisBloom, claimed: laurelsClaimed, base: LAUREL_R0, exp: LAUREL_EXP, scale: null, stat: laurelGain }
+  claim: [laurelsClaimed, laurels, laurelsLifetime]
+  tally: [generations]
+  times: generations
+  first: FIRST_GEN_MIN
+  needs: { worldReached: FESTIVAL_NEEDS_WORLD }
+  grants:
+    - { step: respec, count: 1 }
+    - { step: chest, chest: chest.prism, every: { n: 5, chest: chest.sunburst } }
+    - { step: card, tier: ungodly }
+    - { step: roofOrnament, count: 1 }
+  resets:
+    save: [compost, compostShop, records, focus, combo, visitors, generation, ribbonShopPower]
+    world: [era, run, lock]
+  keeps:
+    save: []
+    world: []
+
+# Layer 4 (EXPANSION 7.2). Ships with the Nebula Nursery. To build: the counters laurelsLifetime,
+# starseedsClaimed and starseeds, the tally blooms, the steps bloom and laurelShopPower, and the grants.
+- id: big_bloom
+  order: 4
+  enabled: false
+  scope: save
+  currency: starseeds
+  gain: { source: laurelsLifetime, claimed: starseedsClaimed, base: STARSEED_L0, exp: STARSEED_EXP, scale: null, stat: null }
+  claim: [starseedsClaimed, starseeds]
+  tally: [blooms]
+  times: blooms
+  first: 1
+  needs: { worldReached: 6 }
+  grants:
+    - { step: respec, count: 1 }
+    - { step: chest, chest: chest.grail, onlyFirst: true }
+    - { step: openTier, tier: grailed, onlyFirst: true }
+  resets:
+    save: [compost, compostShop, records, focus, combo, visitors, generation, ribbonShopPower, bloom, laurelShopPower]
+    world: [era, run, lock]
+  keeps:
+    save: []
+    world: []

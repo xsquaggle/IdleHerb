@@ -1,0 +1,29 @@
+{
+ "who": "Mayor Thyme",
+ "role": "story character: hosts the Grand Harvest Festival and pins on the Prize Ribbons",
+ "frame": [
+  96,
+  104
+ ],
+ "baseline_y": 100,
+ "source": "b03_14_mayor_thyme.png",
+ "frames": [
+  {
+   "name": "proud_rosette",
+   "file": "01_proud_rosette_96x104.png"
+  },
+  {
+   "name": "pinning_rosette",
+   "file": "02_pinning_rosette_96x104.png"
+  },
+  {
+   "name": "hat_cheer",
+   "file": "03_hat_cheer_96x104.png"
+  },
+  {
+   "name": "ribbon_cutting",
+   "file": "04_ribbon_cutting_96x104.png"
+  }
+ ],
+ "note": "Built like a manager, but his top hat needs a taller frame: 96x104 with the feet on y 100. Body about 76 tall, 94 to 98 with the hat. Skin moved one step darker in the clean-up, as the brief asked for warm brown skin. The face is replaced later by one hand-drawn head."
+}

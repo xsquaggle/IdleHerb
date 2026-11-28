@@ -1,6 +1,6 @@
 # 02. Architecture
 
-Status: recommended, Phase 0. Owner: Engine Architect. Brought in line with design version 0.2 on 2026-11-26.
+Status: recommended, Phase 0. Owner: Engine Architect. Brought in line with design version 0.2 on 2026-11-26; reset layers, tiers and counted taps brought in line with design 0.5 on 2026-11-28.
 
 The one rule everything else follows from: **the game's rules live in a core that knows nothing about rendering, files, clocks or randomness sources.** The core is given time, random seeds and content, and it returns state and events. That is what lets the simulator, the tests, the offline catch-up and the real game all run the same code.
 
@@ -104,8 +104,9 @@ export interface SystemModule<S> {
   tick?(ctx: Ctx, dtMs: number): void;
   fastForward?(ctx: Ctx, awayMs: number, report: OfflineReport): void;
   modifiers?(ctx: Ctx, out: ModifierSink): void;      // what this system adds to stats
-  reset: Record<ResetLayer, 'wipe' | 'keep' | ((s: S, ctx: Ctx, at: ResetScope) => void)>;
-                                    // required for both layers: 'replant' (one world) and 'festival'
+  resetSteps?: Record<string, (s: S, ctx: Ctx, at: ResetScope) => void>;
+                                    // the named reset steps this system owns; tables/resets/layers.yaml
+                                    // says which layer runs and which keeps each one
   stats?: StatDecl[];               // stat keys it introduces
   specials?: Record<string, SpecialHandler>;          // code hooks that data can name
 }
@@ -115,7 +116,13 @@ Systems are listed in one registry file, `systems/index.ts`, one line each in al
 
 Planned systems, each one folder, in the design's words: `wallet` (currencies), `floors` (cycles, levels, milestones, buying), `tapping` (counted taps, Combo, Bumper taps, Growth Spurt), `visitors` (Garden Visitors), `boosts` (the one capped Boost per world), `managers` (one per floor: met, hired, perks, abilities), `cards` (copies and levels), `plants` (planters, families, traits), `bench` (cross-pollination and mutation jobs), `chests` (rolls, pity, shown odds), `artifacts` (heirlooms: slots, sets, abilities), `level` (Green Thumb level and XP), `skills`, `research` (Insight and the desks), `quests` (story, daily, weekly), `resets` (Replant, Harvest Festival, the Compost Shop and the Ribbon Shop), `worlds` (tickets, deeds, twists, World Mastery), `achievements`, `codex`, `events` (weekend events and the fair stall), `unlocks` (the reveal order), `tutorial`, `offline`, `time`. Adding or removing one is adding or removing a folder and a registry line.
 
-**Resets are declared, not coded centrally.** There are two reset layers (GDD 12): a Replant resets one world, and a Harvest Festival resets every world. Each system states what each layer does to its own slice (`wipe`, `keep` or a function, which is told the world for a Replant). The reset code simply walks the systems. A new system cannot be forgotten by a reset, because the type requires it to answer for both layers.
+**Resets are a list of layers, and the list is data.** Design 0.5 has four reset layers (GDD 12, EXPANSION 7): Replant resets one world and pays Compost, the Harvest Festival resets every world and pays Ribbons, and New Generation (Laurels) and Big Bloom (Starseeds) come later. Each is a row of `tables/resets/layers.yaml`:
+
+- what it pays and from what: `total = floor(scale x stat x (source / base) ^ exp)`, and pending is the total less what is already claimed. Every layer's currency is a gentle root of a lifetime total, so this one shape covers all four;
+- when it opens (`first`, `needs`), what it adds the gain to (`claim`), what it counts (`tally`), and what it gives (`grants`, such as the Festival's chests and free respec);
+- which reset steps it runs (`resets`) and which it keeps (`keeps`). A step is one named slice of the save: `compost`, `compostShop`, `records`, `focus`, `combo` and `visitors` run once, and `era`, `run` and `lock` run for each world in the layer's scope.
+
+The reset code walks the row: claim, count, grants, then the steps in order. **Every row must name every built step under `resets` or `keeps`, or the content fails to load**, so a new system cannot be forgotten by a reset: adding its step makes every layer answer for it. A later layer is a row plus whatever new steps and counters it needs. A row that is not enabled may name steps that are not built yet; they are its to-do list, and the row cannot be enabled until they exist. In the economy core today the steps are named functions in `game.ts` and the names are listed in `systems/resets/layers.ts`; when the core is split into systems, each system owns its steps (`resetSteps` above). Commands are `replant`, `festival` or the general `reset { layer, world }`, and every layer announces itself with one `reset { layer, world, gained, n }` event.
 
 ### Stats and modifiers
 
@@ -143,12 +150,13 @@ Manager perks, plant traits, heirlooms, set bonuses, skills, research, shop item
 ### Time, ticks and determinism
 
 - `tick(dt)` is exact for any `dt`. Floors compute how many cycles completed inside the step with division, not by looping, so `tick(a + b)` gives the same result as `tick(a)` then `tick(b)`. Frame rate cannot change the economy. A property test holds this.
-- **Rules that react to state run on a fixed step.** Anything that is a pure function of time (cycles, timers, Hearth Heat falling, the weather loop) is exact for any `dt`. The few rules that look at the state and act (the Auto-Gardener buying a level, Auto-Replant) run on a fixed step of 100 ms inside the core, so they behave the same at 30 fps, at 240 fps and in the background. The simulator may pick a coarser step for long runs and says so in its report.
+- **Rules that react to state run on a fixed step.** Anything that is a pure function of time (cycles, timers, Hearth Heat falling, the weather loop) is exact for any `dt`. The few rules that look at the state and act (the Auto-Gardener buying a level, Auto-Replant) run on a fixed step of one second of game time inside the core, so they behave the same at 30 fps, at 240 fps, in the background and in the simulator. The first plan said 100 ms; the economy core chose one second, design 0.4's numbers were measured with it (the PR #6 review, note 7), and a one-second step is quicker than any of these rules needs to be, so it stays.
 - `fastForward(awayMs)` is the same maths over a long span, plus the offline rules (efficiency, stored hours, no visitors). See 07.
 - **Every unlocked world runs all the time.** Managed floors in every world earn at the full rate whichever world is on screen (GDD 14.1). Taps, Combo, Spurts and visitors belong to the world on screen, which the core is told through a `world.show` command. Fifty floors of closed-form maths is far inside the budget.
 - **Open in the background is still playing.** While the window is unfocused, hidden or minimised, the simulation keeps ticking at the full online rate (GDD 15.1). Only drawing slows or stops. Only a real stop of the process, such as the PC sleeping, counts as time away (see 07).
 - **What the screen is doing reaches the core as commands.** A few rules depend on it: Garden Visitors appear only while the window has focus (GDD 6.6), and the Combo timer pauses during a reveal or a full-screen panel (GDD 6.3). The view sends `session.focus` and `session.hold`, so the rule itself stays in the core and a simulator bot can drive it the same way.
 - Input limits are core rules too. The cap of `TAP_RATE_CAP` counted taps per second is enforced against game time, so a bot, a held key and a fast clicker get the same limit.
+- **Counted taps are a flag on the input source** (EXPANSION 15.1 item 7). The tap command carries its source (`tower`, `key` or `field`) and only the counted ones act on the tower (`TAP_SOURCES` in `systems/tapping/logic.ts`), so the field activities of Phase 2 can take taps without feeding the tower's Combo or stats.
 - Timers (boosts, cooldowns, research, bench jobs, Morning Baskets) store **time remaining in game time**, never a wall-clock end time. The system clock cannot touch them.
 - Randomness comes from seeded generator streams whose state is in the save: one each for chests, Bumper taps, harvests that can pay double, visitors and quest draws. Consequences: a simulator run is reproducible from its seed, and reopening the game cannot reroll a chest. Visual-only randomness (particle scatter) uses a separate unsaved generator so effects never disturb gameplay results.
 - The core never asks what time it is. Time is handed in by the platform layer after it has been checked (see 07).

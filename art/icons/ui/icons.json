@@ -1,0 +1,29 @@
+{
+ "note": "32 pixel icons are the designs. 24 and 16 are stand-ins until redrawn by hand.",
+ "icons": [
+  "card_stack",
+  "sprout_lightbulb",
+  "skill_nodes",
+  "quest_scroll",
+  "market_stall",
+  "prestige_wreath",
+  "trophy",
+  "sprout_book",
+  "event_calendar",
+  "settings_gear",
+  "speaker",
+  "music_note",
+  "lock",
+  "check_mark",
+  "close",
+  "magnifying_glass",
+  "upgrade_arrow",
+  "hourglass",
+  "sprout",
+  "lightning",
+  "starburst",
+  "triple_chevrons",
+  "moon_and_stars",
+  "golden_sprout"
+ ]
+}

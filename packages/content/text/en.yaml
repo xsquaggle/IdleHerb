@@ -1,0 +1,277 @@
+# Display text, English. Words live here and numbers live in tables/ (docs/tech/04).
+# Names come from docs/design/CONTENT.md. Pip's lines are a first pass for the Writer to polish;
+# they follow GDD 2.3 (the word list) and docs/art/HEMP_ART.md (hemp is a farm crop and nothing else).
+
+game:
+  title: Sprout Tower
+  tagline: From one windowsill to the stars
+
+currencies:
+  coins: Coins
+  gems: Gems
+  compost: Compost
+  ribbons: Ribbons
+  laurels: Laurels
+  starseeds: Starseeds
+
+# Reset layers (tables/resets/layers.yaml).
+resets:
+  replant: Replant
+  festival: Harvest Festival
+  new_generation: New Generation
+  big_bloom: Big Bloom
+
+worlds:
+  world.w1: Thymeford
+
+floors:
+  floor.w1.windowsill: Windowsill Planter
+  floor.w1.balcony: Balcony Boxes
+  floor.w1.hemp_patch: Backyard Hemp Patch
+  floor.w1.garden_shed: Garden Shed Nursery
+  floor.w1.greenhouse: Glass Greenhouse
+  floor.w1.market: Farmers' Market Stall
+  floor.w1.tea_house: Tea House
+  floor.w1.ropewalk: Ropewalk & Twine Shop
+  floor.w1.soap_workshop: Soap & Scent Workshop
+  floor.w1.hq: Sprout Tower HQ
+
+products:
+  floor.w1.windowsill: Fresh mint
+  floor.w1.balcony: Basil and kitchen herbs
+  floor.w1.hemp_patch: Hemp stalks
+  floor.w1.garden_shed: Seedlings
+  floor.w1.greenhouse: Sage and tender herbs
+  floor.w1.market: Herb bunches
+  floor.w1.tea_house: Herbal teas
+  floor.w1.ropewalk: Hemp rope and twine
+  floor.w1.soap_workshop: Lavender soap
+  floor.w1.hq: The brand, on every shelf
+
+managers:
+  card.manager.nana_sprig: Nana Sprig
+  card.manager.basil_brumble: Basil Brumble
+  card.manager.rowan_rake: Rowan Rake
+  card.manager.posy_seedwell: Posy Seedwell
+  card.manager.fern_petrie: Fern Petrie
+  card.manager.juniper_jones: Juniper Jones
+  card.manager.old_moss: Old Moss
+  card.manager.captain_kelp: Captain Kelp
+  card.manager.clementine_zest: Clementine Zest
+  card.manager.granny_evergreen: Granny Evergreen
+
+manager_roles:
+  card.manager.nana_sprig: Never overpays for anything
+  card.manager.basil_brumble: Jolly shopkeeper in an apron
+  card.manager.rowan_rake: Up before the sun
+  card.manager.posy_seedwell: A sack on each shoulder
+  card.manager.fern_petrie: Curious botanist in goggles
+  card.manager.juniper_jones: Cheerful market runner
+  card.manager.old_moss: Serene tea master
+  card.manager.captain_kelp: Rope master, retired sailor
+  card.manager.clementine_zest: A flair for drama
+  card.manager.granny_evergreen: Head of Thymeford
+
+plants:
+  plant.hemp.fibre: Fibre Hemp
+  plant.hemp.seed: Seed Hemp
+  plant.hemp.longstalk: Longstalk Hemp
+  plant.hemp.show: Giant Show-Hemp
+  plant.mint.garden: Garden Mint
+  plant.mint.pepper: Peppermint
+  plant.mint.chocolate: Chocolate Mint
+  plant.basil.sweet: Sweet Basil
+  plant.basil.lemon: Lemon Basil
+  plant.basil.purple: Purple Basil
+  plant.rosemary.kitchen: Kitchen Rosemary
+  plant.rosemary.trailing: Trailing Rosemary
+  plant.rosemary.topiary: Rosemary Topiary
+  plant.lavender.field: Field Lavender
+  plant.lavender.butterfly: Butterfly Lavender
+  plant.lavender.royal: Royal Lavender
+  plant.sage.garden: Garden Sage
+  plant.sage.pineapple: Pineapple Sage
+  plant.sage.silver: Silver Sage
+  plant.chamomile.meadow: Meadow Chamomile
+  plant.chamomile.double: Double Chamomile
+  plant.chamomile.golden: Golden Chamomile
+  plant.thyme.garden: Garden Thyme
+  plant.thyme.lemon: Lemon Thyme
+  plant.thyme.creeping: Creeping Thyme
+  plant.thyme.elfin: Elfin Thyme
+  plant.mint.honey: Honeymint
+  plant.basil.pepperleaf: Pepperleaf Basil
+  plant.hemp.silkspun: Silkspun Hemp
+  plant.sage.sunset: Sunset Sage
+  plant.hemp.sunspun: Sunspun Hemp
+  plant.thyme.clockwork: Clockwork Thyme
+  plant.basil.ember: Ember Basil
+  plant.rosemary.thunder: Thunder Rosemary
+  plant.mint.frosted: Frosted Mint
+  plant.sage.crystal: Crystal Sage
+  plant.lavender.moonlit: Moonlit Lavender
+  plant.chamomile.starlight: Starlight Chamomile
+
+chests:
+  chest.welcome: Welcome Chest
+  chest.hiring: Hiring Crate
+  chest.seed_packet: Seed Packet
+  chest.wooden: Wooden Crate
+  chest.copper: Copper Chest
+  chest.silver: Silver Chest
+  chest.golden: Golden Chest
+  chest.crystal: Crystal Chest
+  chest.starlight: Starlight Chest
+  chest.prism: Prism Chest
+  chest.sunburst: Sunburst Chest
+  chest.eclipse: Eclipse Chest
+  chest.pearl: Pearl Chest
+  chest.grail: Grail Chest
+
+rarities:
+  common: Common
+  uncommon: Uncommon
+  rare: Rare
+  epic: Epic
+  legendary: Legendary
+  mythic: Mythic
+  exotic: Exotic
+  godly: Godly
+  ungodly: Ungodly
+  holy: Holy
+  grailed: Grailed
+
+shop:
+  shop.compost.rich_soil: Rich Soil
+  shop.compost.head_start: Head Start
+  shop.compost.loyal_staff: Loyal Staff
+  shop.compost.market_day: Market Day
+  shop.compost.green_deal: Green Deal
+  shop.compost.overnight_growth: Overnight Growth
+  shop.compost.sprout_whistle: Sprout Whistle
+  shop.compost.compost_tea: Compost Tea
+
+shop_effects:
+  shop.compost.rich_soil: Profit x1.25 in every world
+  shop.compost.head_start: Every run starts with Coins in hand
+  shop.compost.loyal_staff: The lowest floors keep their managers
+  shop.compost.market_day: Hire fees -20%
+  shop.compost.green_deal: Level costs x0.96
+  shop.compost.overnight_growth: Offline earnings +3 points
+  shop.compost.sprout_whistle: Golden Sprouts come 4% sooner
+  shop.compost.compost_tea: Compost gain +10%
+
+story:
+  quest.story.first_harvest: Tap the planter to harvest your first mint.
+  quest.story.grow_up: Level the Windowsill Planter to 10.
+  quest.story.proper_milestone: Get any floor to level 25 for a milestone.
+  quest.story.fresh_air: Open floor 2, the Balcony Boxes.
+  quest.story.flagship_crop: Open floor 3, the Backyard Hemp Patch.
+  quest.story.helping_hands: Hold 1,000 Coins at once.
+  quest.story.youre_hired: Hire a manager.
+  quest.story.moving_up: Open floor 4.
+  quest.story.full_swing: Fill the Combo meter.
+  quest.story.under_glass: Open floor 5.
+  quest.story.right_plant: Plant a card on a floor that favours its family.
+  quest.story.what_a_whopper: Land 5 Bumper taps.
+  quest.story.to_market: Open floor 6.
+  quest.story.catch: Catch a Golden Sprout.
+  quest.story.tea_time: Open floor 7, the Tea House.
+  quest.story.level_best: Level up any card.
+  quest.story.know_the_ropes: Open floor 8, the Ropewalk.
+  quest.story.spurt: Trigger a Growth Spurt.
+  quest.story.squeaky_clean: Open floor 9.
+  quest.story.head_office: Open floor 10, Sprout Tower HQ.
+  quest.story.even_growth: Get every floor to level 25.
+  quest.story.turn_the_heap: Replant for the first time.
+  quest.story.richer_soil: Buy Rich Soil in the Compost Shop.
+  quest.story.bright_idea: Start a research project.
+  quest.story.back_again: Open floor 10 again.
+  quest.story.third_time: Replant 3 times.
+  quest.story.century: Get every floor to level 100.
+  quest.story.all_aboard: Hold 1e18 Coins at once.
+
+pip:
+  hello: Hi! I'm Pip. This windowsill is the start of something big. Tap the planter!
+  first_harvest: Fresh mint! Spend those Coins on the green button to grow faster.
+  milestone: A milestone! Every 25 levels the floor runs twice as fast.
+  floor2: The Balcony Boxes pay more, but they take longer. Keep tapping!
+  floor3: Hemp! A tall farm crop for rope, canvas, paper and more. Our flagship.
+  welcome_chest: A Welcome Chest! Three gardeners want to work here. Tap to open it.
+  hire: Hire Nana Sprig and the windowsill harvests itself!
+  tap_bonus: With a manager on staff, every tap pays a bonus. Keep tapping to build Combo!
+  bumper: Some taps are Bumpers now. They pay ten times as much!
+  visitors: A Golden Sprout! Catch it before it floats away.
+  spurt: The Growth Spurt meter is full. Press it and tap like the wind!
+  top_floor: The whole tower! When growth slows, the compost heap turns it into richer soil.
+  replant_ready: The compost heap is ready. Replant for a big boost to every floor!
+  after_replant: Richer soil already! Spend Compost in the shop, then grow back faster.
+  card_level: Two copies of a card level it up. Managers get stronger every level.
+
+ui:
+  tap_to_harvest: Tap!
+  level: Lv
+  open: Open
+  hire: Hire
+  hired: Hired
+  buy: Buy
+  max: Max
+  next: Next
+  locked: Locked
+  building: Building...
+  chests: Chests
+  cards: Cards
+  replant: Replant
+  settings: Settings
+  combo: Combo
+  spurt: Spurt
+  milestone: Milestone!
+  twice_as_fast: Twice as fast!
+  bumper: BUMPER!
+  new_floor: New floor!
+  tap_to_open: Tap to open
+  tap_to_continue: Tap to continue
+  level_up: Level up!
+  new_card: New!
+  welcome_back: Welcome back!
+  while_away: While you were away
+  collect: Collect
+  replant_title: Turn the compost heap
+  replant_body: Everything in Thymeford starts again, in richer soil. Cards and levels stay.
+  replant_now: Replant now
+  compost_shop: Compost Shop
+  close: Close
+  sound_on: Sound on
+  sound_off: Sound off
+  per_sec: /s
+  ready_in: Ready in
+  copies: copies
+  max_level: Max level
+  owned: Owned
+  not_met: Open its floor to meet
+  quest: Quest
+  need_coins: Not enough Coins yet
+  no_chests: No chests yet. Finish quests, level up and catch visitors to earn them.
+  managers_title: Managers
+  plants_title: Plants
+  plant: Plant
+  planted_on: planted on
+  replant_not_yet: Grow the tower further first. The heap fills as you earn.
+  shop_after_replant: The Compost Shop opens after your first Replant.
+  reduce_motion_on: Reduce motion is on
+  reduce_motion_off: Reduce motion is off
+  reset: Start a new tower
+  reset_confirm: Tap again to erase this tower
+  reset_done: Starting over...
+  build: Build
+  controls_help: "Tap a floor to harvest and earn. Space taps too (hold it). F starts a Growth Spurt, B changes how many levels to buy, arrows scroll."
+  controls_help_desktop: "F11 switches full screen."
+  fullscreen: Full screen
+  open_saves: Open save folder
+  theatre: Reveal theatre
+  theatre_help: "See the reveal of every rarity, from Common to Grailed. Rarities above Legendary use stand-in art until theirs is drawn. Nothing here changes your game."
+  theatre_full: "Full reveals (tap to switch)"
+  theatre_short: "Short reveals (tap to switch)"
+  theatre_all: Play all eleven
+  player_level: Level
+  quest_done: Quest done!

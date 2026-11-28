@@ -3,6 +3,7 @@
  * The shell, the UI and the simulator all drive the game through `dispatch`
  * and learn what happened through `on`.
  */
+import type { TapSource } from '../systems/tapping/logic';
 import type { Num } from '../kernel/num/num';
 import type { VisitorKind } from './state';
 
@@ -16,7 +17,11 @@ export type Command =
   | { type: 'buyTicket'; world: number }
   | { type: 'focus'; world: number }
   // Tapping and visitors
-  | { type: 'tap'; count: number }
+  /**
+   * `floor`: the floor the tap landed on, if any. It harvests that floor when it is ready (GDD 6.1).
+   * `source`: where the tap came from (default tower). Only counted sources act on the tower (TAP_SOURCES).
+   */
+  | { type: 'tap'; count: number; floor?: number; source?: TapSource }
   | { type: 'startSpurt' }
   | { type: 'catchVisitor'; index: number }
   | { type: 'useAbility'; id: string; world?: number }
@@ -42,6 +47,8 @@ export type Command =
   // Resets and shops
   | { type: 'replant'; world: number }
   | { type: 'festival' }
+  /** Any reset layer by id (tables/resets/layers.yaml); `replant` and `festival` are the same as the two above. */
+  | { type: 'reset'; layer: string; world?: number }
   | { type: 'buyCompostShop'; id: string }
   | { type: 'buyRibbonShop'; id: string }
   /** Auto-Gardener switches: one floor, every floor of one world, or (no world) every floor. */
@@ -58,8 +65,8 @@ export type GameEvent = { t: number } & (
   | { type: 'milestone'; world: number; floor: number; tier: number; record: boolean }
   | { type: 'towerMilestone'; world: number; count: number }
   | { type: 'hire'; world: number; floor: number }
-  | { type: 'replant'; world: number; gained: Num; compostEra: Num; runSeconds: number }
-  | { type: 'festival'; gained: Num; ribbons: Num; n: number }
+  /** A reset layer was taken: `n` counts this one; `runSeconds` is how long the world's run had lasted. */
+  | { type: 'reset'; layer: string; world: number; gained: Num; n: number; runSeconds: number }
   | { type: 'worldReached'; world: number; first: boolean }
   | { type: 'levelUp'; level: number }
   | { type: 'chestOpened'; chest: string; cards: string[]; heirloom: string | null }
@@ -77,6 +84,8 @@ export type GameEvent = { t: number } & (
   | { type: 'offline'; seconds: number; paidSeconds: number; earned: Num[] }
   | { type: 'fairStep'; step: number }
   | { type: 'sunrise'; world: number; caught: boolean }
+  /** One counted tap, rolled on its own (only with `GameOptions.rollTaps`): what it paid and whether it was a Bumper. */
+  | { type: 'tapped'; world: number; amount: Num; bumper: boolean; harvested: number; combo: number }
 );
 
 export type GameEventOf<T extends GameEvent['type']> = Extract<GameEvent, { type: T }>;

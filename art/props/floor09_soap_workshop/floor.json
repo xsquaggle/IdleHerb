@@ -1,0 +1,70 @@
+{
+ "size": [
+  360,
+  120
+ ],
+ "baseline_y": 112,
+ "parts": {
+  "soap_kettle_and_stove": {
+   "file": "soap_kettle_and_stove_62x81.png",
+   "size": [
+    62,
+    81
+   ],
+   "origin_on_floor": [
+    5,
+    31
+   ],
+   "cls": "prop"
+  },
+  "soap_mould_table": {
+   "file": "soap_mould_table_79x49.png",
+   "size": [
+    79,
+    49
+   ],
+   "origin_on_floor": [
+    72,
+    63
+   ],
+   "cls": "prop"
+  },
+  "soap_drying_rack": {
+   "file": "soap_drying_rack_67x101.png",
+   "size": [
+    67,
+    101
+   ],
+   "origin_on_floor": [
+    156,
+    11
+   ],
+   "cls": "prop"
+  },
+  "lotion_shelf_and_soap_basket": {
+   "file": "lotion_shelf_and_soap_basket_55x88.png",
+   "size": [
+    55,
+    88
+   ],
+   "origin_on_floor": [
+    228,
+    24
+   ],
+   "cls": "prop"
+  },
+  "manager_stool_and_side_table": {
+   "file": "manager_stool_and_side_table_67x55.png",
+   "size": [
+    67,
+    55
+   ],
+   "origin_on_floor": [
+    288,
+    57
+   ],
+   "cls": "prop"
+  }
+ },
+ "note": "Replaces the copper still and glass flasks of v2 floor 09. The two workers, the perfume stand and the lavender basket of v2 floor 09 stay."
+}

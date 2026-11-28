@@ -1,0 +1,15 @@
+{
+ "size": [
+  48,
+  48
+ ],
+ "icons": [
+  "fair_tickets_48x48.png",
+  "insight_48x48.png",
+  "pollen_48x48.png",
+  "shells_48x48.png",
+  "skill_points_48x48.png",
+  "snowmarks_48x48.png"
+ ],
+ "note": "Coins, Notes, Gems, Compost and Ribbons come from B12 and are still to be cleaned. The 32, 24 and 16 pixel sizes are drawn by hand."
+}

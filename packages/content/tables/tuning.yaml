@@ -159,6 +159,13 @@ BLUE_POLISH_PCT: 0.002
 AUTO_BUY_SHARE: 0.10
 
 # --- World Mastery (GDD 14.5) ---
+# --- Rarity tiers (design 0.5, EXPANSION 1.3 and 2.2; the tiers themselves are tiers.yaml) ---
+TIER_STEP: 1.5
+CHEST_CARD_TOP: legendary             # a chest's card slot never rolls above this
+PITY_EPIC_TIER: epic                  # PITY_EPIC counts cards since one of this tier or better
+HEAD_TIER: exotic                     # a world's Head, the manager of its top floor
+HEIRLOOM_PICK_TIER: legendary         # the Heirloom Pick chooses among heirlooms of this tier
+EPIC_COPIES_TIER: epic                # a reward's epicCopies are copies of a manager of this tier
 MASTERY_PCT: 0.10
 MASTERY_EXOTIC_STARS: [5, 7, 9, 10]
 
