@@ -58,7 +58,7 @@ These are the stat names used in this file. The Engine thread may map them to it
 | `spurt.speed` | Floor speed during a Spurt | 4 |
 | `visitor.interval` | Time between Garden Visitors | at least 0.4 of the base |
 | `visitor.lifetime` | How long a visitor stays | none |
-| `visitor.reward` | Value of Golden Sprout outcomes | none |
+| `visitor.reward` | Coins paid by a Windfall, Jackpots included. It does not change Sunbeams or Tap Storms | none |
 | `offline.earnings` | Offline earnings, as a percentage on top of efficiency | see GDD 13.4 |
 | `offline.efficiency` | Offline efficiency, in points | 1.0 |
 | `offline.cap` | Hours of offline earnings stored | 36 h. Everything in the game adds up to 33 h |

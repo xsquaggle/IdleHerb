@@ -98,6 +98,10 @@ On 2026-11-28 the Game Designer confirmed the three first-pass calls of C.6 and 
    - **When it joins the GDD.** GDD 13.4 gains the named cap and Patient Hearts with New Generation (v1.1), and Lavender's cap with Big Bloom (v1.3).
 5. **What other threads do.** Balance simulator: nothing now. With the reset layers, fit both caps in EXPANSION 15.2, items 5 and 6, and run the idle player with Patient Hearts worn in every generation (item 5). Engine: the efficiency cap is a stat (1.0, or 1.25 with Lavender), and after-cap bonuses are a named list that only real time away uses. Fresh-eyes reviewer: audit this section with EXPANSION 1.3, rule 10, before it merges.
 
+### C.8 One wording fix from the simulator's rebuild of 0.4
+
+The simulator's core raises only Windfalls with `visitor.reward` (Skipper Papaya's +100% in Papaya Cay), and its accepted run of 0.4 was measured that way. CONTENT section 1 called the stat the "value of Golden Sprout outcomes", which could also be read to cover Sunbeams and Tap Storms. The Game Designer's call: **Windfalls only**, Jackpots included. CONTENT now says so. A longer or stronger Sunbeam or Tap Storm would change the Boost averages that 0.4 froze, and Skipper Papaya's own ability, Treasure Map, already brings more of them. No number changes.
+
 ## Version 0.4: the balance simulator's numbers
 
 The balance simulator (`apps/sim`, report in `docs/balance/REPORT.md`) ran version 0.3 for three play styles over 60 to 90 days. On 2026-11-26 the Game Designer accepted four of its overlays (`p1-levels`, `p2-taps`, `p4-gates`, `p5-late-research`), turned one down (`p3-managers`), and made three rulings on the results: the idle player may start slower, the multiplier budget is retired as a target, and the Auto-Gardener restarts older worlds. Version 0.4 writes all of it in, together with the seven non-blocking notes from the fresh-eyes audit of 0.3. **The numbers are frozen until a playtest.** Everything not listed here is as it was in 0.3.
