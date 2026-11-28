@@ -2,6 +2,79 @@
 
 For the Economy and Balance thread, the Engine thread, the Art Director and anyone who read an earlier version. The newest version is first. Rules are in [GDD.md](GDD.md) and rows are in [CONTENT.md](CONTENT.md).
 
+## Version 0.5 (draft): the long game
+
+Lawson asked on 2026-11-28 for higher retention: better core upgrades and items, longer skill trees, higher currencies and resets, cosmetics that boost, chests and crates from fishing, digging and mining that can also be automated, and eleven rarities from Common to Grailed, each noticeably better than the one before, with effects and reveals that scale with rarity. Design 0.5 answers with two new files. [EXPANSION.md](EXPANSION.md) designs every system in full, with first-pass numbers and named constants. [ROADMAP.md](ROADMAP.md) puts each system in a release: most of it in v1.0, then v1.1 New Generation, v1.2 The Moon and v1.3 Nebula Nursery.
+
+Only the changes in C.1 take effect in the GDD now. Everything else joins the GDD and CONTENT.md when it is built and the simulator has fitted it. **Version 0.4's numbers stay frozen** for everything they cover. This draft waits for a fresh-eyes audit.
+
+### C.1 Rules that changed now
+
+| # | Rule in 0.4 | Rule in 0.5 | Where |
+|---|---|---|---|
+| 1 | Six rarities. Call p6 (2026-11-27) planned eight, with Exotic 6, Mythic 7 and Godly 8 | Eleven tiers, in Lawson's order: Common, Uncommon, Rare, Epic, Legendary, Mythic, Exotic, Godly, Ungodly, Holy, Grailed. **Mythic is below Exotic.** Tiers are data, and no chest ever rolls a card above Legendary | GDD 8.1, EXPANSION 2 |
+| 2 | (none) | A world's Head is crowned Godly at the Festival after its 10th Mastery star (kept from call p6). It is the only way a Head reaches Godly, and it gives one Tier Up step and the Godly crest | GDD 14.5 |
+| 3 | No third reset layer in v1 | Still none in v1.0. New Generation (Laurels) follows in v1.1 and Big Bloom (Starseeds) in v1.3 | GDD 12.3, EXPANSION 7 |
+| 4 | The Ribbon Shop never resets | A Festival never resets it. From v1.1 a New Generation resets its four power items and keeps every slot and convenience | GDD 12.2, CONTENT 8 |
+| 5 | The Festival's fiction says "a new generation starts over" | "The brand starts over", so the words "New Generation" belong to layer 3 | GDD 12.2 |
+
+### C.2 Planned changes to 0.4's numbers, when each system ships
+
+| What | 0.4 | 0.5 | Ships with |
+|---|---|---|---|
+| `RARITY_FACTOR` | 1, 1.5, 2.2, 3.2, 5, Exotic 8 | 1, 1.5, 2.2, 3.2, 5, 7.5, 11, 16, 24, 36, 54 (Exotic 11) | Tier Up (v1.0) |
+| `WINDFALL_SECONDS` | 60 | `WINDFALL_BASE = 40 s` times the visitor's `tierPower`: 60 s on average, as before | Golden Sprout tiers (v1.0) |
+| `LEVEL_CAP` | 112 | 250, then endless Evergreen ranks | the longer trees (v1.0); Evergreen ranks in v1.3 |
+| Skill tree | 3 branches, 111 points | 4 branches, 256 points, so 249 points at the cap still leaves a choice | the longer trees (v1.0) |
+| Achievements | 20 families, 5 tiers, 100 in all | 30 families, 11 tiers, 330 in all | v1.0 |
+| Heirloom slots | 6 | 8 | the Laurel Shop (v1.1) |
+| Research lanes | 4 | 5, with Field Science | v1.0 |
+
+Every new constant is listed in EXPANSION.md, Appendix B.
+
+### C.3 What 0.5 replaces
+
+- **Call p6's order** (Exotic 6, Mythic 7, Godly 8) and its Mythic path, a max-level Exotic plant after a three-day Full Bloom job. A plant now reaches Mythic by tiering up from Legendary, and Full Bloom is the name of every plant tier-up at the bench (EXPANSION 1.2).
+- **Style bible v1.6's eight-tier order.** Style bible v1.7 on the art branch (PR #2) already draws the eleven tiers in Lawson's order.
+- **Batch 4 Part 2 as first written.** The art thread rewrote it on 2026-11-28 for the five tiers above Legendary (frames, badges and bursts), and dropped the Mythic plant forms.
+- **Three cuts of AUDIT 6, in part.** Expeditions return as Outings (v1.2), and tower skins return as Style (v1.0). Pets stay cut: the three helpers belong to their activities.
+
+### C.4 What each thread should do
+
+**Phase 1 build thread (engine).** Build the seven foundations of EXPANSION 15.1 into the slice: tiers as data, `tier` and `nativeTier` on cards, one reveal player with a debug reveal theatre for all eleven tiers, one `moment(tier, place, form)` effect, chests by tier 1 to 11, reset layers as a list, and counted taps as a flag on the input source. Nothing else from 0.5 goes into the slice. Phase 2's list is in EXPANSION 15.1 and ROADMAP 3.
+
+**Balance simulator.** First design 0.4's list (B.6). Then EXPANSION 15.2, in its order, as each system is built. The new numbers are first-pass and are fitted then. One check is worth doing now: the Head crowning adds one Tier Up step (×1.5 and the Crown crest) to a Head around day 58 to 68. Confirm it does not move the Festival rhythm of GDD 17.5. When the reset layers are built, items 5 and 6 of EXPANSION 15.2 include playing several generations and Big Blooms, to confirm the gaps between them do not shrink (C.6).
+
+**Art.** Style bible v1.7 already covers the ladder and the reveal climb. Fit EXPANSION 15.3 into the batch plan in the order of ROADMAP 5. A thing that tiers up keeps its own art: only the frame, emblem, glow and pips change.
+
+**Writer.** The names and lines in EXPANSION 15.4. Every name in EXPANSION is a first pass that follows GDD 2.3 and EXPANSION 14.
+
+**Audio.** The eleven climbing chime notes, the eleven stings and the field sounds in EXPANSION 15.5.
+
+**Content Builder.** Nothing yet. The rows join CONTENT.md when each system is built, from the patterns in EXPANSION.
+
+**QA.** The long game's checks in ROADMAP 7.
+
+**Fresh-eyes reviewer.** Audit design 0.5 before it merges, as for every design version.
+
+### C.5 Two record notes from the audit of 0.4
+
+The audit that passed version 0.4 (the review on PR #7) left two notes for the record in GDD 17.6. Both are written in, and no number changes.
+
+1. **Targets list, item 5:** two targets were widened after the final run. Festivals by day 30 went from 9 to 11 to 9 to 12 for active and mixed players, and the idle player's World 5 went from day 26 to day 27.
+2. **Still for a playtest:** the idle player's Festival rhythm steps up late too. Its gaps are 2 days up to about day 27, where 3 to 6 are wanted, and 3.4 to 3.6 days after day 30, where 5 to 9 are wanted.
+
+### C.6 Fixes from the fresh-eyes audit of 0.5
+
+The audit of this draft (the review on PR #8) found one thing that had to change before 0.5 could stand, in the two new reset layers. Nothing in version 0.4 changes.
+
+1. **Two gain bonuses had no cap.** Every Laurel gave +10% Ribbon gain and every Starseed +20% Laurel gain, without limit. By the arithmetic of GDD 17.6, point 1, that feeds itself: each New Generation would arrive sooner than the one before. Now only the first `LAUREL_RIBBON_CAP = 10` Laurels and the first `STARSEED_LAUREL_CAP = 5` Starseeds count, so +100% at most each. EXPANSION 1.3 (rule 5) and 7.3 say why, and EXPANSION 7.1 shows where the gain sits in the formulas.
+2. **Laurels are counted per Bloom.** A Big Bloom sets `laurelsClaimed` to 0, but Laurels were counted from every Ribbon ever claimed, so every old Laurel would have been pending again at once. `ribbonsLifetime` is now `ribbonsThisBloom`, which a Big Bloom resets. Starseeds still count every Laurel ever claimed.
+3. **Two more simulator checks** (EXPANSION 15.2, items 5 and 6): play at least six generations and three Big Blooms, and confirm the gaps between them do not shrink.
+4. ROADMAP 1 shows PR #6 and PR #7 as merged, and one art note was reworded.
+
+The two cap values are first-pass, like every number in EXPANSION, and they are the Game Designer's to change.
+
 ## Version 0.4: the balance simulator's numbers
 
 The balance simulator (`apps/sim`, report in `docs/balance/REPORT.md`) ran version 0.3 for three play styles over 60 to 90 days. On 2026-11-26 the Game Designer accepted four of its overlays (`p1-levels`, `p2-taps`, `p4-gates`, `p5-late-research`), turned one down (`p3-managers`), and made three rulings on the results: the idle player may start slower, the multiplier budget is retired as a target, and the Auto-Gardener restarts older worlds. Version 0.4 writes all of it in, together with the seven non-blocking notes from the fresh-eyes audit of 0.3. **The numbers are frozen until a playtest.** Everything not listed here is as it was in 0.3.
