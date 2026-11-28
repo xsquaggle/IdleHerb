@@ -75,6 +75,8 @@ export interface CardState {
   copies: number;
   /** A manager who has been hired at least once, in any run (achievement `managers`). */
   everHired?: boolean;
+  /** The card's tier, 1-based, once a Tier Up has raised it (design 0.5). Absent: its native tier. */
+  tier?: number;
 }
 
 /**
@@ -183,6 +185,8 @@ export interface GameState {
 
   // Collection
   cards: Record<string, CardState>;
+  /** Materials and cosmetics from chest extras, by item id (`item@tier` for a cosmetic of a tier). Design 0.5. */
+  items?: Record<string, number>;
   heirlooms: Record<string, CardState>;
   equipped: string[];
   chests: Record<string, number>;

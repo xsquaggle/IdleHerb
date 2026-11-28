@@ -4,6 +4,7 @@
  */
 import type { Game } from '@sprout/core';
 import type { Settings } from './save';
+import type { RevealOptions } from '../scene/reveal';
 
 export interface Hooks {
   /** Screen-space point of the HUD coin counter, where coins fly to. */
@@ -12,9 +13,11 @@ export interface Hooks {
   coinLanded(): void;
   shake(px: number, sec: number): void;
   toast(text: string, color?: number): void;
-  openPanel(id: 'chests' | 'cards' | 'replant' | 'settings'): void;
+  openPanel(id: 'chests' | 'cards' | 'replant' | 'settings' | 'theatre'): void;
   /** Scrolls the tower to show a floor (-1: the ground). */
   focusFloor(i: number): void;
+  /** Queues a reveal behind any already playing; resolves when it is put away. */
+  reveal(opts: RevealOptions): Promise<void>;
 }
 
 export const session = {} as {

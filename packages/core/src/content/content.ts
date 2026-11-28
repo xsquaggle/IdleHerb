@@ -6,8 +6,80 @@
 import { Num, parseNum } from '../kernel/num/num';
 import type {
   Ability, AchievementRow, ArtifactRow, ChestRow, CompostShopRow, Effect, Family, FairTable, ManagerRow, PlantRow,
-  PoolQuestRow, Rarity, RawContent, ResearchRow, RibbonShopRow, SetRow, SkillRow, StoryRow, TraitRow, Tuning, UnlockRow,
+  MomentRow, PoolQuestRow, RawContent, ResearchRow, RibbonShopRow, SetRow, SkillRow, StoryRow, TierId, TierRow, TraitRow, Tuning, UnlockRow,
 } from './schema';
+
+/**
+ * The rarity ladder (tables/tiers.yaml), lowest tier first. Code reaches a tier by its id or its
+ * place on the ladder, never by comparing names: a rule that singles out a tier names it in data.
+ */
+export class Tiers {
+  readonly list: readonly TierRow[];
+  private readonly byId: Map<string, TierRow>;
+
+  constructor(
+    rows: TierRow[],
+    private readonly step: number,
+  ) {
+    this.list = [...rows].sort((a, b) => a.order - b.order);
+    this.list.forEach((t, i) => {
+      if (t.order !== i + 1) throw new Error(`content: tier order must be 1..n without gaps (${t.id})`);
+    });
+    this.byId = new Map(this.list.map((t) => [t.id, t]));
+    if (this.byId.size !== this.list.length) throw new Error('content: two tiers share an id');
+  }
+
+  get count(): number {
+    return this.list.length;
+  }
+
+  has(id: string): boolean {
+    return this.byId.has(id);
+  }
+
+  get(id: TierId): TierRow {
+    const t = this.byId.get(id);
+    if (!t) throw new Error(`content: unknown tier ${id}`);
+    return t;
+  }
+
+  /** 0-based place on the ladder (Common is 0). */
+  index(id: TierId): number {
+    return this.get(id).order - 1;
+  }
+
+  /** 1-based tier number (Common is 1), as the design writes it. */
+  order(id: TierId): number {
+    return this.get(id).order;
+  }
+
+  /** The tier at a 0-based place, clamped to the ladder. */
+  at(index: number): TierRow {
+    return this.list[Math.max(0, Math.min(this.list.length - 1, Math.floor(index)))]!;
+  }
+
+  /** tierPower(t) = TIER_STEP ^ (t - 1) (EXPANSION 2.2). */
+  power(id: TierId): number {
+    return this.step ** (this.order(id) - 1);
+  }
+
+  /** Every tier from the lowest up to and including `top`. */
+  upTo(top: TierId): TierRow[] {
+    return this.list.slice(0, this.index(top) + 1);
+  }
+
+  /** True when `a` is at least as high as `b`. */
+  atLeast(a: TierId, b: TierId): boolean {
+    return this.order(a) >= this.order(b);
+  }
+
+  /** The higher of the given tiers. */
+  best(ids: TierId[]): TierRow {
+    let best = this.list[0]!;
+    for (const id of ids) if (this.order(id) > best.order) best = this.get(id);
+    return best;
+  }
+}
 
 export interface FloorDef {
   id: string;
@@ -45,6 +117,8 @@ export interface WorldDef {
 
 export interface ManagerDef extends ManagerRow {
   kind: 'manager';
+  /** The tier the card is born at, 1-based (design 0.5). A Tier Up raises the owned card's `tier`, never this. */
+  nativeTier: number;
   maxLevel: number;
   dupes: number[];
   /** 0-based world and floor of the manager's own floor. */
@@ -55,6 +129,8 @@ export interface ManagerDef extends ManagerRow {
 }
 export interface PlantDef extends PlantRow {
   kind: 'plant';
+  /** The tier the card is born at, 1-based (design 0.5). */
+  nativeTier: number;
   maxLevel: number;
   dupes: number[];
   traitDefs: TraitRow[];
@@ -74,6 +150,11 @@ export interface AbilityOwner {
 
 export interface Content {
   tuning: Tuning;
+  tiers: Tiers;
+  /** Chests with fixed contents (welcome, hiring, seed packet): their tier, for their look. */
+  specialChests: Map<string, number>;
+  /** Big moments and their tiers (EXPANSION 4.2). */
+  moments: Map<string, MomentRow>;
   compostE0: Num;
   ribbonC0: Num;
   worlds: WorldDef[];
@@ -105,10 +186,10 @@ export interface Content {
   raw: RawContent;
 }
 
-export const RARITY_ORDER: Record<Rarity, number> = { common: 0, uncommon: 1, rare: 2, epic: 3, legendary: 4, exotic: 5 };
-
 /** Turns validated raw tables into the runtime bundle. Throws on a broken reference. */
 export function hydrateContent(raw: RawContent): Content {
+  const tiers = new Tiers(raw.tiers, raw.tuning.TIER_STEP);
+  checkTierRefs(raw, tiers);
   const curves = new Map(raw.dupeCurves.map((c) => [c.id, c.copies]));
   const curve = (id: string): number[] => {
     const c = curves.get(id);
@@ -166,8 +247,8 @@ export function hydrateContent(raw: RawContent): Content {
     if (!floor) throw new Error(`content: ${m.id} names unknown floor ${m.floor}`);
     if (floor.manager) throw new Error(`content: ${m.floor} has two managers (${floor.manager.id} and ${m.id})`);
     const head = floor.index === worlds[floor.worldIndex]!.floors.length - 1;
-    if (head !== (m.rarity === 'exotic')) throw new Error(`content: ${m.id}: the Exotic managers are the Heads of the top floors, and only they`);
-    const def: ManagerDef = { ...m, kind: 'manager', dupes, maxLevel: dupes.length + 1, world: floor.worldIndex, floorIndex: floor.index, head };
+    if (head !== (m.rarity === raw.tuning.HEAD_TIER)) throw new Error(`content: ${m.id}: the managers of HEAD_TIER are the Heads of the top floors, and only they`);
+    const def: ManagerDef = { ...m, kind: 'manager', nativeTier: tiers.order(m.rarity), dupes, maxLevel: dupes.length + 1, world: floor.worldIndex, floorIndex: floor.index, head };
     floor.manager = def;
     return def;
   });
@@ -179,7 +260,7 @@ export function hydrateContent(raw: RawContent): Content {
       if (!t) throw new Error(`content: ${p.id} names unknown trait ${id}`);
       return t;
     });
-    return { ...p, kind: 'plant', dupes, maxLevel: dupes.length + 1, traitDefs };
+    return { ...p, kind: 'plant', nativeTier: tiers.order(p.rarity), dupes, maxLevel: dupes.length + 1, traitDefs };
   });
   const cards = new Map<string, CardDef>();
   for (const c of [...managers, ...plants]) {
@@ -209,6 +290,9 @@ export function hydrateContent(raw: RawContent): Content {
 
   return {
     tuning: raw.tuning,
+    tiers,
+    specialChests: new Map(raw.specialChests.map((c) => [c.id, c.tier])),
+    moments: new Map(raw.moments.map((m) => [m.id, m])),
     compostE0: parseNum(String(raw.tuning.COMPOST_E0)),
     ribbonC0: parseNum(String(raw.tuning.RIBBON_C0)),
     worlds,
@@ -242,4 +326,52 @@ export function hydrateContent(raw: RawContent): Content {
 /** Chest-drop effect helper used by several systems. */
 export function effectScope(e: Effect): 'floor' | 'adjacent' | 'world' | 'global' {
   return e.scope ?? 'global';
+}
+
+/**
+ * Every tier a table names must be on the ladder, and chest card slots never roll above
+ * CHEST_CARD_TOP (EXPANSION 1.3 rule 1). Throws on the first problem.
+ */
+function checkTierRefs(raw: RawContent, tiers: Tiers): void {
+  const t = raw.tuning;
+  const need = (id: string, where: string): void => {
+    if (!tiers.has(id)) throw new Error(`content: ${where} names unknown tier ${id}`);
+  };
+  for (const k of ['CHEST_CARD_TOP', 'PITY_EPIC_TIER', 'HEAD_TIER', 'HEIRLOOM_PICK_TIER', 'EPIC_COPIES_TIER'] as const) need(t[k], k);
+  for (const k of ['MGR_BASE', 'MGR_STEP', 'POLLEN_FROM_MAXED', 'RARITY_FACTOR', 'POLLEN_COPY_COST', 'HEIRLOOM_ODDS', 'HEIRLOOM_ODDS_STARLIGHT', 'HEIRLOOM_POLLEN_FROM_MAXED', 'POLLEN_HEIRLOOM_COPY_COST'] as const) {
+    for (const id of Object.keys(t[k])) need(id, k);
+  }
+  for (const m of raw.managers) {
+    need(m.rarity, m.id);
+    for (const k of ['MGR_BASE', 'MGR_STEP', 'POLLEN_FROM_MAXED'] as const) if (t[k][m.rarity] === undefined) throw new Error(`content: ${k} has no value for ${m.rarity} (${m.id})`);
+  }
+  for (const p of raw.plants) {
+    need(p.rarity, p.id);
+    if (t.RARITY_FACTOR[p.rarity] === undefined) throw new Error(`content: RARITY_FACTOR has no value for ${p.rarity} (${p.id})`);
+  }
+  for (const a of raw.artifacts) need(a.rarity, a.id);
+  const top = tiers.order(t.CHEST_CARD_TOP);
+  for (const c of raw.chests) {
+    if (!(c.tier >= 1 && c.tier <= tiers.count)) throw new Error(`content: ${c.id} has tier ${c.tier}, off the ladder`);
+    for (const id of [...Object.keys(c.odds), ...c.guarantee]) {
+      need(id, c.id);
+      if (tiers.order(id) > top) throw new Error(`content: ${c.id} lets a card slot roll ${id}, above CHEST_CARD_TOP`);
+    }
+    for (const id of c.heirloomSlots ?? []) if (id !== 'any') need(id, c.id);
+    for (const e of c.extras ?? []) if (e.tier) need(e.tier, c.id);
+  }
+  for (const m of raw.moments) {
+    for (const id of [m.tier, ...(m.steps ?? []).map((x) => x.tier), ...(m.every ? [m.every.tier] : []), ...Object.values(m.cases ?? {})]) need(id, `moment ${m.id}`);
+  }
+  for (const c of raw.specialChests) if (!(c.tier >= 1 && c.tier <= tiers.count)) throw new Error(`content: ${c.id} has tier ${c.tier}, off the ladder`);
+}
+
+/** A card's tier now, 1-based: its native tier, raised by any Tier Ups (design 0.5, EXPANSION 3). */
+export function cardTier(def: { nativeTier: number }, own?: { tier?: number } | null): number {
+  return Math.max(def.nativeTier, own?.tier ?? def.nativeTier);
+}
+
+/** Tier Ups a card has had: its tier now less the tier it was born at. Max level still comes from the native tier. */
+export function tierUps(def: { nativeTier: number }, own?: { tier?: number } | null): number {
+  return cardTier(def, own) - def.nativeTier;
 }

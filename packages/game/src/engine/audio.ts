@@ -130,10 +130,10 @@ export const sfx = {
   deny(): void {
     tone(220, 0.1, { type: 'square', vol: 0.08, slide: 0.8 });
   },
-  /** One step of the rarity climb: a chime one note higher per tier. */
-  climb(tier: number): void {
-    tone(note(tier * 2), 0.25, { type: 'triangle', vol: 0.3 });
-    tone(note(tier * 2 + 5), 0.2, { type: 'sine', vol: 0.12, at: 0.02 });
+  /** One step of the rarity climb. `step`: the tier's chime (tables/tiers.yaml), one pentatonic note higher per tier. */
+  climb(step: number): void {
+    tone(note(step), 0.25, { type: 'triangle', vol: 0.3 });
+    tone(note(step + 5), 0.2, { type: 'sine', vol: 0.12, at: 0.02 });
   },
   hop(): void {
     tone(240, 0.08, { type: 'triangle', vol: 0.25, slide: 1.8 });
@@ -142,11 +142,18 @@ export const sfx = {
     noise(0.25 + tier * 0.08, { vol: 0.3 + tier * 0.05, freq: 1500 + tier * 300 });
     tone(110, 0.3, { type: 'sine', vol: 0.6, slide: 0.5 });
   },
-  /** The closing sting for a rarity: longer and fuller the rarer it is. */
-  sting(tier: number): void {
-    const steps = [0, 2, 4, 7, 9, 12, 14, 16].slice(0, 2 + tier);
-    steps.forEach((s, i) => tone(note(s, 392), 0.3 + tier * 0.05, { type: tier >= 4 ? 'square' : 'triangle', vol: tier >= 4 ? 0.1 : 0.22, at: i * 0.07 }));
-    if (tier >= 4) tone(note(14, 196), 1.2, { type: 'triangle', vol: 0.18, at: steps.length * 0.07 });
+  /**
+   * The closing sting for a tier. `notes`: how many notes it runs up (the tier's `sting` in
+   * tables/tiers.yaml), so it is longer and fuller the rarer the tier. `grand`: a held chord under it.
+   */
+  sting(notes: number, grand = false): void {
+    const n = Math.max(1, Math.min(14, notes));
+    for (let i = 0; i < n; i++) tone(note(i, 392), 0.3 + n * 0.02, { type: grand ? 'square' : 'triangle', vol: grand ? 0.1 : 0.22, at: i * 0.07 });
+    if (grand) tone(note(n + 2, 196), 1.2, { type: 'triangle', vol: 0.18, at: n * 0.07 });
+  },
+  /** A moment's layered chime (design 0.5 `moment`): `layers` notes stacked, from the tier's chime step. */
+  chord(step: number, layers: number): void {
+    for (let i = 0; i < Math.max(1, layers); i++) tone(note(step + i * 2), 0.22 + i * 0.03, { type: i === 0 ? 'triangle' : 'sine', vol: 0.18 / (1 + i * 0.4), at: i * 0.03 });
   },
   card(): void {
     tone(700, 0.04, { type: 'triangle', vol: 0.2 });

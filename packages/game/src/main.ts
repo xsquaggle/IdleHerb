@@ -22,8 +22,9 @@ import { Hud, TOP_H, BOTTOM_H } from './scene/hud';
 import { Toasts } from './scene/toast';
 import { Pip } from './scene/pip';
 import { Visitors } from './scene/visitors';
-import { Reveal } from './scene/reveal';
-import { ChestsPanel, CardsPanel, ReplantPanel, SettingsPanel, WelcomeBack } from './scene/panels';
+import { Reveal, type RevealOptions } from './scene/reveal';
+import { initMoments, namedMoment } from './scene/moment';
+import { ChestsPanel, CardsPanel, ReplantPanel, SettingsPanel, TheatrePanel, WelcomeBack } from './scene/panels';
 import type { Window } from './scene/window';
 import { coinFlight, flash } from './scene/fx';
 import jersey from '@fontsource/jersey-10/files/jersey-10-latin-400-normal.woff2?url';
@@ -87,9 +88,11 @@ async function boot(): Promise<void> {
   const screenFx = new Particles();
   const coinLayer = new Container();
   const pip = new Pip();
+  const momentFx = new Container();
   const overlay = new Container();
   const toasts = new Toasts();
-  root.addChild(backdrop, tower, visitors, hud, pip, coinLayer, screenFx, overlay, toasts);
+  root.addChild(backdrop, tower, visitors, hud, pip, coinLayer, screenFx, momentFx, overlay, toasts);
+  initMoments(momentFx, screenFx, () => view);
   app.stage.addChild(root);
   app.stage.eventMode = 'static';
 
@@ -109,10 +112,11 @@ async function boot(): Promise<void> {
     toast: (text, color) => toasts.show(text, color),
     openPanel: (id) => {
       panel?.close();
-      const p = id === 'chests' ? new ChestsPanel() : id === 'cards' ? new CardsPanel() : id === 'replant' ? new ReplantPanel() : new SettingsPanel();
+      const p = id === 'chests' ? new ChestsPanel() : id === 'cards' ? new CardsPanel() : id === 'replant' ? new ReplantPanel() : id === 'theatre' ? new TheatrePanel() : new SettingsPanel();
       showWindow(p);
     },
     focusFloor: (i) => tower.focusFloor(i),
+    reveal: (opts) => queueReveal(opts),
   };
 
   function showWindow(p: Window): void {
@@ -197,6 +201,29 @@ async function boot(): Promise<void> {
   let lastTapFloor = -1;
   const newCards = new Set<string>();
   const nextAfter = new Map<Reveal, () => void>();
+  /** Reveals play one at a time, in the order they were asked for. Resolves when this one is put away. */
+  function queueReveal(opts: RevealOptions): Promise<void> {
+    const r = new Reveal(opts, view.w, view.h);
+    reveals.push(r);
+    overlay.addChild(r);
+    return new Promise<void>((resolve) => {
+      const after = () => {
+        reveals.splice(reveals.indexOf(r), 1);
+        resolve();
+        const next = reveals[0];
+        if (next) void next.start().then(nextAfter.get(next));
+      };
+      nextAfter.set(r, after);
+      if (reveals.length === 1) void r.start().then(after);
+    });
+  }
+  const center = () => ({ layer: overlay, x: Math.floor(view.w / 2), y: Math.floor(view.h * 0.45) });
+  const floorPlace = (i: number) => {
+    const fv = tower.floors[i];
+    return fv ? { layer: fv as Container, x: 180, y: 60 } : center();
+  };
+  let comboWasFull = false;
+  let recordPow = game.state.compostRecordPow;
   const queue: GameEvent[] = [];
   game.on((e) => queue.push(e));
   let coinBudget = 0;
@@ -210,10 +237,12 @@ async function boot(): Promise<void> {
         sfx.tap(combo);
         if (e.bumper) {
           sfx.bumper();
-          clock.freeze(0.06);
-          session.hooks.shake(2, 0.18);
-          flash(overlay, view.w, view.h, C['gold-5'], 0.08, 0.25);
+          namedMoment('bumper', fv ? { layer: fv, x: 180, y: 50 } : center());
         }
+        // The Combo meter filling is its own moment, once per fill.
+        const full = combo >= 0.999;
+        if (full && !comboWasFull) namedMoment('combo_full', fv ? { layer: fv, x: 180, y: 40 } : center());
+        comboWasFull = full;
         if (fv) {
           fv.tapped(e.amount, e.bumper, e.harvested >= 0, combo);
           if (e.amount.gt(0) && coinBudget > 0) {
@@ -226,10 +255,12 @@ async function boot(): Promise<void> {
       }
       case 'floorOpened': {
         const fv = tower.floors[e.floor];
+        const top = e.floor === content.worlds[e.world]!.floors.length - 1;
         clock.after(0.05, () => {
           fv?.opened();
           tower.glideTo(floorTop(e.floor));
         });
+        clock.after(0.45, () => namedMoment('floor_open', floorPlace(e.floor), { cases: top ? ['top'] : [] }));
         toasts.show(`${ui('new_floor')} ${floorName(e.world, e.floor)}`);
         if (e.floor === 1) pip.say('floor2');
         if (e.floor === 2) pip.say('floor3');
@@ -238,7 +269,20 @@ async function boot(): Promise<void> {
       }
       case 'milestone':
         tower.floors[e.floor]?.milestone();
+        namedMoment('floor_milestone', floorPlace(e.floor), { value: game.state.worlds[e.world]!.floors[e.floor]!.level });
         if (!pip.hasSeen('milestone')) pip.say('milestone', 'jump');
+        break;
+      case 'towerMilestone':
+        namedMoment('tower_milestone', center(), { value: e.count });
+        break;
+      case 'worldReached':
+        namedMoment('world_reached', center(), { cases: e.first ? ['first'] : [] });
+        break;
+      case 'festival':
+        namedMoment('festival', center(), { cases: e.n === 1 ? ['first'] : [] });
+        break;
+      case 'star':
+        namedMoment('mastery_star', center(), { value: e.stars });
         break;
       case 'hire':
         tower.floors[e.floor]?.hired();
@@ -248,26 +292,19 @@ async function boot(): Promise<void> {
         newCards.add(e.id);
         break;
       case 'chestOpened': {
-        // Reveals play one at a time, in the order the chests opened.
-        const r = new Reveal(e.chest, e.cards, new Set(newCards), view.w, view.h);
+        const welcome = e.chest === 'chest.welcome';
+        if (welcome) pip.say('welcome_chest', 'jump');
+        void queueReveal({ chestId: e.chest, cards: e.cards, isNew: new Set(newCards) }).then(() => {
+          if (welcome) pip.say('hire');
+        });
         newCards.clear();
-        if (e.chest === 'chest.welcome') pip.say('welcome_chest', 'jump');
-        reveals.push(r);
-        overlay.addChild(r);
-        const after = () => {
-          reveals.splice(reveals.indexOf(r), 1);
-          if (e.chest === 'chest.welcome') pip.say('hire');
-          void reveals[0]?.start().then(nextAfter.get(reveals[0]!));
-        };
-        nextAfter.set(r, after);
-        if (reveals.length === 1) void r.start().then(after);
         break;
       }
       case 'cardLevel':
         toasts.show(`${txt('managers', e.id) ?? e.id} ${ui('level')} ${e.level}!`, C['leaf-5']);
         break;
       case 'levelUp':
-        sfx.levelUp();
+        namedMoment('level_up', center(), { value: e.level });
         toasts.show(`${ui('player_level')} ${e.level}!`, C['lavender-5']);
         break;
       case 'story':
@@ -284,13 +321,17 @@ async function boot(): Promise<void> {
         break;
       case 'spurt':
         sfx.spurt();
-        flash(overlay, view.w, view.h, C['sky-4'], 0.12, 0.35);
+        namedMoment('spurt', center());
         break;
-      case 'replant':
+      case 'replant': {
+        const record = game.state.compostRecordPow > recordPow;
+        recordPow = game.state.compostRecordPow;
+        namedMoment('replant', center(), { cases: record ? ['record'] : [] });
         toasts.show(`+${e.gained.toString()} ${txt('currencies', 'compost')}`, C['leaf-5']);
         tower.focusFloor(0);
         pip.say('after_replant', 'jump');
         break;
+      }
       case 'offline': {
         const earned = e.earned[0] ?? Num.ZERO;
         if (e.seconds >= 60 && earned.gt(0)) showWindow(new WelcomeBack(e.seconds, earned));
@@ -376,6 +417,7 @@ async function boot(): Promise<void> {
     },
     tower,
     hud,
+    hooks: session.hooks,
     view: () => view,
     /** Drops every queued chest reveal (screenshot runs). */
     skipReveals: () => {

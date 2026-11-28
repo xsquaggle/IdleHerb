@@ -16,14 +16,13 @@ import { Num, assertFinite } from '../kernel/num/num';
 import { bulkCost, maxAffordable } from '../kernel/formulas/geometric';
 import { nextFloat, nextRange, pickWeighted, seedRng } from '../kernel/rng/rng';
 import type { Content, FloorDef, ManagerDef, PlantDef } from '../content/content';
-import { RARITY_ORDER } from '../content/content';
 import type { Ability, ChestRow, Condition, Effect, PoolQuestRow, Reward, Tuning } from '../content/schema';
 import { rollChest } from '../systems/chests/logic';
 import { floorOutput, milestoneCount } from '../systems/floors/logic';
 import { averageHeat, compoundInterest } from '../systems/offline/logic';
 import { levelUpChest, xpToNext } from '../systems/progression/logic';
 import { compostRecordXp, compostTotal, ribbonsTotal, shopCost } from '../systems/resets/logic';
-import { comboRun, expectedCrit } from '../systems/tapping/logic';
+import { comboRun, expectedCrit, isCountedTap } from '../systems/tapping/logic';
 import { bubbleSweepAverage, heatMult, masteryStars, sunriseMult, weatherAt, weatherLoopSeconds, weatherGroupOf } from '../systems/worlds/logic';
 import { computeDerived, type Derived } from './derive';
 import { newWorldState, type Buff, type FairState, type GameState, type QuestSlot, type VisitorKind, type WorldState } from './state';
@@ -822,7 +821,7 @@ export class Game {
           const def = this.content.cards.get(j.plantId) as PlantDef;
           this.addCard(j.plantId);
           this.count('benchJobsDone');
-          this.count(def.source === 'exotic' ? 'exoticsGrown' : 'hybridsMade');
+          this.count(def.source === 'mutation' ? 'exoticsGrown' : 'hybridsMade');
           this.emit({ type: 'benchDone', id: j.plantId });
         }
       }
@@ -1058,7 +1057,7 @@ export class Game {
       case 'plant': return this.plant(cmd.world, cmd.floor, cmd.plants);
       case 'buyTicket': return this.buyTicket(cmd.world);
       case 'focus': return this.setFocus(cmd.world);
-      case 'tap': return this.tap(cmd.count, cmd.floor);
+      case 'tap': return isCountedTap(cmd.source) && this.tap(cmd.count, cmd.floor);
       case 'startSpurt': return this.startSpurt(false);
       case 'catchVisitor': return this.catchVisitor(cmd.index);
       case 'useAbility': return this.useAbility(cmd.id, cmd.world);
@@ -1763,9 +1762,15 @@ export class Game {
     });
     s.luckDoubleNext = false;
     for (const c of res.cards) this.addCard(c);
-    if (res.exoticManager) this.addCard(res.exoticManager);
-    if (res.heirloom) this.addHeirloom(res.heirloom);
+    for (const h of res.heads) this.addCard(h);
+    for (const h of res.heirlooms) this.addHeirloom(h);
     if (res.pollen > 0) this.addPollen(res.pollen);
+    // Fixed extras wait in the item bag until the systems that use them arrive (design 0.5).
+    for (const e of res.extras) {
+      const key = e.tier ? `${e.item}@${e.tier}` : e.item;
+      s.items ??= {};
+      s.items[key] = (s.items[key] ?? 0) + e.count;
+    }
     return { cards: res.cards, heirloom: res.heirloom };
   }
 
@@ -1836,7 +1841,7 @@ export class Game {
     const s = this.state;
     const own = s.cards[id];
     const def = this.content.cards.get(id);
-    if (!own || !def || def.rarity === 'exotic' || own.level >= def.maxLevel) return false;
+    if (!own || !def || (def.kind === 'manager' && def.head) || own.level >= def.maxLevel) return false;
     if (def.kind === 'plant' && def.source !== 'chest') return false;
     const cost = this.t.POLLEN_COPY_COST[def.rarity];
     if (s.pollen < cost) return false;
@@ -1884,7 +1889,7 @@ export class Game {
   private pickHeirloom(id: string): boolean {
     const s = this.state;
     const def = this.content.artifactById.get(id);
-    if (s.heirloomPicks <= 0 || !def || def.rarity !== 'legendary') return false;
+    if (s.heirloomPicks <= 0 || !def || def.rarity !== this.t.HEIRLOOM_PICK_TIER) return false;
     s.heirloomPicks--;
     this.addHeirloom(id);
     return true;
@@ -1978,7 +1983,7 @@ export class Game {
     const def = this.content.cards.get(plantId);
     if (!def || def.kind !== 'plant' || def.source === 'chest') return false;
     const g = this.derived.global;
-    const exotic = def.source === 'exotic';
+    const exotic = def.source === 'mutation';
     if (!g.specials[exotic ? 'unlock.mutation' : 'unlock.bench']) return false;
     if (s.benchJobs.length >= g.benchSlots) return false;
     const own = s.cards[plantId];
@@ -1993,7 +1998,7 @@ export class Game {
     if (!this.canBench(plantId)) return false;
     const s = this.state;
     const t = this.t;
-    const exotic = (this.content.cards.get(plantId) as PlantDef).source === 'exotic';
+    const exotic = (this.content.cards.get(plantId) as PlantDef).source === 'mutation';
     s.pollen -= exotic ? t.EXOTIC_POLLEN : t.HYBRID_POLLEN;
     s.benchJobs.push({ plantId, remaining: ((exotic ? t.EXOTIC_HOURS : t.HYBRID_HOURS) * 3600) / this.derived.global.benchSpeed });
     return true;
@@ -2275,7 +2280,7 @@ export class Game {
       this.chestOpened('chest.seed_packet', 1, SEED_PACKET, null);
     }
     if (r.epicCopies) {
-      const epics = this.content.managers.filter((m) => m.rarity === 'epic' && s.cards[m.id] !== undefined);
+      const epics = this.content.managers.filter((m) => m.rarity === this.t.EPIC_COPIES_TIER && s.cards[m.id] !== undefined);
       if (epics.length > 0) this.addCard(epics[((s.fair.weekKey % epics.length) + epics.length) % epics.length]!.id, r.epicCopies);
     }
   }

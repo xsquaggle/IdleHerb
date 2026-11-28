@@ -1,16 +1,18 @@
 /**
  * Card faces: the large card (style bible 19's Show beat, art/cards/frames) and
- * the small tile for the collection. Rarity drives the frame, colours and pips
- * from data (engine/palette RARITY_LOOKS), so a new tier needs one row there
- * and its art, not new code.
+ * the small tile for the collection. The card's tier (its native tier raised by
+ * any Tier Ups) drives the frame, colours and pips from tables/tiers.yaml, so a
+ * new tier needs one row there and its art, not new code. A tier whose frame is
+ * not drawn yet borrows the nearest lower frame and wears its own colours round it.
  */
 import { Container, Graphics, Rectangle, Sprite, Texture } from 'pixi.js';
 import type { CardDef, Effect } from '@sprout/core';
-import { C, rarityLook, rarityIndex } from '../engine/palette';
+import { C } from '../engine/palette';
 import { PixelText } from '../engine/font';
 import { F, box } from '../engine/ui';
 import { tex, hasTex, texList } from '../engine/assets';
 import { content, cardName, txt } from '../app/content';
+import { cardTierIndex, nearestBelow, tierAt } from '../app/tiers';
 import frames from '../../../../art/cards/frames/frames.json';
 import plantCards from '../../../../art/cards/plants/cards.json';
 
@@ -72,12 +74,22 @@ function plantArtKey(id: string): string | null {
   return hasTex(guess) ? guess : null;
 }
 
-/** The large card, 180x240, origin top-left. */
-export function bigCard(id: string, level: number, opts: { newCard?: boolean; copies?: [number, number] } = {}): Container {
+/** The frame art for a tier: its own, else the nearest lower tier's. `own` is false for a borrowed frame. */
+function frameFor(index: number): { info: FrameInfo; own: boolean } {
+  const info = nearestBelow(index, (r) => FRAMES[r.id]) ?? Object.values(FRAMES)[0]!;
+  return { info, own: FRAMES[tierAt(index).id] !== undefined };
+}
+
+/**
+ * The large card, 180x240, origin top-left. `tier`: show it at this 0-based tier (the reveal
+ * theatre); otherwise the card's own tier.
+ */
+export function bigCard(id: string, level: number, opts: { newCard?: boolean; copies?: [number, number]; tier?: number } = {}): Container {
   const def = content.cards.get(id)!;
-  const look = rarityLook(def.rarity);
+  const tierI = opts.tier ?? cardTierIndex(id);
+  const look = tierAt(tierI);
   const c = new Container();
-  const frameInfo = FRAMES[def.rarity] ?? FRAMES.exotic!;
+  const { info: frameInfo, own: ownFrame } = frameFor(tierI);
   const [wx, wy, ww, wh] = frameInfo.window;
   const back = new Graphics();
   back.rect(wx, wy, ww, wh).fill(look.dark);
@@ -94,10 +106,29 @@ export function bigCard(id: string, level: number, opts: { newCard?: boolean; co
   const m = new Graphics().rect(wx, wy, ww, wh).fill(0xffffff);
   art.mask = m;
   c.addChild(m, art, new Sprite(tex(`cards/frames/${frameInfo.file}`)));
+  if (!ownFrame) {
+    // Placeholder until the tier's frame is drawn: a band of the tier's colours round the borrowed frame.
+    const band = new Graphics();
+    const ring = (x: number, y: number, w: number, h: number, t: number, col: number) => {
+      band.rect(x, y, w, t).fill(col);
+      band.rect(x, y + h - t, w, t).fill(col);
+      band.rect(x, y + t, t, h - t * 2).fill(col);
+      band.rect(x + w - t, y + t, t, h - t * 2).fill(col);
+    };
+    ring(0, 0, 180, 240, 2, look.dark);
+    ring(2, 2, 176, 236, 3, look.main);
+    band.rect(6, 3, 168, 1).fill(look.light);
+    // The colours the tier braids, as a strip along the foot of the frame.
+    look.flood.slice(0, 11).forEach((col, i, all) => {
+      const w = Math.floor(160 / all.length);
+      band.rect(10 + i * w, 236, w - 1, 2).fill(col);
+    });
+    c.addChild(band);
+  }
   const name = new PixelText(F.body, cardName(id), { align: 'center', color: C['ink-1'] });
   name.position.set(90, 139 - F.body.capTop - Math.ceil(F.body.cap / 2));
   c.addChild(name);
-  const row1 = new PixelText(F.body, `${txt('rarities', def.rarity)}  Lv ${level}`, { align: 'center', color: look.dark === C['wood-2'] ? C['wood-2'] : look.dark });
+  const row1 = new PixelText(F.body, `${txt('rarities', look.id)}  Lv ${level}`, { align: 'center', color: look.index === 0 ? C['wood-2'] : look.dark === C['ink-1'] ? C['lavender-2'] : look.dark });
   row1.position.set(90, 171 - F.body.capTop - Math.ceil(F.body.cap / 2));
   c.addChild(row1);
   let line2 = '';
@@ -129,7 +160,7 @@ export const TILE_W = 76;
 export const TILE_H = 96;
 export function smallCard(id: string, level: number, copies: number, need: number, owned: boolean): Container {
   const def = content.cards.get(id)!;
-  const look = rarityLook(def.rarity);
+  const look = tierAt(cardTierIndex(id));
   const c = new Container();
   const g = new Graphics();
   // Frame in the rarity colours: dark outline, main body, light top line.
@@ -150,12 +181,20 @@ export function smallCard(id: string, level: number, copies: number, need: numbe
   }
   if (!owned) art.tint = C['ink-2'];
   c.addChild(art);
-  // Rarity pips along the top of the picture.
+  // Rarity pips along the top of the picture. From 6 up: a gold bar for the first five, then single pips (bible 8).
   const pips = new Graphics();
-  const n = Math.min(look.pips, 8);
-  for (let i = 0; i < n; i++) {
-    pips.rect(6 + i * 5, 6, 3, 3).fill(C['ink-1']);
-    pips.rect(7 + i * 5, 7, 1, 1).fill(look.light);
+  if (look.pips <= 5) {
+    for (let i = 0; i < look.pips; i++) {
+      pips.rect(6 + i * 5, 6, 3, 3).fill(C['ink-1']);
+      pips.rect(7 + i * 5, 7, 1, 1).fill(look.light);
+    }
+  } else {
+    pips.rect(6, 6, 18, 3).fill(C['ink-1']);
+    pips.rect(7, 7, 16, 1).fill(C['gold-4']);
+    for (let i = 0; i < look.pips - 5; i++) {
+      pips.rect(26 + i * 5, 6, 3, 3).fill(C['ink-1']);
+      pips.rect(27 + i * 5, 7, 1, 1).fill(look.light);
+    }
   }
   c.addChild(pips);
   const name = new PixelText(F.small, cardName(id).toUpperCase(), { align: 'center', color: C['ink-1'], maxWidth: TILE_W - 10 });
@@ -175,4 +214,3 @@ export function smallCard(id: string, level: number, copies: number, need: numbe
   return c;
 }
 
-export { rarityIndex };

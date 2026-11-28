@@ -3,6 +3,7 @@
  * The shell, the UI and the simulator all drive the game through `dispatch`
  * and learn what happened through `on`.
  */
+import type { TapSource } from '../systems/tapping/logic';
 import type { Num } from '../kernel/num/num';
 import type { VisitorKind } from './state';
 
@@ -16,8 +17,11 @@ export type Command =
   | { type: 'buyTicket'; world: number }
   | { type: 'focus'; world: number }
   // Tapping and visitors
-  /** `floor`: the floor the tap landed on, if any. It harvests that floor when it is ready (GDD 6.1). */
-  | { type: 'tap'; count: number; floor?: number }
+  /**
+   * `floor`: the floor the tap landed on, if any. It harvests that floor when it is ready (GDD 6.1).
+   * `source`: where the tap came from (default tower). Only counted sources act on the tower (TAP_SOURCES).
+   */
+  | { type: 'tap'; count: number; floor?: number; source?: TapSource }
   | { type: 'startSpurt' }
   | { type: 'catchVisitor'; index: number }
   | { type: 'useAbility'; id: string; world?: number }

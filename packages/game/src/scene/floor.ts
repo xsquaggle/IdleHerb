@@ -290,19 +290,17 @@ export class FloorView extends Container {
     for (const s of this.hemp) pop(s, 0.25, 0.2);
   }
 
+  /** The floor's own part of a milestone; the tiered burst, light and sound are the `floor_milestone` moment. */
   milestone(): void {
-    sfx.milestone();
-    const lay = this.lay;
     popText(this.fx, 180, 30, ui('milestone'), { color: C['gold-5'], font: F.big, rise: 18, life: 1.6 });
     popText(this.fx, 180, 52, ui('twice_as_fast'), { color: C.white, rise: 14, life: 1.6 });
     for (let i = 0; i < 6; i++) clock.after(i * 0.08, () => sparkle(this.fx, 30 + Math.random() * 300, 20 + Math.random() * 80, C['gold-5'], 3));
-    this.particles.spawn({ x: lay.spot[0], y: lay.spot[1], colors: [C['gold-3'], C['gold-4'], C['gold-5'], C.white], count: 40, speed: [60, 220], life: [0.6, 1.2], size: [1, 3] });
     for (const w of this.workers) w.cheer(1.2);
     this.manager?.cheer(1.2);
   }
 
+  /** The floor's own part of opening (dust and cheers); the tiered moment is `floor_open`. */
   opened(): void {
-    sfx.floorOpen();
     this.particles.spawn({ x: 180, y: 100, colors: [C['cream-2'], C['cream-3'], C['wood-5']], count: 40, speed: [40, 160], angle: -Math.PI / 2, spread: 3, life: [0.5, 1.0], size: [2, 4], gravity: 80 });
     for (const w of this.workers) w.cheer(1);
     this.alpha = 1;

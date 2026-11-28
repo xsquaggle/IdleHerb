@@ -1,14 +1,16 @@
 /**
- * The rarity reveal ladder (style bible 19): Arrive, Build, Tell, Burst, Show.
- * The rarer the best card inside, the longer the build-up and the bigger the
- * payoff. The light climbs the rarity colours one step at a time and never
- * goes back down, so the climb is always honest.
+ * The reveal player (style bible v1.7, section 19; design 0.5, EXPANSION 4.1): one player for every
+ * reveal, taking a tier and a form. The full form plays five beats, Arrive, Build, Tell, Burst and
+ * Show; the short form plays only the climb, the burst and the chime, in under a second. The rarer
+ * the tier, the longer the build-up and the bigger the payoff. The light climbs the tier colours one
+ * step at a time and never goes back down, so the climb is always honest.
  *
- * Every tier's staging is a row of REVEAL_TIERS, indexed like RARITY_LOOKS, so
- * new tiers (Mythic, Godly and beyond) slot in as data.
+ * Every tier's staging and timing is its row of tables/tiers.yaml, so tiers 6 to 11 play the day
+ * their art arrives; until then they borrow the nearest lower tier's art and wear their own colours.
  */
 import { Container, Graphics, Rectangle, Sprite, Texture } from 'pixi.js';
-import { C, RARITY_LOOKS, rarityIndex } from '../engine/palette';
+import type { TierRow } from '@sprout/core';
+import { C } from '../engine/palette';
 import { PixelText } from '../engine/font';
 import { F } from '../engine/ui';
 import { tex, hasTex } from '../engine/assets';
@@ -17,60 +19,55 @@ import { Particles } from '../engine/particles';
 import { sfx } from '../engine/audio';
 import { content, txt, ui } from '../app/content';
 import { session } from '../app/session';
+import { bestTierIndex, cardTierIndex, chestMaterial, nearestBelow, tierAt, tierChestMaterial } from '../app/tiers';
 import { bigCard } from './cards';
 import { flash, ring } from './fx';
 import burstsFile from '../../../../art/effects/reveal/bursts.json';
-import chestsFile from '../../../../art/chests/chests.json';
 
-export interface RevealTier {
-  /** Hops before the light, each higher. */
-  hops: number;
-  /** The chest lifts off the floor and the rest of the screen dims. */
-  lift: boolean;
-  /** How dark the room goes during the build, 0 to 1. */
-  dim: number;
-  /** A beat of darkness with one crack of light before the burst. */
-  blackout: boolean;
-  /** Screen shake at the burst, in pixels. */
-  shake: number;
-  /** Rays turn behind the chest. */
-  rays: boolean;
-  /** A shockwave ring at the burst. */
-  ring: boolean;
-  /** A beam of light at the burst. */
-  beam: boolean;
-  /** Colours flooding the screen at the burst. */
-  flood: string[];
-  /** Seconds the card is held up before "Tap to continue". */
-  hold: number;
-  /** Seconds per climb step. */
-  climbStep: number;
+export type RevealForm = 'full' | 'short';
+
+export interface RevealOptions {
+  /** The chest being opened, for its name and art. None: a bare climb (the reveal theatre, later tier-ups and finds). */
+  chestId?: string;
+  /** Cards held up at the Show, lowest tier first. */
+  cards: string[];
+  /** Cards the player did not have before. */
+  isNew?: Set<string>;
+  /** The tier the climb stops on, 0-based. Default: the best card's tier. */
+  tier?: number;
+  /** Default full. */
+  form?: RevealForm;
+  /** Show every card at this tier (the reveal theatre), instead of its own. */
+  cardTier?: number;
+  /** A title in place of the chest's name. */
+  title?: string;
 }
 
-export const REVEAL_TIERS: RevealTier[] = [
-  { hops: 0, lift: false, dim: 0, blackout: false, shake: 0, rays: false, ring: false, beam: false, flood: [], hold: 0.4, climbStep: 0.25 },
-  { hops: 1, lift: false, dim: 0, blackout: false, shake: 0, rays: false, ring: false, beam: false, flood: [], hold: 0.5, climbStep: 0.25 },
-  { hops: 2, lift: false, dim: 0.15, blackout: false, shake: 0, rays: false, ring: false, beam: true, flood: [], hold: 0.7, climbStep: 0.28 },
-  { hops: 3, lift: false, dim: 0.33, blackout: false, shake: 1, rays: false, ring: true, beam: true, flood: [], hold: 1.0, climbStep: 0.3 },
-  { hops: 3, lift: true, dim: 0.5, blackout: false, shake: 2, rays: true, ring: true, beam: true, flood: ['gold-4'], hold: 1.5, climbStep: 0.34 },
-  { hops: 3, lift: true, dim: 0.5, blackout: true, shake: 3, rays: true, ring: true, beam: true, flood: ['teal-3', 'rose-3', 'lavender-4'], hold: 2.5, climbStep: 0.36 },
-  { hops: 4, lift: true, dim: 0.7, blackout: true, shake: 3, rays: true, ring: true, beam: true, flood: ['teal-2', 'lavender-5', 'sky-3'], hold: 3, climbStep: 0.4 },
-  { hops: 4, lift: true, dim: 0.7, blackout: true, shake: 4, rays: true, ring: true, beam: true, flood: ['cream-4', 'white-1', 'gold-4'], hold: 4, climbStep: 0.42 },
-];
+/** Seconds of the burst beat itself (open frames and the pause after), inside the tier's total. */
+const BURST_BEAT = 0.31;
+/** Seconds per colour of a burst's flood. */
+const FLOOD_STEP = 0.12;
+
+/**
+ * Seconds per climb step so the full form meets the tier's total (EXPANSION 4.1 rule 4): the total
+ * runs from the first jolt to the end of the Show, and the Show holds the best card for `hold`.
+ */
+export function climbStep(row: TierRow, steps: number, form: RevealForm): number {
+  if (form === 'short') return Math.max(0.04, (row.reveal.short * 0.55) / steps);
+  const rest = row.reveal.total - row.reveal.hold - BURST_BEAT - row.reveal.blackout - row.look.flood.length * FLOOD_STEP;
+  return Math.max(0.1, rest / steps);
+}
 
 const BURSTS = (burstsFile as unknown as { bursts: Record<string, { frames: string[] }> }).bursts;
-const CHEST_IDS = (chestsFile as unknown as { design_ids: Record<string, string> }).design_ids;
-/** Chests the design has but the art does not name: each borrows a material. */
-const CHEST_MATERIAL_FALLBACK: Record<string, string> = { 'chest.welcome': 'copper', 'chest.hiring': 'common', 'chest.seed_packet': 'common' };
 
-function chestFrames(chestId: string): Texture[] {
-  const mat = CHEST_IDS[chestId] ?? CHEST_MATERIAL_FALLBACK[chestId] ?? 'common';
-  return ['closed', 'cracked', 'half_open', 'fully_open'].map((st) => tex(`chests/frames/${mat}_${st}_96x80.png`));
+function chestFrames(material: string): Texture[] {
+  return ['closed', 'cracked', 'half_open', 'fully_open'].map((st) => tex(`chests/frames/${material}_${st}_96x80.png`));
 }
 
 function burstFrames(tier: number): Texture[] {
-  const id = RARITY_LOOKS[Math.min(tier, RARITY_LOOKS.length - 1)]!.id;
-  const b = BURSTS[id] ?? BURSTS.exotic!;
+  const id = nearestBelow(tier, (r) => (r.burst && BURSTS[r.burst] ? r.burst : null));
+  const b = id ? BURSTS[id] : undefined;
+  if (!b) return [];
   return b.frames.filter((f) => hasTex(`effects/reveal/${f}`)).map((f) => tex(`effects/reveal/${f}`));
 }
 
@@ -84,6 +81,9 @@ export class Reveal extends Container {
   private readonly front = new Container();
   private readonly parts = new Particles();
   private readonly hint: PixelText;
+  private readonly cards: string[];
+  private readonly isNew: Set<string>;
+  private readonly form: RevealForm;
   private skip = false;
   private tapped: (() => void) | null = null;
   private cx = 0;
@@ -93,18 +93,19 @@ export class Reveal extends Container {
   done: Promise<void> | null = null;
 
   constructor(
-    readonly chestId: string,
-    readonly cards: string[],
-    readonly isNew: Set<string>,
+    readonly opts: RevealOptions,
     w: number,
     h: number,
   ) {
     super();
     this.w = w;
     this.h = h;
+    this.cards = opts.cards;
+    this.isNew = opts.isNew ?? new Set();
+    this.form = opts.form ?? 'full';
     this.eventMode = 'static';
     this.hitArea = new Rectangle(0, 0, w, h);
-    this.frames = chestFrames(chestId);
+    this.frames = chestFrames(opts.chestId ? chestMaterial(opts.chestId) : tierChestMaterial(this.best()));
     this.chest = new Sprite(this.frames[0]);
     this.chest.anchor.set(0.5, 1);
     this.hint = new PixelText(F.body, ui('tap_to_continue'), { align: 'center', color: C['cream-4'], outline: true });
@@ -121,7 +122,7 @@ export class Reveal extends Container {
     this.visible = false;
   }
 
-  /** Plays the whole ladder; resolves when the last card is put away. */
+  /** Plays the whole reveal; resolves when the last card is put away. */
   start(): Promise<void> {
     this.visible = true;
     this.done ??= this.play();
@@ -148,8 +149,15 @@ export class Reveal extends Container {
     return new Promise((r) => (this.tapped = r));
   }
 
+  /** The tier the climb stops on, 0-based. */
   private best(): number {
-    return Math.max(0, ...this.cards.map((id) => rarityIndex(content.cards.get(id)?.rarity ?? 'common')));
+    if (this.opts.tier !== undefined) return this.opts.tier;
+    if (this.opts.cardTier !== undefined) return this.opts.cardTier;
+    return bestTierIndex(this.cards);
+  }
+
+  private cardTier(id: string): number {
+    return this.opts.cardTier ?? cardTierIndex(id);
   }
 
   private async play(): Promise<void> {
@@ -164,99 +172,108 @@ export class Reveal extends Container {
 
   private async ladder(): Promise<void> {
     const best = this.best();
-    const tier = REVEAL_TIERS[Math.min(best, REVEAL_TIERS.length - 1)]!;
+    const look = tierAt(best);
+    const st = look.row.reveal;
+    const short = this.form === 'short';
     const reduce = session.settings.reduceMotion;
     this.alpha = 0;
-    void clock.tween(this, { alpha: 1 }, 0.15);
+    void clock.tween(this, { alpha: 1 }, short ? 0.08 : 0.15);
 
-    // Chest name.
-    const title = new PixelText(F.big, txt('chests', this.chestId), { align: 'center', color: C['gold-4'], outline: true });
+    // Title: the chest's name, or what is being revealed.
+    const name = this.opts.title ?? (this.opts.chestId ? txt('chests', this.opts.chestId) : txt('rarities', look.id));
+    const title = new PixelText(F.big, name, { align: 'center', color: C['gold-4'], outline: true });
     title.position.set(this.cx, Math.max(40, this.cy - 200));
     this.front.addChild(title);
 
     // Arrive: drop in with a squash.
     this.chest.y = -40;
-    await clock.tween(this.chest, { y: this.cy }, 0.32, { ease: ease.outBounce });
+    await clock.tween(this.chest, { y: this.cy }, short ? 0.14 : 0.32, { ease: ease.outBounce });
     sfx.hop();
-    await this.squash();
-    await this.wait(0.15);
-
-    // Build.
-    if (tier.dim > 0) this.setDim(tier.dim * 0.6);
-    for (let i = 0; i < tier.hops && !this.skip; i++) {
-      const hgt = 6 + i * 5;
-      sfx.hop();
-      await clock.tween(this.chest, { y: this.cy - hgt }, 0.12, { ease: ease.outQuad });
-      await clock.tween(this.chest, { y: this.cy }, 0.12, { ease: ease.inQuad });
+    if (!short) {
       await this.squash();
-      await this.wait(0.08);
+      await this.wait(0.15);
     }
+
+    // Build (full form only).
     let lifted = 0;
-    if (tier.lift && !this.skip) {
-      this.setDim(tier.dim);
-      lifted = 22;
-      await clock.tween(this.chest, { y: this.cy - lifted }, 0.6, { ease: ease.inOutQuad });
+    if (!short) {
+      if (st.dim > 0) this.setDim(st.dim * 0.6);
+      for (let i = 0; i < st.hops && !this.skip; i++) {
+        const hgt = 6 + i * 5;
+        sfx.hop();
+        await clock.tween(this.chest, { y: this.cy - hgt }, 0.12, { ease: ease.outQuad });
+        await clock.tween(this.chest, { y: this.cy }, 0.12, { ease: ease.inQuad });
+        await this.squash();
+        await this.wait(0.08);
+      }
+      if (st.lift && !this.skip) {
+        this.setDim(st.dim);
+        lifted = 22;
+        await clock.tween(this.chest, { y: this.cy - lifted }, 0.6, { ease: ease.inOutQuad });
+      }
     }
 
-    // Tell: the light climbs one rarity at a time and stops on the best.
+    // Tell: the light climbs one tier at a time and stops on the best.
     this.chest.texture = this.frames[1]!;
+    const step = climbStep(look.row, best + 1, this.form);
     for (let t = 0; t <= best; t++) {
-      const look = RARITY_LOOKS[t]!;
-      sfx.climb(t);
-      this.drawGlow(look.main, look.light, t);
+      const lk = tierAt(t);
+      sfx.climb(lk.row.chime);
+      this.drawGlow(lk.main, lk.light, t);
       this.jolt();
-      if (!this.skip) await clock.wait(tier.climbStep + t * 0.03);
+      if (!this.skip) await clock.wait(step);
     }
-    if (tier.blackout && !this.skip) {
+    if (st.blackout > 0 && !short && !this.skip) {
       this.setDim(0.95);
-      this.drawGlow(RARITY_LOOKS[best]!.light, C.white, 0, true);
-      await clock.wait(0.7);
+      this.drawGlow(look.light, C.white, 0, true);
+      await clock.wait(st.blackout);
     }
 
-    // Burst.
+    // Burst. A short reveal of a high tier pauses the game for its burst, so it is never missed.
     this.chest.texture = this.frames[2]!;
     await this.wait(0.06);
     this.chest.texture = this.frames[3]!;
     this.glow.clear();
-    this.setDim(tier.dim * 0.5);
-    const look = RARITY_LOOKS[best]!;
-    sfx.burst(best);
+    this.setDim(short ? 0 : st.dim * 0.5);
+    sfx.burst(Math.min(best, 6));
+    if (look.row.juice.pause > 0 && !reduce) clock.freeze(look.row.juice.pause);
     const by = this.cy - lifted - 40;
-    if (tier.rays) this.rays(look.main, by);
-    if (tier.beam) this.beam(look.light, by);
+    if (st.rays && !short) this.rays(look.main, by);
+    if (st.beam) this.beam(look.light, by);
     this.playBurst(best, by);
-    this.parts.spawn({ x: this.cx, y: by, colors: [look.main, look.light, C.white], count: 20 + best * 14, speed: [60, 160 + best * 30], life: [0.5, 1 + best * 0.2], size: [1, 3] });
-    if (best >= 4) this.parts.spawn({ x: this.cx, y: by - 20, frames: [tex('ui/coin_10.png')], colors: [], count: 18, speed: [80, 200], angle: -Math.PI / 2, spread: 2.4, life: [0.9, 1.4], gravity: 260 });
-    if (tier.ring) ring(this.front, this.cx, by, look.light, 60 + best * 10, 0.45);
-    if (tier.shake && !reduce) session.hooks.shake(tier.shake, 0.35);
-    for (const f of tier.flood) {
-      flash(this.front, this.w, this.h, C[f] ?? C.white, 0.16, 0.45);
-      await clock.wait(0.12);
+    this.parts.spawn({ x: this.cx, y: by, colors: [look.main, look.light, C.white], count: look.row.juice.particles + (short ? 0 : 14), speed: [60, 160 + best * 20], life: [0.5, 1 + best * 0.12], size: [1, 3] });
+    if (st.lift) this.parts.spawn({ x: this.cx, y: by - 20, frames: [tex('ui/coin_10.png')], colors: [], count: 12 + best * 2, speed: [80, 200], angle: -Math.PI / 2, spread: 2.4, life: [0.9, 1.4], gravity: 260 });
+    if (st.ring) ring(this.front, this.cx, by, look.light, 60 + best * 10, 0.45);
+    if (st.shake && !reduce) session.hooks.shake(short ? Math.min(2, st.shake) : st.shake, 0.35);
+    if (!short) {
+      for (const f of look.flood) {
+        flash(this.front, this.w, this.h, f, FLOOD_STEP + 0.04, 0.45);
+        await clock.wait(FLOOD_STEP);
+      }
     }
     if (best === 0) flash(this.front, this.w, this.h, C.white, 0.08, 0.2);
     if (lifted) void clock.tween(this.chest, { y: this.cy }, 0.3, { ease: ease.outBounce });
-    await this.wait(0.25);
-    sfx.sting(best);
+    await this.wait(short ? 0.12 : 0.25);
+    sfx.sting(look.row.sting, look.row.order >= 5);
 
-    // Show: the cards come up, lowest rarity first, best last.
-    const order = [...this.cards].sort((a, b) => rarityIndex(content.cards.get(a)!.rarity) - rarityIndex(content.cards.get(b)!.rarity));
+    // Show: the cards come up, lowest tier first, best last.
+    const order = [...this.cards].sort((a, b) => this.cardTier(a) - this.cardTier(b));
     title.destroy();
     this.skip = false;
     await this.showCards(order);
-    await clock.tween(this, { alpha: 0 }, 0.15);
+    await clock.tween(this, { alpha: 0 }, short ? 0.1 : 0.15);
   }
 
   private async showCards(order: string[]): Promise<void> {
-    // Small row of every card, then each is held up big.
-    const shown: Container[] = [];
+    const short = this.form === 'short';
     for (let i = 0; i < order.length; i++) {
       const id = order[i]!;
-      const tierI = rarityIndex(content.cards.get(id)!.rarity);
-      const tier = REVEAL_TIERS[Math.min(tierI, REVEAL_TIERS.length - 1)]!;
+      const tierI = this.cardTier(id);
+      const look = tierAt(tierI);
       const own = session.game.state.cards[id];
       const def = content.cards.get(id)!;
       const need = def.dupes[(own?.level ?? 1) - 1] ?? 0;
-      const card = bigCard(id, own?.level ?? 1, { newCard: this.isNew.has(id), copies: own ? [own.copies, need] : undefined });
+      const card = bigCard(id, own?.level ?? 1, { newCard: this.isNew.has(id), copies: own ? [own.copies, need] : undefined, tier: tierI });
       const holder = new Container();
       holder.addChild(card);
       card.position.set(-90, -120);
@@ -267,16 +284,17 @@ export class Reveal extends Container {
       const sx = holder.scale.x;
       holder.scale.x = 0.05;
       this.front.addChild(holder);
-      shown.push(holder);
       sfx.card();
-      const look = RARITY_LOOKS[tierI]!;
-      await clock.tween(holder.scale, { x: sx }, tierI >= 4 ? 0.5 : 0.18, { ease: ease.outBack });
-      if (tierI >= 2) this.parts.spawn({ x: this.cx, y: holder.y - 60, colors: [look.main, look.light, C.white], count: 10 + tierI * 6, speed: [40, 120], life: [0.4, 0.9] });
+      await clock.tween(holder.scale, { x: sx }, tierI >= 4 && !short ? 0.5 : 0.18, { ease: ease.outBack });
+      if (tierI >= 2) this.parts.spawn({ x: this.cx, y: holder.y - 60, colors: [look.main, look.light, C.white], count: 10 + tierI * 5, speed: [40, 120], life: [0.4, 0.9] });
       if (tierI >= 3) {
-        for (let k = 0; k < 4 + tierI; k++) clock.after(k * 0.1, () => this.sparkleAt(this.cx + (Math.random() - 0.5) * 180, holder.y + (Math.random() - 0.5) * 220, look.light));
+        // Read the position now: a fast tap can put the card away before the last sparkle.
+        const hy = holder.y;
+        for (let k = 0; k < 4 + tierI; k++) clock.after(k * 0.1, () => !this.destroyed && this.sparkleAt(this.cx + (Math.random() - 0.5) * 180, hy + (Math.random() - 0.5) * 220, look.light));
       }
-      const quick = tierI <= 1 && i < order.length - 1;
-      await clock.wait(quick ? 0.55 : tier.hold);
+      // Common and Uncommon cards ripple past; the rest wait for a tap. The short form never waits.
+      const quick = short || (tierI <= 1 && i < order.length - 1);
+      await clock.wait(quick ? (short ? 0.5 : 0.55) : look.row.reveal.hold);
       if (!quick) {
         this.hint.visible = true;
         this.hint.text = i < order.length - 1 ? ui('next') : ui('tap_to_continue');

@@ -112,6 +112,11 @@ chests:
   chest.golden: Golden Chest
   chest.crystal: Crystal Chest
   chest.starlight: Starlight Chest
+  chest.prism: Prism Chest
+  chest.sunburst: Sunburst Chest
+  chest.eclipse: Eclipse Chest
+  chest.pearl: Pearl Chest
+  chest.grail: Grail Chest
 
 rarities:
   common: Common
@@ -119,7 +124,12 @@ rarities:
   rare: Rare
   epic: Epic
   legendary: Legendary
+  mythic: Mythic
   exotic: Exotic
+  godly: Godly
+  ungodly: Ungodly
+  holy: Holy
+  grailed: Grailed
 
 shop:
   shop.compost.rich_soil: Rich Soil
@@ -248,5 +258,10 @@ ui:
   controls_help_desktop: "F11 switches full screen."
   fullscreen: Full screen
   open_saves: Open save folder
+  theatre: Reveal theatre
+  theatre_help: "See the reveal of every rarity, from Common to Grailed. Rarities above Legendary use stand-in art until theirs is drawn. Nothing here changes your game."
+  theatre_full: "Full reveals (tap to switch)"
+  theatre_short: "Short reveals (tap to switch)"
+  theatre_all: Play all eleven
   player_level: Level
   quest_done: Quest done!

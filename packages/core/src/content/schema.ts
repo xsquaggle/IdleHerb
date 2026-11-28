@@ -11,8 +11,13 @@
  */
 import { z } from 'zod';
 
-export const RARITIES = ['common', 'uncommon', 'rare', 'epic', 'legendary', 'exotic'] as const;
-export type Rarity = (typeof RARITIES)[number];
+/**
+ * A rarity tier's id, from tables/tiers.yaml (design 0.5: eleven tiers). Tiers are data: the
+ * loader checks every id against the table, and no code compares tier names (tiers.test.ts).
+ */
+export type TierId = string;
+/** The old name for a tier id. */
+export type Rarity = TierId;
 export const FAMILIES = ['hemp', 'mint', 'basil', 'rosemary', 'lavender', 'sage', 'chamomile', 'thyme'] as const;
 export type Family = (typeof FAMILIES)[number];
 
@@ -31,7 +36,7 @@ export const STATS = [
 export type StatId = (typeof STATS)[number];
 
 const big = z.union([z.string(), z.number()]);
-const rarity = z.enum(RARITIES);
+const rarity = z.string().regex(/^[a-z]+$/);
 const family = z.enum(FAMILIES);
 const stat = z.enum(STATS);
 
@@ -104,9 +109,10 @@ export const RewardSchema = z
   .strict();
 export type Reward = z.infer<typeof RewardSchema>;
 
-const rarityNumbers = z.object({ common: z.number(), uncommon: z.number(), rare: z.number(), epic: z.number(), legendary: z.number(), exotic: z.number() }).strict();
-const chestOdds = z.object({ common: z.number(), uncommon: z.number(), rare: z.number(), epic: z.number(), legendary: z.number() }).strict();
-const heirloomOdds = z.object({ rare: z.number(), epic: z.number(), legendary: z.number() }).strict();
+/** One number per tier, keyed by tier id. The loader checks the keys against tables/tiers.yaml. */
+const rarityNumbers = z.record(rarity, z.number());
+const chestOdds = z.record(rarity, z.number());
+const heirloomOdds = z.record(rarity, z.number());
 
 export const TuningSchema = z
   .object({
@@ -237,6 +243,18 @@ export const TuningSchema = z
     /** Design 0.4: the Auto-Gardener keeps floor 1's manager hired and opens floors, so no world goes dead. */
     AUTO_GARDENER_RESTARTS: z.boolean(),
     MASTERY_LEVELS: z.array(z.number().int().positive()),
+    /** Design 0.5: each tier is TIER_STEP times as strong as the one below (EXPANSION 2.2). */
+    TIER_STEP: z.number().gt(1),
+    /** The best tier a chest's card slot can roll (EXPANSION 1.3 rule 1). Higher tiers are earned. */
+    CHEST_CARD_TOP: rarity,
+    /** PITY_EPIC counts cards since the last one of this tier or better. PITY_LEGENDARY counts toward CHEST_CARD_TOP. */
+    PITY_EPIC_TIER: rarity,
+    /** The tier of a world's Head, the manager of its top floor (GDD 7.1 rule 8). */
+    HEAD_TIER: rarity,
+    /** The tier of heirloom the Heirloom Pick chooses from (GDD 8.3). */
+    HEIRLOOM_PICK_TIER: rarity,
+    /** The tier of manager a reward's `epicCopies` gives copies of (GDD 15.3). */
+    EPIC_COPIES_TIER: rarity,
     MASTERY_PCT: z.number(),
     MASTERY_EXOTIC_STARS: z.array(z.number().int()),
     CUSTOMER_INTERVAL: z.number().positive(),
@@ -344,7 +362,8 @@ export const PlantRowSchema = z
     family,
     rarity,
     traits: z.array(z.string()).min(1).max(2),
-    source: z.enum(['chest', 'hybrid', 'exotic']),
+    /** chest: rolled from chests; hybrid: cross-pollination; mutation: the Mutation Pot (GDD 8.6). */
+    source: z.enum(['chest', 'hybrid', 'mutation']),
     poolWorld: z.number().int().optional(),
     parents: z.array(z.string()).optional(),
     climateWorld: z.number().int().optional(),
@@ -365,17 +384,76 @@ export const ChestRowSchema = z
     pollen: z.number(),
     heirloomChance: z.number().min(0).max(1),
     heirloomOdds: z.literal('starlight').optional(),
-    exoticManagerCopy: z.boolean().optional(),
+    /**
+     * Design 0.5 chests (EXPANSION 4.3): one heirloom per entry, each at least the tier named, or
+     * `any` for the chest's normal heirloom odds. Absent: one heirloom at heirloomChance.
+     */
+    heirloomSlots: z.array(rarity).optional(),
+    /** Copies of a Head (GDD 8.3 rule 9). Each falls back to another Legendary slot while no world has 5 stars. */
+    headCopies: z.number().int().nonnegative().optional(),
+    /** Fixed extras, never rolled (EXPANSION 4.3): materials and cosmetics, kept in the item bag until their systems arrive. */
+    extras: z.array(z.object({ item: z.string(), count: z.number().int().positive(), tier: rarity.optional() }).strict()).optional(),
   })
   .strict();
 export type ChestRow = z.infer<typeof ChestRowSchema>;
+
+/** Chests with fixed contents that the core hands out (welcome, hiring, seed packet). `tier` sets their look. */
+export const SpecialChestRowSchema = z.object({ id: z.string().regex(/^chest\.[a-z_]+$/), tier: z.number().int().positive() }).strict();
+export type SpecialChestRow = z.infer<typeof SpecialChestRowSchema>;
+
+/** One rarity tier (tables/tiers.yaml; design 0.5, EXPANSION 2.1 and 4.1; style bible v1.7, 8 and 19). */
+export const TierRowSchema = z
+  .object({
+    id: rarity,
+    order: z.number().int().positive(),
+    look: z.object({ main: z.string(), light: z.string(), dark: z.string(), flood: z.array(z.string()) }).strict(),
+    emblem: z.string().nullable(),
+    burst: z.string().nullable(),
+    chest: z.string().nullable(),
+    pips: z.number().int().positive(),
+    chime: z.number().int().nonnegative(),
+    sting: z.number().int().positive(),
+    reveal: z
+      .object({
+        total: z.number().positive(),
+        hold: z.number().nonnegative(),
+        hops: z.number().int().nonnegative(),
+        lift: z.boolean(),
+        dim: z.number().min(0).max(1),
+        blackout: z.number().nonnegative(),
+        shake: z.number().nonnegative(),
+        rays: z.boolean(),
+        ring: z.boolean(),
+        beam: z.boolean(),
+        short: z.number().positive(),
+      })
+      .strict(),
+    juice: z
+      .object({ particles: z.number().int().nonnegative(), shake: z.number().nonnegative(), flash: z.number().min(0).max(1), pause: z.number().nonnegative(), layers: z.number().int().positive() })
+      .strict(),
+  })
+  .strict();
+export type TierRow = z.infer<typeof TierRowSchema>;
+
+/** A big moment's tier (tables/moments.yaml; design 0.5, EXPANSION 4.2). The client turns it into one tiered effect. */
+export const MomentRowSchema = z
+  .object({
+    id: z.string().regex(/^[a-z_]+$/),
+    tier: rarity,
+    form: z.enum(['short', 'full']),
+    steps: z.array(z.object({ at: z.number(), tier: rarity }).strict()).optional(),
+    every: z.object({ n: z.number().int().positive(), tier: rarity }).strict().optional(),
+    cases: z.record(z.string(), rarity).optional(),
+  })
+  .strict();
+export type MomentRow = z.infer<typeof MomentRowSchema>;
 
 export const ArtifactRowSchema = z
   .object({
     id: z.string().regex(/^artifact\.[a-z_]+$/),
     n: z.number().int(),
     set: z.string(),
-    rarity: z.enum(['rare', 'epic', 'legendary']),
+    rarity,
     passives: z.array(EffectSchema).min(1),
     ability: AbilitySchema.optional(),
   })
@@ -479,6 +557,8 @@ export const FloorTemplateSchema = z
 export const RawContentSchema = z
   .object({
     tuning: TuningSchema,
+    tiers: z.array(TierRowSchema).min(1),
+    moments: z.array(MomentRowSchema),
     worlds: z.array(WorldRowSchema),
     floors: z.array(FloorRowSchema),
     floorTemplate: FloorTemplateSchema,
@@ -487,6 +567,7 @@ export const RawContentSchema = z
     plants: z.array(PlantRowSchema),
     dupeCurves: z.array(DupeCurveRowSchema),
     chests: z.array(ChestRowSchema),
+    specialChests: z.array(SpecialChestRowSchema),
     artifacts: z.array(ArtifactRowSchema),
     sets: z.array(SetRowSchema),
     skills: z.array(SkillRowSchema),

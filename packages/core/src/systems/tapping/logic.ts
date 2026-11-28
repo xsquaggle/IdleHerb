@@ -2,6 +2,25 @@
 import type { Tuning } from '../../content/schema';
 import { chance, type RngState } from '../../kernel/rng/rng';
 
+/**
+ * Where a tap comes from (design 0.5, EXPANSION 1.3 rule 7). Only counted sources are counted taps
+ * (GDD 6.1): they feed the Combo, the Spurt meter, Hearth Heat and the tap counters and achievements.
+ * Taps in a field activity are not counted; the activity handles them itself.
+ */
+export const TAP_SOURCES = {
+  /** A tap or click on the tower. */
+  tower: { counted: true },
+  /** The tap key (Space) on a PC. */
+  key: { counted: true },
+  /** A tap in a field activity (fishing, digging, mining; Phase 2). */
+  field: { counted: false },
+} as const satisfies Record<string, { counted: boolean }>;
+export type TapSource = keyof typeof TAP_SOURCES;
+
+export function isCountedTap(source: TapSource | undefined): boolean {
+  return TAP_SOURCES[source ?? 'tower'].counted;
+}
+
 export function comboMult(stacks: number, t: Pick<Tuning, 'COMBO_PER_STACK'>): number {
   return 1 + t.COMBO_PER_STACK * stacks;
 }

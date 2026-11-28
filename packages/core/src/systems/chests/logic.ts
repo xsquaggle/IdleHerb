@@ -4,11 +4,16 @@
  * rolled come from the same code.
  */
 import type { Content, CardDef } from '../../content/content';
-import { RARITY_ORDER } from '../../content/content';
-import type { ChestRow, Rarity } from '../../content/schema';
+import type { ChestRow, TierId } from '../../content/schema';
 import { chance, nextFloat, pickOne, pickWeighted, type RngState } from '../../kernel/rng/rng';
 
-export const CHEST_RARITIES: Rarity[] = ['common', 'uncommon', 'rare', 'epic', 'legendary'];
+/** The tiers a chest's card slot can roll: the lowest up to CHEST_CARD_TOP (EXPANSION 1.3 rule 1). */
+export function chestTiers(content: Content): TierId[] {
+  return content.tiers.upTo(content.tuning.CHEST_CARD_TOP).map((t) => t.id);
+}
+
+/** Tiers above this many places from the bottom are boosted by chest luck (Rare and better, GDD 8.3 rule 6). */
+const LUCKY_FROM = 2;
 
 export interface Pity {
   /** Cards drawn since the last Epic or better. */
@@ -48,32 +53,40 @@ export interface ChestRollInput {
 
 export interface ChestRollResult {
   cards: string[];
+  /** The first heirloom, or null. */
   heirloom: string | null;
+  /** Every heirloom (design 0.5 chests can hold several). */
+  heirlooms: string[];
   pollen: number;
+  /** The first Head copy, or null. */
   exoticManager: string | null;
+  /** Every Head copy. */
+  heads: string[];
+  /** Fixed extras, never rolled (EXPANSION 4.3). */
+  extras: { item: string; count: number; tier?: TierId }[];
 }
 
 /**
- * The five slot weights with luck applied (rule 6): Rare, Epic and Legendary
- * are multiplied by 1 + luck (and doubled again by Abracadabra). The weights
- * are then used as proportions, so Common and Uncommon shrink together and
- * nothing can go below zero.
+ * The slot weights, one per tier from chestTiers, with luck applied (rule 6):
+ * Rare and better are multiplied by 1 + luck (and doubled again by Abracadabra).
+ * The weights are then used as proportions, so Common and Uncommon shrink
+ * together and nothing can go below zero.
  */
-export function slotWeights(chest: ChestRow, luck: number, doubleLuck: boolean): number[] {
+export function slotWeights(content: Content, chest: ChestRow, luck: number, doubleLuck: boolean): number[] {
   const factor = (1 + luck) * (doubleLuck ? 2 : 1);
-  return [chest.odds.common, chest.odds.uncommon, chest.odds.rare * factor, chest.odds.epic * factor, chest.odds.legendary * factor];
+  return chestTiers(content).map((id, i) => (chest.odds[id] ?? 0) * (i >= LUCKY_FROM ? factor : 1));
 }
 
-/** The odds the chest screen shows, as fractions that sum to 1. */
-export function shownOdds(chest: ChestRow, luck: number): Record<string, number> {
-  const w = slotWeights(chest, luck, false);
+/** The odds the chest screen shows, as fractions that sum to 1, keyed by tier id. */
+export function shownOdds(content: Content, chest: ChestRow, luck: number): Record<string, number> {
+  const w = slotWeights(content, chest, luck, false);
   const total = w.reduce((a, b) => a + b, 0);
   const out: Record<string, number> = {};
-  CHEST_RARITIES.forEach((r, i) => (out[r] = w[i]! / total));
+  chestTiers(content).forEach((r, i) => (out[r] = w[i]! / total));
   return out;
 }
 
-function poolFor(input: ChestRollInput, rarity: Rarity, kind: 'manager' | 'plant'): CardDef[] {
+function poolFor(input: ChestRollInput, rarity: TierId, kind: 'manager' | 'plant'): CardDef[] {
   const list: CardDef[] = kind === 'manager' ? input.content.managers : input.content.plants;
   return list.filter((c) => {
     if (c.rarity !== rarity) return false;
@@ -85,7 +98,7 @@ function poolFor(input: ChestRollInput, rarity: Rarity, kind: 'manager' | 'plant
   });
 }
 
-function rollCard(input: ChestRollInput, rarity: Rarity): string | null {
+function rollCard(input: ChestRollInput, rarity: TierId): string | null {
   const t = input.content.tuning;
   let kind: 'manager' | 'plant' = !input.plantsUnlocked || chance(input.rng, t.CHEST_MANAGER_SHARE) ? 'manager' : 'plant';
   let pool = poolFor(input, rarity, kind);
@@ -102,29 +115,59 @@ function rollCard(input: ChestRollInput, rarity: Rarity): string | null {
   return pickOne(input.rng, pool).id;
 }
 
-function rollSlot(input: ChestRollInput, atLeast: Rarity | null): string | null {
-  const t = input.content.tuning;
-  let weights = slotWeights(input.chest, input.luck, input.doubleLuck);
+function rollSlot(input: ChestRollInput, atLeast: TierId | null): string | null {
+  const { content } = input;
+  const t = content.tuning;
+  const tiers = content.tiers;
+  const ladder = chestTiers(content);
+  const top = t.CHEST_CARD_TOP;
+  let weights = slotWeights(content, input.chest, input.luck, input.doubleLuck);
   if (atLeast) {
-    const min = RARITY_ORDER[atLeast];
+    const min = Math.min(tiers.index(atLeast), ladder.length - 1);
     weights = weights.map((w, i) => (i >= min ? w : 0));
     if (!weights.some((w) => w > 0)) weights[min] = 1;
   }
-  let rarity = CHEST_RARITIES[pickWeighted(input.rng, weights)]!;
+  let rarity = ladder[pickWeighted(input.rng, weights)]!;
   // Pity (rule 5): the counters are shown on the chest screen.
-  if (input.pity.sinceLegendary >= t.PITY_LEGENDARY) rarity = 'legendary';
-  else if (input.pity.sinceEpic >= t.PITY_EPIC && RARITY_ORDER[rarity] < RARITY_ORDER.epic) rarity = 'epic';
+  if (input.pity.sinceLegendary >= t.PITY_LEGENDARY) rarity = top;
+  else if (input.pity.sinceEpic >= t.PITY_EPIC && !tiers.atLeast(rarity, t.PITY_EPIC_TIER)) rarity = t.PITY_EPIC_TIER;
 
   // If nothing of this rarity is in the pool yet, step down until something is.
   let card: string | null = null;
-  let r = RARITY_ORDER[rarity];
-  for (; r >= 0 && card === null; r--) card = rollCard(input, CHEST_RARITIES[r]!);
+  let r = tiers.index(rarity);
+  for (; r >= 0 && card === null; r--) card = rollCard(input, ladder[r]!);
   if (card === null) return null;
-  const got = input.content.cards.get(card)!.rarity;
-  input.pity.sinceEpic = RARITY_ORDER[got] >= RARITY_ORDER.epic ? 0 : input.pity.sinceEpic + 1;
-  input.pity.sinceLegendary = got === 'legendary' ? 0 : input.pity.sinceLegendary + 1;
+  const got = content.cards.get(card)!.rarity;
+  input.pity.sinceEpic = tiers.atLeast(got, t.PITY_EPIC_TIER) ? 0 : input.pity.sinceEpic + 1;
+  input.pity.sinceLegendary = tiers.atLeast(got, top) ? 0 : input.pity.sinceLegendary + 1;
   input.owned.add(card);
   return card;
+}
+
+/** One heirloom piece, at least tier `min` when given (rules 7 and 8). */
+function rollHeirloom(input: ChestRollInput, min: TierId | null): string | null {
+  const { chest, content, rng } = input;
+  const t = content.tuning;
+  const tiers = content.tiers;
+  const table = chest.heirloomOdds === 'starlight' ? t.HEIRLOOM_ODDS_STARLIGHT : t.HEIRLOOM_ODDS;
+  const kinds = Object.keys(table).sort((a, b) => tiers.order(a) - tiers.order(b));
+  const best = kinds[kinds.length - 1]!;
+  let weights = kinds.map((k) => table[k]!);
+  if (min) {
+    weights = weights.map((w, i) => (tiers.atLeast(kinds[i]!, min) ? w : 0));
+    if (!weights.some((w) => w > 0)) weights[weights.length - 1] = 1;
+  }
+  let rarity = kinds[pickWeighted(rng, weights)]!;
+  // Rule 7: at PITY_HEIRLOOM pieces without one of the best tier, the next piece is of the best tier.
+  if (t.PITY_HEIRLOOM > 0 && input.pity.heirloomsSinceLegendary >= t.PITY_HEIRLOOM) rarity = best;
+  input.pity.heirloomsSinceLegendary = rarity === best ? 0 : input.pity.heirloomsSinceLegendary + 1;
+  let pool = content.artifacts.filter((a) => a.rarity === rarity);
+  // Rule 7: while a piece of this rarity is missing, the piece is one the player does not own.
+  if (t.HEIRLOOM_NO_REPEATS) {
+    const missing = pool.filter((a) => !input.ownedHeirlooms.has(a.id));
+    if (missing.length > 0) pool = missing;
+  }
+  return pool.length > 0 ? pickOne(rng, pool).id : null;
 }
 
 export function rollChest(input: ChestRollInput): ChestRollResult {
@@ -141,31 +184,28 @@ export function rollChest(input: ChestRollInput): ChestRollResult {
     if (c) cards.push(c);
   }
 
-  let heirloom: string | null = null;
-  if (input.heirloomsUnlocked && chest.heirloomChance > 0 && nextFloat(rng) < chest.heirloomChance) {
-    const odds = chest.heirloomOdds === 'starlight' ? t.HEIRLOOM_ODDS_STARLIGHT : t.HEIRLOOM_ODDS;
-    const kinds = ['rare', 'epic', 'legendary'] as const;
-    let rarity = kinds[pickWeighted(rng, [odds.rare, odds.epic, odds.legendary])]!;
-    // Rule 7: at PITY_HEIRLOOM pieces without a Legendary, the next piece is Legendary.
-    if (t.PITY_HEIRLOOM > 0 && input.pity.heirloomsSinceLegendary >= t.PITY_HEIRLOOM) rarity = 'legendary';
-    input.pity.heirloomsSinceLegendary = rarity === 'legendary' ? 0 : input.pity.heirloomsSinceLegendary + 1;
-    let pool = content.artifacts.filter((a) => a.rarity === rarity);
-    // Rule 7: while a piece of this rarity is missing, the piece is one the player does not own.
-    if (t.HEIRLOOM_NO_REPEATS) {
-      const missing = pool.filter((a) => !input.ownedHeirlooms.has(a.id));
-      if (missing.length > 0) pool = missing;
+  const heirlooms: string[] = [];
+  if (input.heirloomsUnlocked && chest.heirloomChance > 0) {
+    if (chest.heirloomSlots) {
+      // Design 0.5 chests: every slot is a sure piece, at least the tier it names.
+      for (const min of chest.heirloomSlots) {
+        const h = rollHeirloom(input, min === 'any' ? null : min);
+        if (h) heirlooms.push(h);
+      }
+    } else if (nextFloat(rng) < chest.heirloomChance) {
+      const h = rollHeirloom(input, null);
+      if (h) heirlooms.push(h);
     }
-    heirloom = pickOne(rng, pool).id;
   }
 
-  let exoticManager: string | null = null;
-  if (chest.exoticManagerCopy) {
-    if (input.heads.length > 0) exoticManager = pickOne(rng, input.heads);
+  const heads: string[] = [];
+  for (let i = 0; i < (chest.headCopies ?? 0); i++) {
+    if (input.heads.length > 0) heads.push(pickOne(rng, input.heads));
     else {
-      // Rule 9: while no world has 5 Mastery stars, the copy is a third guaranteed Legendary.
-      const c = rollSlot(input, 'legendary');
+      // Rule 9: while no world has 5 Mastery stars, each copy is another guaranteed card of the top chest tier.
+      const c = rollSlot(input, t.CHEST_CARD_TOP);
       if (c) cards.push(c);
     }
   }
-  return { cards, heirloom, pollen: chest.pollen, exoticManager };
+  return { cards, heirloom: heirlooms[0] ?? null, heirlooms, pollen: chest.pollen, exoticManager: heads[0] ?? null, heads, extras: chest.extras ?? [] };
 }

@@ -4,7 +4,8 @@
  */
 import { Container, Graphics, Sprite } from 'pixi.js';
 import { formatCost, formatDuration, formatNum, type CardDef, type Num } from '@sprout/core';
-import { C, rarityIndex } from '../engine/palette';
+import { C } from '../engine/palette';
+import { cardTierIndex, chestMaterial, chestTierIndex } from '../app/tiers';
 import { PixelText } from '../engine/font';
 import { Button, F, box } from '../engine/ui';
 import { tex } from '../engine/assets';
@@ -16,11 +17,6 @@ import { shell, wipeSave } from '../app/save';
 import { Window, ink } from './window';
 import { bigCard, smallCard, TILE_H, TILE_W } from './cards';
 
-const CHEST_ORDER = ['chest.welcome', 'chest.hiring', 'chest.seed_packet', 'chest.wooden', 'chest.copper', 'chest.silver', 'chest.golden', 'chest.crystal', 'chest.starlight'];
-const CHEST_MAT: Record<string, string> = {
-  'chest.wooden': 'common', 'chest.copper': 'copper', 'chest.silver': 'silver', 'chest.golden': 'legendary',
-  'chest.crystal': 'crystal', 'chest.starlight': 'starlight', 'chest.welcome': 'copper', 'chest.hiring': 'common', 'chest.seed_packet': 'common',
-};
 
 function row(g: Graphics, y: number, w: number, h: number): void {
   box(g, 0, y, w, h, C['cream-1'], 1);
@@ -35,7 +31,10 @@ export class ChestsPanel extends Window {
 
   protected build(width: number): void {
     const s = session.game.state;
-    const ids = CHEST_ORDER.filter((id) => (s.chests[id] ?? 0) > 0).concat(Object.keys(s.chests).filter((id) => !CHEST_ORDER.includes(id) && (s.chests[id] ?? 0) > 0));
+    // Lowest tier first, so the best chest is last to tempt.
+    const ids = Object.keys(s.chests)
+      .filter((id) => (s.chests[id] ?? 0) > 0)
+      .sort((a, b) => chestTierIndex(a) - chestTierIndex(b) || a.localeCompare(b));
     this.sig = ids.map((id) => `${id}:${s.chests[id]}`).join(',');
     if (ids.length === 0) {
       this.body.addChild(Object.assign(ink(ui('no_chests'), { maxWidth: width - 8 }), { x: 4, y: 6 }));
@@ -47,7 +46,7 @@ export class ChestsPanel extends Window {
     for (const id of ids) {
       const h = 84;
       row(g, y, width, h);
-      const sp = new Sprite(tex(`chests/frames/${CHEST_MAT[id] ?? 'common'}_closed_96x80.png`));
+      const sp = new Sprite(tex(`chests/frames/${chestMaterial(id)}_closed_96x80.png`));
       sp.position.set(2, y + 2);
       this.body.addChild(sp);
       const name = ink(txt('chests', id), { maxWidth: width - 110 });
@@ -97,7 +96,7 @@ export class CardsPanel extends Window {
     const plants = content.plants.filter((p) => p.launch && (p.source === 'chest' || s.cards[p.id])).map((p) => p.id);
     const sections: [string, string[]][] = [
       [ui('managers_title'), managers],
-      [ui('plants_title'), plants.sort((a, b) => Number(!!s.cards[b]) - Number(!!s.cards[a]) || rarityIndex(content.cards.get(b)!.rarity) - rarityIndex(content.cards.get(a)!.rarity))],
+      [ui('plants_title'), plants.sort((a, b) => Number(!!s.cards[b]) - Number(!!s.cards[a]) || cardTierIndex(b) - cardTierIndex(a))],
     ];
     const cols = Math.max(2, Math.floor((width + 4) / (TILE_W + 4)));
     const gap = Math.floor((width - cols * TILE_W) / Math.max(1, cols - 1));
@@ -377,6 +376,7 @@ export class SettingsPanel extends Window {
       }
       this.rebuild();
     });
+    mk(ui('theatre'), 'wood', () => session.hooks.openPanel('theatre'));
     if (shell) {
       const sh = shell;
       mk(ui('fullscreen'), 'wood', () => sh.toggleFullscreen());
@@ -420,3 +420,55 @@ export class WelcomeBack extends Window {
 
 declare const __BUILD__: string;
 export { content };
+
+/**
+ * The reveal theatre (design 0.5, EXPANSION 15.1 item 3): plays the reveal of any of the eleven tiers,
+ * full or short, with a stand-in card, so every tier can be seen before its art arrives. Changes
+ * nothing in the save.
+ */
+export class TheatrePanel extends Window {
+  private form: 'full' | 'short' = 'full';
+  constructor() {
+    super(ui('theatre'), 320, 400);
+  }
+
+  /** A card to hold up at tier `i`: the manager born nearest that tier, so the art varies. */
+  private sample(i: number): string {
+    let best = content.managers[0]!;
+    for (const m of content.managers) if (Math.abs(m.nativeTier - 1 - i) < Math.abs(best.nativeTier - 1 - i)) best = m;
+    return best.id;
+  }
+
+  private play(tiers: number[]): void {
+    const form = this.form;
+    this.close();
+    void tiers.reduce<Promise<void>>((p, i) => p.then(() => session.hooks.reveal({ cards: [this.sample(i)], cardTier: i, form, title: txt('rarities', content.tiers.at(i).id) })), Promise.resolve());
+  }
+
+  protected build(width: number): void {
+    const intro = ink(ui('theatre_help'), { maxWidth: width, color: C['wood-2'] });
+    this.body.addChild(intro);
+    let y = intro.textHeight + 8;
+    const formBtn = new Button({ w: width, h: 28, look: this.form === 'full' ? 'leaf' : 'wood', label: this.form === 'full' ? ui('theatre_full') : ui('theatre_short') });
+    formBtn.position.set(0, y);
+    formBtn.onTap = () => {
+      this.form = this.form === 'full' ? 'short' : 'full';
+      this.rebuild();
+    };
+    this.body.addChild(formBtn);
+    y += 34;
+    const all = new Button({ w: width, h: 28, look: 'gold', label: ui('theatre_all') });
+    all.position.set(0, y);
+    all.onTap = () => this.play(content.tiers.list.map((_, i) => i));
+    this.body.addChild(all);
+    y += 36;
+    const cols = 2;
+    const bw = Math.floor((width - 6) / cols);
+    content.tiers.list.forEach((t, i) => {
+      const b = new Button({ w: bw, h: 26, look: i >= 6 ? 'lavender' : i >= 4 ? 'gold' : 'wood', label: `${t.order}. ${txt('rarities', t.id)}` });
+      b.position.set((i % cols) * (bw + 6), y + Math.floor(i / cols) * 30);
+      b.onTap = () => this.play([i]);
+      this.body.addChild(b);
+    });
+  }
+}

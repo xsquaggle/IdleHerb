@@ -31,11 +31,11 @@
 - { id: plant.hemp.silkspun,      family: hemp,      rarity: legendary, traits: [trait.sturdy, trait.evergreen],    source: hybrid, parents: [plant.hemp.show, plant.lavender.royal], launch: true }
 - { id: plant.sage.sunset,        family: sage,      rarity: legendary, traits: [trait.frosty, trait.thrifty],      source: hybrid, parents: [plant.sage.silver, plant.rosemary.topiary], launch: true }
 # Exotics (two traits). Parent at EXOTIC_PARENT_LEVEL or higher and the climate's world reached. Needs the Mutation Chamber.
-- { id: plant.hemp.sunspun,       family: hemp,      rarity: exotic,    traits: [trait.sturdy, trait.neighbourly],  source: exotic, parents: [plant.hemp.show],         climateWorld: 1, launch: true }
-- { id: plant.thyme.clockwork,    family: thyme,     rarity: exotic,    traits: [trait.quick, trait.radiant],       source: exotic, parents: [plant.thyme.elfin],       climateWorld: 2, launch: true }
-- { id: plant.basil.ember,        family: basil,     rarity: exotic,    traits: [trait.sweet, trait.zesty],         source: exotic, parents: [plant.basil.purple],      climateWorld: 3, launch: true }
-- { id: plant.rosemary.thunder,   family: rosemary,  rarity: exotic,    traits: [trait.thrifty, trait.zesty],       source: exotic, parents: [plant.rosemary.topiary],  climateWorld: 3, launch: true }
-- { id: plant.mint.frosted,       family: mint,      rarity: exotic,    traits: [trait.frosty, trait.quick],        source: exotic, parents: [plant.mint.chocolate],    climateWorld: 4, launch: true }
-- { id: plant.sage.crystal,       family: sage,      rarity: exotic,    traits: [trait.studious, trait.lucky],      source: exotic, parents: [plant.sage.silver],       climateWorld: 4, launch: true }
-- { id: plant.lavender.moonlit,   family: lavender,  rarity: exotic,    traits: [trait.evergreen, trait.lucky],     source: exotic, parents: [plant.lavender.royal],    climateWorld: 5, launch: false }
-- { id: plant.chamomile.starlight, family: chamomile, rarity: exotic,   traits: [trait.radiant, trait.bountiful],   source: exotic, parents: [plant.chamomile.golden],  climateWorld: 6, launch: false }
+- { id: plant.hemp.sunspun,       family: hemp,      rarity: exotic,    traits: [trait.sturdy, trait.neighbourly],  source: mutation, parents: [plant.hemp.show],         climateWorld: 1, launch: true }
+- { id: plant.thyme.clockwork,    family: thyme,     rarity: exotic,    traits: [trait.quick, trait.radiant],       source: mutation, parents: [plant.thyme.elfin],       climateWorld: 2, launch: true }
+- { id: plant.basil.ember,        family: basil,     rarity: exotic,    traits: [trait.sweet, trait.zesty],         source: mutation, parents: [plant.basil.purple],      climateWorld: 3, launch: true }
+- { id: plant.rosemary.thunder,   family: rosemary,  rarity: exotic,    traits: [trait.thrifty, trait.zesty],       source: mutation, parents: [plant.rosemary.topiary],  climateWorld: 3, launch: true }
+- { id: plant.mint.frosted,       family: mint,      rarity: exotic,    traits: [trait.frosty, trait.quick],        source: mutation, parents: [plant.mint.chocolate],    climateWorld: 4, launch: true }
+- { id: plant.sage.crystal,       family: sage,      rarity: exotic,    traits: [trait.studious, trait.lucky],      source: mutation, parents: [plant.sage.silver],       climateWorld: 4, launch: true }
+- { id: plant.lavender.moonlit,   family: lavender,  rarity: exotic,    traits: [trait.evergreen, trait.lucky],     source: mutation, parents: [plant.lavender.royal],    climateWorld: 5, launch: false }
+- { id: plant.chamomile.starlight, family: chamomile, rarity: exotic,   traits: [trait.radiant, trait.bountiful],   source: mutation, parents: [plant.chamomile.golden],  climateWorld: 6, launch: false }
