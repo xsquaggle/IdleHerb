@@ -35,6 +35,11 @@ Kept current so the work can be picked up after any stop. Last update: 2026-11-2
 5. The designer accepted the B.6 run, including the mixed 7.3-day gap from day 27.1 (run-to-run flip, no refit).
 6. The p6 overlay (Mythic and Godly) is cancelled: design 0.5 replaces it, and only the Head crowning (step 2) survives.
 
+## Gotchas from the audit of PR #12
+
+- Overlay rows merge deeply. An overlay that sets a story goal back must write every field of it (for step 35's old goal, `worlds: 1` too), or the old field stays.
+- Save shape: from the first public preview on, any change to the state shape needs a `SAVE_VERSION` bump and a migration step (tech plan). `WorldState.crowned` (PR #14) is optional and reads as false when missing, so it needs none.
+
 ## Assumptions (also in the report)
 
 - New-player model: 0.3 purchases a second and 30 percent of taps landed for 2 minutes, then 0.35 and 35 percent to minute 10, 0.4 and 35 percent to the end of the first hour, then 2 a second and every tap.
