@@ -43,6 +43,7 @@ Owner: Game Designer. Companion files: [GDD.md](GDD.md) (rules and formulas, ver
 | Expeditions cut from v1 (AUDIT 6) | They return as Outings for the helpers, in the second update | Section 6.6 |
 | Tower skins cut from v1 (AUDIT 6) | Style is a planned system with tower skins, outfits and effects | Section 10 |
 | Achievements have five tiers | Eleven, named and drawn by rarity | Section 12.1 |
+| Offline efficiency stops at 100%, with only Compound Interest and the Night Market after the cap (GDD 13.4) | The Lavender bright star raises the cap to 125%, and the Patient Hearts motto joins the after-cap bonuses. Nothing else changes | Section 1.3, rule 10 |
 | The Ribbon Shop never resets (CONTENT 8) | A New Generation resets its four power items. Its slots and conveniences stay | Section 7.1 |
 | `RARITY_FACTOR` for an Exotic plant is 8 | 11, with Mythic at 7.5 below it | Section 2.2 |
 | A Windfall pays `WINDFALL_SECONDS = 60` | `WINDFALL_BASE = 40 s` times the visitor's `tierPower`, the same on average | Section 4.4 |
@@ -60,6 +61,7 @@ Owner: Game Designer. Companion files: [GDD.md](GDD.md) (rules and formulas, ver
 7. **Activity taps are not counted taps** (GDD 6.1). They give no Combo, no Spurt meter, no Hearth Heat and no tap achievements. The tower and the field each have their own fun.
 8. **One new thing at a time.** Every system here unlocks alone, with a story beat and one line from Pip (section 13).
 9. **Hemp guardrails and words** (GDD 2.2 and 2.3) apply to every new name. Section 14 adds words for the new systems. Fish are always caught and released.
+10. **Offline efficiency may go above 100%, in named ways only.** Its cap stays `OFFLINE_EFF_CAP = 1.0` (GDD 13.4), and every point and "offline earnings" bonus still counts under it, Evergreen ranks, the Millpond's display and outfit sets included. The Lavender bright star (section 8.4) raises that cap to `LAVENDER_OFFLINE_CAP = 1.25`, and nothing else moves it. After the cap, only three named bonuses apply: Compound Interest and the Night Market, as in 0.4, and the Patient Hearts motto (section 7.1). They apply only to real time away, so Time Warp and the Time Capsule pay at the capped efficiency, and the fair stall keeps its own fixed rule (GDD 15.3). The formula and the reasons are in CHANGES C.7.
 
 ## 2. The rarity ladder
 
@@ -94,7 +96,7 @@ One step for everything: `TIER_STEP = 1.5`. A tier's power is `tierPower(t) = TI
 
 - **Plants** use `RARITY_FACTOR[tier]` in the trait formula (GDD 8.5). The first five values are unchanged. Exotic moves from 8 to 11 because Mythic now sits below it, and a step from 7.5 to 8 would not be noticeable. The simulator checks the effect (Exotic plants arrive around day 11).
 - **Managers:** `managerProfit = MGR_BASE[native] x MGR_STEP[native] ^ (level - 1) x TIERUP_STEP ^ tierUps x managerPowerMult`, with `TIERUP_STEP = 1.5`. The perk grows too: `perkValue x (1 + TIERUP_PERK_STEP x tierUps)`, with `TIERUP_PERK_STEP = 0.25`.
-- **Heirlooms:** a numeric passive is multiplied by `TIERUP_STEP ^ tierUps`. An ability that lasts a set time lasts `TIERUP_ABILITY_STEP = 20%` longer per tier-up, and one that pays at once pays 20% more per tier-up, still from the steady rate. Set bonuses do not scale.
+- **Heirlooms:** a numeric passive is multiplied by `TIERUP_STEP ^ tierUps`. A passive whose row says "fixed" does not grow with tier-ups, as it does not grow with levels (CONTENT 0.1). An ability that lasts a set time lasts `TIERUP_ABILITY_STEP = 20%` longer per tier-up, and one that pays at once pays 20% more per tier-up, still from the steady rate. Set bonuses do not scale.
 - **Tools, helpers, chests, catches, ores, cosmetics, Golden Sprouts and events** have their own tier tables in their sections. Each one climbs by about 1.5 per tier too.
 
 ### 2.3 Crests: what the top four tiers add
@@ -274,7 +276,7 @@ All three are built once, as one system with three games on top (section 15.1).
 - **A tool.** The rod, the spade and the pickaxe each have a tier from Common to Grailed. A tool can **reach** one tier above its own: a Legendary rod can hook a Mythic fish, never an Exotic one. Each tool tier above Common adds `GEAR_LUCK_STEP = 10%` luck.
 - **A helper** automates the activity: Otis the Otter fishes, Digby the Mole digs, and the Gnome Crew mines. **A helper only ever uses overflow:** when the store is full, the helper spends the charge that would have been wasted. Away from the game, the helper works through the overflow of the away time, up to the offline cap. So automation never takes a charge the player could have used, and an idle player still gets everything a full store would have thrown away. A helper never gets a Perfect Hook or a Bumper strike. Each helper tier adds `HELPER_LUCK_STEP = 5%` luck.
 - **The roll.** Each action rolls a tier from the spot's weights, `CATCH_WEIGHTS` = Common 50, Uncommon 25, Rare 13, Epic 7, Legendary 3.2, Mythic 1.2, Exotic 0.4, Godly 0.13, Ungodly 0.05, Holy 0.015, Grailed 0.005. Tiers above the tool's reach are left out and the rest are scaled to 100%. Luck multiplies the weights of Rare and better, as in GDD 8.3 rule 6. The odds are shown on the spot.
-- **The Legend Meter** is the pity: after `LEGEND_METER = 60` actions without a result at the tool's own tier or better, the next action is at the tool's tier.
+- **The Legend Meter** is the pity: after `LEGEND_METER = 60` actions without a result at the tool's own tier or better, the next action is at the tool's tier. The helper's actions count too. In the Mine it aims at a depth the player picks (section 6.5).
 - **A token** for upgrading the tool and the helper: Shiny Scales from fishing, Trinkets from digging, and the ores themselves from mining. Every result pays its tier's amount: `TOKENS` = 1, 2, 3, 5, 8, 12, 18, 27, 40, 60, 90.
 - **A crate** of its own, which is a chest of its tier (section 4.3) plus one extra from the activity.
 - **A collection** in the Codex and the Museum (section 6.7).
@@ -325,6 +327,8 @@ All three are built once, as one system with three games on top (section 15.1).
 **How it plays.** A rock face of `ROCK_FACE = 6` rocks. Each rock shows its tier by colour. Tap a rock to start on it (one charge), then strike it by tapping or holding until it splits open. A rock takes `ROCK_HP` strikes: 5, 8, 12, 18, 27, 40, 60, 90, 135, 200, 300, divided by the pickaxe's power, which is ×1.25 per tier. A strike has a 5% chance to be a Bumper strike for ×5 damage, with a crunch and a hit-pause. Rocks above the pickaxe's reach sparkle but cannot be struck yet. This is the most clicker-like of the three, on purpose.
 
 **Ores.** A broken rock gives ores of its tier, `ORE_YIELD` = 3 for Common to Legendary, 2 for Mythic to Godly, 1 for Ungodly to Grailed. 5% of rocks (`GEODE_CHANCE`) also drop a Geode of their tier.
+
+**Deep pity.** In the Mine, the Legend Meter aims at a depth the player picks: any open depth up to the pickaxe's reach, and the reach itself unless the player picks another. After `LEGEND_METER` rocks without one of that tier or better, the next rock is of that tier. Without this, the ore of the next depth would come only from rolls of 0.13% or less, and each of the top pickaxes would take months. With it, an active player breaks about four rocks a day of the picked ore (240 actions a day, one in 60), which is about 8 Sunstone a day, or 4 of a deeper ore. A new depth's pickaxe then takes two to four days, and Pollen, not ore, sets the pace of the top tier-ups. Picking a shallower depth is how a player goes back for an ore the pickaxe has passed, which would otherwise come only from rare rolls.
 
 | Tier | Ore | Opens |
 |---|---|---|
@@ -384,7 +388,7 @@ laurelsPending = laurelsTotal - laurelsClaimed
 ```
 
 - `compostThisGeneration` is what 0.4 calls `compostAllTime`, counted from the start of the current generation. `ribbonsThisBloom` is every Ribbon claimed since the last Big Bloom, in every generation since then. Before the first Big Bloom that is every Ribbon ever claimed. It is scoped the way `compostThisGeneration` is: a Big Bloom sets `laurelsClaimed` to 0, so the total that Laurels are counted from has to start again with it, or every old Laurel would be pending again at once.
-- **Ribbon gain** is one number. Its bonuses add together, by the rule of GDD 13: Laurels (below, capped), Festival Fame (ten levels), the Legacy Builder skill (section 8.1) and the Golden Gardener's Hat (section 9.1). Every one of them is finite. A pending count never shows below 0.
+- **Ribbon gain** is one number. Its bonuses add together, by the rule of GDD 13: Laurels (below, capped), Festival Fame (ten levels), the Legacy Builder skill (section 8.1) and the Golden Gardener's Hat (section 9.1), whose +15% is fixed: its level, `heirloom.power` and Tier Up do not change it. Every one of them is finite, and together they give ×3.3 at most. A pending count never shows below 0.
 - `LAUREL_EXP = 0.5`. `LAUREL_R0` is fitted by the simulator so that `FIRST_GEN_MIN = 3` Laurels are pending around day 30 for an active player.
 - **Unlocks** when Mount Mitten has been reached and 3 Laurels are pending. Later generations need 1.
 - **On New Generation:** `laurelsClaimed += laurelsPending`. Everything a Festival resets resets (GDD 12.2). `compostThisGeneration` and `ribbonsClaimed` reset to 0. The Ribbon Shop's power items reset: Golden Hour, Master Composter, Festival Fireworks and Blue Ribbon Polish. The Ribbon passive (GDD 12.2) then counts the Ribbons of the new generation, as the Compost passive counts the Compost of the current era.
@@ -407,7 +411,7 @@ laurelsPending = laurelsTotal - laurelsClaimed
 | Family Album | Hall of Fame frames and the portrait kit's extra parts | 1 | 5 |
 | Laurel Polish | Each Laurel gives +2 points more profit per level (50% becomes 52%, 54% and so on) | endless | `20 x 1.15^(n-1)`, rounded up |
 
-**Family Mottos** (one at a time): **Busy Hands** (tap power +100%, under the tap cap), **Patient Hearts** (offline efficiency +20 points, applied after the cap), **Keen Eyes** (Pollen from every source +50%), **Field Folk** (charges regrow 50% faster) and **Showfolk** (Golden Sprouts roll one tier higher, up to Exotic). A motto changes how a generation plays, which keeps the fourth and fifth generation fresh.
+**Family Mottos** (one at a time): **Busy Hands** (tap power +100%, under the tap cap), **Patient Hearts** (offline efficiency +20 points, `PATIENT_HEARTS_PTS = 0.20`, added after the cap, so it can lift efficiency above 100%: rule 10 of section 1.3), **Keen Eyes** (Pollen from every source +50%), **Field Folk** (charges regrow 50% faster) and **Showfolk** (Golden Sprouts roll one tier higher, up to Exotic). A motto changes how a generation plays, which keeps the fourth and fifth generation fresh.
 
 **The Hall of Fame** holds a portrait of every retired Head Gardener, built from a small kit of hats, hair and aprons, with that generation's records: Festivals held, best Ribbons, first Mythic, best fish. It is the family album of the save.
 
@@ -445,7 +449,7 @@ Laurel Polish and the Evergreen ranks are the only endless items. Both add a fix
 
 **The arithmetic of GDD 17.6, point 1, for four layers.** Version 0.4 has `e` at about 0.75. Laurels are the square root of the Ribbon term and add about 0.1, and Starseeds are the square root of that and add about 0.05. So `e` is about 0.9. That is still below 1, with little room left.
 
-**Why the two gain bonuses are capped.** Ribbon gain and Laurel gain are not profit, so rule 5 of section 1.3 did not cover them at first. They multiply the count of a currency whose own passive multiplies profit, so an open-ended one feeds itself. With +10% Ribbon gain for every Laurel and no cap, the Ribbons of one generation would grow faster than the Ribbons the next Laurel costs, and each New Generation would arrive sooner than the one before, where the target is 7 to 14 days apart. By the same arithmetic, with the caps the wait for the next Laurel grows slowly with the Laurels held, as the wait for the next Ribbon does in 0.4. The cap values are first-pass and the simulator fits them (section 15.2, items 5 and 6). The fresh-eyes audit of 0.5 added both caps and scoped `ribbonsThisBloom` (CHANGES C.6).
+**Why the two gain bonuses are capped.** Ribbon gain and Laurel gain are not profit, so rule 5 of section 1.3 did not cover them at first. They multiply the count of a currency whose own passive multiplies profit, so an open-ended one feeds itself. With +10% Ribbon gain for every Laurel and no cap, the Ribbons of one generation would grow faster than the Ribbons the next Laurel costs, and each New Generation would arrive sooner than the one before, where the target is 7 to 14 days apart. By the same arithmetic, with the caps the wait for the next Laurel grows slowly with the Laurels held, as the wait for the next Ribbon does in 0.4. The cap values are first-pass and the simulator fits them (section 15.2, items 5 and 6). The fresh-eyes audit of 0.5 added both caps and scoped `ribbonsThisBloom` (CHANGES C.6), and the Game Designer confirmed both caps, the one summed Ribbon gain and the count per Bloom on 2026-11-28 (CHANGES C.7).
 
 ## 8. Longer trees
 
@@ -547,7 +551,7 @@ Bought with Starseeds after the first Big Bloom. Eight constellations, one per p
 | Mint, the Cool Breeze | `SPURT_DURATION_CAP` rises from 45 s to 60 s, and Growth Spurts last 50% longer |
 | Basil, the Ember | `CRIT_MULT_CAP` rises from 20 to 25 |
 | Rosemary, the Storm | Tap Storms last twice as long |
-| Lavender, the Dreamer | Offline efficiency can reach 125% |
+| Lavender, the Dreamer | The offline efficiency cap rises from 100% to 125% (rule 10 of section 1.3) |
 | Sage, the Scholar | Research and bench jobs run 50% faster |
 | Chamomile, the Sleepy Sun | Morning Dew is ×3 and lasts 5 minutes |
 | Thyme, the Old Clock | The cooldown reduction cap rises from 50% to 60% |
@@ -563,7 +567,7 @@ Ten sets, 30 pieces. The new sets come with the new systems and drop in the usua
 | **Angler's Luck** | Grandpa's Lucky Lure: fishing luck +15% | Kingfisher Feather: `BITE_WINDOW` +0.2 s | Silver Tide Net: fishing charges regrow 25% faster. **Big One:** the next 3 casts are Perfect Hooks (30 min) | fishing charge store +5 | Tackle Boxes are one tier better |
 | **Treasure Hunter** | Old Map Scrap: digging luck +15% | Brass Dowsing Rod: Epic-or-better tiles sparkle | Old Prospector's Hat: dig taps -20%. **Lucky Dig:** the next tile is at least Epic (30 min) | dig taps -15% | Buried Chest chance ×2 |
 | **Deep Delver** | Gnome Lantern: strike damage +20% | Ore Compass: ore yield +15% | Starforged Hammer: Geode chance +5 points. **Rich Seam:** the next 10 rocks are one tier higher, within reach (45 min) | Bumper strike chance +5 points | +1 ore from every rock |
-| **County Fair** | Rosette Pin: Style points +10% | Judge's Spyglass: visitor luck +20% | The Golden Gardener's Hat: Ribbon gain +15%. **Showtime:** for 60 s every Golden Sprout is at least Epic (30 min) | visitor lifetime +4 s | Golden Sprouts roll one tier higher |
+| **County Fair** | Rosette Pin: Style points +10% | Judge's Spyglass: visitor luck +20% | The Golden Gardener's Hat: Ribbon gain +15% (fixed). **Showtime:** for 60 s every Golden Sprout is at least Epic (30 min) | visitor lifetime +4 s | Golden Sprouts roll one tier higher |
 
 Heirloom slots rise from 6 to 8 (Laurel Shop). No heirloom gives chest luck or Compost gain.
 
@@ -731,8 +735,8 @@ In this order, after design 0.4's own list (CHANGES B.6):
 1. Floor Improvements: refit `D` and the tickets so the gate table of 0.4 still holds.
 2. Golden Sprout tiers: check that the average visitor payout matches 0.4.
 3. Fishing and digging: measure cards and Pollen per day with them, and keep total chests per day within about +40% of 0.4.
-4. Mining and Tier Up: measure the power curve from day 8 and keep the Festival rhythm near 0.4's (GDD 17.5: one to five days apart up to day 30).
-5. New Generation: fit `LAUREL_R0` (first one around day 30) and check the return to the old Ribbon total within 3 days. Then play at least six generations and confirm that the gaps between them do not shrink (target 7 to 14 days), and fit `LAUREL_RIBBON_CAP` there. This is the check of GDD 17.6, point 1, for layer 3.
+4. Mining and Tier Up: measure the power curve from day 8 and keep the Festival rhythm near 0.4's (GDD 17.5: one to five days apart up to day 30). Include the launch game's two Ribbon gain sources in that run (Legacy Builder and the Golden Gardener's Hat, ×1.3 together), because `RIBBON_C0` was fitted with none. Check the supply of each ore against `TIERUP_ORE`, `PICK_ORE` and `GEAR_ORE`, with the deep pity of section 6.5: a picked deep ore should come at about 4 to 8 a day for an active player.
+5. New Generation: fit `LAUREL_R0` (first one around day 30) and check the return to the old Ribbon total within 3 days. Then play at least six generations and confirm that the gaps between them do not shrink (target 7 to 14 days), and fit `LAUREL_RIBBON_CAP` there. This is the check of GDD 17.6, point 1, for layer 3. Run the idle player once with Patient Hearts worn in every generation and set its Festival gaps after day 30 beside the same run without the motto (rule 10 of section 1.3). In 0.4 the idle player's gaps there are already shorter than the window of GDD 17.6 (3.4 to 3.6 days, where 5 to 9 are wanted, still for a playtest), so the motto is judged by how much shorter it makes them. About a sixth shorter is expected.
 6. Big Bloom: fit `STARSEED_L0` (around day 90) once worlds 5 and 6 are in the tables. Play to at least the third Big Bloom, confirm that the gaps do not shrink (target 3 to 6 weeks), and fit `STARSEED_LAUREL_CAP`.
 7. Report the day of each tier's first item for each play style.
 
@@ -763,6 +767,9 @@ Eleven climbing chime notes and eleven closing stings (section 4.1), the cast, b
 
 | Constant | Value | Section |
 |---|---|---|
+| `OFFLINE_EFF_CAP` (names the cap of GDD 13.4) | 1.0 | 1.3 |
+| `LAVENDER_OFFLINE_CAP` | 1.25 | 1.3, 8.4 |
+| `PATIENT_HEARTS_PTS` | 0.20, added after the cap | 1.3, 7.1 |
 | `TIER_COUNT` | 11 | 2.1 |
 | `TIER_STEP` | 1.5 | 2.2 |
 | `RARITY_FACTOR` | 1, 1.5, 2.2, 3.2, 5, 7.5, 11, 16, 24, 36, 54 | 2.2 |
@@ -789,7 +796,7 @@ Eleven climbing chime notes and eleven closing stings (section 4.1), the cast, b
 | `GEAR_LUCK_STEP` | 0.10 | 6.1 |
 | `HELPER_LUCK_STEP` | 0.05 | 6.1 |
 | `CATCH_WEIGHTS` | 50, 25, 13, 7, 3.2, 1.2, 0.4, 0.13, 0.05, 0.015, 0.005 | 6.1 |
-| `LEGEND_METER` | 60 actions | 6.1 |
+| `LEGEND_METER` | 60 actions. In the Mine it aims at a picked depth, up to the pickaxe's reach | 6.1, 6.5 |
 | `TOKENS` (per result, by tier) | 1, 2, 3, 5, 8, 12, 18, 27, 40, 60, 90 | 6.1 |
 | `BITE_WINDOW` | 0.8 s | 6.3 |
 | `PERFECT_WINDOW` | 0.25 s | 6.3 |

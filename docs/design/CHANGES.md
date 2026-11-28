@@ -6,7 +6,7 @@ For the Economy and Balance thread, the Engine thread, the Art Director and anyo
 
 Lawson asked on 2026-11-28 for higher retention: better core upgrades and items, longer skill trees, higher currencies and resets, cosmetics that boost, chests and crates from fishing, digging and mining that can also be automated, and eleven rarities from Common to Grailed, each noticeably better than the one before, with effects and reveals that scale with rarity. Design 0.5 answers with two new files. [EXPANSION.md](EXPANSION.md) designs every system in full, with first-pass numbers and named constants. [ROADMAP.md](ROADMAP.md) puts each system in a release: most of it in v1.0, then v1.1 New Generation, v1.2 The Moon and v1.3 Nebula Nursery.
 
-Only the changes in C.1 take effect in the GDD now. Everything else joins the GDD and CONTENT.md when it is built and the simulator has fitted it. **Version 0.4's numbers stay frozen** for everything they cover. This draft waits for a fresh-eyes audit.
+Only the changes in C.1 take effect in the GDD now. Everything else joins the GDD and CONTENT.md when it is built and the simulator has fitted it. **Version 0.4's numbers stay frozen** for everything they cover. This draft passed its fresh-eyes audit with one fix (C.6), and C.7 holds the Game Designer's calls on that fix and on offline efficiency.
 
 ### C.1 Rules that changed now
 
@@ -73,7 +73,49 @@ The audit of this draft (the review on PR #8) found one thing that had to change
 3. **Two more simulator checks** (EXPANSION 15.2, items 5 and 6): play at least six generations and three Big Blooms, and confirm the gaps between them do not shrink.
 4. ROADMAP 1 shows PR #6 and PR #7 as merged, and one art note was reworded.
 
-The two cap values are first-pass, like every number in EXPANSION, and they are the Game Designer's to change.
+The two cap values are first-pass, like every number in EXPANSION, and they are the Game Designer's to change. C.7 confirms them.
+
+### C.7 The Game Designer's calls on the audit fix and on offline efficiency
+
+On 2026-11-28 the Game Designer confirmed the three first-pass calls of C.6 and settled the one question the audit left open. No number of version 0.4 changes, and nothing here joins the GDD before its system ships.
+
+1. **Both caps stay, first-pass: the first 10 Laurels and the first 5 Starseeds.** Each gives at most +100%, the same size as Festival Fame's ten levels, so no single source is the whole of a gain. The simulator fits both in EXPANSION 15.2, items 5 and 6, and may move either one up or down as long as the gaps between New Generations and between Big Blooms do not shrink. If a gap shrinks, lower that cap first.
+2. **Ribbon gain stays one summed number.** Its four parts are all finite: Laurels up to +100%, Festival Fame up to +100%, Legacy Builder up to +15% and the Golden Gardener's Hat a fixed +15% (C.10), so `ribbonGain` is ×3.3 at most. Multiplying the parts would reach about ×5.3 and add nothing a player would feel. A fixed factor on Ribbons does not change the growth exponent `e` of GDD 17.6, point 1, so the sum is safe at these sizes. Any later bonus to Ribbon gain or Laurel gain adds into its one number, with its own cap.
+3. **Laurels stay counted per Bloom (`ribbonsThisBloom`).** A Big Bloom sets `laurelsClaimed` to 0, so the Ribbon count it is measured against starts again too. Otherwise every Laurel of the past would be pending at once after a Big Bloom. Starseeds still count every Laurel ever claimed, because nothing resets Starseeds.
+4. **Offline efficiency may go above 100%, in named ways only** (EXPANSION 1.3, rule 10). Version 0.4 caps it at 1.0 and already lets two bonuses act after the cap. The long game keeps that shape:
+
+   ```
+   eff    = min((OFFLINE_EFF_BASE + points added) x (1 + "offline earnings" bonuses), effCap)
+            effCap = OFFLINE_EFF_CAP = 1.0, or LAVENDER_OFFLINE_CAP = 1.25 with the Lavender bright star
+   eff    = eff + PATIENT_HEARTS_PTS (0.20) while the Patient Hearts motto is worn
+   earned = sum of floorIPS over managed floors x eff x (1 + Compound Interest) x Night Market x offlineSeconds
+   ```
+
+   - **Why yes.** Both come late: Patient Hearts from the first New Generation (about day 30) and Lavender after the first Big Bloom (about day 90). Patient Hearts is a choice: one motto of five for a whole generation. Lavender is a choice of order only, because a player can own all eight bright stars in time. They are the idle player's answer to Busy Hands and the tap stars. Every part is a fixed factor, so `e` does not move. Offline income rises ×1.45 at most over 0.4. A fixed factor on all income brings every milestone that much sooner at most, so an all-idle player's Festival gaps can be up to about 30% shorter with both, and about a sixth shorter with Patient Hearts alone (C.10).
+   - **The ceiling.** With both, the highest rate is 1.45 × 1.5 = about ×2.2 the floors' steady income, after 25 hours away. Without them it is ×1.5. A Night Market weekend multiplies either by 1.5 to 2.0 (EXPANSION 4.5).
+   - **Only real time away.** After-cap bonuses apply only to time actually away. Time Warp and the Time Capsule pay at the capped efficiency, with Lavender's cap if it is owned. The fair stall keeps its own fixed rule (GDD 15.3).
+   - **The cost, accepted.** A closed game can now pay more than an open one nobody touches: about ×1.7 the steady rate over an eight-hour night with both, where 0.4 gives about ×1.16. An open game keeps its Auto-Gardener, Auto-Replant, visitors and abilities, and any play beats both. The playtest checks it. If players close the game to earn more, lower `PATIENT_HEARTS_PTS` to 0.10 first.
+   - **When it joins the GDD.** GDD 13.4 gains the named cap and Patient Hearts with New Generation (v1.1), and Lavender's cap with Big Bloom (v1.3).
+5. **What other threads do.** Balance simulator: nothing now. With the reset layers, fit both caps in EXPANSION 15.2, items 5 and 6, and run the idle player with Patient Hearts worn in every generation (item 5). Engine: the efficiency cap is a stat (1.0, or 1.25 with Lavender), and after-cap bonuses are a named list that only real time away uses. Fresh-eyes reviewer: audit this section with EXPANSION 1.3, rule 10, before it merges.
+
+### C.8 One wording fix from the simulator's rebuild of 0.4
+
+The simulator's core raises only Windfalls with `visitor.reward` (Skipper Papaya's +100% in Papaya Cay), and its accepted run of 0.4 was measured that way. CONTENT section 1 called the stat the "value of Golden Sprout outcomes", which could also be read to cover Sunbeams and Tap Storms. The Game Designer's call: **Windfalls only**, Jackpots included. CONTENT now says so. A longer or stronger Sunbeam or Tap Storm would change the Boost averages that 0.4 froze, and Skipper Papaya's own ability, Treasure Map, already brings more of them. No number changes.
+
+### C.9 Deep ores come steadily (the audit's note 2)
+
+The audit of 0.5 (the review on PR #8, note 2) found Grailstone and Cloud Pearl very thin. The arithmetic shows a design problem, not a tuning one. Every spot shares `CATCH_WEIGHTS`, and a pickaxe reaches one tier above its own, so the ore of the next depth came only from rolls of 0.13% or less. With gear luck and 240 rocks a day, that is about 0.9 Sunstone, 0.17 Eclipse Stone, 0.05 Cloud Pearl and 0.02 Grailstone a day, so the last three pickaxes would have taken about 3 months, 9 months and 2 years. An ore the pickaxe had passed also nearly stopped, while every tier-up to that tier still needs 5 or 6 of it.
+
+The fix is one rule with no new numbers, from the long-game designer's proposal p7. In the Mine the Legend Meter now aims at a depth the player picks, up to the pickaxe's reach and the reach by default. An active player gets about four rocks a day of the ore they need, the deepest included, and can go back for an ore the pickaxe has passed (EXPANSION 6.5). The helper's actions count toward the meter in all three activities (EXPANSION 6.1), so a player who lets the Gnome Crew work the overflow gets the same pity. Depths still open with the 1st, 3rd and 5th New Generation and the first Big Bloom, each new pickaxe then takes two to four days, and Pollen sets the pace of the top tier-ups. Ore is a gate, not a multiplier, so the growth exponent of GDD 17.6 does not move. The simulator checks the supply against the prices (EXPANSION 15.2, item 4).
+
+### C.10 Three corrections from the audit of C.7
+
+The fresh-eyes audit of C.7 (the review on PR #11) passed all four calls and corrected three statements. No call changes.
+
+1. **The Golden Gardener's Hat gives a fixed +15% Ribbon gain.** As an ordinary heirloom passive it would have grown with level (×2.2 at level 9), with `heirloom.power` (×1.45 with Curator and Patron) and with Tier Up (×11.4 from Legendary to Grailed). That is about +108% at Exotic and +545% at Grailed, so `ribbonGain` would have reached about ×8.6, not ×3.3. The row now says "fixed", as the Moonstone Birdbath's does, and EXPANSION 2.2 says a fixed passive does not grow with tier-ups either. With that, C.7's ×3.3 is right.
+2. **What ×1.45 offline income does.** C.7 said it raises Compost by ×1.16 at most. That is the effect on one run of the same length. A fixed factor on all income brings every milestone that much sooner, so an all-idle player's Festival gaps can be up to about 30% shorter with both bonuses, and about a sixth shorter with Patient Hearts alone. It is still a fixed factor, so `e` does not move.
+3. **The idle check in EXPANSION 15.2, item 5.** It asked that the idle player's Festival rhythm after day 30 stay in the window of GDD 17.6. In 0.4 that rhythm is already shorter than the window (C.5, note 2), so the check now sets the run with the motto beside the run without it. Item 4 also asks the simulator to include the launch game's Ribbon gain (Legacy Builder and the Hat, ×1.3 together), because `RIBBON_C0` was fitted with none.
+4. **A note that did not block.** C.7 called Lavender "one bright star of eight", which read as if only one could be owned. A player can own all eight in time (EXPANSION 8.4), so Lavender is a choice of order, and C.7 now says so.
 
 ## Version 0.4: the balance simulator's numbers
 
