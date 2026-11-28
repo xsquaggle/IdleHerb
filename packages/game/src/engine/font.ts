@@ -27,11 +27,18 @@ interface Glyph {
 
 export class PixelFont {
   readonly glyphs = new Map<string, Glyph>();
+  /** Capital height in pixels, measured from the drawn 'H'. */
+  cap = 0;
   constructor(
     readonly id: string,
     readonly lineHeight: number,
     readonly ascent: number,
   ) {}
+
+  /** Offset from a PixelText's origin to the top of its capitals. */
+  get capTop(): number {
+    return this.ascent - this.cap;
+  }
 
   glyph(ch: string): Glyph {
     return this.glyphs.get(ch) ?? this.glyphs.get('?')!;
@@ -131,10 +138,24 @@ export async function loadPixelFont(spec: FontSpec): Promise<PixelFont> {
     }
   });
   g.putImageData(img, 0, 0);
+  // Capital height from the thresholded 'H'.
+  const hi = [...CHARS].indexOf('H');
+  let capTopRow = -1;
+  let capBottomRow = -1;
+  for (let cy = 0; cy < cellH; cy++) {
+    for (let cx = 0; cx < cellWs[hi]!; cx++) {
+      if (d[((places[hi]!.y + cy) * atlasW + places[hi]!.x + cx) * 4 + 3]! >= 255) {
+        if (capTopRow < 0) capTopRow = cy;
+        capBottomRow = cy;
+        break;
+      }
+    }
+  }
 
   const base = Texture.from(raw);
   base.source.scaleMode = 'nearest';
   const font = new PixelFont(spec.id, lineH, ascent);
+  font.cap = capTopRow >= 0 ? capBottomRow - capTopRow + 1 : ascent;
   [...CHARS].forEach((ch, i) => {
     const p = places[i]!;
     font.glyphs.set(ch, {
@@ -196,6 +217,13 @@ export class PixelText extends Container {
 
   get color(): number {
     return this._color;
+  }
+
+  /** Changes the wrap width and redraws. */
+  setMaxWidth(w: number | undefined): void {
+    if (this.opts.maxWidth === w) return;
+    this.opts.maxWidth = w;
+    this.rebuild();
   }
 
   set color(c: number) {

@@ -63,10 +63,11 @@ manager_roles:
   card.manager.granny_evergreen: Head of Thymeford
 
 plants:
-  plant.mint.garden: Garden Mint
   plant.hemp.fibre: Fibre Hemp
   plant.hemp.seed: Seed Hemp
   plant.hemp.longstalk: Longstalk Hemp
+  plant.hemp.show: Giant Show-Hemp
+  plant.mint.garden: Garden Mint
   plant.mint.pepper: Peppermint
   plant.mint.chocolate: Chocolate Mint
   plant.basil.sweet: Sweet Basil
@@ -74,14 +75,32 @@ plants:
   plant.basil.purple: Purple Basil
   plant.rosemary.kitchen: Kitchen Rosemary
   plant.rosemary.trailing: Trailing Rosemary
+  plant.rosemary.topiary: Rosemary Topiary
   plant.lavender.field: Field Lavender
   plant.lavender.butterfly: Butterfly Lavender
+  plant.lavender.royal: Royal Lavender
   plant.sage.garden: Garden Sage
   plant.sage.pineapple: Pineapple Sage
+  plant.sage.silver: Silver Sage
   plant.chamomile.meadow: Meadow Chamomile
   plant.chamomile.double: Double Chamomile
+  plant.chamomile.golden: Golden Chamomile
   plant.thyme.garden: Garden Thyme
   plant.thyme.lemon: Lemon Thyme
+  plant.thyme.creeping: Creeping Thyme
+  plant.thyme.elfin: Elfin Thyme
+  plant.mint.honey: Honeymint
+  plant.basil.pepperleaf: Pepperleaf Basil
+  plant.hemp.silkspun: Silkspun Hemp
+  plant.sage.sunset: Sunset Sage
+  plant.hemp.sunspun: Sunspun Hemp
+  plant.thyme.clockwork: Clockwork Thyme
+  plant.basil.ember: Ember Basil
+  plant.rosemary.thunder: Thunder Rosemary
+  plant.mint.frosted: Frosted Mint
+  plant.sage.crystal: Crystal Sage
+  plant.lavender.moonlit: Moonlit Lavender
+  plant.chamomile.starlight: Starlight Chamomile
 
 chests:
   chest.welcome: Welcome Chest
@@ -211,3 +230,20 @@ ui:
   owned: Owned
   not_met: Open its floor to meet
   quest: Quest
+  need_coins: Not enough Coins yet
+  no_chests: No chests yet. Finish quests, level up and catch visitors to earn them.
+  managers_title: Managers
+  plants_title: Plants
+  plant: Plant
+  planted_on: planted on
+  replant_not_yet: Grow the tower further first. The heap fills as you earn.
+  shop_after_replant: The Compost Shop opens after your first Replant.
+  reduce_motion_on: Reduce motion is on
+  reduce_motion_off: Reduce motion is off
+  reset: Start a new tower
+  reset_confirm: Tap again to erase this tower
+  reset_done: Starting over...
+  build: Build
+  controls_help: "Tap a floor to harvest and earn. Space taps too (hold it). F starts a Growth Spurt, B changes how many levels to buy, arrows scroll."
+  player_level: Level
+  quest_done: Quest done!

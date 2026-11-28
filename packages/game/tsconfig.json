@@ -5,7 +5,8 @@
     "types": ["vite/client"],
     "baseUrl": "../..",
     "paths": {
-      "@sprout/core": ["packages/core/src/index.ts"]
+      "@sprout/core": ["packages/core/src/index.ts"],
+      "@content/*": ["packages/content/generated/*"]
     }
   },
   "include": ["src/**/*.ts"]
