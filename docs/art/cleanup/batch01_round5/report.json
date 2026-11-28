@@ -1,0 +1,292 @@
+[
+ {
+  "cls": "prop",
+  "name": "fibre_shelf",
+  "size": [
+   44,
+   47
+  ],
+  "files": 1,
+  "source_colours": 26,
+  "colours": 13,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 44,
+  "mean_move": 0.043,
+  "max_move": 0.098,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "gold-1",
+   "gold-2",
+   "gold-5",
+   "ink-1",
+   "ink-2",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "rope_wheel",
+  "size": [
+   45,
+   44
+  ],
+  "files": 1,
+  "source_colours": 31,
+  "colours": 16,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 62,
+  "mean_move": 0.049,
+  "max_move": 0.101,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "gold-2",
+   "gold-5",
+   "ink-1",
+   "stone-1",
+   "stone-2",
+   "stone-3",
+   "stone-4",
+   "stone-5",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "actor",
+  "name": "crank_worker",
+  "size": [
+   46,
+   62
+  ],
+  "files": 1,
+  "source_colours": 31,
+  "colours": 16,
+  "budget": 24,
+  "within_budget": true,
+  "outline_pixels_fixed": 26,
+  "mean_move": 0.037,
+  "max_move": 0.099,
+  "palette": [
+   "clay-4",
+   "clay-5",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "gold-5",
+   "ink-1",
+   "ink-2",
+   "skin-2",
+   "skin-3",
+   "skin-4",
+   "skin-6",
+   "wood-2",
+   "wood-3",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "rope_run_and_post",
+  "size": [
+   50,
+   31
+  ],
+  "files": 1,
+  "source_colours": 29,
+  "colours": 15,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 33,
+  "mean_move": 0.047,
+  "max_move": 0.098,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "gold-2",
+   "gold-5",
+   "ink-1",
+   "stone-1",
+   "stone-3",
+   "stone-4",
+   "stone-5",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "twine_bench",
+  "size": [
+   49,
+   32
+  ],
+  "files": 1,
+  "source_colours": 30,
+  "colours": 16,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 31,
+  "mean_move": 0.045,
+  "max_move": 0.098,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "gold-2",
+   "gold-5",
+   "ink-1",
+   "stone-1",
+   "stone-2",
+   "stone-3",
+   "stone-4",
+   "stone-5",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "actor",
+  "name": "twine_worker",
+  "size": [
+   32,
+   57
+  ],
+  "files": 1,
+  "source_colours": 37,
+  "colours": 22,
+  "budget": 24,
+  "within_budget": true,
+  "outline_pixels_fixed": 48,
+  "mean_move": 0.038,
+  "max_move": 0.088,
+  "palette": [
+   "ash-4",
+   "blush-1",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "gold-5",
+   "ink-1",
+   "rose-1",
+   "skin-2",
+   "skin-3",
+   "skin-4",
+   "skin-5",
+   "skin-6",
+   "stone-1",
+   "stone-2",
+   "stone-3",
+   "stone-4",
+   "stone-5",
+   "wood-2",
+   "wood-3",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "prop",
+  "name": "shop_counter_and_stool",
+  "size": [
+   68,
+   62
+  ],
+  "files": 1,
+  "source_colours": 33,
+  "colours": 16,
+  "budget": 16,
+  "within_budget": true,
+  "outline_pixels_fixed": 37,
+  "mean_move": 0.045,
+  "max_move": 0.101,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "gold-2",
+   "gold-5",
+   "ink-1",
+   "stone-1",
+   "stone-2",
+   "stone-3",
+   "stone-4",
+   "stone-5",
+   "wood-2",
+   "wood-3",
+   "wood-4",
+   "wood-5",
+   "wood-6"
+  ]
+ },
+ {
+  "cls": "wall",
+  "name": "w1_floor06_market",
+  "size": [
+   336,
+   104
+  ],
+  "files": 1,
+  "source_colours": 15,
+  "colours": 5,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.062,
+  "max_move": 0.122,
+  "palette": [
+   "cream-1",
+   "cream-2",
+   "lavender-5",
+   "stone-2",
+   "stone-3"
+  ]
+ },
+ {
+  "cls": "wall",
+  "name": "w1_floor07_tea_house",
+  "size": [
+   336,
+   104
+  ],
+  "files": 1,
+  "source_colours": 14,
+  "colours": 9,
+  "budget": 32,
+  "within_budget": true,
+  "outline_pixels_fixed": 0,
+  "mean_move": 0.049,
+  "max_move": 0.073,
+  "palette": [
+   "ash-1",
+   "cream-1",
+   "cream-2",
+   "cream-3",
+   "gold-1",
+   "sage-3",
+   "stone-1",
+   "wood-3",
+   "wood-4"
+  ]
+ }
+]

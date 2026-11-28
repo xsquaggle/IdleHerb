@@ -1,0 +1,80 @@
+GIMP Palette
+Name: Sprout Tower Master v1
+Columns: 6
+#
+ 26  16  36	ink-1
+ 44  29  58	ink-2
+ 59  29  41	wood-1
+ 94  44  42	wood-2
+140  68  38	wood-3
+188 100  43	wood-4
+228 143  60	wood-5
+247 188 102	wood-6
+ 92  34  48	clay-1
+147  58  48	clay-2
+196  83  46	clay-3
+233 123  61	clay-4
+249 170 110	clay-5
+122  74  18	gold-1
+185 120  26	gold-2
+235 169  43	gold-3
+255 212  71	gold-4
+255 241 156	gold-5
+180 138 102	cream-1
+221 185 140	cream-2
+246 221 176	cream-3
+255 245 218	cream-4
+ 75  42  36	skin-1
+115  65  44	skin-2
+162  96  58	skin-3
+206 135  82	skin-4
+237 174 126	skin-5
+251 208 168	skin-6
+232 112 108	blush-1
+ 18  51  43	leaf-1
+ 29  90  56	leaf-2
+ 53 133  58	leaf-3
+107 181  54	leaf-4
+178 216  56	leaf-5
+233 238  98	leaf-6
+ 23  64  63	sage-1
+ 42 106  91	sage-2
+ 79 148 116	sage-3
+134 189 146	sage-4
+194 226 182	sage-5
+ 39  25  74	lavender-1
+ 67  46 121	lavender-2
+103  70 174	lavender-3
+143 104 218	lavender-4
+187 153 240	lavender-5
+227 210 252	lavender-6
+ 43  36  63	stone-1
+ 71  61  98	stone-2
+107  95 135	stone-3
+151 139 172	stone-4
+200 191 213	stone-5
+ 25  31 104	sky-1
+ 41  68 180	sky-2
+ 72 122 232	sky-3
+125 179 244	sky-4
+190 224 250	sky-5
+ 13  79  92	teal-1
+ 23 134 136	teal-2
+ 59 191 177	teal-3
+152 232 214	teal-4
+130  38  96	rose-1
+204  70 144	rose-2
+240 131 188	rose-3
+255 194 220	rose-4
+116  28  46	red-1
+190  45  53	red-2
+236  84  64	red-3
+ 53  62  84	steel-1
+105 118 142	steel-2
+166 179 196	steel-3
+225 232 239	steel-4
+ 75  69  81	ash-1
+123 116 129	ash-2
+174 168 178	ash-3
+223 219 225	ash-4
+255 251 239	white-1

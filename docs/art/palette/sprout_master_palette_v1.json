@@ -1,0 +1,189 @@
+{
+ "name": "sprout_master_v1",
+ "ramps": [
+  {
+   "id": "ink",
+   "use": "Outlines, deepest shadow",
+   "colors": [
+    "#1A1024",
+    "#2C1D3A"
+   ]
+  },
+  {
+   "id": "wood",
+   "use": "Beams, shelves, crates, frames",
+   "colors": [
+    "#3B1D29",
+    "#5E2C2A",
+    "#8C4426",
+    "#BC642B",
+    "#E48F3C",
+    "#F7BC66"
+   ]
+  },
+  {
+   "id": "clay",
+   "use": "Terracotta, brick, roof tile warm",
+   "colors": [
+    "#5C2230",
+    "#933A30",
+    "#C4532E",
+    "#E97B3D",
+    "#F9AA6E"
+   ]
+  },
+  {
+   "id": "gold",
+   "use": "Coins, trim, lamp light, UI accents",
+   "colors": [
+    "#7A4A12",
+    "#B9781A",
+    "#EBA92B",
+    "#FFD447",
+    "#FFF19C"
+   ]
+  },
+  {
+   "id": "cream",
+   "use": "Paper, plaster, parchment UI, cloth",
+   "colors": [
+    "#B48A66",
+    "#DDB98C",
+    "#F6DDB0",
+    "#FFF5DA"
+   ]
+  },
+  {
+   "id": "skin",
+   "use": "All skin tones, deep to light",
+   "colors": [
+    "#4B2A24",
+    "#73412C",
+    "#A2603A",
+    "#CE8752",
+    "#EDAE7E",
+    "#FBD0A8"
+   ]
+  },
+  {
+   "id": "blush",
+   "use": "Cheeks, noses, warm lips",
+   "colors": [
+    "#E8706C"
+   ]
+  },
+  {
+   "id": "leaf",
+   "use": "Herb foliage, the hero green",
+   "colors": [
+    "#12332B",
+    "#1D5A38",
+    "#35853A",
+    "#6BB536",
+    "#B2D838",
+    "#E9EE62"
+   ]
+  },
+  {
+   "id": "sage",
+   "use": "Hemp, rosemary, sage, cool foliage",
+   "colors": [
+    "#17403F",
+    "#2A6A5B",
+    "#4F9474",
+    "#86BD92",
+    "#C2E2B6"
+   ]
+  },
+  {
+   "id": "lavender",
+   "use": "Brand purple, roofs, flowers, UI",
+   "colors": [
+    "#27194A",
+    "#432E79",
+    "#6746AE",
+    "#8F68DA",
+    "#BB99F0",
+    "#E3D2FC"
+   ]
+  },
+  {
+   "id": "stone",
+   "use": "Cobbles, walls, cool shadow masses",
+   "colors": [
+    "#2B243F",
+    "#473D62",
+    "#6B5F87",
+    "#978BAC",
+    "#C8BFD5"
+   ]
+  },
+  {
+   "id": "sky",
+   "use": "Dusk sky, windows, night",
+   "colors": [
+    "#191F68",
+    "#2944B4",
+    "#487AE8",
+    "#7DB3F4",
+    "#BEE0FA"
+   ]
+  },
+  {
+   "id": "teal",
+   "use": "Glass, water, Uncommon-adjacent UI",
+   "colors": [
+    "#0D4F5C",
+    "#178688",
+    "#3BBFB1",
+    "#98E8D6"
+   ]
+  },
+  {
+   "id": "rose",
+   "use": "Sunset clouds, blossoms, Exotic hints",
+   "colors": [
+    "#822660",
+    "#CC4690",
+    "#F083BC",
+    "#FFC2DC"
+   ]
+  },
+  {
+   "id": "red",
+   "use": "Awning stripes, alerts, hibiscus",
+   "colors": [
+    "#741C2E",
+    "#BE2D35",
+    "#EC5440"
+   ]
+  },
+  {
+   "id": "steel",
+   "use": "Tin, tools, hinges, cool metal",
+   "colors": [
+    "#353E54",
+    "#69768E",
+    "#A6B3C4",
+    "#E1E8EF"
+   ]
+  },
+  {
+   "id": "ash",
+   "use": "Grey hair, pewter, plaster shadow",
+   "colors": [
+    "#4B4551",
+    "#7B7481",
+    "#AEA8B2",
+    "#DFDBE1"
+   ]
+  },
+  {
+   "id": "white",
+   "use": "Sparkles, speculars, text on dark",
+   "colors": [
+    "#FFFBEF"
+   ]
+  }
+ ]
+}

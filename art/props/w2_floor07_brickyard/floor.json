@@ -1,0 +1,87 @@
+{
+ "world": 2,
+ "floor": 7,
+ "size": [
+  360,
+  120
+ ],
+ "baseline_y": 112,
+ "tap_target": "mixing_trough_mould_block",
+ "manager_spot": "manager_stool_plan_bell",
+ "source": "b03_06_w2_floor07_brickyard.png",
+ "parts": {
+  "hempcrete_block_pallet": {
+   "file": "hempcrete_block_pallet_42x48.png",
+   "size": [
+    42,
+    48
+   ],
+   "origin_on_floor": [
+    20,
+    64
+   ],
+   "cls": "prop"
+  },
+  "mixing_worker": {
+   "file": "../../actors/w2_floor07_brickyard/mixing_worker_43x64.png",
+   "size": [
+    43,
+    64
+   ],
+   "origin_on_floor": [
+    72,
+    48
+   ],
+   "cls": "actor"
+  },
+  "mixing_trough_mould_block": {
+   "file": "mixing_trough_mould_block_66x38.png",
+   "size": [
+    66,
+    38
+   ],
+   "origin_on_floor": [
+    126,
+    74
+   ],
+   "cls": "prop"
+  },
+  "bricklaying_worker": {
+   "file": "../../actors/w2_floor07_brickyard/bricklaying_worker_40x62.png",
+   "size": [
+    40,
+    62
+   ],
+   "origin_on_floor": [
+    194,
+    50
+   ],
+   "cls": "actor"
+  },
+  "block_wall_tools": {
+   "file": "block_wall_tools_52x38.png",
+   "size": [
+    52,
+    38
+   ],
+   "origin_on_floor": [
+    236,
+    74
+   ],
+   "cls": "prop"
+  },
+  "manager_stool_plan_bell": {
+   "file": "manager_stool_plan_bell_46x29.png",
+   "size": [
+    46,
+    29
+   ],
+   "origin_on_floor": [
+    290,
+    83
+   ],
+   "cls": "prop"
+  }
+ },
+ "note": "Loomington. Drawn on a finer pixel than the game grid, so every item was brought to five sixths in the clean-up. The two workers are single standing frames until their Batch 4 sheets. Workers are drawn after the props."
+}

@@ -1,0 +1,83 @@
+{
+ "size": [
+  180,
+  240
+ ],
+ "order": [
+  "common",
+  "uncommon",
+  "rare",
+  "epic",
+  "legendary",
+  "exotic"
+ ],
+ "frames": {
+  "common": {
+   "file": "card_frame_common_180x240.png",
+   "window": [
+    25,
+    33,
+    130,
+    95
+   ]
+  },
+  "uncommon": {
+   "file": "card_frame_uncommon_180x240.png",
+   "window": [
+    27,
+    33,
+    125,
+    94
+   ]
+  },
+  "rare": {
+   "file": "card_frame_rare_180x240.png",
+   "window": [
+    27,
+    38,
+    125,
+    90
+   ]
+  },
+  "epic": {
+   "file": "card_frame_epic_180x240.png",
+   "window": [
+    27,
+    36,
+    127,
+    89
+   ]
+  },
+  "legendary": {
+   "file": "card_frame_legendary_180x240.png",
+   "window": [
+    31,
+    35,
+    118,
+    90
+   ]
+  },
+  "exotic": {
+   "file": "card_frame_exotic_180x240.png",
+   "window": [
+    28,
+    39,
+    122,
+    89
+   ]
+  }
+ },
+ "card_art_at": [
+  36,
+  33
+ ],
+ "card_art_size": [
+  108,
+  100
+ ],
+ "free_slots": [
+  "mythic",
+  "godly"
+ ],
+ "note": "Large card frames. Draw order: the rarity backdrop filling the window, then the card picture at card_art_at, then the frame. The name ribbon and the two panel rows are blank; the game writes on them. Small card frames are drawn by hand from these."
+}

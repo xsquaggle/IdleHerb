@@ -1,0 +1,48 @@
+{
+ "who": "Tea House, second: the waiter with ginger curls",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "source": "b02_13_workers_floor07_tea_house.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png"
+  },
+  {
+   "name": "walk_right_contact_right",
+   "file": "04_walk_right_contact_right_80x80.png"
+  },
+  {
+   "name": "walk_right_pass",
+   "file": "05_walk_right_pass_80x80.png"
+  },
+  {
+   "name": "walk_right_contact_left",
+   "file": "06_walk_right_contact_left_80x80.png"
+  },
+  {
+   "name": "balance_four_cups",
+   "file": "07_balance_four_cups_80x80.png"
+  },
+  {
+   "name": "bow_set_down_cup",
+   "file": "08_bow_set_down_cup_80x80.png"
+  },
+  {
+   "name": "walk_carry_four_cups",
+   "file": "09_walk_carry_four_cups_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}

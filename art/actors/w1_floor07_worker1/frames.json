@@ -1,0 +1,48 @@
+{
+ "who": "Tea House, lead: the tea pourer in the plum robe",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "source": "b02_13_workers_floor07_tea_house.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "clap",
+   "file": "03_clap_80x80.png"
+  },
+  {
+   "name": "walk_right_contact_right",
+   "file": "04_walk_right_contact_right_80x80.png"
+  },
+  {
+   "name": "walk_right_pass",
+   "file": "05_walk_right_pass_80x80.png"
+  },
+  {
+   "name": "walk_right_contact_left",
+   "file": "06_walk_right_contact_left_80x80.png"
+  },
+  {
+   "name": "kneel_pour_tea",
+   "file": "07_kneel_pour_tea_80x80.png"
+  },
+  {
+   "name": "kneel_offer_cup",
+   "file": "08_kneel_offer_cup_80x80.png"
+  },
+  {
+   "name": "walk_carry_teapot",
+   "file": "09_walk_carry_teapot_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}

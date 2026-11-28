@@ -1,0 +1,48 @@
+{
+ "who": "Backyard Hemp Patch, second: the gardener with the red braid",
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "source": "b02_17_workers_floor02_floor03.png",
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png"
+  },
+  {
+   "name": "walk_right_contact",
+   "file": "04_walk_right_contact_80x80.png"
+  },
+  {
+   "name": "walk_pass",
+   "file": "05_walk_pass_80x80.png"
+  },
+  {
+   "name": "walk_left_contact",
+   "file": "06_walk_left_contact_80x80.png"
+  },
+  {
+   "name": "hoe_push",
+   "file": "07_hoe_push_80x80.png"
+  },
+  {
+   "name": "hoe_pull",
+   "file": "08_hoe_pull_80x80.png"
+  },
+  {
+   "name": "carry_tin_bucket",
+   "file": "09_carry_tin_bucket_80x80.png"
+  }
+ ],
+ "note": "Flip-book frames. The face is replaced later by one hand-drawn head per person."
+}

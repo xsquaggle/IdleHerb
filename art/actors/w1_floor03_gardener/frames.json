@@ -1,0 +1,110 @@
+{
+ "frame": [
+  80,
+  80
+ ],
+ "baseline_y": 76,
+ "frames": [
+  {
+   "name": "idle",
+   "file": "01_idle_80x80.png",
+   "head_offset": [
+    0,
+    0
+   ],
+   "body": "layers/01_idle.png"
+  },
+  {
+   "name": "blink",
+   "file": "02_blink_80x80.png",
+   "head_offset": [
+    0,
+    0
+   ],
+   "body": "layers/02_blink.png",
+   "head_patch": "blink"
+  },
+  {
+   "name": "cheer",
+   "file": "03_cheer_80x80.png",
+   "head_offset": [
+    -2,
+    -1
+   ],
+   "body": "layers/03_cheer.png",
+   "head_patch": "blink"
+  },
+  {
+   "name": "walk_right_contact",
+   "file": "04_walk_right_contact_80x80.png",
+   "head_offset": [
+    0,
+    1
+   ],
+   "body": "layers/04_walk_right_contact.png"
+  },
+  {
+   "name": "walk_pass",
+   "file": "05_walk_pass_80x80.png",
+   "head_offset": [
+    1,
+    0
+   ],
+   "body": "layers/05_walk_pass.png"
+  },
+  {
+   "name": "walk_left_contact",
+   "file": "06_walk_left_contact_80x80.png",
+   "head_offset": [
+    0,
+    1
+   ],
+   "body": "layers/06_walk_left_contact.png"
+  },
+  {
+   "name": "rake_extend",
+   "file": "07_rake_extend_80x80.png",
+   "head_offset": [
+    -8,
+    -2
+   ],
+   "body": "layers/07_rake_extend.png",
+   "prop": "layers/rake_extended.png",
+   "ground": "layers/rake_extended_ground_stalks.png"
+  },
+  {
+   "name": "rake_pull",
+   "file": "08_rake_pull_80x80.png",
+   "head_offset": [
+    -11,
+    -3
+   ],
+   "body": "layers/08_rake_pull.png",
+   "prop": "layers/rake_pulled.png",
+   "ground": "layers/rake_pulled_ground_stalks.png"
+  },
+  {
+   "name": "carry_sheaf",
+   "file": "09_carry_sheaf_80x80.png",
+   "head_offset": [
+    -2,
+    -3
+   ],
+   "body": "layers/09_carry_sheaf.png",
+   "prop": "layers/shouldered_sheaf.png"
+  }
+ ],
+ "head": {
+  "file": "layers/floor03_backyard_shared_head.png",
+  "patches": {
+   "blink": {
+    "file": "layers/floor03_backyard_blink_patch.png",
+    "replace_at": [
+     39,
+     18
+    ]
+   }
+  }
+ },
+ "recipe": "Ground layer and prop at the origin, then the shared head at head_offset, then the body at the origin."
+}
