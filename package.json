@@ -1,0 +1,21 @@
+{
+  "name": "sprout-tower",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "check": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "content:build": "tsx packages/content/src/cli.ts",
+    "content:floors": "tsx packages/content/tables/floors/generate.ts",
+    "sim": "tsx apps/sim/src/cli.ts"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "fast-check": "4.11.0",
+    "tsx": "4.23.15",
+    "typescript": "5.7.2",
+    "vitest": "3.0.5"
+  }
+}

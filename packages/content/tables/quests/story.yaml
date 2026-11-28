@@ -1,0 +1,46 @@
+# Story quests. Source of truth: CONTENT.md section 9. One step is active at a time; a step whose
+# goal is already met completes at once. rewards: gems, pollen, chest, special (welcome, seed_packet, heirloom).
+- { n: 1,  id: quest.story.first_harvest,     goal: { kind: counter, counter: harvests, gte: 1 }, xp: 30 }
+- { n: 2,  id: quest.story.grow_up,           goal: { kind: floorLevel, world: 1, floor: 1, level: 10 }, xp: 30 }
+- { n: 3,  id: quest.story.proper_milestone,  goal: { kind: anyFloorLevel, level: 25 }, xp: 30 }
+- { n: 4,  id: quest.story.fresh_air,         goal: { kind: floorOpened, world: 1, floor: 2 }, xp: 30 }
+- { n: 5,  id: quest.story.flagship_crop,     goal: { kind: floorOpened, world: 1, floor: 3 }, xp: 30 }
+- { n: 6,  id: quest.story.helping_hands,     goal: { kind: holdCoins, world: 1, floor: 3, gte: "1000" }, rewards: [{ special: chest.welcome }], xp: 50 }
+- { n: 7,  id: quest.story.youre_hired,       goal: { kind: counter, counter: hires, gte: 1 }, rewards: [{ gems: 5 }], xp: 50 }
+- { n: 8,  id: quest.story.moving_up,         goal: { kind: floorOpened, world: 1, floor: 4 }, xp: 75 }
+- { n: 9,  id: quest.story.full_swing,        goal: { kind: counter, counter: fullComboSec, gte: 0.001 }, rewards: [{ gems: 5 }], xp: 75 }
+- { n: 10, id: quest.story.under_glass,       goal: { kind: floorOpened, world: 1, floor: 5 }, rewards: [{ special: chest.seed_packet }], xp: 100 }
+- { n: 11, id: quest.story.right_plant,       goal: { kind: counter, counter: plantsAtHome, gte: 1 }, rewards: [{ gems: 10 }], xp: 100 }
+- { n: 12, id: quest.story.what_a_whopper,    goal: { kind: counter, counter: bumpers, gte: 5 }, rewards: [{ chest: chest.wooden }], xp: 150 }
+- { n: 13, id: quest.story.to_market,         goal: { kind: floorOpened, world: 1, floor: 6 }, xp: 150 }
+- { n: 14, id: quest.story.catch,             goal: { kind: counter, counter: sproutsCaught, gte: 1 }, rewards: [{ gems: 10 }], xp: 150 }
+- { n: 15, id: quest.story.tea_time,          goal: { kind: floorOpened, world: 1, floor: 7 }, rewards: [{ gems: 10 }], xp: 200 }
+- { n: 16, id: quest.story.level_best,        goal: { kind: counter, counter: cardLevelUps, gte: 1 }, rewards: [{ chest: chest.copper }], xp: 200 }
+- { n: 17, id: quest.story.know_the_ropes,    goal: { kind: floorOpened, world: 1, floor: 8 }, xp: 250 }
+- { n: 18, id: quest.story.spurt,             goal: { kind: counter, counter: spurts, gte: 1 }, rewards: [{ gems: 15 }], xp: 250 }
+- { n: 19, id: quest.story.squeaky_clean,     goal: { kind: floorOpened, world: 1, floor: 9 }, rewards: [{ chest: chest.wooden }], xp: 300 }
+- { n: 20, id: quest.story.head_office,       goal: { kind: floorOpened, world: 1, floor: 10 }, rewards: [{ chest: chest.silver }], xp: 400 }
+- { n: 21, id: quest.story.even_growth,       goal: { kind: allFloorsLevel, world: 1, level: 25 }, rewards: [{ gems: 20 }], xp: 400 }
+- { n: 22, id: quest.story.turn_the_heap,     goal: { kind: counter, counter: replants, gte: 1 }, rewards: [{ chest: chest.silver }], xp: 500 }
+- { n: 23, id: quest.story.richer_soil,       goal: { kind: shopLevel, id: shop.compost.rich_soil, gte: 1 }, rewards: [{ gems: 10 }], xp: 300 }
+- { n: 24, id: quest.story.bright_idea,       goal: { kind: counter, counter: researchStarted, gte: 1 }, rewards: [{ gems: 10 }], xp: 300 }
+- { n: 25, id: quest.story.back_again,        goal: { kind: counter, counter: w1TopFloorOpens, gte: 2 }, rewards: [{ chest: chest.copper }], xp: 300 }
+- { n: 26, id: quest.story.third_time,        goal: { kind: counter, counter: replants, gte: 3 }, rewards: [{ heirloom: artifact.sprouting_trowel }], xp: 500 }
+- { n: 27, id: quest.story.century,           goal: { kind: allFloorsLevel, world: 1, level: 100 }, rewards: [{ chest: chest.copper }, { gems: 20 }], xp: 500 }
+- { n: 28, id: quest.story.all_aboard,        goal: { kind: holdCoins, world: 1, gte: "1e18" }, rewards: [{ chest: chest.copper }], xp: 750 }
+- { n: 29, id: quest.story.big_city_lights,   goal: { kind: worldReached, world: 2 }, rewards: [{ chest: chest.golden }], xp: 1000 }
+- { n: 30, id: quest.story.service_with_a_smile, goal: { kind: counter, counter: customersServed, gte: 20 }, rewards: [{ gems: 20 }], xp: 500 }
+- { n: 31, id: quest.story.mill_town,         goal: { kind: floorOpened, world: 2, floor: 3 }, rewards: [{ chest: chest.silver }], xp: 600 }
+- { n: 32, id: quest.story.busy_bees,         goal: { kind: counter, counter: beesCaught, gte: 1 }, rewards: [{ pollen: 50 }], xp: 600 }
+- { n: 33, id: quest.story.matchmaker,        goal: { kind: counter, counter: hybridsMade, gte: 1 }, rewards: [{ gems: 30 }], xp: 1000 }
+- { n: 34, id: quest.story.city_slicker,      goal: { kind: floorOpened, world: 2, floor: 8 }, rewards: [{ chest: chest.golden }], xp: 1000 }
+- { n: 35, id: quest.story.rising_star,       goal: { kind: masteryStars, gte: 3 }, rewards: [{ gems: 30 }], xp: 1000 }
+- { n: 36, id: quest.story.island_time,       goal: { kind: worldReached, world: 3 }, rewards: [{ chest: chest.golden }], xp: 1500 }
+- { n: 37, id: quest.story.rain_or_shine,     goal: { kind: counter, counter: weatherGroupsPlanted, gte: 3 }, rewards: [{ gems: 40 }], xp: 1000 }
+- { n: 38, id: quest.story.festival_season,   goal: { kind: ribbonsPending, gte: 8 }, rewards: [{ chest: chest.silver }], xp: 1500 }
+- { n: 39, id: quest.story.blue_ribbon,       goal: { kind: counter, counter: festivals, gte: 1 }, rewards: [{ gems: 50 }], xp: 2500 }
+- { n: 40, id: quest.story.snow_day,          goal: { kind: worldReached, world: 4 }, rewards: [{ chest: chest.golden }], xp: 2500 }
+- { n: 41, id: quest.story.something_strange, goal: { kind: counter, counter: exoticsGrown, gte: 1 }, rewards: [{ gems: 100 }], xp: 2500 }
+- { n: 42, id: quest.story.local_legend,      goal: { kind: masteryStars, gte: 5 }, rewards: [{ gems: 50 }], xp: 3000 }
+- { n: 43, id: quest.story.small_step,        goal: { kind: worldReached, world: 5 }, rewards: [{ chest: chest.crystal }], xp: 4000, launch: false }
+- { n: 44, id: quest.story.among_the_stars,   goal: { kind: worldReached, world: 6 }, rewards: [{ chest: chest.starlight }], xp: 5000, launch: false }

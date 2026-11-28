@@ -1,0 +1,16 @@
+# Plant traits. Source of truth: GDD 8.5. `base` is traitBase; the full formula is
+# base x RARITY_FACTOR x (1 + TRAIT_PER_LEVEL x (level - 1)) x affinity x dual factor x plantPowerMult.
+# op: inc = percentage in the floor bucket, add = flat amount, reduce = its own (1 - x) source.
+- { id: trait.sturdy,      stat: floor.profit,       op: inc,    base: 0.20,   scope: floor }
+- { id: trait.quick,       stat: floor.speed,        op: inc,    base: 0.06,   scope: floor }
+- { id: trait.thrifty,     stat: floor.levelCost,    op: inc,    base: -0.03,  scope: floor }
+- { id: trait.neighbourly, stat: floor.profit,       op: inc,    base: 0.08,   scope: adjacent }
+- { id: trait.bountiful,   stat: floor.doubleChance, op: add,    base: 0.05,   scope: floor }
+- { id: trait.frosty,      stat: tap.critChance,     op: add,    base: 0.0025, scope: world }
+- { id: trait.zesty,       stat: tap.critMult,       op: add,    base: 0.3,    scope: world }
+- { id: trait.fragrant,    stat: tap.comboCap,       op: add,    base: 2,      scope: world }
+- { id: trait.radiant,     stat: spurt.duration,     op: add,    base: 0.5,    scope: world }
+- { id: trait.lucky,       stat: visitor.interval,   op: reduce, base: 0.015,  scope: world }
+- { id: trait.evergreen,   stat: offline.earnings,   op: inc,    base: 0.04,   scope: world }
+- { id: trait.sweet,       stat: tap.power,          op: inc,    base: 0.03,   scope: world }
+- { id: trait.studious,    stat: insight.gain,       op: inc,    base: 0.02,   scope: global }

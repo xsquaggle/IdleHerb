@@ -1,0 +1,17 @@
+# Daily quest pool. Source of truth: CONTENT.md 10.1. Three are drawn each day without repeats.
+# counter: the per-day counter the goal is measured on. needs: the feature that must be unlocked.
+- { id: quest.daily.taps,       counter: taps,            goal: 1500, needs: feature.tap_bonus }
+- { id: quest.daily.bumpers,    counter: bumpers,         goal: 40,   needs: feature.bumpers }
+- { id: quest.daily.combo,      counter: fullComboSec,    goal: 60,   needs: feature.tap_bonus }
+- { id: quest.daily.visitors,   counter: visitorsCaught,  goal: 5,    needs: feature.visitors }
+- { id: quest.daily.spurts,     counter: spurts,          goal: 3,    needs: feature.spurt }
+- { id: quest.daily.levels,     counter: levelsBought,    goal: 500 }
+- { id: quest.daily.milestones, counter: milestones,      goal: 15,   needs: feature.milestones }
+- { id: quest.daily.hires,      counter: hires,           goal: 8,    needs: feature.managers }
+- { id: quest.daily.chests,     counter: chestsOpened,    goal: 3,    needs: feature.managers }
+- { id: quest.daily.cards,      counter: cardsCollected,  goal: 15,   needs: feature.managers }
+- { id: quest.daily.abilities,  counter: abilitiesUsed,   goal: 5,    needs: ability }
+- { id: quest.daily.replant,    counter: replants,        goal: 1,    needs: feature.replant }
+- { id: quest.daily.offline,    counter: offlineCollects30, goal: 1,  needs: feature.offline }
+- { id: quest.daily.customers,  counter: customersServed, goal: 40,   needs: feature.world2 }
+- { id: quest.daily.bees,       counter: beesCaught,      goal: 3,    needs: feature.bees }

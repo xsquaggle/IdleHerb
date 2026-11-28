@@ -1,0 +1,10 @@
+# Compost Shop (Replant). Source of truth: CONTENT.md section 7 and GDD 12.1.
+# Cost of level n (from 1) = base x growth^(n-1), rounded up. Resets at a Harvest Festival.
+- { id: shop.compost.rich_soil,        maxLevel: 10, cost: { base: 20,  growth: 1.8 }, effect: { stat: floor.profit, op: mul, value: 1.25 } }
+- { id: shop.compost.head_start,       maxLevel: 6,  cost: { base: 10,  growth: 5 },   special: shop.head_start, params: { start: ["1e3", "1e5", "1e7", "1e9", "1e11", "1e13"] } }
+- { id: shop.compost.loyal_staff,      maxLevel: 5,  cost: { base: 15,  growth: 6 },   special: shop.loyal_staff, params: { floorsPerLevel: 2 } }
+- { id: shop.compost.market_day,       maxLevel: 4,  cost: { base: 25,  growth: 3 },   effect: { stat: hire.fee, op: reduce, value: 0.20 } }
+- { id: shop.compost.green_deal,       maxLevel: 10, cost: { base: 30,  growth: 2.5 }, effect: { stat: floor.levelCost, op: mul, value: 0.96 } }
+- { id: shop.compost.overnight_growth, maxLevel: 6,  cost: { base: 40,  growth: 3 },   effect: { stat: offline.efficiency, op: add, value: 0.03 } }
+- { id: shop.compost.sprout_whistle,   maxLevel: 5,  cost: { base: 100, growth: 4 },   effect: { stat: visitor.interval, op: reduce, value: 0.04 } }
+- { id: shop.compost.compost_tea,      maxLevel: 10, cost: { base: 50,  growth: 3 },   effect: { stat: compost.gain, op: inc, value: 0.10 } }

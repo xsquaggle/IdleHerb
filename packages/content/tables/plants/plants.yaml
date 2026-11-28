@@ -1,0 +1,41 @@
+# Plant cards. Source of truth: CONTENT.md section 3. source: chest | hybrid | exotic.
+- { id: plant.hemp.fibre,         family: hemp,      rarity: common,    traits: [trait.sturdy],      source: chest, poolWorld: 1, launch: true }
+- { id: plant.hemp.seed,          family: hemp,      rarity: uncommon,  traits: [trait.bountiful],   source: chest, poolWorld: 1, launch: true }
+- { id: plant.hemp.longstalk,     family: hemp,      rarity: rare,      traits: [trait.neighbourly], source: chest, poolWorld: 1, launch: true }
+- { id: plant.hemp.show,          family: hemp,      rarity: epic,      traits: [trait.sturdy],      source: chest, poolWorld: 2, launch: true }
+- { id: plant.mint.garden,        family: mint,      rarity: common,    traits: [trait.quick],       source: chest, poolWorld: 1, launch: true }
+- { id: plant.mint.pepper,        family: mint,      rarity: uncommon,  traits: [trait.sweet],       source: chest, poolWorld: 1, launch: true }
+- { id: plant.mint.chocolate,     family: mint,      rarity: rare,      traits: [trait.fragrant],    source: chest, poolWorld: 1, launch: true }
+- { id: plant.basil.sweet,        family: basil,     rarity: common,    traits: [trait.sweet],       source: chest, poolWorld: 1, launch: true }
+- { id: plant.basil.lemon,        family: basil,     rarity: uncommon,  traits: [trait.zesty],       source: chest, poolWorld: 1, launch: true }
+- { id: plant.basil.purple,       family: basil,     rarity: rare,      traits: [trait.sturdy],      source: chest, poolWorld: 1, launch: true }
+- { id: plant.rosemary.kitchen,   family: rosemary,  rarity: common,    traits: [trait.thrifty],     source: chest, poolWorld: 1, launch: true }
+- { id: plant.rosemary.trailing,  family: rosemary,  rarity: uncommon,  traits: [trait.neighbourly], source: chest, poolWorld: 1, launch: true }
+- { id: plant.rosemary.topiary,   family: rosemary,  rarity: epic,      traits: [trait.thrifty],     source: chest, poolWorld: 2, launch: true }
+- { id: plant.lavender.field,     family: lavender,  rarity: common,    traits: [trait.evergreen],   source: chest, poolWorld: 1, launch: true }
+- { id: plant.lavender.butterfly, family: lavender,  rarity: uncommon,  traits: [trait.lucky],       source: chest, poolWorld: 1, launch: true }
+- { id: plant.lavender.royal,     family: lavender,  rarity: rare,      traits: [trait.evergreen],   source: chest, poolWorld: 2, launch: true }
+- { id: plant.sage.garden,        family: sage,      rarity: common,    traits: [trait.studious],    source: chest, poolWorld: 1, launch: true }
+- { id: plant.sage.pineapple,     family: sage,      rarity: uncommon,  traits: [trait.quick],       source: chest, poolWorld: 1, launch: true }
+- { id: plant.sage.silver,        family: sage,      rarity: rare,      traits: [trait.frosty],      source: chest, poolWorld: 2, launch: true }
+- { id: plant.chamomile.meadow,   family: chamomile, rarity: common,    traits: [trait.bountiful],   source: chest, poolWorld: 1, launch: true }
+- { id: plant.chamomile.double,   family: chamomile, rarity: uncommon,  traits: [trait.evergreen],   source: chest, poolWorld: 1, launch: true }
+- { id: plant.chamomile.golden,   family: chamomile, rarity: epic,      traits: [trait.radiant],     source: chest, poolWorld: 3, launch: true }
+- { id: plant.thyme.garden,       family: thyme,     rarity: common,    traits: [trait.fragrant],    source: chest, poolWorld: 1, launch: true }
+- { id: plant.thyme.lemon,        family: thyme,     rarity: uncommon,  traits: [trait.thrifty],     source: chest, poolWorld: 1, launch: true }
+- { id: plant.thyme.creeping,     family: thyme,     rarity: rare,      traits: [trait.quick],       source: chest, poolWorld: 2, launch: true }
+- { id: plant.thyme.elfin,        family: thyme,     rarity: epic,      traits: [trait.lucky],       source: chest, poolWorld: 3, launch: true }
+# Hybrids (Legendary, two traits). Both parents at HYBRID_PARENT_LEVEL or higher. Needs the Pollination Bench.
+- { id: plant.mint.honey,         family: mint,      rarity: legendary, traits: [trait.quick, trait.bountiful],     source: hybrid, parents: [plant.mint.chocolate, plant.chamomile.double], launch: true }
+- { id: plant.basil.pepperleaf,   family: basil,     rarity: legendary, traits: [trait.zesty, trait.fragrant],      source: hybrid, parents: [plant.basil.purple, plant.thyme.creeping], launch: true }
+- { id: plant.hemp.silkspun,      family: hemp,      rarity: legendary, traits: [trait.sturdy, trait.evergreen],    source: hybrid, parents: [plant.hemp.show, plant.lavender.royal], launch: true }
+- { id: plant.sage.sunset,        family: sage,      rarity: legendary, traits: [trait.frosty, trait.thrifty],      source: hybrid, parents: [plant.sage.silver, plant.rosemary.topiary], launch: true }
+# Exotics (two traits). Parent at EXOTIC_PARENT_LEVEL or higher and the climate's world reached. Needs the Mutation Chamber.
+- { id: plant.hemp.sunspun,       family: hemp,      rarity: exotic,    traits: [trait.sturdy, trait.neighbourly],  source: exotic, parents: [plant.hemp.show],         climateWorld: 1, launch: true }
+- { id: plant.thyme.clockwork,    family: thyme,     rarity: exotic,    traits: [trait.quick, trait.radiant],       source: exotic, parents: [plant.thyme.elfin],       climateWorld: 2, launch: true }
+- { id: plant.basil.ember,        family: basil,     rarity: exotic,    traits: [trait.sweet, trait.zesty],         source: exotic, parents: [plant.basil.purple],      climateWorld: 3, launch: true }
+- { id: plant.rosemary.thunder,   family: rosemary,  rarity: exotic,    traits: [trait.thrifty, trait.zesty],       source: exotic, parents: [plant.rosemary.topiary],  climateWorld: 3, launch: true }
+- { id: plant.mint.frosted,       family: mint,      rarity: exotic,    traits: [trait.frosty, trait.quick],        source: exotic, parents: [plant.mint.chocolate],    climateWorld: 4, launch: true }
+- { id: plant.sage.crystal,       family: sage,      rarity: exotic,    traits: [trait.studious, trait.lucky],      source: exotic, parents: [plant.sage.silver],       climateWorld: 4, launch: true }
+- { id: plant.lavender.moonlit,   family: lavender,  rarity: exotic,    traits: [trait.evergreen, trait.lucky],     source: exotic, parents: [plant.lavender.royal],    climateWorld: 5, launch: false }
+- { id: plant.chamomile.starlight, family: chamomile, rarity: exotic,   traits: [trait.radiant, trait.bountiful],   source: exotic, parents: [plant.chamomile.golden],  climateWorld: 6, launch: false }
