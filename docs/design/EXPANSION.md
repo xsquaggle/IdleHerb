@@ -96,7 +96,7 @@ One step for everything: `TIER_STEP = 1.5`. A tier's power is `tierPower(t) = TI
 
 - **Plants** use `RARITY_FACTOR[tier]` in the trait formula (GDD 8.5). The first five values are unchanged. Exotic moves from 8 to 11 because Mythic now sits below it, and a step from 7.5 to 8 would not be noticeable. The simulator checks the effect (Exotic plants arrive around day 11).
 - **Managers:** `managerProfit = MGR_BASE[native] x MGR_STEP[native] ^ (level - 1) x TIERUP_STEP ^ tierUps x managerPowerMult`, with `TIERUP_STEP = 1.5`. The perk grows too: `perkValue x (1 + TIERUP_PERK_STEP x tierUps)`, with `TIERUP_PERK_STEP = 0.25`.
-- **Heirlooms:** a numeric passive is multiplied by `TIERUP_STEP ^ tierUps`. An ability that lasts a set time lasts `TIERUP_ABILITY_STEP = 20%` longer per tier-up, and one that pays at once pays 20% more per tier-up, still from the steady rate. Set bonuses do not scale.
+- **Heirlooms:** a numeric passive is multiplied by `TIERUP_STEP ^ tierUps`. A passive whose row says "fixed" does not grow with tier-ups, as it does not grow with levels (CONTENT 0.1). An ability that lasts a set time lasts `TIERUP_ABILITY_STEP = 20%` longer per tier-up, and one that pays at once pays 20% more per tier-up, still from the steady rate. Set bonuses do not scale.
 - **Tools, helpers, chests, catches, ores, cosmetics, Golden Sprouts and events** have their own tier tables in their sections. Each one climbs by about 1.5 per tier too.
 
 ### 2.3 Crests: what the top four tiers add
@@ -386,7 +386,7 @@ laurelsPending = laurelsTotal - laurelsClaimed
 ```
 
 - `compostThisGeneration` is what 0.4 calls `compostAllTime`, counted from the start of the current generation. `ribbonsThisBloom` is every Ribbon claimed since the last Big Bloom, in every generation since then. Before the first Big Bloom that is every Ribbon ever claimed. It is scoped the way `compostThisGeneration` is: a Big Bloom sets `laurelsClaimed` to 0, so the total that Laurels are counted from has to start again with it, or every old Laurel would be pending again at once.
-- **Ribbon gain** is one number. Its bonuses add together, by the rule of GDD 13: Laurels (below, capped), Festival Fame (ten levels), the Legacy Builder skill (section 8.1) and the Golden Gardener's Hat (section 9.1). Every one of them is finite. A pending count never shows below 0.
+- **Ribbon gain** is one number. Its bonuses add together, by the rule of GDD 13: Laurels (below, capped), Festival Fame (ten levels), the Legacy Builder skill (section 8.1) and the Golden Gardener's Hat (section 9.1), whose +15% is fixed: its level, `heirloom.power` and Tier Up do not change it. Every one of them is finite, and together they give ×3.3 at most. A pending count never shows below 0.
 - `LAUREL_EXP = 0.5`. `LAUREL_R0` is fitted by the simulator so that `FIRST_GEN_MIN = 3` Laurels are pending around day 30 for an active player.
 - **Unlocks** when Mount Mitten has been reached and 3 Laurels are pending. Later generations need 1.
 - **On New Generation:** `laurelsClaimed += laurelsPending`. Everything a Festival resets resets (GDD 12.2). `compostThisGeneration` and `ribbonsClaimed` reset to 0. The Ribbon Shop's power items reset: Golden Hour, Master Composter, Festival Fireworks and Blue Ribbon Polish. The Ribbon passive (GDD 12.2) then counts the Ribbons of the new generation, as the Compost passive counts the Compost of the current era.
@@ -565,7 +565,7 @@ Ten sets, 30 pieces. The new sets come with the new systems and drop in the usua
 | **Angler's Luck** | Grandpa's Lucky Lure: fishing luck +15% | Kingfisher Feather: `BITE_WINDOW` +0.2 s | Silver Tide Net: fishing charges regrow 25% faster. **Big One:** the next 3 casts are Perfect Hooks (30 min) | fishing charge store +5 | Tackle Boxes are one tier better |
 | **Treasure Hunter** | Old Map Scrap: digging luck +15% | Brass Dowsing Rod: Epic-or-better tiles sparkle | Old Prospector's Hat: dig taps -20%. **Lucky Dig:** the next tile is at least Epic (30 min) | dig taps -15% | Buried Chest chance ×2 |
 | **Deep Delver** | Gnome Lantern: strike damage +20% | Ore Compass: ore yield +15% | Starforged Hammer: Geode chance +5 points. **Rich Seam:** the next 10 rocks are one tier higher, within reach (45 min) | Bumper strike chance +5 points | +1 ore from every rock |
-| **County Fair** | Rosette Pin: Style points +10% | Judge's Spyglass: visitor luck +20% | The Golden Gardener's Hat: Ribbon gain +15%. **Showtime:** for 60 s every Golden Sprout is at least Epic (30 min) | visitor lifetime +4 s | Golden Sprouts roll one tier higher |
+| **County Fair** | Rosette Pin: Style points +10% | Judge's Spyglass: visitor luck +20% | The Golden Gardener's Hat: Ribbon gain +15% (fixed). **Showtime:** for 60 s every Golden Sprout is at least Epic (30 min) | visitor lifetime +4 s | Golden Sprouts roll one tier higher |
 
 Heirloom slots rise from 6 to 8 (Laurel Shop). No heirloom gives chest luck or Compost gain.
 
@@ -733,8 +733,8 @@ In this order, after design 0.4's own list (CHANGES B.6):
 1. Floor Improvements: refit `D` and the tickets so the gate table of 0.4 still holds.
 2. Golden Sprout tiers: check that the average visitor payout matches 0.4.
 3. Fishing and digging: measure cards and Pollen per day with them, and keep total chests per day within about +40% of 0.4.
-4. Mining and Tier Up: measure the power curve from day 8 and keep the Festival rhythm near 0.4's (GDD 17.5: one to five days apart up to day 30).
-5. New Generation: fit `LAUREL_R0` (first one around day 30) and check the return to the old Ribbon total within 3 days. Then play at least six generations and confirm that the gaps between them do not shrink (target 7 to 14 days), and fit `LAUREL_RIBBON_CAP` there. This is the check of GDD 17.6, point 1, for layer 3. Run the idle player once with Patient Hearts worn in every generation and confirm its Festival rhythm after day 30 stays in the window of GDD 17.6 (rule 10 of section 1.3).
+4. Mining and Tier Up: measure the power curve from day 8 and keep the Festival rhythm near 0.4's (GDD 17.5: one to five days apart up to day 30). Include the launch game's two Ribbon gain sources in that run (Legacy Builder and the Golden Gardener's Hat, ×1.3 together), because `RIBBON_C0` was fitted with none.
+5. New Generation: fit `LAUREL_R0` (first one around day 30) and check the return to the old Ribbon total within 3 days. Then play at least six generations and confirm that the gaps between them do not shrink (target 7 to 14 days), and fit `LAUREL_RIBBON_CAP` there. This is the check of GDD 17.6, point 1, for layer 3. Run the idle player once with Patient Hearts worn in every generation and set its Festival gaps after day 30 beside the same run without the motto (rule 10 of section 1.3). In 0.4 the idle player's gaps there are already shorter than the window of GDD 17.6 (3.4 to 3.6 days, where 5 to 9 are wanted, still for a playtest), so the motto is judged by how much shorter it makes them. About a sixth shorter is expected.
 6. Big Bloom: fit `STARSEED_L0` (around day 90) once worlds 5 and 6 are in the tables. Play to at least the third Big Bloom, confirm that the gaps do not shrink (target 3 to 6 weeks), and fit `STARSEED_LAUREL_CAP`.
 7. Report the day of each tier's first item for each play style.
 
