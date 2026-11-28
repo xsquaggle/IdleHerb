@@ -44,6 +44,8 @@
     save: [compost, compostShop, records, focus, combo, visitors]
     world: [era, lock]
 
+# Ribbon gain (EXPANSION 7.1) becomes this row's stat when its first sources are built in Phase 2
+# (the Legacy Builder skill and the Golden Gardener's Hat); design 0.4 has none, so it is null.
 - id: festival
   order: 2
   enabled: true
