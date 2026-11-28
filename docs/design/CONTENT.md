@@ -1,6 +1,6 @@
 # Sprout Tower: Content Tables
 
-Version 0.3, Phase 0: one fixed manager per floor (what changed is in [CHANGES.md](CHANGES.md)). Owner: Game Designer thread. This file holds every content row. Rules and formulas are in [GDD.md](GDD.md). The reasons behind the big calls are in [AUDIT.md](AUDIT.md).
+Version 0.4, Phase 0: the balance simulator's numbers, frozen until a playtest (what changed is in [CHANGES.md](CHANGES.md)). Version 0.3 gave every floor one fixed manager. Owner: Game Designer thread. This file holds every content row. Rules and formulas are in [GDD.md](GDD.md). The reasons behind the big calls are in [AUDIT.md](AUDIT.md).
 
 ## 0. How to read this file
 
@@ -90,12 +90,12 @@ World rules, twists and parameters are in GDD 14. Every floor value below comes 
 
 | `id` | `name` | `climate` | `currency` | Floors | `D` | `T` | `COMPOST_K` | Ticket to next | Deed | Art | Launch |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| `world.w1` | Thymeford | temperate | Coins | 10 | 1 | 1.00 | 5 | 5e19 Coins | none | B3, B26 | yes |
-| `world.w2` | Loomington | urban | Notes | 8 | 1e5 | 0.90 | 15 | 2e19 Notes | none | B17 | yes |
-| `world.w3` | Papaya Cay | tropical | Shells | 8 | 2e7 | 0.85 | 40 | 1e24 Shells | none | B18 | yes |
-| `world.w4` | Mount Mitten | frost | Snowmarks | 8 | 5e10 | 0.80 | 100 | 2e29 Snowmarks | 8 Ribbons | new | yes |
-| `world.w5` | The Moon | lunar | Moonpennies | 8 | 1e16 | 0.75 | 250 | 1e34 Moonpennies | 60 Ribbons | B27 (file is named "world4") | later |
-| `world.w6` | Nebula Nursery | stellar | Stardust | 8 | 4e20 | 0.70 | 600 | none | 600 Ribbons | new | later |
+| `world.w1` | Thymeford | temperate | Coins | 10 | 1 | 1.00 | 5 | 3e23 Coins | none | B3, B26 | yes |
+| `world.w2` | Loomington | urban | Notes | 8 | 1e5 | 0.90 | 15 | 4.5e23 Notes | none | B17 | yes |
+| `world.w3` | Papaya Cay | tropical | Shells | 8 | 2e7 | 0.85 | 40 | 1e25 Shells | none | B18 | yes |
+| `world.w4` | Mount Mitten | frost | Snowmarks | 8 | 5e10 | 0.80 | 100 | 3e30 Snowmarks | 8 Ribbons | new | yes |
+| `world.w5` | The Moon | lunar | Moonpennies | 8 | 1e16 | 0.75 | 250 | 3e35 Moonpennies | 60 Ribbons | B27 (file is named "world4") | later |
+| `world.w6` | Nebula Nursery | stellar | Stardust | 8 | 4e20 | 0.70 | 600 | none | 250 Ribbons | new | later |
 
 ### 1.1 Thymeford (`world.w1`), currency: Coins, `D = 1`, `T = 1.0`
 
@@ -192,7 +192,7 @@ A manager's card is owned at level 1 from the first time its floor is opened. Ch
 | M01 | `card.manager.nana_sprig` | Nana Sprig | `floor.w1.windowsill` | common | `floor.levelCost` -5% (floor) | Grandmother with a trowel who never overpays | B5, 2nd | yes |
 | M02 | `card.manager.basil_brumble` | Basil Brumble | `floor.w1.balcony` | common | `floor.profit` +20% (floor) | Jolly shopkeeper in an apron | B5, 3rd | yes |
 | M03 | `card.manager.rowan_rake` | Rowan Rake | `floor.w1.hemp_patch` | common | `floor.speed` +10% (floor) | Hemp field hand, up before the sun | new, hemp cast | yes |
-| M04 | `card.manager.posy_seedwell` | Posy Seedwell | `floor.w1.garden_shed` | uncommon | `plant.power` +15% (floor) | Seed keeper with a sack on each shoulder | new, hemp cast | yes |
+| M04 | `card.manager.posy_seedwell` | Posy Seedwell | `floor.w1.garden_shed` | uncommon | `plant.power` +15% (floor) | Seed keeper with a sack on each shoulder | new | yes |
 | M05 | `card.manager.fern_petrie` | Fern Petrie | `floor.w1.greenhouse` | uncommon | `insight.gain` +4% (global) | Curious botanist in goggles | B5, 5th | yes |
 | M06 | `card.manager.juniper_jones` | Juniper Jones | `floor.w1.market` | uncommon | `tap.power` +8% (world) | Cheerful market runner with a basket | B21, 2nd | yes |
 | M07 | `card.manager.old_moss` | Old Moss | `floor.w1.tea_house` | rare | `offline.earnings` +12% (world) | Serene tea master | B21, 1st | yes |
@@ -298,7 +298,7 @@ The Welcome Chest arrives at the moment the player can pay the first hire fee (1
 - **New for worlds 2 to 4 (18):** M13, M14, M16, M17, M18, M20 to M26, M27 to M31, M34.
 - **Later (16):** M35 to M50.
 - **New characters in version 0.3 (7 at launch):** Tansy Treadle, Kit Foldaway, Marina Bolt, Ned Knotwell, Wren Woolsey, Bertie Bundle, Purl Garter. Fourteen more belong to worlds 5 and 6.
-- **Hemp cast** (brisk, proud craftspeople): every manager of a hemp floor. At launch: M03 Rowan Rake, M04 Posy Seedwell, M08 Captain Kelp, M13 Tansy Treadle, M14 Kit Foldaway, M16 Hazel Thimble, M17 Bjorn Barrow, M18 Madame Loom, M21 Marina Bolt, M22 Ned Knotwell, M30 Purl Garter. Chip runs the Sled Works and is a robot, which reads as neither.
+- **Hemp cast** (brisk, proud craftspeople): every manager of a hemp floor. At launch: M03 Rowan Rake, M08 Captain Kelp, M13 Tansy Treadle, M14 Kit Foldaway, M16 Hazel Thimble, M17 Bjorn Barrow, M18 Madame Loom, M21 Marina Bolt, M22 Ned Knotwell, M30 Purl Garter. Chip runs the Sled Works and is a robot, which reads as neither.
 - A manager now belongs to one room, so a sprite can be drawn for that room and no longer needs a floor-neutral pose. Every floor still needs one manager spot. Whether the pictured twelve need new poses is the Art Director's call.
 - The hemp-floor rule is now a casting rule: the easygoing beach gardener (M19) and the night-shift keeper (M33) are on herb floors and stay there. The Art Director still keeps mortars, pipes, steam and smoke puffs off every manager sprite. Role hints, bios and ability text stay clear of them too.
 - World 1 has three grandmothers: the lead worker on floor 1 (Lawson's art), Nana Sprig, who manages that same floor, and Granny Evergreen. A hint for the Writer: the floor 1 worker and Nana Sprig can be sisters, so the likeness reads as a joke.
@@ -441,10 +441,10 @@ Rules are in GDD 9.2. Three branches of 37 points. A branch has six minor skills
 
 | `id` | `name` | Tier | Ranks | Effect per rank |
 |---|---|---|---|---|
-| `skill.gt.firm_grip` | Firm Grip | 1 | 5 | `tap.power` +20% |
-| `skill.gt.keep_the_rhythm` | Keep the Rhythm | 1 | 5 | `tap.comboCap` +4 |
-| `skill.gt.bumper_crop` | Bumper Crop | 2 | 5 | `tap.critChance` +1 point |
-| `skill.gt.big_bumpers` | Big Bumpers | 2 | 5 | `tap.critMult` +1 |
+| `skill.gt.firm_grip` | Firm Grip | 1 | 5 | `tap.power` +10% |
+| `skill.gt.keep_the_rhythm` | Keep the Rhythm | 1 | 5 | `tap.comboCap` +2 |
+| `skill.gt.bumper_crop` | Bumper Crop | 2 | 5 | `tap.critChance` +0.5 points |
+| `skill.gt.big_bumpers` | Big Bumpers | 2 | 5 | `tap.critMult` +0.5 |
 | `skill.gt.long_spurt` | Long Spurt | 2, major | 3 | `spurt.duration` +2 s |
 | `skill.gt.second_wind` | Second Wind | 3 | 5 | `spurt.tapsNeeded` -6% |
 | `skill.gt.sprout_spotter` | Sprout Spotter | 3 | 5 | `visitor.interval` -5% |
@@ -484,7 +484,7 @@ Rules are in GDD 9.2. Three branches of 37 points. A branch has six minor skills
 
 ## 6. Research
 
-Rules are in GDD 10. Forty projects in four lanes. A project needs the project named in `requires` to be finished first. Cost is in Insight. Totals: about 626,000 Insight and about 442 hours.
+Rules are in GDD 10. Forty-eight projects in four lanes. A project needs the project named in `requires` to be finished first. Cost is in Insight. Totals: about 809,000 Insight and about 1,354 hours. The eight rows marked 0.4 are long projects (GDD 10, rule 7): cheap in Insight, four or five days each.
 
 ### 6.1 Tools
 
@@ -513,10 +513,17 @@ Rules are in GDD 10. Forty projects in four lanes. A project needs the project n
 | `research.soil.crop_rotation_1` | Crop Rotation I | Soil Science I | 300 | 30 min | Research speed ×1.2 |
 | `research.soil.crop_rotation_2` | Crop Rotation II | Crop Rotation I | 4,000 | 6 h | Research speed ×1.2 |
 | `research.soil.crop_rotation_3` | Crop Rotation III | Crop Rotation II | 60,000 | 36 h | Research speed ×1.2 |
+| `research.soil.crop_rotation_4` | Crop Rotation IV (0.4) | Crop Rotation III | 12,000 | 96 h | Research speed ×1.4 |
 | `research.soil.frugal_farming_1` | Frugal Farming I | Soil Science I | 600 | 1 h | Research level cost ×0.9 |
 | `research.soil.frugal_farming_2` | Frugal Farming II | Frugal Farming I | 12,000 | 12 h | Research level cost ×0.9 |
+| `research.soil.living_soil_1` | Living Soil I (0.4) | Soil Science III | 18,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_2` | Living Soil II (0.4) | Living Soil I | 21,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_3` | Living Soil III (0.4) | Living Soil II | 24,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_4` | Living Soil IV (0.4) | Living Soil III | 27,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_5` | Living Soil V (0.4) | Living Soil IV | 30,000 | 120 h | Research profit ×1.3 |
+| `research.soil.living_soil_6` | Living Soil VI (0.4) | Living Soil V | 36,000 | 120 h | Research profit ×1.3 |
 
-All five Soil Science projects together are ×7.59 profit. All three Crop Rotations are ×1.73 speed.
+All five Soil Science projects together are ×7.59 profit and all six Living Soil projects ×4.83, so research profit is ×36.6 in all. All four Crop Rotations are ×2.42 speed. Living Soil I needs only Soil Science III, so the long chain can start in week 3 while Soil Science IV and V are still being saved for.
 
 ### 6.3 Botany
 
@@ -542,6 +549,7 @@ All five Soil Science projects together are ×7.59 profit. All three Crop Rotati
 | `research.people.training_day_1` | Training Day I | | 1,500 | 3 h | `manager.power` +10% |
 | `research.people.training_day_2` | Training Day II | Training Day I | 15,000 | 16 h | `manager.power` +10% |
 | `research.people.training_day_3` | Training Day III | Training Day II | 90,000 | 40 h | `manager.power` +10% |
+| `research.people.training_day_4` | Training Day IV (0.4) | Training Day III | 15,000 | 96 h | `manager.power` +25% |
 | `research.people.lucky_clover_1` | Lucky Clover Patch I | | 2,000 | 4 h | `chest.luck` +10% |
 | `research.people.lucky_clover_2` | Lucky Clover Patch II | Lucky Clover Patch I | 25,000 | 24 h | `chest.luck` +10% |
 | `research.people.sprout_lure` | Sprout Lure | | 700 | 90 min | `visitor.interval` -10% |
@@ -565,7 +573,7 @@ Rules are in GDD 12.1. Paid in Compost. Every item has a level cap. The whole sh
 | `shop.compost.sprout_whistle` | Sprout Whistle | `visitor.interval` -4% | 5 | `100 x 4^(n-1)` | 34,100 |
 | `shop.compost.compost_tea` | Compost Tea | `compost.gain` +10% | 10 | `50 x 3^(n-1)` | 1,476,200 |
 
-Rich Soil is the only item that multiplies profit, and its ten levels are ×9.31 in total. The first Replant (60 Compost) buys Rich Soil twice. The whole shop costs about 1.8 million Compost, which is less than one era produces, so every era ends with a full shop. After the first Harvest Festival a Buy All button buys every level the player can afford, cheapest first.
+Rich Soil is the only item that multiplies profit, and its ten levels are ×9.31 in total. The first Replant (440 Compost) buys Rich Soil four times. The whole shop costs about 1.8 million Compost, which is less than one era produces, so every era ends with a full shop. After the first Harvest Festival a Buy All button buys every level the player can afford, cheapest first.
 
 ## 8. Ribbon Shop
 
@@ -574,7 +582,7 @@ Rules are in GDD 12.2. Paid in Ribbons. Nothing here ever resets.
 | `id` | `name` | Effect | Levels | Cost |
 |---|---|---|---|---|
 | `shop.ribbon.golden_hour` | Golden Hour | Profit ×2 per level, in every world | 5 | 3, 10, 40, 150, 600 |
-| `shop.ribbon.auto_gardener` | Auto-Gardener | Auto-buy. Every floor gets a switch. While it is on and the game is open, the floor buys its next level whenever that costs at most 10% of the currency in hand | 1 | 4 |
+| `shop.ribbon.auto_gardener` | Auto-Gardener | Auto-buy. Every floor gets a switch, and switches start on. While the game is open, a floor whose switch is on buys its next level whenever that costs at most 10% (`AUTO_BUY_SHARE`) of the currency in hand. A floor that is not open yet opens itself on the same rule. Floor 1's manager in every unlocked world works with no fee while floor 1's switch is on: it is hired free the moment the world is reached, the first time or again after a Festival, and stays hired through every Replant and Festival. So no world goes dead after a reset | 1 | 4 |
 | `shop.ribbon.deed_mitten` | Deed: Mount Mitten | World 4 can be reached | 1 | 8 |
 | `shop.ribbon.festival_fireworks` | Festival Fireworks | `spurt.duration` +2 s per level | 3 | 10, 50, 250 |
 | `shop.ribbon.second_desk` | Second Research Desk | Two research projects run at once | 1 | 15 |
@@ -585,10 +593,10 @@ Rules are in GDD 12.2. Paid in Ribbons. Nothing here ever resets.
 | `shop.ribbon.deed_moon` | Deed: The Moon | World 5 can be reached | 1 | 60 |
 | `shop.ribbon.auto_replant` | Auto-Replant | A rule for each world: Replant by itself when pending Compost reaches a multiple of this era's Compost that the player sets (default 1). Works while the game is open | 1 | 100 |
 | `shop.ribbon.heirloom_shelf_4` | Heirloom Shelf IV | Heirloom slot 6 | 1 | 250 |
-| `shop.ribbon.deed_nebula` | Deed: Nebula Nursery | World 6 can be reached | 1 | 600 |
+| `shop.ribbon.deed_nebula` | Deed: Nebula Nursery | World 6 can be reached | 1 | 250 |
 | `shop.ribbon.blue_polish` | Blue Ribbon Polish | Each Ribbon gives +0.2 points more profit per level (10% becomes 10.2%, 10.4% and so on) | endless | `50 x 1.15^(n-1)`, rounded up |
 
-Everything except Blue Ribbon Polish costs 3,950 Ribbons. The first Festival's 8 Ribbons buy either the deed to Mount Mitten, or Golden Hour and the Auto-Gardener.
+Everything except Blue Ribbon Polish costs 3,600 Ribbons. The first Festival's 8 Ribbons buy either the deed to Mount Mitten, or Golden Hour and the Auto-Gardener.
 
 ## 9. Story quests
 
@@ -615,9 +623,9 @@ Rules are in GDD 11.1. One step is active at a time. A step whose goal is alread
 | 17 | `quest.story.know_the_ropes` | Know the Ropes | Open floor 8, the Ropewalk | | Growth Spurt | 250 |
 | 18 | `quest.story.spurt` | Spurt! | Trigger a Growth Spurt | 15 Gems | | 250 |
 | 19 | `quest.story.squeaky_clean` | Squeaky Clean | Open floor 9 | Wooden Crate | Achievements, Codex | 300 |
-| 20 | `quest.story.head_office` | Head Office | Open floor 10 | Silver Chest | The Replant button, with a bar that fills toward 60 Compost pending | 400 |
+| 20 | `quest.story.head_office` | Head Office | Open floor 10 | Silver Chest | The Replant button, with a bar that fills toward 440 Compost pending | 400 |
 | 21 | `quest.story.even_growth` | Even Growth | Every World 1 floor at level 25 | 20 Gems | | 400 |
-| 22 | `quest.story.turn_the_heap` | Turn the Heap | Replant for the first time (the button is live at 60 Compost pending) | Silver Chest | Compost Shop, Research | 500 |
+| 22 | `quest.story.turn_the_heap` | Turn the Heap | Replant for the first time (the button is live at 440 Compost pending) | Silver Chest | Compost Shop, Research | 500 |
 | 23 | `quest.story.richer_soil` | Richer Soil | Buy Rich Soil | 10 Gems | | 300 |
 | 24 | `quest.story.bright_idea` | Bright Idea | Start a research project | 10 Gems | | 300 |
 | 25 | `quest.story.back_again` | Back Again | Open floor 10 again | Copper Chest | | 300 |
@@ -630,7 +638,7 @@ Rules are in GDD 11.1. One step is active at a time. A step whose goal is alread
 | 32 | `quest.story.busy_bees` | Busy Bees | Finish Bee Hotel and catch a Busy Bee | 50 Pollen | | 600 |
 | 33 | `quest.story.matchmaker` | Matchmaker | Make a hybrid | 30 Gems | | 1,000 |
 | 34 | `quest.story.city_slicker` | City Slicker | Open floor 8 in Loomington | Golden Chest | | 1,000 |
-| 35 | `quest.story.rising_star` | Rising Star | Earn 3 Mastery stars in one world | 30 Gems | | 1,000 |
+| 35 | `quest.story.rising_star` | Rising Star | Earn a Mastery star in two worlds | 30 Gems | | 1,000 |
 | 36 | `quest.story.island_time` | Island Time | Buy the ticket to Papaya Cay | Golden Chest | World 3, Weather | 1,500 |
 | 37 | `quest.story.rain_or_shine` | Rain or Shine | In Papaya Cay, have plants from all three weather groups planted at once | 40 Gems | | 1,000 |
 | 38 | `quest.story.festival_season` | Festival Season | Have 8 Ribbons pending | Silver Chest | Harvest Festival | 1,500 |
@@ -641,7 +649,7 @@ Rules are in GDD 11.1. One step is active at a time. A step whose goal is alread
 | 43 | `quest.story.small_step` | Small Step | Arrive on the Moon | Crystal Chest | World 5, Floating Harvests | 4,000 |
 | 44 | `quest.story.among_the_stars` | Among the Stars | Arrive in the Nebula Nursery | Starlight Chest | World 6, Orbital Sunrise | 5,000 |
 
-Steps 43 and 44 are `later`. With a four-world launch the fixed chain ends at step 42. Steps 40 to 42 are in the order an active player meets them: Mount Mitten around day 7, the first Exotic plant about the same time, and the fifth Mastery star around day 11. The skill tree has no story step. It opens at player level 6.
+Steps 43 and 44 are `later`. With a four-world launch the fixed chain ends at step 42. Steps 40 to 42 are in the order an active player meets them: Mount Mitten around day 7 or 8, and the first Exotic plant and the fifth Mastery star both around day 11. Step 35 asks for stars in two worlds because version 0.4's Mastery levels give a second star in one world only around day 5, after Papaya Cay. The skill tree has no story step. It opens at player level 6.
 
 **Chapter goals.** After the last fixed step, every unlocked world shows a repeating goal: every floor in that world at level `100 x n`, for `n = 1, 2, 3` and so on. Each is counted once, on the best level ever reached. Each gives a Silver Chest and 2,000 XP.
 
@@ -690,7 +698,7 @@ Five are drawn each Monday.
 
 ## 11. Achievements
 
-Rules are in GDD 11.4. Twenty families with five tiers each. Ids are `ach.<family>.<tier>`, for example `ach.taps.3`. Every achievement gives +1% profit, Gems (5, 10, 15, 25, 50 by tier) and XP (200, 400, 800, 1,500, 3,000 by tier). All counts are lifetime totals that never reset. Progress is counted from the first second of play, so several pop at once when the panel unlocks.
+Rules are in GDD 11.4. Twenty families with five tiers each. Ids are `ach.<family>.<tier>`, for example `ach.taps.3`. Every achievement gives +1% profit, Gems (5, 10, 15, 25, 50 by tier) and XP (100, 200, 400, 750, 1,500 by tier). All counts are lifetime totals that never reset. Progress is counted from the first second of play, so several pop at once when the panel unlocks.
 
 | Family | Counts | Tier 1 | Tier 2 | Tier 3 | Tier 4 | Tier 5 |
 |---|---|---|---|---|---|---|
@@ -715,7 +723,7 @@ Rules are in GDD 11.4. Twenty families with five tiers each. Ids are `ach.<famil
 | `quests` | Daily and weekly quests finished | 10 | 50 | 200 | 500 | 1,500 |
 | `offline` | Hours of offline earnings collected | 1 | 24 | 100 | 500 | 2,000 |
 
-All 100 can be earned with the four launch worlds. The top `stars` tier asks for 30 of the 40 stars in those worlds, which the rough script puts near day 60 for an active player (GDD 14.5). When worlds 5 and 6 ship, a sixth tier can be added to `managers`, `plants` and `stars`.
+All 100 can be earned with the four launch worlds. The top `stars` tier asks for 30 of the 40 stars in those worlds, which the balance simulator's active player reaches around day 32 (GDD 14.5). When worlds 5 and 6 ship, a sixth tier can be added to `managers`, `plants` and `stars`.
 
 ## 12. Visitors and Codex
 
