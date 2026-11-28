@@ -41,7 +41,8 @@ Kept current so the work can be picked up after any stop. Last update: 2026-11-2
 1. Design 0.3 (PR #5) merged 2026-11-27. Design 0.4 is PR #7, waiting for its audit; checked 2026-11-27: every value matches the overlays (two wording points on the CONTENT 8 Auto-Gardener row: free floor 1 on first arrival too, now fixed on PR #7 in 6d2add7; per-floor switches that start on, to add to the core in B.6). The designer messages this thread when #7 merges. Keep /mnt/project-files/balance/ unchanged until then.
 2. After PR #7 merges, do CHANGES.md B.6 (Balance simulator): rebuild the tables from 0.4 and retire p1, p2, p4, p5 (the Auto-Gardener restart becomes the rule, not a flag; add per-floor switches that start on, floor 1's switch governing the free manager); story step 35 `quest.story.rising_star` becomes "a Mastery star in two worlds"; run the suite and report; confirm the accepted run still holds; report the day the Ribbon Shop's fixed items (3,600 Ribbons, all but Blue Ribbon Polish) are all bought (GDD 18). No refit: numbers frozen until a playtest.
 3. After the B.6 rerun: the designer's proposal p6 (Mythic plants, Godly Heads) in /mnt/project-files/design/proposals/p6-mythic-and-godly.md, section 5 says what to check. Not before the 0.4 rebuild.
-4. Watch PR #6.
+4. Design 0.5 (draft, the long game) is PR #8, stacked on PR #7 (note from the design thread, 2026-11-28). 0.4's numbers stay frozen. One rule changes now: Head crowning (GDD 14.5), a world's Head gets one x1.5 step and the Crown crest at the Festival after its 10th Mastery star (about day 58 to 68). In the next 0.4 run, confirm it leaves the Festival rhythm of GDD 17.5 where it was. The new 0.5 systems get fitted one by one as each is built: list in EXPANSION.md section 15.2, after 0.4's B.6. Full list: CHANGES.md part C.4. Check whether p6 (step 3) is now covered by the crowning rule.
+5. Watch PR #6.
 
 ## Assumptions (also in the report)
 
