@@ -54,7 +54,7 @@ Status: recommended, Phase 0. Owner: Engine Architect.
     fixtures/saves/<version>/    saves from every released version
 ```
 
-Not committed: compiled content, atlases, build output, screenshots other than the small set of baselines, raw generated art, uncompressed audio masters. Committed although generated: the floor rows in `*.gen.yaml` (see 04).
+Not committed: compiled content, atlases, build output, screenshots other than the small set of baselines, raw generated art, uncompressed audio masters. Committed although generated: the floor rows in `packages/content/tables/floors/wN.yaml` (see 04).
 
 ## Ownership
 
@@ -82,7 +82,7 @@ One owner per folder. Work in someone else's folder goes through its owner or a 
 2. **Core and features mirror each other** by name, so ownership is obvious.
 3. **Interfaces before implementations.** The kernel contracts (the system module shape, commands, events, stats, the platform interface) are agreed first. A change to a contract is its own pull request, reviewed by the architect, announced to the other threads.
 4. **Content is split into small files** by world, kind and owner, and words are separate from numbers (see 04).
-5. **Build output is never committed**, so generated files never conflict. The one exception is on purpose: the generated floor rows (`*.gen.yaml`, see 04) are committed so that a change to a world parameter can be reviewed, and CI fails if they are out of date.
+5. **Build output is never committed**, so generated files never conflict. The one exception is on purpose: the generated floor rows (`tables/floors/wN.yaml`, see 04) are committed so that a change to a world parameter can be reviewed, and CI fails if they are out of date.
 6. **Dependencies are added on purpose.** A new package or a lockfile change is its own pull request through the integration owner. Versions are pinned.
 7. **Baseline images** change only in the pull request that means to change them.
 8. **Every pull request** stays inside one owner's area where possible, passes `pnpm check` and its tests, and attaches screenshots or a clip for anything visible.

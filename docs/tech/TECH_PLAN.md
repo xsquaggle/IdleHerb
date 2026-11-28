@@ -46,7 +46,7 @@ The price of not taking a full engine is about 7,000 lines of our own engine-sid
 |---|---|
 | Polished 2D with skeletal animation, particles, shaders | PixiJS renderer and filters, our rig runtime, data-driven particles, GLSL shaders ([03](03-rendering-animation-audio.md)) |
 | Windows installer and portable .exe | electron-builder on a Windows CI runner ([08](08-build-test-release.md)) |
-| Mouse and keyboard first, hotkeys | Action map with rebinding; hover, hold, wheel and keyboard focus built into the UI kit ([03](03-rendering-animation-audio.md)) |
+| Phone and PC alike (Lawson, 2026-11-28), hotkeys | Everything by tap and hold; portrait and landscape views; an action map with rebinding adds keyboard and mouse shortcuts ([03](03-rendering-animation-audio.md)) |
 | Crisp from 1080p to 4K, ultrawide-safe | Whole-number scaling of a 640x360 canvas, handled in true device pixels, proven by an automated crispness test ([03](03-rendering-animation-audio.md), [08](08-build-test-release.md)) |
 | 60 fps or better on an RTX 3060 | A few hundred sprites and capped particles is far inside the renderer's range. Budgets are set in [02](02-architecture.md) and measured on the real PC with a benchmark mode ([08](08-build-test-release.md)) |
 | Local saves with autosave, backups, export and import | [06](06-save-system.md) |

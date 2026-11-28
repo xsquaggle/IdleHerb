@@ -1,16 +1,19 @@
 # 03. Rendering, animation, UI and audio
 
-Status: recommended, Phase 0. Owner: Engine Architect. The pixel grid and sprite sizes here are agreed with the Art Director; the style bible (`docs/art/STYLE_BIBLE.md`, section 3 for sizes) is the authority on anything visual and this document follows it.
+Status: recommended, Phase 0; updated for the Phase 1 build on 2026-11-28 (phone and PC, portrait views, the reveal player and the moment effect of design 0.5). Owner: Engine Architect. The pixel grid and sprite sizes here are agreed with the Art Director; the style bible (`docs/art/STYLE_BIBLE.md`, section 3 for sizes) is the authority on anything visual and this document follows it.
 
 ## Pixel grid and resolution
 
-**The game is drawn on a logical canvas of at least 640x360 art pixels and scaled to the display by a whole number.** One art pixel is always a perfect square block of screen pixels. Nothing is ever stretched or blurred.
+**The game is drawn on a logical canvas scaled to the display by a whole number.** One art pixel is always a perfect square block of screen pixels. Nothing is ever stretched or blurred. The game plays on phones and PCs (Lawson, 2026-11-28: "It should be playable on phone and PC"), so the canvas has two minimums: 600x360 art pixels on a landscape screen (the 640x360 layout, with a little give so 1366x768 still gets 2x), and 360x420 on a portrait screen such as a phone held upright, where the 360-wide tower fills the width and the HUD sits above and below it.
 
 ```
-scale        = max(1, floor(min(deviceWidth / 640, deviceHeight / 360)))
-logicalWidth = floor(deviceWidth / scale)      // 640 or more
-logicalHeight= floor(deviceHeight / scale)     // 360 or more
+minW, minH   = portrait ? (360, 420) : (600, 360)
+scale        = max(1, floor(min(deviceWidth / minW, deviceHeight / minH)))
+logicalWidth = floor(deviceWidth / scale)
+logicalHeight= floor(deviceHeight / scale)
 ```
+
+A view narrower than 600 art pixels uses the tall layout: HUD top and bottom, tower full width, panels full width. On phones the layout also keeps out of the safe-area insets (notches and home bars). The code is `packages/game/src/engine/resolution.ts`.
 
 Any leftover strip (less than one art pixel) is split evenly and filled with the backdrop.
 
@@ -29,7 +32,7 @@ Any leftover strip (less than one art pixel) is split evenly and filled with the
 
 360 is the only base height that divides evenly into 1080, 1440 and 2160, which is why the three common monitors all show exactly the same 640x360 view.
 
-**Ultrawide and odd sizes.** The view grows; it never stretches. Layouts are built for 640x360 and anchor to edges and centre, so extra width shows more parallax background and gives side panels room, and extra height shows more tower. The HUD keeps to a centred safe area by default, with a setting to spread it to the screen edges.
+**Ultrawide and odd sizes.** The view grows; it never stretches. Landscape layouts are built for 640x360, portrait ones for 360x420, and both anchor to edges and centre, so extra width shows more parallax background and gives side panels room, and extra height shows more tower. The HUD keeps to a centred safe area by default, with a setting to spread it to the screen edges.
 
 **Windows display scaling.** At 125 or 150 percent scaling a web canvas is blurry unless it is sized in true device pixels. The resolution manager sizes the canvas from the browser's device-pixel content box, computes the scale from device pixels, and ignores CSS pixels entirely. The automated crispness test (see 08) runs at device pixel ratios 1, 1.25, 1.5 and 2.
 
@@ -59,7 +62,7 @@ At 640 wide, a 360 wide tower leaves 140 art pixels on each side for the HUD and
 4. World effects: particles in world space.
 5. Light: soft additive light pools and window shafts, and a multiply layer for evening and night moods.
 6. Glow: emissive sprites drawn to a half-resolution buffer, blurred and added back. Used for rare-drop bloom.
-7. Screen effects: flashes, rarity colour flood, vignette.
+7. Screen effects: flashes, the tier colour flood of a reveal, rings, vignette.
 8. UI: HUD, panels, then UI effects (coins and leaves flying to counters), tooltips, cursor.
 
 A per-world colour grade is applied to layers 1 to 5. Screen shake moves the world layers by whole device pixels and never moves the UI.
@@ -149,6 +152,10 @@ motion: decorative             # reduce-motion class
 - The "fly to counter" phase crosses from world space to UI space, and the counter ticks up when particles arrive.
 - A global cap and pooling keep the worst case bounded. Big moments scale the number of particles to the size of the reward within that cap.
 
+**One effect for every big moment** (design 0.5, EXPANSION 4.2). `moment(tier, place, form)` in `packages/game/src/scene/moment.ts` plays particles, a light ring, a screen flash, shake, hit-pause and a sound chord, all scaled by the `juice` row of that tier in `tables/tiers.yaml`. `tables/moments.yaml` says which tier each event is (a Bumper tap is Uncommon, a Harvest Festival Mythic, a first Festival Exotic), so the juice goes where the moment is biggest and one table tunes it all. A short moment flashes at half strength and pauses half as long. Reduce motion keeps the particles and the sound and drops the shake, the flash and the pause.
+
+**One reveal player** (EXPANSION 4.1). Chest and card reveals take a tier and a form. The full form is Arrive, Build, Tell, Burst and Show, and its length comes from the tier row (`reveal.total`, 0.4 seconds for Common to 9 seconds for Grailed); the short form is the climb, the burst and the chime. A tier with no art of its own yet borrows the nearest tier below that has one, plus a band in its own colours, so tiers 6 to 11 work before their art arrives. Development builds have a reveal theatre (Settings, Reveal theatre) that plays any of the eleven in either form.
+
 Planned shader set, all GLSL ES 3.0: row-shear sway, one-pixel outline for hover and selection, white flash, palette tint, pixel dissolve for reveals, rarity colour flood, pixel shockwave ring, glow composite, light composite, colour grade.
 
 Screen-level juice (hit-pause, shake, flashes) lives in one `Juice` service on the presentation clock, so the screen-shake and reduce-motion settings and a flash-rate limit for photosensitivity apply to everything in one place.
@@ -167,11 +174,18 @@ The whole UI is drawn in the same PixiJS canvas as the world, on the same pixel 
 
 ## Input
 
-Mouse and keyboard first. All input goes through an action map (`collect`, `collectAll`, `buyLevel`, `buyMax`, `openCards`, `closePanel`, `floorUp`, `floorDown` and so on) with default bindings, a rebinding screen, and conflicts flagged. Supported gestures: click, hold to repeat, mouse wheel and drag to scroll the tower, hover for tooltips, Escape closes the top panel, Tab and arrow keys move focus. Pointer events are used throughout, so touch works in the phone preview without extra code. The GDD chooses the actual hotkeys.
+**Phone and PC are equal.** Everything plays by tap and hold alone, and keyboard and mouse add shortcuts on top (EXPANSION 0, "Phone and PC"). All input goes through an action map (`collect`, `collectAll`, `buyLevel`, `buyMax`, `buyMode`, `spurt`, `ability1` to `ability4`, `openCards`, `closePanel`, `floorUp`, `floorDown` and so on) with default bindings, a rebinding screen, and conflicts flagged.
+
+- **Touch and mouse**, through pointer events: tap, hold to repeat, drag to scroll the tower with inertia, long press for what hover shows on PC.
+- **Mouse extras**: the wheel scrolls the tower, hover shows tooltips.
+- **Keyboard extras**: Space taps (held, it repeats at the hold rate), F starts a Growth Spurt, B changes the buy amount, the arrows and W and S scroll, Escape closes the top panel, Tab and the arrows move focus. **The number keys 1 to 4 press the four abilities of the world on screen, in floor order** (GDD 7.1). F11 and Alt+Enter switch full screen in the Windows app.
+- **Counted taps are a flag on the input source** (design 0.5, EXPANSION 15.1 item 7). A tap command carries its source (`tower`, `key` or `field`), and only counted sources act on the tower, its Combo and its stats, so taps in the later field activities never count as tower taps.
+
+The GDD chooses the actual hotkeys.
 
 ## Accessibility hooks
 
-Built into the engine layer so features cannot skip them: reduce motion, screen shake off, flash limiting, colour-blind-safe rarity cues (each rarity has a shape and a frame pattern as well as a colour), UI scale, full key rebinding, separate volume sliders, and a number format choice.
+Built into the engine layer so features cannot skip them: reduce motion, screen shake off, flash limiting, colour-blind-safe tier cues (each tier has pips, an emblem and a frame pattern as well as a colour), UI scale, full key rebinding, separate volume sliders, and a number format choice.
 
 ## Audio
 
