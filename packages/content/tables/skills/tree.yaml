@@ -1,10 +1,10 @@
 # Skill tree. Source of truth: CONTENT.md section 5 and GDD 9.2.
 # Tier gates count points spent in the same branch: tier 2 needs 5, tier 3 needs 15, keystone needs 30.
 # Reductions (op: reduce) add up over ranks inside the skill, then count as one source.
-- { id: skill.gt.firm_grip,        branch: green_thumb, tier: 1, ranks: 5, effect: { stat: tap.power, op: inc, value: 0.20 } }
-- { id: skill.gt.keep_the_rhythm,  branch: green_thumb, tier: 1, ranks: 5, effect: { stat: tap.comboCap, op: add, value: 4 } }
-- { id: skill.gt.bumper_crop,      branch: green_thumb, tier: 2, ranks: 5, effect: { stat: tap.critChance, op: add, value: 0.01 } }
-- { id: skill.gt.big_bumpers,      branch: green_thumb, tier: 2, ranks: 5, effect: { stat: tap.critMult, op: add, value: 1 } }
+- { id: skill.gt.firm_grip,        branch: green_thumb, tier: 1, ranks: 5, effect: { stat: tap.power, op: inc, value: 0.10 } }
+- { id: skill.gt.keep_the_rhythm,  branch: green_thumb, tier: 1, ranks: 5, effect: { stat: tap.comboCap, op: add, value: 2 } }
+- { id: skill.gt.bumper_crop,      branch: green_thumb, tier: 2, ranks: 5, effect: { stat: tap.critChance, op: add, value: 0.005 } }
+- { id: skill.gt.big_bumpers,      branch: green_thumb, tier: 2, ranks: 5, effect: { stat: tap.critMult, op: add, value: 0.5 } }
 - { id: skill.gt.long_spurt,       branch: green_thumb, tier: 2, ranks: 3, major: true, effect: { stat: spurt.duration, op: add, value: 2 } }
 - { id: skill.gt.second_wind,      branch: green_thumb, tier: 3, ranks: 5, effect: { stat: spurt.tapsNeeded, op: reduce, value: 0.06 } }
 - { id: skill.gt.sprout_spotter,   branch: green_thumb, tier: 3, ranks: 5, effect: { stat: visitor.interval, op: reduce, value: 0.05 } }

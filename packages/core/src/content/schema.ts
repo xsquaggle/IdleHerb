@@ -88,6 +88,8 @@ export const ConditionSchema = z
     level: z.number().int().optional(),
     gte: big.optional(),
     id: z.string().optional(),
+    /** masteryStars: how many worlds must hold `gte` stars (default 1). */
+    worlds: z.number().int().positive().optional(),
   })
   .strict();
 export type Condition = z.infer<typeof ConditionSchema>;
@@ -234,9 +236,6 @@ export const TuningSchema = z
     MASTER_COMPOSTER_PCT: z.number(),
     BLUE_POLISH_PCT: z.number(),
     AUTO_BUY_SHARE: z.number(),
-    /** Design 0.4: the Auto-Gardener keeps floor 1's manager hired and opens floors, so no world goes dead. */
-    AUTO_GARDENER_RESTARTS: z.boolean(),
-    MASTERY_LEVELS: z.array(z.number().int().positive()),
     MASTERY_PCT: z.number(),
     MASTERY_EXOTIC_STARS: z.array(z.number().int()),
     CUSTOMER_INTERVAL: z.number().positive(),
@@ -297,11 +296,11 @@ export const WorldRowSchema = z
     deedRibbons: z.number().nonnegative(),
     twist: z.enum(['none', 'customers', 'weather', 'heat', 'bubbles', 'sunrise']),
     launch: z.boolean(),
-    /** This world's own ten Mastery levels (design 0.4 proposal). Absent: tuning MASTERY_LEVELS. */
-    mastery: z.array(z.number().int().positive()).length(10).optional(),
+    /** This world's own ten Mastery levels (GDD 14.5, `MASTERY_LEVELS[w]`). */
+    mastery: z.array(z.number().int().positive()).length(10),
   })
   .strict()
-  .refine((w) => !w.mastery || w.mastery.every((lv, i) => i === 0 || lv > w.mastery![i - 1]!), { message: 'mastery levels must rise strictly' });
+  .refine((w) => w.mastery.every((lv, i) => i === 0 || lv > w.mastery[i - 1]!), { message: 'mastery levels must rise strictly' });
 export type WorldRow = z.infer<typeof WorldRowSchema>;
 
 export const FloorRowSchema = z

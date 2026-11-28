@@ -645,9 +645,10 @@ function designerAsksSection(R: Runs): string {
   const longA = R.get('fix-long-active') ?? (R.fix ?? R.base).active;
   const longM = R.get('fix-long-mixed') ?? (R.fix ?? R.base).mixed;
   const STAR_WIN: [number, number][] = [[0, 1], [1, 2], [3, 4], [5, 6], [8, 10], [12, 14], [18, 22], [28, 34], [40, 46], [55, 65]];
-  const gddLevels = loadRaw().tuning.MASTERY_LEVELS as number[];
+  const rawWorlds = loadRaw().worlds as { mastery: number[] }[];
+  const tableLevels = (w: number): number[] => rawWorlds[w]!.mastery;
   const proposedLevels = (w: number): number[] => {
-    let lv = gddLevels;
+    let lv = tableLevels(w);
     for (const id of R.proposals) {
       const o = readOverlay(join(PROPOSALS_DIR, `${id}.yaml`));
       const m = (o.rows?.worlds?.[`world.w${w + 1}`] as { mastery?: number[] } | undefined)?.mastery;
@@ -664,7 +665,7 @@ function designerAsksSection(R: Runs): string {
   const inWindow = (ds: (number | null)[]): number => ds.filter((d, k) => d !== null && d >= STAR_WIN[k]![0] - 0.05 && d <= STAR_WIN[k]![1] + 0.05).length;
   out.push(`Each world now has its own ten levels (multiples of 25), picked from the crossing data of 90-day runs so the active player\'s stars land as near as possible to the designer\'s days after arrival, with one star on the day of arrival and star 5 (the first Head copy) not before day 8. The picker finds the list with the least squared distance from the windows. The best level of a world rises in steps, once per Festival cycle, so some stars cannot land inside their window and land at the nearest step instead. The same list moves star days by about a day from one run to the next (the Festival days move), so the lists come from the mean of four 90-day active runs, and star 5 was picked at day 9 or later on that mean to keep the first Head copy after day 8.`);
   out.push('');
-  out.push(table(['World', 'GDD 0.3 (one list for all)', 'Proposed'], WORLD.map((name, w) => [name, gddLevels.join(', '), proposedLevels(w).join(', ')])));
+  out.push(table(['World', 'Design 0.4 (GDD 14.5)', ...(R.fix ? ['Proposed'] : [])], WORLD.map((name, w) => [name, tableLevels(w).join(', '), ...(R.fix ? [proposedLevels(w).join(', ')] : [])])));
   out.push('');
   out.push('Days after first arriving in the world when each star landed (Thymeford: stars start once World 2 is reached). A dash: not reached in the run.');
   out.push('');
