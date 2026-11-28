@@ -165,6 +165,25 @@ function maxFestivalGap(r: RunResult, fromDay: number, toDay: number): { days: n
   return gaps.reduce((a, b) => (b.days > a.days ? b : a));
 }
 
+/** The 90-day runs. The 60-day runs end before a late Festival gap can close, so late gaps are read here. */
+function longRuns(R: Runs): [string, RunResult][] {
+  const runs: [string, RunResult | null][] = [
+    ['Active', R.get(R.fix ? 'fix-long-active' : 'long-active')],
+    ['Mixed', R.get(R.fix ? 'fix-long-mixed' : 'long-mixed')],
+  ];
+  return runs.filter((x): x is [string, RunResult] => x[1] !== null);
+}
+
+/** Festival gaps above the limit after day 14 in the 90-day runs, as text. Empty when there are none. */
+function longRunGaps(R: Runs): string[] {
+  const out: string[] = [];
+  for (const [name, r] of longRuns(R)) {
+    const gaps = festivalGaps(r).filter((g) => g.from >= 14 && g.days > VERDICT.festivalGapDays);
+    if (gaps.length) out.push(`the ${name.toLowerCase()} player ${gaps.map((g) => `${g.days.toFixed(1)} days from day ${g.from.toFixed(1)}${g.open ? ' (still open when the run ended)' : ''}`).join(' and ')}`);
+  }
+  return out;
+}
+
 function emptyDays(r: RunResult, toDay: number): number[] {
   return progressPerDay(r)
     .slice(0, toDay)
@@ -266,6 +285,9 @@ function verdictSection(R: Runs): string {
   out.push(`**Dead zones.** A dead zone here is more than ${VERDICT.quietMinutes} minutes of open game in which the player buys nothing (time spent saving for a world ticket does not count, and the Auto-Gardener's own purchases do not end a stretch), or two Festivals more than ${VERDICT.festivalGapDays} days apart after day 14 (the Game Designer's limit). ${sets.map(([label, set]) => dzSet(label, set)).join(' ')}${(() => {
     const ended = sets.flatMap(([label, set]) => PROFILES.filter((p) => { const d = set[p].dead; return d && d.seconds / MIN > VERDICT.quietMinutes && set[p].timeline.some((e) => e.kind === 'replant' && Math.abs(e.t - d.endedAt) < 120); }).map((p) => `${NAME[p].toLowerCase()} player, ${label.toLowerCase()}`));
     return ended.length ? ` Stretches that end with a Replant by the six-hour rule (${ended.join('; ')}) would not happen to a player who Replants as soon as nothing is left to buy.` : '';
+  })()}${(() => {
+    const late = longRunGaps(R);
+    return late.length ? ` These are the 60-day runs, which end before a late Festival gap can close. The 90-day runs break the ${VERDICT.festivalGapDays}-day limit late on: ${late.join('; ')}.` : '';
   })()} The Festival rhythm against the designer's shape (gaps of 1 to 3 days to day 10, 3 to 6 to day 30, 5 to 9 after, no jump above about twice the gap before) is under "Dead zones".`);
   out.push('');
   out.push(...dz);
@@ -464,6 +486,7 @@ function deadZoneSection(R: Runs): string {
       frows.push([tag(NAME[p], label), gaps.map((g) => `${g.days.toFixed(1)}${g.open ? ' (open)' : ''}`).join(', ')]);
     }
   }
+  for (const [name, r] of longRuns(R)) frows.push([`${name}, 90 days`, festivalGaps(r).map((g) => `${g.days.toFixed(1)}${g.open ? ' (open)' : ''}`).join(', ')]);
   out.push(table(['Run', 'Days between Festivals, in order'], frows));
   out.push('');
   out.push('### Festival rhythm');
@@ -476,6 +499,10 @@ function deadZoneSection(R: Runs): string {
       const br = rhythmBreaks(set[p]);
       rrows.push([tag(NAME[p], label), br.length === 0 ? 'none' : br.join('; ')]);
     }
+  }
+  for (const [name, r] of longRuns(R)) {
+    const br = rhythmBreaks(r);
+    rrows.push([`${name}, 90 days`, br.length === 0 ? 'none' : br.join('; ')]);
   }
   out.push(table(['Run', 'Gaps that break the rhythm'], rrows));
   out.push('');
@@ -812,6 +839,8 @@ function nextChecksSection(R: Runs): string {
   const rows: string[][] = [];
   const notes: string[] = [];
   const facts: { first: number | null; same: boolean; baseMax: number; crownMin: number; crownMax: number }[] = [];
+  /** The gap that ends at the first crowning. The crowning happens at the Festival that closes it, so it cannot shorten it. */
+  const pre: { who: string; from: number; days: number }[] = [];
   for (const [label, base, crown] of pairs) {
     if (!base || !crown) continue;
     const crowns = crown.timeline.filter((e) => e.kind === 'crown');
@@ -824,6 +853,11 @@ function nextChecksSection(R: Runs): string {
     const when2 = [...byDay].map(([d, ws]) => `World${ws.length > 1 ? 's' : ''} ${ws.join(', ')} on day ${d}`).join('; ') || 'none';
     const before = first === null ? fest(base) : fest(base).filter((t) => t < first);
     const same = JSON.stringify(before) === JSON.stringify(first === null ? fest(crown) : fest(crown).filter((t) => t < first));
+    if (first !== null) {
+      const before2 = fest(crown).filter((t) => t < first - 0.01);
+      const last = before2[before2.length - 1];
+      if (last !== undefined) pre.push({ who: label.split(',')[0]!.toLowerCase(), from: last, days: first - last });
+    }
     const gb = first === null ? [] : gapsFrom(base, first);
     const gc = first === null ? [] : gapsFrom(crown, first);
     rows.push([label, when2, same ? 'yes' : 'no', text(gb, base.meta.days), text(gc, crown.meta.days)]);
@@ -849,6 +883,10 @@ function nextChecksSection(R: Runs): string {
     if (crownFaster) parts.push('After it, the crowning makes Festivals come faster.');
     if (baseOver) parts.push(`Without it, design 0.4's 90-day players have a gap above the ${VERDICT.festivalGapDays}-day limit after the late research is done.`);
     if (crownIn) parts.push(`With it, every closed gap after the crowning is between 4 and ${VERDICT.festivalGapDays} days${baseOver ? ', so the crowning brings the late gaps back towards GDD 17.5\'s "every five to ten days"' : ''}.`);
+    if (pre.length && facts.every((f) => f.same)) {
+      const over = pre.filter((g) => g.days > VERDICT.festivalGapDays);
+      parts.push(`The gap that ends at the first crowning is the same with and without it, because a Head is crowned at the Festival that closes that gap: ${pre.map((g) => `${g.days.toFixed(1)} days from day ${g.from.toFixed(1)} for the ${g.who} player`).join(', ')}.${over.length ? ` For the ${over.map((g) => g.who).join(' and ')} player that gap is above the ${VERDICT.festivalGapDays}-day limit, and the crowning cannot shorten it.` : ''}`);
+    }
     out.push(parts.join(' '));
   }
   out.push('');
@@ -899,7 +937,7 @@ function openItemsSection(R: Runs): string {
   };
   const longA = R.get(R.fix ? 'fix-long-active' : 'long-active');
   const longM = R.get(R.fix ? 'fix-long-mixed' : 'long-mixed');
-  out.push(`- **Late research (design 0.4, CONTENT 6).** Festival gaps above 10 days after day 14: ${long.join(', ')}. The shortest gap after day 30 is ${shortest.join(', ')} days. When the eight late projects finish, active player (90-day run): ${lateDays(longA)}. Mixed player: ${lateDays(longM)}. How their costs, Living Soil I's place after Soil Science III and Living Soil's ×1.3 were chosen is in CHANGES.md part B (earlier trial runs of 2026-11-26).`);
+  out.push(`- **Late research (design 0.4, CONTENT 6).** Festival gaps above 10 days after day 14 in the 60-day runs: ${long.join(', ')}. In the 90-day runs: ${longRunGaps(R).join(', ') || 'none'}. The 60-day runs end before those gaps close, so the pacing checks do not count them; they are for the Game Designer (GDD 17.6, target 4). The shortest gap after day 30 is ${shortest.join(', ')} days. When the eight late projects finish, active player (90-day run): ${lateDays(longA)}. Mixed player: ${lateDays(longM)}. How their costs, Living Soil I's place after Soil Science III and Living Soil's ×1.3 were chosen is in CHANGES.md part B (earlier trial runs of 2026-11-26).`);
   const share = longA ? compostShare(longA, 0, 30, longA.meta.days) : null;
   out.push(`- **The Auto-Gardener (CONTENT 8).** Every floor has a switch, and switches start on. The simulated player turns all of them off while a world ticket is close, so the coins can pile up, and on again once it is bought; it never turns single floors off. No world goes dead after a reset: Thymeford keeps climbing and gives ${share === null ? 'a large share' : `${Math.round(share * 100)}%`} of the active player's Compost after day 30.`);
   const accepted = new Set(['active:Top floor of Thymeford', 'mixed:World 2']);
