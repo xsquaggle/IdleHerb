@@ -1,6 +1,6 @@
 # Sprout Tower: Game Design Document
 
-Version 0.4, Phase 0. Version 0.2 passed the independent design audit, and version 0.3 (one fixed manager per floor, on Lawson's decision of 2026-11-25) passed its fresh-eyes audit. Version 0.4 writes in the balance simulator's accepted numbers, which are frozen until a playtest. Owner: Game Designer thread. Companion files: [AUDIT.md](AUDIT.md) (why the premise changed), [CONTENT.md](CONTENT.md) (every content row: floors, managers, plants, heirlooms, skills, research, shops, quests, achievements) and [CHANGES.md](CHANGES.md) (every rule and number that changed from version to version, for the balance simulator and the engine).
+Version 0.4, Phase 0. Version 0.2 passed the independent design audit, and version 0.3 (one fixed manager per floor, on Lawson's decision of 2026-11-25) passed its fresh-eyes audit. Version 0.4 writes in the balance simulator's accepted numbers, which are frozen until a playtest. Design 0.5 (draft, 2026-11-28) adds the long game in [EXPANSION.md](EXPANSION.md) and puts each system in a release in [ROADMAP.md](ROADMAP.md). In this file it changes only the rarity ladder (section 8.1, eleven tiers), the Head crowning that goes with it (section 14.5) and the plan for more reset layers (section 12.3). Owner: Game Designer thread. Companion files: [AUDIT.md](AUDIT.md) (why the premise changed), [CONTENT.md](CONTENT.md) (every content row: floors, managers, plants, heirlooms, skills, research, shops, quests, achievements) and [CHANGES.md](CHANGES.md) (every rule and number that changed from version to version, for the balance simulator and the engine).
 
 ## 0. How to read this document
 
@@ -12,6 +12,7 @@ Version 0.4, Phase 0. Version 0.2 passed the independent design audit, and versi
 - **Names are defaults.** The Writer may polish names and the Art Director owns how everything looks. Ids are stable.
 - Section 13 says exactly how bonuses stack. Read it before implementing any multiplier. Section 13.5 is the one rule for everything that lasts a set time.
 - Section 17.6 says what the balance simulator has checked, which targets it was held to, and what still waits for a playtest.
+- **The long game** (design 0.5) is designed in EXPANSION.md and placed in releases by ROADMAP.md. Each of its systems joins this file and CONTENT.md when it is built and the simulator has fitted it. Until then EXPANSION.md is the reference for it.
 
 ## 1. Vision and pillars
 
@@ -65,6 +66,8 @@ Some ordinary garden words have a second meaning. The safe word is always used.
 | mortar, pestle (as a tool, a prop or part of a name) | bowl, birdbath |
 
 The paper workshop makes notebooks, gift paper and kites. The soap floor uses lavender and hemp-seed oil. Hemp is never shown in a laboratory.
+
+EXPANSION.md section 14 adds words for the long game: fishing, digging, mining and the new tiers.
 
 ## 3. The loops
 
@@ -404,16 +407,27 @@ Abilities have fixed strength. Cooldowns keep running while the game is closed. 
 
 ### 8.1 Rarities
 
-| Rarity | Colour cue (Art Director owns the look) | Where it comes from |
-|---|---|---|
-| Common | grey | chests |
-| Uncommon | green | chests |
-| Rare | blue | chests |
-| Epic | purple | chests |
-| Legendary | gold | chests; hybrid plants from cross-pollination |
-| Exotic | rainbow | never from a chest roll. Plants by mutation. The Exotic managers are the six Heads: their copies come from World Mastery and the Starlight Chest |
+Eleven tiers, in Lawson's order of 2026-11-28. Mythic (tier 6) sits below Exotic. The look is the Art Director's (style bible v1.7, section 8). EXPANSION.md section 2 says what each tier is worth and how things climb.
 
-Rarity is also shown by frame shape and a pip count, so it never depends on colour alone.
+| # | Rarity | Colour cue (Art Director owns the look) | Where it comes from |
+|---|---|---|---|
+| 1 | Common | wood and iron | chests |
+| 2 | Uncommon | leaf green | chests |
+| 3 | Rare | sapphire blue | chests |
+| 4 | Epic | amethyst | chests |
+| 5 | Legendary | gold | chests; hybrid plants from cross-pollination |
+| 6 | Mythic | aurora on midnight | never from a chest roll. Tier Up from Legendary (EXPANSION 3) |
+| 7 | Exotic | prismatic | never from a chest roll. Plants by mutation. The Exotic managers are the six Heads: their copies come from World Mastery and the Starlight Chest. Anything else can tier up to Exotic |
+| 8 | Godly | white gold | never from a chest roll. A world's Head is crowned Godly after its 10th Mastery star (section 14.5). Everything else by Tier Up, from v1.1 |
+| 9 | Ungodly | eclipse: plum-black with a ruby and gold corona | never from a chest roll. Tier Up, from v1.1 |
+| 10 | Holy | pearl | never from a chest roll. Tier Up, from v1.1 |
+| 11 | Grailed | liquid gold with the ten other colours braided in | never from a chest roll. Tier Up, from v1.3 |
+
+Rarity is also shown by frame shape, an emblem and a pip count (one pip per tier), so it never depends on colour alone. No chest ever rolls a card above Legendary.
+
+The tiers are data: one table of eleven rows, and no code compares rarity names (EXPANSION 15.1). The numbers of version 0.4 cover tiers 1 to 5 and Exotic. No card is born Mythic or higher, so the duplicate curves of section 8.2 need no new rows. The numbers for the other tiers arrive with Tier Up (EXPANSION 2.2 and 3).
+
+The tier names are rarity labels only. No religious sign is ever drawn or written.
 
 ### 8.2 Duplicate curves
 
@@ -512,7 +526,7 @@ traitValue = traitBase x RARITY_FACTOR[rarity] x (1 + TRAIT_PER_LEVEL x (level -
            x plantPowerMult
 ```
 
-`TRAIT_PER_LEVEL = 0.2`. `RARITY_FACTOR`: Common 1, Uncommon 1.5, Rare 2.2, Epic 3.2, Legendary 5, Exotic 8.
+`TRAIT_PER_LEVEL = 0.2`. `RARITY_FACTOR`: Common 1, Uncommon 1.5, Rare 2.2, Epic 3.2, Legendary 5, Exotic 8. It is a table by tier. Design 0.5 proposes Mythic 7.5 and Exotic 11, with the higher tiers in EXPANSION 2.2. Those values take effect with Tier Up, after the simulator has checked them. Until then Exotic stays 8.
 
 | Trait | `traitBase` | Scope | Effect |
 |---|---|---|---|
@@ -721,7 +735,7 @@ The rule behind 440: **every play style's first Replant lands inside its first 2
 
 ### 12.2 Harvest Festival (the big reset)
 
-**Fiction:** the whole brand goes to the Grand Harvest Festival. Mayor Thyme hosts it and pins on the Prize Ribbons, and a new generation starts over with the ribbons on the wall.
+**Fiction:** the whole brand goes to the Grand Harvest Festival. Mayor Thyme hosts it and pins on the Prize Ribbons, and the brand starts over with the ribbons on the wall.
 
 ```
 ribbonsTotal   = floor( (compostAllTime / RIBBON_C0) ^ RIBBON_EXP )
@@ -732,15 +746,22 @@ ribbonsPending = ribbonsTotal - ribbonsClaimed
 - **Unlocks** when the player has reached world 3 at least once and `ribbonsPending >= FIRST_FESTIVAL_MIN = 8`. Later Festivals need `ribbonsPending >= 1`.
 - **On Festival:** `ribbonsClaimed += ribbonsPending`. Then every world's currency, floors, hires and `lifetime` reset. `compostEra`, every `claimed(w)` and all Compost Shop purchases reset. World tickets must be bought again. With the Auto-Gardener switched on, floor 1's manager in each world stays hired, with no fee (CONTENT.md section 8). Everything in the "Keeps" column of section 3.4 stays.
 - **Passive:** every Ribbon ever earned gives `RIBBON_PCT = +10%` profit in every world. Spending Ribbons does not reduce this.
-- **Ribbon Shop:** rows in CONTENT.md section 8. It never resets. It holds Golden Hour (×2 profit, 5 levels), the deeds to worlds 4, 5 and 6, the third planter, heirloom slots, a second research desk, auto-buy (the Auto-Gardener, which also keeps every world running through a reset) and one endless item, Blue Ribbon Polish.
+- **Ribbon Shop:** rows in CONTENT.md section 8. A Festival never resets it. From v1.1, a New Generation resets its four power items and keeps the rest (section 12.3). It holds Golden Hour (×2 profit, 5 levels), the deeds to worlds 4, 5 and 6, the third planter, heirloom slots, a second research desk, auto-buy (the Auto-Gardener, which also keeps every world running through a reset) and one endless item, Blue Ribbon Polish.
 - Each Festival gives a Golden Chest (a Crystal Chest the first time, a Starlight Chest every fifth time) and one free respec. The first Festival also gives the Heirloom Pick (section 8.3).
 - The Festival screen says "Hold the Festival now for +N Ribbons (+X% profit)", and the button glows once `ribbonsPending` is at least equal to `ribbonsClaimed`.
 
 The first 8 Ribbons need about 57.6 million Compost. The balance simulator puts the first Festival on about day 4.6 for an active player, day 7 for a mixed player and day 15 for an idle player.
 
-### 12.3 No third layer in v1
+### 12.3 More layers after launch
 
-The long tail is carried by the later worlds, World Mastery, Exotic plants and managers, heirloom sets, card levels, research and the Ribbon Shop's endless item. A third reset would cost more readability than it adds. If the simulator shows the game going flat after week 6, the next layer is designed then.
+Version 0.4 planned no third layer in v1, and v1.0 still has none. Design 0.5 adds two layers in the first updates after launch, before an active player reaches them (ROADMAP.md):
+
+| Layer | Name | Currency | First time (active player) | Release |
+|---|---|---|---|---|
+| 3 | New Generation | Laurels | about day 30 | v1.1 |
+| 4 | Big Bloom | Starseeds | about day 90 | v1.3 |
+
+Both follow the rules of the first two layers: the currency comes from a gentle root of a lifetime total, so quick repeats give nothing; the passive bonus counts every unit earned in its scope, so spending never lowers it; and the shop's power items have level caps. At a New Generation, Ribbons are counted per generation, as Compost is counted per era: `compostAllTime` in section 12.2 becomes `compostThisGeneration`. The layers are designed in EXPANSION.md section 7 and join this section when they are built. The engine holds reset layers as a list (EXPANSION 15.1), so they are new rows, not new code.
 
 ## 13. How bonuses stack
 
@@ -982,6 +1003,7 @@ A permanent record for each world. It never resets.
 | Nebula Nursery | 100, 150, 175, 200, 225, 250, 300, 325, 375, 400 |
 
 - Each star gives `MASTERY_PCT = +10%` profit in that world.
+- **The Head crowning** (design 0.5, from Mythic and Godly call p6). When a world earns its 10th star, Mayor Thyme crowns its Head Godly at the next Harvest Festival, in a scene of its own. It is free, it is the only way a Head reaches Godly, and it gives the Head one Tier Up step and the Godly crest (EXPANSION 2.3 and 3.1).
 - **Star 5** gives one copy of that world's **Head**, the Exotic manager of its top floor (section 7.1). Stars 7, 9 and 10 give one more copy each. Those four copies take a Head from level 1 to level 3. The last two levels come from Starlight Chests.
 - The six lists were picked by the balance simulator for version 0.4, from the days on which an active player's lowest floor first reaches each level. The aim is for stars to land near these days after first arriving in a world: under 1, 1 to 2, 3 to 4, 5 to 6, 8 to 10, 12 to 14, 18 to 22, 28 to 34, 40 to 46 and 55 to 65. Only one star lands on the day of arrival, and star 5 (the first Head copy) not before day 8.
 - Thymeford's track starts when Loomington is reached (section 16, row 20). An active player then earns Thymeford's star 5 about 10 days later, star 8 about 30 days later and star 10 about 58 days later. A world's best level climbs in steps, about once per Festival cycle, so some stars land a day or two outside their window.
@@ -1088,6 +1110,8 @@ One new thing at a time. Conditions are exact. Times are targets for a new playe
 | 31 | World 6, Orbital Sunrise (after launch) | deed (250 Ribbons) and ticket | week 3 (about day 20) |
 
 Nothing that is locked shows more than a silhouette and a one-line hint. The bottom bar starts with no buttons and gains them as features unlock.
+
+Design 0.5 adds rows 32 to 52 for the long game (EXPANSION 13). Each row joins this table when its system is built.
 
 Rows 1 to 10 arrive in the first six minutes and rows 11 to 15 in the next ten. Rows 13 and 14 can come in either order. The top floor follows at about 20 minutes and the first Replant at about 40, so the stretch before the first Replant is for pushing floors toward it. Achievements count from the first second of play, so several pop at once when the panel opens at floor 9.
 
@@ -1197,7 +1221,7 @@ Both buy greedily (lowest wait plus payback time), Replant when pending Compost 
 2. Every play style's first Replant lands inside its first 24 hours. The active player's lands in 30 to 55 minutes.
 3. The idle player may be slower in weeks 1 and 2, and there is no catch-up just for idle players. Idle rhythm: a new world about every six days.
 4. Festival rhythm: the first Festival about day 4 for an active player, then gaps of 1 to 3 days up to day 10, 3 to 6 days up to day 30 and 5 to 9 days after. Never more than 10 days, and no gap more than about twice the one before.
-5. Festivals by day 30: 9 to 12 for active and mixed players, 6 to 8 for idle players.
+5. Festivals by day 30: 9 to 12 for active and mixed players, 6 to 8 for idle players. Two targets were widened after the final run: this one, from 9 to 11 for active and mixed players, and the idle player's World 5 in the gate table, from day 26 to day 27.
 6. The multiplier budget of versions 0.1 to 0.3 (how much managers, taps and everything else multiply income by on each day) is retired as a target. The simulator still reports it as a reading aid.
 
 **Gates: targets and the simulator's results on version 0.4's numbers** (days from first launch):
@@ -1238,7 +1262,7 @@ Between days 10 and 18 the gaps are one to two days where the rhythm asks for th
 8. **XP comes in lumps early.** On version 0.3 the active player was level 13 after an hour, because the first Compost records, daily quests and already-earned achievements all paid at once. Version 0.4's lower daily and achievement XP gives level 11 at one hour and the skill tree at about minute 16.
 9. **World Mastery** levels now come from the simulator (section 14.5). The fair stall's track steps (section 15.3) are still the rough script's (`stall2.py`). The simulator plays the track every weekend, and its active and mixed players finish it on 7 or 8 weekends out of 9.
 
-**Still for a playtest:** the Combo for a player who uses only the mouse, how the offline build feels (how soon a player reaches 100%), the event track's pace, the top floor at 20 minutes and the long stretch late in a Festival cycle. Chest, card, heirloom, Pollen, Gem and Insight rates run in the simulator but have no targets of their own yet. The card-level table in section 17.5 is rough arithmetic from the chest odds.
+**Still for a playtest:** the Combo for a player who uses only the mouse, how the offline build feels (how soon a player reaches 100%), the event track's pace, the top floor at 20 minutes, the long stretch late in a Festival cycle, and the idle player's Festival rhythm, which also steps up late: gaps of 2 days up to about day 27, where 3 to 6 are wanted, and 3.4 to 3.6 days after day 30, where 5 to 9 are wanted. Chest, card, heirloom, Pollen, Gem and Insight rates run in the simulator but have no targets of their own yet. The card-level table in section 17.5 is rough arithmetic from the chest odds.
 
 ## 18. Currency sources and sinks
 
@@ -1283,6 +1307,8 @@ Version 0.4's numbers are frozen until a playtest. After one, reach for these in
 
 ## Appendix A. Constants
 
+The long game's new constants are in EXPANSION.md, Appendix B, until each system is built.
+
 | Constant | Value | Section |
 |---|---|---|
 | `MILESTONES` | 25, 50, 100, then every 100 | 5.2 |
@@ -1322,7 +1348,7 @@ Version 0.4's numbers are frozen until a playtest. After one, reach for these in
 | `AFFINITY_BONUS` | 1.5 | 8.5 |
 | `DUAL_TRAIT_FACTOR` | 0.7 | 8.5 |
 | `TRAIT_PER_LEVEL` | 0.2 | 8.5 |
-| `RARITY_FACTOR` | 1, 1.5, 2.2, 3.2, 5, 8 | 8.5 |
+| `RARITY_FACTOR` | Common to Legendary 1, 1.5, 2.2, 3.2, 5; Exotic 8 (the eleven-tier table is in EXPANSION 2.2) | 8.5 |
 | `HYBRID_POLLEN`, `HYBRID_HOURS` | 400, 8 | 8.6 |
 | `EXOTIC_POLLEN`, `EXOTIC_HOURS` | 1,500, 24 | 8.6 |
 | `HYBRID_PARENT_LEVEL`, `EXOTIC_PARENT_LEVEL` | 2, 3 | 8.6 |
