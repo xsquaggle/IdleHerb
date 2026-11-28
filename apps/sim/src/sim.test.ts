@@ -2,7 +2,7 @@
  * The economy core under a simulated player: saves, ticks, offline time and a
  * two-day soak with no NaN, no Infinity and no Boost above its cap.
  */
-import { Num, createGame, deserializeState, serializeState, type Game } from '@sprout/core';
+import { Num, computeDerived, createGame, deserializeState, serializeState, type Game } from '@sprout/core';
 import { loadContent } from '@sprout/content';
 import { describe, expect, it } from 'vitest';
 import { Bot } from './bot';
@@ -149,5 +149,24 @@ describe('the Auto-Gardener keeps a world going (CONTENT 8, design 0.4)', () => 
     expect(x.dispatch({ type: 'setAutoBuy', on: false, world: 99 })).toBe(false);
     expect(x.dispatch({ type: 'setAutoBuy', on: false, floor: 0 })).toBe(false);
     expect(x.dispatch({ type: 'setAutoBuy', on: false, world: 0, floor: 99 })).toBe(false);
+  });
+});
+
+describe('the fair stall (GDD 15.3)', () => {
+  it('uses tap skills and heirlooms, never cards', () => {
+    const state = deserializeState(serializeState(played(50).state));
+    const w1 = state.worlds[0]!;
+    const jj = content.worlds[0]!.floors.findIndex((f) => f.manager.id === 'card.manager.juniper_jones');
+    w1.floors[jj]!.level = Math.max(1, w1.floors[jj]!.level);
+    w1.floors[jj]!.hired = true;
+    state.cards['card.manager.juniper_jones'] ??= { level: 1, copies: 0 };
+    state.skills = {};
+    state.equipped = [];
+    const bare = computeDerived(state, content, null);
+    expect(bare.worlds[0]!.tapPower).toBeGreaterThan(1);
+    expect(bare.global.fairTap.tapPower).toBe(1);
+    state.skills = { 'skill.gt.firm_grip': 2 };
+    const skilled = computeDerived(state, content, null);
+    expect(skilled.global.fairTap.tapPower).toBeCloseTo(1.2, 9);
   });
 });

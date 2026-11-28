@@ -2162,12 +2162,15 @@ export class Game {
     return true;
   }
 
-  /** Taps on the fair stall. Tap skills apply; Combo is shared with the main game. */
+  /**
+   * Taps on the fair stall (GDD 15.3). Only tap skills and heirloom passives
+   * apply, never cards; Combo is shared with the main game.
+   */
   private fairTap(count: number): boolean {
     const s = this.state;
     const t = this.t;
     if (!s.fair.active || !(count > 0)) return false;
-    const wd = this.derived.worlds[0]!;
+    const wd = this.derived.global.fairTap;
     const run = comboRun(s.combo, count, wd.comboCap, 1 / t.COMBO_TAPS_PER_STACK, t.COMBO_PER_STACK);
     s.combo = run.stacks;
     s.comboIdle = 0;
