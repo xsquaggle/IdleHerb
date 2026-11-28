@@ -1,0 +1,11 @@
+# Weekly quest pool. Source of truth: CONTENT.md 10.2. Five are drawn each Monday. Unlocks with world 2.
+- { id: quest.weekly.replants,    counter: replants,        goal: 10 }
+- { id: quest.weekly.chests,      counter: chestsOpened,    goal: 25 }
+- { id: quest.weekly.cards,       counter: cardsCollected,  goal: 300 }
+- { id: quest.weekly.milestones,  counter: milestones,      goal: 150 }
+- { id: quest.weekly.records,     counter: recordMilestones, goal: 10 }
+- { id: quest.weekly.visitors,    counter: visitorsCaught,  goal: 40 }
+- { id: quest.weekly.taps,        counter: taps,            goal: 25000 }
+- { id: quest.weekly.dailies,     counter: dailiesDone,     goal: 15 }
+- { id: quest.weekly.research,    counter: researchDone,    goal: 3,  needs: research3 }
+- { id: quest.weekly.pollination, counter: benchJobsDone,   goal: 1,  needs: feature.bench }

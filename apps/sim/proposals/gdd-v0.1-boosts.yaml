@@ -1,0 +1,10 @@
+# The timed-boost rule of GDD version 0.1, kept so the burst-stacking exploit
+# found by the design audit (finding M1) can be replayed and compared.
+# Not a proposal: version 0.2 replaced this rule.
+id: gdd-v0.1-boosts
+title: GDD 0.1 timed boosts (every boost its own multiplier, no cap, lump sums at the boosted rate)
+why: Shows the exploit the audit found, so the report can show it gone under the 0.2 rule.
+tuning:
+  BOOST_STACKING: multiply
+  BOOST_CAP: 0
+  LUMP_SUM_USES_BOOSTS: true

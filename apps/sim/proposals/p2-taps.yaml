@@ -1,0 +1,12 @@
+id: p2-taps
+title: Tap skills at half strength
+why: >
+  Tap income is several times the budget of GDD 17.6 in the first week, because
+  four Green Thumb skills are full on day 1. Half the value per rank keeps the
+  branch worth taking and spreads the growth over the first weeks.
+rows:
+  skills:
+    skill.gt.firm_grip: { effect: { value: 0.10 } }
+    skill.gt.keep_the_rhythm: { effect: { value: 2 } }
+    skill.gt.bumper_crop: { effect: { value: 0.005 } }
+    skill.gt.big_bumpers: { effect: { value: 0.5 } }

@@ -1,0 +1,33 @@
+# The reveal order. Source of truth: GDD section 16 (31 rows, design 0.3). targetSec is the GDD's target for a
+# new player's first session; targetDay is used for the later rows. The simulator reports both.
+- { n: 1,  id: feature.tap_to_harvest, when: { kind: start }, targetSec: 5 }
+- { n: 2,  id: feature.floor_levels,   when: { kind: counter, counter: harvests, gte: 1 }, targetSec: 10 }
+- { n: 3,  id: feature.milestones,     when: { kind: anyFloorLevel, level: 25 }, targetSec: 35 }
+- { n: 4,  id: feature.more_floors,    when: { kind: floorOpened, world: 1, floor: 2 }, targetSec: 40 }
+- { n: 5,  id: feature.managers,       when: { kind: holdCoins, world: 1, floor: 3, gte: "1000" }, targetSec: 90 }
+- { n: 6,  id: feature.tap_bonus,      when: { kind: counter, counter: hires, gte: 1 }, targetSec: 100 }
+- { n: 7,  id: feature.quests,         when: { kind: floorOpened, world: 1, floor: 4 }, targetSec: 135 }
+- { n: 8,  id: feature.plants,         when: { kind: floorOpened, world: 1, floor: 5 }, targetSec: 210 }
+- { n: 9,  id: feature.bumpers,        when: { kind: playerLevel, gte: 2 }, targetSec: 240 }
+- { n: 10, id: feature.visitors,       when: { kind: floorOpened, world: 1, floor: 6 }, targetSec: 330 }
+- { n: 11, id: feature.abilities,      when: { kind: managerHired, world: 1, floor: 7 }, targetSec: 660 }
+- { n: 12, id: feature.spurt,          when: { kind: floorOpened, world: 1, floor: 8 }, targetSec: 780 }
+- { n: 13, id: feature.basket,         when: { kind: playSeconds, gte: 900 }, targetSec: 900 }
+- { n: 14, id: feature.achievements,   when: { kind: floorOpened, world: 1, floor: 9 }, targetSec: 1260 }
+- { n: 15, id: feature.skills,         when: { kind: playerLevel, gte: 6 }, targetSec: 1560 }
+- { n: 16, id: feature.offline,        when: { kind: firstReturn }, targetSec: null }
+- { n: 17, id: feature.replant,        when: { kind: replantAvailable }, targetSec: 3000 }
+- { n: 18, id: feature.research,       when: { kind: counter, counter: replants, gte: 1 }, targetSec: 3300 }
+- { n: 19, id: feature.heirlooms,      when: { kind: counter, counter: replants, gte: 3 }, targetSec: 5400 }
+- { n: 20, id: feature.world2,         when: { kind: worldReached, world: 2 }, targetDay: 1 }
+- { n: 21, id: feature.bees,           when: { kind: research, id: research.botany.bee_hotel }, targetDay: 1.5 }
+- { n: 22, id: feature.events,         when: { kind: playerLevel, gte: 12 }, targetDay: 1.5 }
+- { n: 23, id: feature.bench,          when: { kind: research, id: research.botany.pollination_bench }, targetDay: 2 }
+- { n: 24, id: feature.world3,         when: { kind: worldReached, world: 3 }, targetDay: 3 }
+- { n: 25, id: feature.mutation,       when: { kind: research, id: research.botany.mutation_chamber }, targetDay: 6 }
+- { n: 26, id: feature.festival,       when: { kind: festivalAvailable }, targetDay: 4.5 }
+- { n: 27, id: feature.auto_buy,       when: { kind: shopLevel, id: shop.ribbon.auto_gardener, gte: 1 }, targetDay: 5 }
+- { n: 28, id: feature.world4,         when: { kind: worldReached, world: 4 }, targetDay: 10 }
+- { n: 29, id: feature.head_copies,    when: { kind: masteryStars, gte: 5 }, targetDay: 11 }
+- { n: 30, id: feature.world5,         when: { kind: worldReached, world: 5 }, targetDay: 17 }
+- { n: 31, id: feature.world6,         when: { kind: worldReached, world: 6 }, targetDay: 24 }

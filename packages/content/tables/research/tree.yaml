@@ -1,0 +1,42 @@
+# Research. Source of truth: CONTENT.md section 6 and GDD 10. Cost in Insight, time in seconds.
+# needs: a feature or world that must be reached as well as the `requires` projects.
+- { id: research.tools.sturdy_baskets,     lane: tools, requires: [], cost: 50,    timeSec: 300,    effect: { stat: offline.cap, op: add, value: 4 } }
+- { id: research.tools.bigger_baskets,     lane: tools, requires: [research.tools.sturdy_baskets], cost: 400, timeSec: 3600, effect: { stat: offline.cap, op: add, value: 4 } }
+- { id: research.tools.root_cellar,        lane: tools, requires: [research.tools.bigger_baskets], cost: 3000, timeSec: 21600, effect: { stat: offline.cap, op: add, value: 4 } }
+- { id: research.tools.cold_store,         lane: tools, requires: [research.tools.root_cellar], cost: 20000, timeSec: 86400, effect: { stat: offline.cap, op: add, value: 8 } }
+- { id: research.tools.whole_tower_button, lane: tools, requires: [], cost: 150,   timeSec: 1200,   special: unlock.whole_tower_button }
+- { id: research.tools.second_planter,     lane: tools, requires: [], cost: 1500,  timeSec: 14400,  effect: { stat: planter.count, op: add, value: 1 } }
+- { id: research.tools.heirloom_shelf_1,   lane: tools, requires: [], needs: heirlooms, cost: 2500, timeSec: 21600, effect: { stat: heirloom.slots, op: add, value: 1 } }
+- { id: research.tools.heirloom_shelf_2,   lane: tools, requires: [research.tools.heirloom_shelf_1], cost: 25000, timeSec: 86400, effect: { stat: heirloom.slots, op: add, value: 1 } }
+- { id: research.tools.basket_stacker,     lane: tools, requires: [], cost: 800,   timeSec: 7200,   effect: { stat: basket.store, op: add, value: 1 } }
+- { id: research.tools.auto_hire,          lane: tools, requires: [research.tools.whole_tower_button], cost: 5000, timeSec: 28800, special: unlock.auto_hire }
+- { id: research.soil.soil_science_1,      lane: soil, requires: [], cost: 100,    timeSec: 600,    effect: { stat: floor.profit, op: mul, value: 1.5 } }
+- { id: research.soil.soil_science_2,      lane: soil, requires: [research.soil.soil_science_1], cost: 1000, timeSec: 7200, effect: { stat: floor.profit, op: mul, value: 1.5 } }
+- { id: research.soil.soil_science_3,      lane: soil, requires: [research.soil.soil_science_2], cost: 8000, timeSec: 28800, effect: { stat: floor.profit, op: mul, value: 1.5 } }
+- { id: research.soil.soil_science_4,      lane: soil, requires: [research.soil.soil_science_3], cost: 40000, timeSec: 86400, effect: { stat: floor.profit, op: mul, value: 1.5 } }
+- { id: research.soil.soil_science_5,      lane: soil, requires: [research.soil.soil_science_4], cost: 150000, timeSec: 172800, effect: { stat: floor.profit, op: mul, value: 1.5 } }
+- { id: research.soil.crop_rotation_1,     lane: soil, requires: [research.soil.soil_science_1], cost: 300, timeSec: 1800, effect: { stat: floor.speed, op: mul, value: 1.2 } }
+- { id: research.soil.crop_rotation_2,     lane: soil, requires: [research.soil.crop_rotation_1], cost: 4000, timeSec: 21600, effect: { stat: floor.speed, op: mul, value: 1.2 } }
+- { id: research.soil.crop_rotation_3,     lane: soil, requires: [research.soil.crop_rotation_2], cost: 60000, timeSec: 129600, effect: { stat: floor.speed, op: mul, value: 1.2 } }
+- { id: research.soil.frugal_farming_1,    lane: soil, requires: [research.soil.soil_science_1], cost: 600, timeSec: 3600, effect: { stat: floor.levelCost, op: mul, value: 0.9 } }
+- { id: research.soil.frugal_farming_2,    lane: soil, requires: [research.soil.frugal_farming_1], cost: 12000, timeSec: 43200, effect: { stat: floor.levelCost, op: mul, value: 0.9 } }
+- { id: research.botany.bee_hotel,         lane: botany, requires: [], cost: 200,  timeSec: 1800,   special: unlock.bees }
+- { id: research.botany.pollination_bench, lane: botany, requires: [research.botany.bee_hotel], needs: world2, cost: 500, timeSec: 7200, special: unlock.bench }
+- { id: research.botany.tidy_hive,         lane: botany, requires: [research.botany.bee_hotel], cost: 2000, timeSec: 14400, effect: { stat: pollen.maxedBonus, op: add, value: 0.5 } }
+- { id: research.botany.greenhouse_glass_1, lane: botany, requires: [], cost: 1200, timeSec: 10800, effect: { stat: plant.power, op: inc, value: 0.10 } }
+- { id: research.botany.greenhouse_glass_2, lane: botany, requires: [research.botany.greenhouse_glass_1], cost: 10000, timeSec: 43200, effect: { stat: plant.power, op: inc, value: 0.10 } }
+- { id: research.botany.greenhouse_glass_3, lane: botany, requires: [research.botany.greenhouse_glass_2], cost: 70000, timeSec: 129600, effect: { stat: plant.power, op: inc, value: 0.10 } }
+- { id: research.botany.mutation_chamber,  lane: botany, requires: [research.botany.pollination_bench], needs: world3, cost: 5000, timeSec: 43200, special: unlock.mutation }
+- { id: research.botany.second_bench,      lane: botany, requires: [research.botany.pollination_bench], cost: 6000, timeSec: 28800, effect: { stat: bench.slots, op: add, value: 1 } }
+- { id: research.botany.fast_pollination,  lane: botany, requires: [research.botany.second_bench], cost: 15000, timeSec: 57600, effect: { stat: bench.speed, op: inc, value: 0.25 } }
+- { id: research.botany.perfect_beds,      lane: botany, requires: [research.botany.greenhouse_glass_1], cost: 30000, timeSec: 86400, effect: { stat: plant.affinity, op: add, value: 0.25 } }
+- { id: research.people.staff_room_1,      lane: people, requires: [], cost: 400,  timeSec: 3600,   effect: { stat: manager.cooldown, op: add, value: 0.10 } }
+- { id: research.people.staff_room_2,      lane: people, requires: [research.people.staff_room_1], cost: 6000, timeSec: 28800, effect: { stat: manager.cooldown, op: add, value: 0.10 } }
+- { id: research.people.training_day_1,    lane: people, requires: [], cost: 1500, timeSec: 10800,  effect: { stat: manager.power, op: inc, value: 0.10 } }
+- { id: research.people.training_day_2,    lane: people, requires: [research.people.training_day_1], cost: 15000, timeSec: 57600, effect: { stat: manager.power, op: inc, value: 0.10 } }
+- { id: research.people.training_day_3,    lane: people, requires: [research.people.training_day_2], cost: 90000, timeSec: 144000, effect: { stat: manager.power, op: inc, value: 0.10 } }
+- { id: research.people.lucky_clover_1,    lane: people, requires: [], cost: 2000, timeSec: 14400,  effect: { stat: chest.luck, op: add, value: 0.10 } }
+- { id: research.people.lucky_clover_2,    lane: people, requires: [research.people.lucky_clover_1], cost: 25000, timeSec: 86400, effect: { stat: chest.luck, op: add, value: 0.10 } }
+- { id: research.people.sprout_lure,       lane: people, requires: [], cost: 700,  timeSec: 5400,   effect: { stat: visitor.interval, op: reduce, value: 0.10 } }
+- { id: research.people.field_journal_1,   lane: people, requires: [], cost: 1000, timeSec: 7200,   effect: { stat: insight.gain, op: inc, value: 0.25 } }
+- { id: research.people.field_journal_2,   lane: people, requires: [research.people.field_journal_1], cost: 10000, timeSec: 43200, effect: { stat: insight.gain, op: inc, value: 0.25 } }

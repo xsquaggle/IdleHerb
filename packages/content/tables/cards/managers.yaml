@@ -1,0 +1,78 @@
+# Managers: one for every floor (design 0.3). Source of truth: docs/design/CONTENT.md section 2.
+# n is the M number, which follows floor order. Code matches on id. Names live in text/ (Writer).
+# perk: the level-1 value. Scales by 1 + PERK_PER_LEVEL x (level - 1). It works only while the manager is hired.
+# ability: Rare and better managers have one, and it works only in the manager's own world (CONTENT 2.2).
+- { id: card.manager.nana_sprig, n: 1, floor: floor.w1.windowsill, rarity: common, launch: true, perk: { stat: floor.levelCost, op: inc, value: -0.05, scope: floor } }
+- { id: card.manager.basil_brumble, n: 2, floor: floor.w1.balcony, rarity: common, launch: true, perk: { stat: floor.profit, op: inc, value: 0.2, scope: floor } }
+- { id: card.manager.rowan_rake, n: 3, floor: floor.w1.hemp_patch, rarity: common, launch: true, perk: { stat: floor.speed, op: inc, value: 0.1, scope: floor } }
+- { id: card.manager.posy_seedwell, n: 4, floor: floor.w1.garden_shed, rarity: uncommon, launch: true, perk: { stat: plant.power, op: inc, value: 0.15, scope: floor } }
+- { id: card.manager.fern_petrie, n: 5, floor: floor.w1.greenhouse, rarity: uncommon, launch: true, perk: { stat: insight.gain, op: inc, value: 0.04, scope: global } }
+- { id: card.manager.juniper_jones, n: 6, floor: floor.w1.market, rarity: uncommon, launch: true, perk: { stat: tap.power, op: inc, value: 0.08, scope: world } }
+- { id: card.manager.old_moss, n: 7, floor: floor.w1.tea_house, rarity: rare, launch: true, perk: { stat: offline.earnings, op: inc, value: 0.12, scope: world },
+    ability: { id: ability.tea_break, cooldownSec: 480, kind: comboLock, durationSec: 60 } }
+- { id: card.manager.captain_kelp, n: 8, floor: floor.w1.ropewalk, rarity: epic, launch: true, perk: { stat: floor.profit, op: inc, value: 0.12, scope: adjacent },
+    ability: { id: ability.all_hands, cooldownSec: 720, kind: buff, stat: floor.speed, scope: world, mult: 2, durationSec: 30 } }
+- { id: card.manager.clementine_zest, n: 9, floor: floor.w1.soap_workshop, rarity: legendary, launch: true, perk: { stat: tap.critChance, op: add, value: 0.005, scope: world },
+    ability: { id: ability.showstopper, cooldownSec: 480, kind: guaranteedCrits, taps: 20 } }
+- { id: card.manager.granny_evergreen, n: 10, floor: floor.w1.hq, rarity: exotic, launch: true, perk: { stat: tower.milestoneMult, op: add, value: 0.1, scope: world },
+    ability: { id: ability.sunday_best, cooldownSec: 900, kind: buff, stat: floor.profit, scope: world, mult: 5, durationSec: 30 } }
+- { id: card.manager.bram_applewhite, n: 11, floor: floor.w2.rooftop_beds, rarity: common, launch: true, perk: { stat: floor.profit, op: inc, value: 0.08, scope: adjacent } }
+- { id: card.manager.olive_ledger, n: 12, floor: floor.w2.herb_kiosk, rarity: common, launch: true, perk: { stat: floor.speed, op: inc, value: 0.1, scope: floor } }
+- { id: card.manager.tansy_treadle, n: 13, floor: floor.w2.weaving_mill, rarity: uncommon, launch: true, perk: { stat: floor.profit, op: inc, value: 0.3, scope: floor } }
+- { id: card.manager.kit_foldaway, n: 14, floor: floor.w2.paper_workshop, rarity: uncommon, launch: true, perk: { stat: floor.speed, op: inc, value: 0.15, scope: floor } }
+- { id: card.manager.barley_biggs, n: 15, floor: floor.w2.bistro, rarity: rare, launch: true, perk: { stat: floor.profit, op: inc, value: 0.4, scope: floor },
+    ability: { id: ability.lunch_rush, cooldownSec: 600, kind: fillSpurt, fraction: 1 } }
+- { id: card.manager.hazel_thimble, n: 16, floor: floor.w2.atelier, rarity: epic, launch: true, perk: { stat: plant.power, op: inc, value: 0.25, scope: floor, family: hemp },
+    ability: { id: ability.stitch_in_time, cooldownSec: 360, kind: lumpSum, scope: floor, seconds: 60 } }
+- { id: card.manager.bjorn_barrow, n: 17, floor: floor.w2.brickyard, rarity: legendary, launch: true, perk: { stat: floor.profit, op: inc, value: 0.6, scope: floor },
+    ability: { id: ability.heave_ho, cooldownSec: 1200, kind: lumpSum, scope: world, seconds: 120 } }
+- { id: card.manager.madame_loom, n: 18, floor: floor.w2.emporium, rarity: exotic, launch: true, perk: { stat: plant.power, op: inc, value: 0.5, scope: world, family: hemp },
+    ability: { id: ability.golden_thread, cooldownSec: 1200, kind: buff, stat: floor.profit, scope: world, mult: 10, durationSec: 20 } }
+- { id: card.manager.sandy_tidewell, n: 19, floor: floor.w3.beach_hut, rarity: common, launch: true, perk: { stat: offline.earnings, op: inc, value: 0.08, scope: world } }
+- { id: card.manager.marigold_mayhew, n: 20, floor: floor.w3.jungle_terrace, rarity: common, launch: true, perk: { stat: tap.comboCap, op: add, value: 2, scope: world } }
+- { id: card.manager.marina_bolt, n: 21, floor: floor.w3.sailcloth_loft, rarity: uncommon, launch: true, perk: { stat: floor.profit, op: inc, value: 0.3, scope: floor } }
+- { id: card.manager.ned_knotwell, n: 22, floor: floor.w3.net_weavers, rarity: uncommon, launch: true, perk: { stat: floor.levelCost, op: inc, value: -0.06, scope: floor } }
+- { id: card.manager.professor_thistlewick, n: 23, floor: floor.w3.hot_spring, rarity: rare, launch: true, perk: { stat: floor.speed, op: inc, value: 0.25, scope: floor },
+    ability: { id: ability.sprinkler_surge, cooldownSec: 600, kind: buff, stat: floor.profit, scope: floor, mult: 10, durationSec: 30 } }
+- { id: card.manager.amazing_marrow, n: 24, floor: floor.w3.floating_market, rarity: epic, launch: true, perk: { stat: floor.doubleChance, op: add, value: 0.1, scope: world },
+    ability: { id: ability.abracadabra, cooldownSec: 3600, kind: chestLuckNext, mult: 2 } }
+- { id: card.manager.pepper_finch, n: 25, floor: floor.w3.snack_shack, rarity: legendary, launch: true, perk: { stat: visitor.interval, op: reduce, value: 0.05, scope: world },
+    ability: { id: ability.step_right_up, cooldownSec: 600, kind: callVisitor, count: 1 } }
+- { id: card.manager.skipper_papaya, n: 26, floor: floor.w3.lighthouse, rarity: exotic, launch: true, perk: { stat: visitor.reward, op: add, value: 1, scope: world },
+    ability: { id: ability.treasure_map, cooldownSec: 1200, kind: callVisitor, count: 3 } }
+- { id: card.manager.wren_woolsey, n: 27, floor: floor.w4.cabin_windowsill, rarity: common, launch: true, perk: { stat: floor.levelCost, op: inc, value: -0.05, scope: floor } }
+- { id: card.manager.bertie_bundle, n: 28, floor: floor.w4.herb_racks, rarity: common, launch: true, perk: { stat: floor.profit, op: inc, value: 0.2, scope: floor } }
+- { id: card.manager.dame_dahlia, n: 29, floor: floor.w4.ice_greenhouse, rarity: uncommon, launch: true, perk: { stat: tap.critMult, op: add, value: 0.5, scope: world } }
+- { id: card.manager.purl_garter, n: 30, floor: floor.w4.knitworks, rarity: uncommon, launch: true, perk: { stat: floor.speed, op: inc, value: 0.15, scope: floor } }
+- { id: card.manager.maestro_fennel, n: 31, floor: floor.w4.tea_lodge, rarity: rare, launch: true, perk: { stat: spurt.duration, op: add, value: 2, scope: world },
+    ability: { id: ability.strike_up_the_band, cooldownSec: 1800, kind: startSpurt } }
+- { id: card.manager.chip, n: 32, floor: floor.w4.sled_works, rarity: epic, launch: true, perk: { stat: floor.levelCost, op: inc, value: -0.08, scope: floor },
+    ability: { id: ability.dig_in, cooldownSec: 900, kind: buff, stat: floor.levelCost, scope: floor, mult: 0.5, durationSec: 30 } }
+- { id: card.manager.barnaby_moonwort, n: 33, floor: floor.w4.aurora_garden, rarity: legendary, launch: true, perk: { stat: offline.earnings, op: inc, value: 0.2, scope: world },
+    ability: { id: ability.night_shift, cooldownSec: 900, kind: buff, stat: floor.profit, scope: world, mult: 2, durationSec: 60 } }
+- { id: card.manager.grandpa_mitten, n: 34, floor: floor.w4.summit_lodge, rarity: exotic, launch: true, perk: { stat: offline.efficiency, op: add, value: 0.25, scope: world },
+    ability: { id: ability.fireside_story, cooldownSec: 1200, kind: fillHeat } }
+- { id: card.manager.tilly_touchdown, n: 35, floor: floor.w5.lander_windowsill, rarity: common, launch: false, perk: { stat: floor.levelCost, op: inc, value: -0.05, scope: floor } }
+- { id: card.manager.domingo_pane, n: 36, floor: floor.w5.dome_garden, rarity: common, launch: false, perk: { stat: floor.profit, op: inc, value: 0.2, scope: floor } }
+- { id: card.manager.stilts_mccrae, n: 37, floor: floor.w5.hemp_field, rarity: uncommon, launch: false, perk: { stat: floor.speed, op: inc, value: 0.15, scope: floor } }
+- { id: card.manager.petra_blockley, n: 38, floor: floor.w5.hempcrete_works, rarity: uncommon, launch: false, perk: { stat: floor.profit, op: inc, value: 0.3, scope: floor } }
+- { id: card.manager.auntie_gravity, n: 39, floor: floor.w5.tea_room, rarity: rare, launch: false, perk: { stat: offline.earnings, op: inc, value: 0.12, scope: world },
+    ability: { id: ability.tea_party, cooldownSec: 1200, kind: fillBubbles, seconds: 120 } }
+- { id: card.manager.stella_lather, n: 40, floor: floor.w5.soapery, rarity: epic, launch: false, perk: { stat: floor.profit, op: inc, value: 0.12, scope: adjacent },
+    ability: { id: ability.lather_up, cooldownSec: 720, kind: buff, stat: floor.profit, scope: world, mult: 3, durationSec: 30 } }
+- { id: card.manager.grover_crater, n: 41, floor: floor.w5.biodome, rarity: legendary, launch: false, perk: { stat: plant.power, op: inc, value: 0.2, scope: world },
+    ability: { id: ability.moonrise, cooldownSec: 900, kind: buff, stat: floor.profit, scope: world, mult: 5, durationSec: 30 } }
+- { id: card.manager.commander_comet, n: 42, floor: floor.w5.lunar_spire, rarity: exotic, launch: false, perk: { stat: tap.power, op: inc, value: 0.3, scope: world },
+    ability: { id: ability.liftoff, cooldownSec: 900, kind: tapBoost, taps: 50, mult: 5 } }
+- { id: card.manager.dot_hatchley, n: 43, floor: floor.w6.airlock_planter, rarity: common, launch: false, perk: { stat: floor.speed, op: inc, value: 0.1, scope: floor } }
+- { id: card.manager.gus_gyro, n: 44, floor: floor.w6.ring_garden, rarity: common, launch: false, perk: { stat: floor.profit, op: inc, value: 0.2, scope: floor } }
+- { id: card.manager.luma_weft, n: 45, floor: floor.w6.sail_loom, rarity: uncommon, launch: false, perk: { stat: floor.profit, op: inc, value: 0.3, scope: floor } }
+- { id: card.manager.major_kernel, n: 46, floor: floor.w6.seed_vault, rarity: uncommon, launch: false, perk: { stat: plant.power, op: inc, value: 0.15, scope: floor } }
+- { id: card.manager.rocky_bloom, n: 47, floor: floor.w6.asteroid_greenhouse, rarity: rare, launch: false, perk: { stat: visitor.interval, op: reduce, value: 0.05, scope: world },
+    ability: { id: ability.meteor_shower, cooldownSec: 900, kind: callVisitor, count: 2 } }
+- { id: card.manager.celeste_crema, n: 48, floor: floor.w6.cafe, rarity: epic, launch: false, perk: { stat: tap.critChance, op: add, value: 0.005, scope: world },
+    ability: { id: ability.wake_up_call, cooldownSec: 600, kind: catchSunrise } }
+- { id: card.manager.dash_parcelli, n: 49, floor: floor.w6.shipping_dock, rarity: legendary, launch: false, perk: { stat: floor.profit, op: inc, value: 0.6, scope: floor },
+    ability: { id: ability.express_delivery, cooldownSec: 1800, kind: lumpSum, scope: world, seconds: 300 } }
+- { id: card.manager.stargardener, n: 50, floor: floor.w6.garden_bridge, rarity: exotic, launch: false, perk: { stat: floor.profit, op: inc, value: 0.5, scope: world },
+    ability: { id: ability.supernova, cooldownSec: 3600, kind: lumpSum, scope: world, seconds: 600 } }

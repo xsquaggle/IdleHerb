@@ -1,0 +1,21 @@
+# Achievements. Source of truth: CONTENT.md section 11. Twenty families, five tiers, lifetime counters.
+- { id: ach.taps,        counter: taps,            tiers: [1000, 10000, 100000, 500000, 3000000] }
+- { id: ach.bumpers,     counter: bumpers,         tiers: [50, 500, 5000, 50000, 300000] }
+- { id: ach.combo,       counter: fullComboSec,    tiers: [60, 600, 6000, 60000, 300000] }
+- { id: ach.spurts,      counter: spurts,          tiers: [5, 50, 250, 1000, 5000] }
+- { id: ach.visitors,    counter: visitorsCaught,  tiers: [10, 100, 500, 2500, 10000] }
+- { id: ach.levels,      counter: levelsBought,    tiers: [500, 5000, 25000, 100000, 500000] }
+- { id: ach.milestones,  counter: milestones,      tiers: [25, 250, 1000, 5000, 20000] }
+- { id: ach.floors,      counter: floorsOpened,    tiers: [10, 100, 500, 2500, 10000] }
+- { id: ach.managers,    counter: managersHired,   tiers: [5, 10, 18, 26, 34] }
+- { id: ach.plants,      counter: plantsOwned,     tiers: [5, 10, 20, 28, 36] }
+- { id: ach.heirlooms,   counter: heirloomsOwned,  tiers: [2, 6, 10, 14, 18] }
+- { id: ach.card_levels, counter: cardLevelUps,    tiers: [5, 25, 100, 250, 500] }
+- { id: ach.chests,      counter: chestsOpened,    tiers: [10, 50, 250, 1000, 5000] }
+- { id: ach.replants,    counter: replants,        tiers: [1, 10, 50, 250, 1000] }
+- { id: ach.compost,     counter: compostAllTime,  tiers: [100, 1e4, 1e6, 1e9, 1e12] }
+- { id: ach.festivals,   counter: festivals,       tiers: [1, 3, 10, 25, 50] }
+- { id: ach.stars,       counter: masteryStars,    tiers: [3, 8, 15, 22, 30] }
+- { id: ach.research,    counter: researchDone,    tiers: [3, 10, 20, 30, 40] }
+- { id: ach.quests,      counter: questsDone,      tiers: [10, 50, 200, 500, 1500] }
+- { id: ach.offline,     counter: offlineHours,    tiers: [1, 24, 100, 500, 2000] }

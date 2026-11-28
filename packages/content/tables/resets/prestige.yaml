@@ -1,0 +1,16 @@
+# Ribbon Shop (Harvest Festival). Source of truth: CONTENT.md section 8 and GDD 12.2. Never resets.
+# costs: one price per level. endless items use cost: { base, growth } rounded up.
+- { id: shop.ribbon.golden_hour,        costs: [3, 10, 40, 150, 600], effect: { stat: floor.profit, op: mul, value: 2 } }
+- { id: shop.ribbon.auto_gardener,      costs: [4],   special: unlock.auto_gardener }
+- { id: shop.ribbon.deed_mitten,        costs: [8],   special: deed.w4 }
+- { id: shop.ribbon.festival_fireworks, costs: [10, 50, 250], effect: { stat: spurt.duration, op: add, value: 2 } }
+- { id: shop.ribbon.second_desk,        costs: [15],  effect: { stat: research.desks, op: add, value: 1 } }
+- { id: shop.ribbon.master_composter,   costs: [5, 20, 80, 320, 1280], special: shop.master_composter }
+- { id: shop.ribbon.heirloom_shelf_3,   costs: [25],  effect: { stat: heirloom.slots, op: add, value: 1 } }
+- { id: shop.ribbon.third_planter,      costs: [30],  effect: { stat: planter.count, op: add, value: 1 } }
+- { id: shop.ribbon.deluxe_basket,      costs: [40],  special: unlock.deluxe_basket }
+- { id: shop.ribbon.deed_moon,          costs: [60],  special: deed.w5 }
+- { id: shop.ribbon.auto_replant,       costs: [100], special: unlock.auto_replant }
+- { id: shop.ribbon.heirloom_shelf_4,   costs: [250], effect: { stat: heirloom.slots, op: add, value: 1 } }
+- { id: shop.ribbon.deed_nebula,        costs: [600], special: deed.w6 }
+- { id: shop.ribbon.blue_polish,        endless: { base: 50, growth: 1.15 }, special: shop.blue_polish }

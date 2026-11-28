@@ -1,0 +1,8 @@
+# Chests. Source of truth: GDD 8.3. Odds are weights in percent for one card slot.
+# guarantee: slots rolled first among that rarity and better, in the table's proportions.
+- { id: chest.wooden,    tier: 1, cards: 3,  guarantee: [],                      odds: { common: 74, uncommon: 22, rare: 3.5, epic: 0.5, legendary: 0 },  pollen: 0,   heirloomChance: 0 }
+- { id: chest.copper,    tier: 2, cards: 5,  guarantee: [uncommon],              odds: { common: 62, uncommon: 28, rare: 8,   epic: 1.8, legendary: 0.2 }, pollen: 10,  heirloomChance: 0 }
+- { id: chest.silver,    tier: 3, cards: 8,  guarantee: [rare],                  odds: { common: 48, uncommon: 32, rare: 15,  epic: 4.2, legendary: 0.8 }, pollen: 30,  heirloomChance: 0.2 }
+- { id: chest.golden,    tier: 4, cards: 12, guarantee: [epic],                  odds: { common: 34, uncommon: 34, rare: 22,  epic: 8,   legendary: 2 },   pollen: 80,  heirloomChance: 0.5 }
+- { id: chest.crystal,   tier: 5, cards: 16, guarantee: [legendary],             odds: { common: 22, uncommon: 30, rare: 28,  epic: 15,  legendary: 5 },   pollen: 200, heirloomChance: 1 }
+- { id: chest.starlight, tier: 6, cards: 20, guarantee: [legendary, legendary],  odds: { common: 15, uncommon: 25, rare: 30,  epic: 20,  legendary: 10 },  pollen: 500, heirloomChance: 1, heirloomOdds: starlight, exoticManagerCopy: true }
